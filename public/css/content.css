@@ -1,0 +1,10 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14pt;
+    line-height: 30px;
+    text-align: justify;
+}
+
+body > *{
+    margin: 0;
+}
