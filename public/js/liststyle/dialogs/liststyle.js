@@ -56,14 +56,14 @@
 						],
 						setup: function( element ) {
 							var value = element.getStyle( 'list-style-type' ) || mapListStyle[ element.getAttribute( 'type' ) ] || element.getAttribute( 'type' ) || '';
-
+							
 							this.setValue( value );
 						},
 						commit: function( element ) {
 							var value = this.getValue();
-							if ( value )
-								element.setStyle( 'list-style-type', value );
-							else
+							if ( value ) {
+								element.setAttribute('type', value);					
+							} else
 								element.removeStyle( 'list-style-type' );
 						}
 					} ]
@@ -82,7 +82,6 @@
 				}
 			};
 		} else if ( startupPage == 'numberedListStyle' ) {
-
 			var listStyleOptions = [
 				[ lang.notset, '' ],
 				[ lang.lowerRoman, 'lower-roman' ],
@@ -143,14 +142,29 @@
 							items: listStyleOptions,
 							setup: function( element ) {
 								var value = element.getStyle( 'list-style-type' ) || mapListStyle[ element.getAttribute( 'type' ) ] || element.getAttribute( 'type' ) || '';
-
+								
 								this.setValue( value );
 							},
 							commit: function( element ) {
 								var value = this.getValue();
-								if ( value )
+								if ( value ){
 									element.setStyle( 'list-style-type', value );
+									if(value == "lower-roman"){
+										element.setAttribute('type', 'i');
+									} else if(value == "upper-roman"){
+										element.setAttribute('type', 'I');
+									} else if(value == "lower-alpha"){
+										element.setAttribute('type', 'a');
+									} else if(value == "upper-alpha"){
+										element.setAttribute('type', 'A');
+									} else if(value == "decimal"){
+										element.setAttribute('type', '1');
+									} else if(value == ""){
+										element.setAttribute('type', '1');
+									}									
+								}
 								else
+									element.setAttribute('type', '');
 									element.removeStyle( 'list-style-type' );
 							}
 						} ]
