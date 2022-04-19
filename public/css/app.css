@@ -1,0 +1,45 @@
+.navbar{
+    background-color: #E87B2A;
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+}
+
+.navbar h4{
+    color: white;
+}
+
+
+.canva{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+  }
+
+.canva .sector1 {
+    grid-column-start: 1;
+    width: 100%;
+    text-align: center;
+
+}
+
+.canva .sector1 img{
+    width: 30%;
+    margin-top: 20%;
+}
+
+.canva .sector1 p{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 50px;
+    color: white;
+    margin-top: 5%;
+}
+
+.canva .sector2 {
+    grid-column-start: 2;
+    background-color: #003C71;
+    width: 100%;
+}
+
