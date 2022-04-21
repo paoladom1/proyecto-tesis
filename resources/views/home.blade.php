@@ -25,7 +25,7 @@
     <div class = "container-fluid canva">
 
         <div class = "sector1"  style="background-image: url('img/Fondo.jpg')">
-            <img src="img/logoUCAnegro.png" alt="" class="d-inline-block align-text-top">
+            <img src="img/LogoUCAnegro.png" alt="" class="d-inline-block align-text-top">
             <p>
                 Universidad Centroamericana <br> José Simeón Cañas
             </p>
@@ -34,7 +34,7 @@
 
         <div class = "sector2">
 
-           
+
         </div>
 
     </div>
