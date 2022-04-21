@@ -25,7 +25,7 @@
     <div class = "container-fluid canva">
 
         <div class = "sector1"  style="background-image: url('img/Fondo.jpg')">
-            <img src="img/logoUCAnegro.png" alt="" class="d-inline-block align-text-top">
+            <img src="img/LogoUCAnegro.png" alt="" class="d-inline-block align-text-top">
             <p>
                 Universidad Centroamericana <br> José Simeón Cañas
             </p>
@@ -33,10 +33,38 @@
         </div>
 
         <div class = "sector2">
-
-           
+            <h1 style="align-self: center; margin-bottom: 1em; color: #E87B2A;">Log in</h1>
+            <div class="formulario">
+                <form class="container-sm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Usuario">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Contrasena">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-8 justify-content-start" style="align-self: center;">
+                            <input type="submit" value="Iniciar sesion" style="background-color: #E87B2A; color:white; border: #E87B2A; border-radius: 3px;" >
+                        </div>
+                        <div class="col-4 justify-content-end">
+                            <a href="#" style="font-size: .9rem; font-weight: bold; text-decoration: none"  onMouseOver="this.style.color='#f00'"
+                            onMouseOut="this.style.color='#000'">Problemas para iniciar sesion?</a>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-5">
+                            <hr>
+                        </div>
+                        <div class="col-2">
+                            <center><p>o</p></center>
+                        </div>
+                        <div class="col-5">
+                            <hr>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-
     </div>
 
 </body>
