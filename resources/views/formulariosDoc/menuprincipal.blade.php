@@ -15,33 +15,39 @@
             <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat molestiae eveniet ullam nostrum earum possimus.</h2>
         </div> 
         <div class="row">
-            <div class="container" style="background-color: silver; width: 100%;">
-                <div class="row row-cols-1">
+            <div class="container" style="background-color: silver">
+                <div class="row">
+                    <center><h1>MENU PRINCIPAL</h1></center>
+                </div>
+                <center><div class="row mt-3">
                     <div class="col">
                         <div class="card" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top">
                             <div class="card-body" style="background-color: skyblue">
                                 <h5 class="card-title">Portada</h5>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="card" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top">
-                            <div class="card-body">
+                            <div class="card-body" style="background-color: skyblue">
                                 <h5 class="card-title">Portada</h5>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="card" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top">
-                            <div class="card-body">
+                            <div class="card-body" style="background-color: skyblue">
                                 <h5 class="card-title">Portada</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div></center>
+                
             </div>
-        </div> 
-        
+        </div>
         <div class="row">
             <div>
             </div>

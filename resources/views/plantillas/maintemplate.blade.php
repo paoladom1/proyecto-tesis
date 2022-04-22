@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <link href = "{{URL::asset('css/app.css')}}" rel="stylesheet">
 
@@ -31,13 +32,13 @@
                 <img src="/img/Logo.png" alt="" height="65px" style="margin: .5em;" class="d-inline-block align-text-top">
                 </a>
             </div>
-            <div class="col" style="display: flex; flex-direction:column; justify-content:flex-end;">
+            <div class="col justify-content-center" style="align-self:end;">
                 <p style="color: white;">Tema de tesis <!--Variable laravel--></p>
             </div>
         </div>
         <div class="row">
             <div class="col-1 mt-1">
-                <button type="button" id="menu" style="background-color: none; color: white; " onclick="openNav()"><img src="/img/menu.png" height="50rem" ></button>
+                <button type="button" id="menu" style="background-color: #003C71; color: white; height: 4em; width: 4em;  " onclick="openNav()"><i class="bi bi-list" style= "font-size: 2em;"></i></button>
             </div>
         </div>
     </div>
