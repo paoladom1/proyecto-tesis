@@ -25,15 +25,12 @@
     <!-- Barra de navegacion superior -->
     <nav id="nav" class="navbar-main ">
     <div class="container-fluid">
-        <div class="row" style="background-color: #003C71;">
-            <div class="col justify-content-start">
-                <a class="navbar-brand" href="#">
-                <img src="/img/Logo.png" alt="" height="65px" style="margin: .5em;" class="d-inline-block align-text-top">
-                </a>
-            </div>
-            <div class="col" style="display: flex; flex-direction:column; justify-content:flex-end;">
-                <p style="color: white;">Tema de tesis <!--Variable laravel--></p>
-            </div>
+        <div class="row navContent" style="background-color: #003C71;">
+            <a class="navbar-brand navImg" href="#">
+                <img src="/img/Logo.png" alt="" height="65px" style="margin: .5em;" class="d-inline-block align-text-top ">
+            </a>
+
+            <p style="color: white;" class="textoNav">Tema de tesis <!--Variable laravel--></p>
         </div>
         <div class="row">
             <div class="col-1 mt-1">
@@ -66,7 +63,7 @@
                 closeNav();
             }
         });
-    </script>  
+    </script>
 @include('plantillas.footer')
 
 
