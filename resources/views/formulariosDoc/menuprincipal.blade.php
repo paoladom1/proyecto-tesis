@@ -7,50 +7,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 @endpush-->
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, quos?</h1>
+            <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, quos?</h4>
         </div> 
         <div class="row">
-            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat molestiae eveniet ullam nostrum earum possimus.</h2>
+            <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat molestiae eveniet ullam nostrum earum possimus.</h5>
         </div> 
         <div class="row">
-            <div class="container" style="background-color: silver">
-                <div class="row">
+            <div class="container" style="background-color: silver; border-radius: 10px;">
+                <div class="row " style="margin-top: 2em;">
                     <center><h1>MENU PRINCIPAL</h1></center>
                 </div>
-                <center><div class="row mt-3">
+                <center>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-3">
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card m-3 position-static" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top">
-                            <div class="card-body" style="background-color: skyblue">
+                            <div class="card-body" style="background-color: #003C71">
                                 <h5 class="card-title">Portada</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card m-3 position-static" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top">
-                            <div class="card-body" style="background-color: skyblue">
+                            <div class="card-body" style="background-color: #003C71">
                                 <h5 class="card-title">Portada</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card m-3 position-static" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top">
-                            <div class="card-body" style="background-color: skyblue">
+                            <div class="card-body" style="background-color: #003C71">
                                 <h5 class="card-title">Portada</h5>
                             </div>
                         </div>
                     </div>
-                </div></center>
-                
+                </div>
+                </center>
             </div>
         </div>
-        <div class="row">
-            <div>
+        <div class="row mt-3">
+            <div class="container" style="background-color: silver; border-radius: 10px;">
+                <center><h3 class="mt-3">Lorem ipsum dolor sit amet.</h3></center>
+                <div class="list-group list-group-horizontal justify-content-center m-3">
+                    <input type="text" class="list-group-item" placeholder="Seccion"/>
+                    <input type="text" class="list-group-item" placeholder="Autor"/>
+                    <input type="text" class="list-group-item" placeholder="Fecha"/>
+                    <button class="list-group-item" style="color: white; background-color: #003C71">Ver</button>
+                </div>
             </div>
-        </div> 
+            
+        </div>
     </div>
 @endsection
