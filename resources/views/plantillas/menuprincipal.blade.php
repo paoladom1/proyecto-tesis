@@ -1,4 +1,4 @@
-@extends('plantillas.maintemplate')
+@extends('plantillas.nav')
 @section('content')
 <!--@push('styles')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -10,10 +10,10 @@
     <div class="container">
         <div class="row">
             <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, quos?</h4>
-        </div> 
+        </div>
         <div class="row">
             <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat molestiae eveniet ullam nostrum earum possimus.</h5>
-        </div> 
+        </div>
         <div class="row">
             <div class="container" style="background-color: silver; border-radius: 10px;">
                 <div class="row " style="margin-top: 2em;">
@@ -59,7 +59,7 @@
                     <button class="list-group-item" style="color: white; background-color: #003C71">Ver</button>
                 </div>
             </div>
-            
+
         </div>
     </div>
 @endsection

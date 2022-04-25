@@ -10,17 +10,58 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <link href = "{{URL::asset('css/app.css')}}" rel="stylesheet">
+
     <title>Proceso de graduación</title>
 </head>
 <body>
 
-    <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-        <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-        Bootstrap
+    <nav class="navGral">
+        <a href="#">
+            <img src="/img/Logo.png" alt="" class="d-inline-block align-text-top navImg">
         </a>
-    </div>
+        <p style="color: white;" class="navTitle align-items-center">Tema de tesis <!--Variable laravel--></p>
     </nav>
 
+     <!-- Menu desplegable lateral -->
+     <div id="SideNav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
+        <a href="#">Cerrar Sesion</a>
+    </div>
 
+    <div class="menuButton">
+        <a href="#" id="menu" onclick="openNav()">
+            <i class="bi bi-list"></i>
+        </a>
+    </div>
+
+    <main class="main-content" id="content">
+        @yield('content')
+    </main>
+
+    <script>
+        function openNav(){
+            document.getElementById("SideNav").style.width = "250px";
+            document.getElementById("nav").style.marginLeft = "250px";
+            document.getElementById("content").style.marginLeft = "250px";
+            document.getElementById("menu").style.display = 'none';
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
+        function closeNav(){
+            document.getElementById("SideNav").style.width = "0";
+            document.getElementById("nav").style.marginLeft = "0";
+            document.getElementById("content").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+            document.getElementById("menu").style.display = 'initial';
+        }
+        window.addEventListener('mouseup', function(event){
+            var box = document.getElementById("SideNav");
+            if (event.target != box){
+                closeNav();
+            }
+        });
+    </script>
+@include('plantillas.footer')

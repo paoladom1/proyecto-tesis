@@ -45,7 +45,7 @@
                     <div class="row mb-3">
                         <div class="">
                             <a href="#" style="font-size: .75rem; font-weight: bold; text-decoration: none"  onMouseOver="this.style.color='#f00'"
-                            onMouseOut="this.style.color='blue'">Olvidaste la contrasenia?</a>
+                            onMouseOut="this.style.color='blue'">¿Olvidaste la contraseña?</a>
                         </div>
                     </div>
                     <div class="row mb-3">

@@ -14,11 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('plantillas.maintemplate');
+    return view('home');
 });
 
+
 Route::get('/menu', function () {
-    return view('formulariosDoc.menuprincipal');
+    return view('plantillas.menuprincipal');
 });
 
 
