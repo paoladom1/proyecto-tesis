@@ -33,14 +33,14 @@
         </div>
 
         <div class = "sector2">
-            <h1 style="align-self: center; margin-bottom: 1em; color: #E87B2A;">Log in</h1>
+            <h1 style="align-self: center; margin-bottom: 1em; color: #E87B2A;">Inicio de sesión</h1>
             <div class="formulario">
                 <form class="container-sm">
                     <div class="mb-3">
                         <input type="text" class="form-control" placeholder="Usuario">
                     </div>
                     <div class="mb-1">
-                        <input type="text" class="form-control" placeholder="Contrasena">
+                        <input type="password" class="form-control" placeholder="Contraseña">
                     </div>
                     <div class="row mb-3">
                         <div class="">

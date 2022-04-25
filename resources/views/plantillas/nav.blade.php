@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <nav class="navGral">
+    <nav class="navGral" id="nav">
         <a href="#">
             <img src="/img/Logo.png" alt="" class="d-inline-block align-text-top navImg">
         </a>
@@ -28,8 +28,13 @@
 
      <!-- Menu desplegable lateral -->
      <div id="SideNav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
-        <a href="#">Cerrar Sesion</a>
+        <div>
+            <a href="#">Cerrar Sesion</a>
+        </div>
+        <hr>
+        <div>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
+        </div>
     </div>
 
     <div class="menuButton">
@@ -48,13 +53,11 @@
             document.getElementById("nav").style.marginLeft = "250px";
             document.getElementById("content").style.marginLeft = "250px";
             document.getElementById("menu").style.display = 'none';
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
         function closeNav(){
             document.getElementById("SideNav").style.width = "0";
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
-            document.body.style.backgroundColor = "white";
             document.getElementById("menu").style.display = 'initial';
         }
         window.addEventListener('mouseup', function(event){

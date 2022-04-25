@@ -19,9 +19,12 @@ Route::get('/', function () {
 
 
 Route::get('/menu', function () {
-    return view('plantillas.menuprincipal');
+    return view('plantillas.plantillaMenu');
 });
 
+Route::get('/navChino', function(){
+    return view('plantillas.maintemplate');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

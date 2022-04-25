@@ -1,3 +1,5 @@
+
+/*---------------------Estilos de la pantalla de Login------------------------*/
 .navbar{
     background-color: #E87B2A;
     justify-content: center;
@@ -14,40 +16,6 @@
 
 .navbar h4{
     color: white;
-}
-
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: absolute;
-    z-index: auto;
-    top: 0;
-    left: 0;
-    background-color: #003C71;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidenav a{
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: white;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover{
-    color: #f1f1f1;
-}
-
-#nav {
-    transition: margin-left .5s;
-}
-
-#content {
-    transition: margin-left .5s;
 }
 
 .canva{
@@ -98,6 +66,42 @@
     width: 65%;
 }
 
+
+/*---------------------Estilos de la barra lateral del nav---------------------*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: auto;
+    top: 0;
+    left: 0;
+    background-color: #003C71;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a{
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover{
+    color: #f1f1f1;
+}
+
+#content {
+    transition: margin-left .5s;
+}
+
+#nav{
+    transition: margin-left .5s;
+}
+
 .main-content{
     padding-top: 10.5rem;
     padding-left: 3rem;
@@ -113,6 +117,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    transition: margin-left .5s;
 }
 
 .navImg{
