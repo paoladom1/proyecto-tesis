@@ -29,7 +29,7 @@
         <div class="row" style="background-color: #003C71;">
             <div class="col justify-content-start">
                 <a class="navbar-brand" href="#">
-                <img src="/img/Logo.png" alt="" height="65px" style="margin: .5em;" class="d-inline-block align-text-top">
+                    <img src="/img/Logo.png" alt="" height="65px" style="margin: .5em;" class="d-inline-block align-text-top">
                 </a>
             </div>
             <div class="col justify-content-center" style="align-self:end;">
@@ -51,17 +51,14 @@
             document.getElementById("SideNav").style.width = "250px";
             document.getElementById("nav").style.marginLeft = "250px";
             document.getElementById("content").style.marginLeft = "250px";
-            //document.getElementById("menu").style.marginLeft = "250px";
-            //document.getElementById("menu").style.display = 'none';
-            //document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            document.getElementById("menu").style.display = 'none';
+
         }
         function closeNav(){
             document.getElementById("SideNav").style.width = "0";
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
-            //document.getElementById("menu").style.marginLeft = "0";
-            document.body.style.backgroundColor = "white";
-            //document.getElementById("menu").style.display = 'initial';
+            document.getElementById("menu").style.display = 'initial';
         }
 
         //Funcion de cerrar y abrir sidenav con el mismo boton

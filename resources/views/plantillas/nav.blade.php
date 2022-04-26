@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <nav class="navGral">
+    <nav class="navGral" id="nav">
         <a href="#">
             <img src="/img/Logo.png" alt="" class="d-inline-block align-text-top navImg">
         </a>
@@ -28,8 +28,18 @@
 
      <!-- Menu desplegable lateral -->
      <div id="SideNav" class="sidenav">
+<<<<<<< HEAD
         <a href="javascript:void(0)" class="closebtn" >Cerrar</a>
         <a href="#">Cerrar Sesion</a>
+=======
+        <div>
+            <a href="#">Cerrar Sesion</a>
+        </div>
+        <hr>
+        <div>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
+        </div>
+>>>>>>> 007c9ae32ba156ca4e31e0e4cf5feeb564a2ba75
     </div>
 
     <div class="menuButton" id="menuB">
@@ -49,14 +59,20 @@
             document.getElementById("content").style.marginLeft = "250px";
             //document.getElementById("menuB").style.marginLeft = "250px";
             document.getElementById("menu").style.display = 'none';
+<<<<<<< HEAD
             //document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+=======
+>>>>>>> 007c9ae32ba156ca4e31e0e4cf5feeb564a2ba75
         }
         function closeNav(){
             document.getElementById("SideNav").style.width = "0";
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
+<<<<<<< HEAD
             //document.getElementById("menuB").style.marginLeft = "0";
             document.body.style.backgroundColor = "white";
+=======
+>>>>>>> 007c9ae32ba156ca4e31e0e4cf5feeb564a2ba75
             document.getElementById("menu").style.display = 'initial';
         }
         window.addEventListener('mouseup', function(event){
