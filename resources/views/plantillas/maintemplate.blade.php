@@ -38,35 +38,47 @@
         </div>
         <div class="row">
             <div class="col-1 mt-1">
-                <button type="button" id="menu" style="background-color: #003C71; color: white; height: 4em; width: 4em;  " onclick="openNav()"><i class="bi bi-list" style= "font-size: 2em;"></i></button>
+                <button type="button" id="menu" style="background-color: #003C71; color: white; height: 4em; width: 4em;  "><i class="bi bi-list" style= "font-size: 2em;"></i></button>
             </div>
         </div>
     </div>
     </nav>
     <main class="main-content" id="content">
-        @yield('content')
+        @yield('content2')
     </main>
     <script>
         function openNav(){
             document.getElementById("SideNav").style.width = "250px";
             document.getElementById("nav").style.marginLeft = "250px";
             document.getElementById("content").style.marginLeft = "250px";
-            document.getElementById("menu").style.display = 'none';
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            //document.getElementById("menu").style.marginLeft = "250px";
+            //document.getElementById("menu").style.display = 'none';
+            //document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
         function closeNav(){
             document.getElementById("SideNav").style.width = "0";
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
+            //document.getElementById("menu").style.marginLeft = "0";
             document.body.style.backgroundColor = "white";
-            document.getElementById("menu").style.display = 'initial';
+            //document.getElementById("menu").style.display = 'initial';
         }
-        window.addEventListener('mouseup', function(event){
+
+        //Funcion de cerrar y abrir sidenav con el mismo boton
+        document.getElementById("menu").addEventListener("click", toggleNav);
+        function toggleNav(){
+            if(document.getElementById("SideNav").style.width == "250px" ){
+                return closeNav();
+            }
+            return openNav();
+        }
+        /*window.addEventListener('mouseup', function(event){
             var box = document.getElementById("SideNav");
             if (event.target != box){
                 closeNav();
             }
-        });
+        });*/
+        
     </script>
 @include('plantillas.footer')
 

@@ -28,11 +28,11 @@
 
      <!-- Menu desplegable lateral -->
      <div id="SideNav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
+        <a href="javascript:void(0)" class="closebtn" >Cerrar</a>
         <a href="#">Cerrar Sesion</a>
     </div>
 
-    <div class="menuButton">
+    <div class="menuButton" id="menuB">
         <a href="#" id="menu" onclick="openNav()">
             <i class="bi bi-list"></i>
         </a>
@@ -47,13 +47,15 @@
             document.getElementById("SideNav").style.width = "250px";
             document.getElementById("nav").style.marginLeft = "250px";
             document.getElementById("content").style.marginLeft = "250px";
+            //document.getElementById("menuB").style.marginLeft = "250px";
             document.getElementById("menu").style.display = 'none';
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            //document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
         function closeNav(){
             document.getElementById("SideNav").style.width = "0";
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
+            //document.getElementById("menuB").style.marginLeft = "0";
             document.body.style.backgroundColor = "white";
             document.getElementById("menu").style.display = 'initial';
         }
@@ -63,5 +65,12 @@
                 closeNav();
             }
         });
+        /*document.getElementById("menu").addEventListener("click", toggleNav);
+        function toggleNav(){
+            if(document.getElementById("SideNav").style.width = 0){
+                return closeNav();
+            }
+            return openNav();
+        }*/
     </script>
 @include('plantillas.footer')
