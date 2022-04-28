@@ -28,13 +28,14 @@
 
      <!-- Menu desplegable lateral -->
      <div id="SideNav" class="sidenav">
+        <div class="closeBtn">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa-solid fa-circle-xmark"> </i></a>
+        </div>
         <div>
             <a href="#">Cerrar Sesion</a>
         </div>
-        <hr>
-        <div>
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
-        </div>
+
+
     </div>
 
     <div class="menuButton">

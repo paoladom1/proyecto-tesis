@@ -9,13 +9,11 @@
 @endpush-->
     <div class="container">
         <div class="row">
-            <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, quos?</h4>
+            <h4>Usuario x \ Menu Principal</h4>
         </div>
+
         <div class="row">
-            <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat molestiae eveniet ullam nostrum earum possimus.</h5>
-        </div>
-        <div class="row">
-            <div class="container" style="background-color: silver; border-radius: 10px;">
+            <div class="container mPrincipal" style="background-color: silver; border-radius: 10px;">
                 <div class="row " style="margin-top: 2em;">
                     <center><h1>MENU PRINCIPAL</h1></center>
                 </div>
