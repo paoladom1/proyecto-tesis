@@ -52,3 +52,15 @@ Route::get('/capitulos', 'App\Http\Controllers\PruebasController@formCapitulos')
 Route::post('/insertarCapitulo', 'App\Http\Controllers\PruebasController@registrar');
 Route::post('/modificar', 'App\Http\Controllers\PruebasController@modificar');
 Route::post('/eliminar', 'App\Http\Controllers\PruebasController@eliminar');
+
+
+
+//Rutas de prueba para UI
+/*Route::get('/menu', function () {
+    return view('plantillas.menuprincipal');
+});*/
+
+Route::get('/user', function () {
+    return view('usuarios.usuario');
+});
+

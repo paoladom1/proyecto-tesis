@@ -423,7 +423,7 @@ class PruebasController extends Controller
     public function formCapitulos()
     {
         $capitulo = Capitulos::orderBy("orden_capitulo", 'asc')->get();
-        return view("formulariosDoc.capitulos", array(
+        return view("formulariosDoc.capitulo", array(
             "capitulos" => $capitulo
         ));
     }

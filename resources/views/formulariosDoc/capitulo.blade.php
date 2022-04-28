@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <title>Capitulos</title>
-</head>
+@extends('plantillas.nav')
+@section('content')
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script
+src="https://code.jquery.com/jquery-3.3.1.js"
+integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <style>
     table{
         table-layout: fixed;
@@ -31,6 +27,7 @@
         text-align: center;
     } 
 </style>
+
 <script>
     function modificarCapitulo(i) {
         let elements = document.getElementsByName("tituloN");
@@ -217,86 +214,82 @@
                 })
             }
         }
-    </script>
+</script>
 
-<body>
-    <div class="container-fluid">
-        <div class="container" style="background-color: silver; border-radius: 5px;">
-            <br>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <label for="basic-url" class="form-label">Nombre del capitulo</label>
-                    <div class="input-group mb-3">
-                        <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
-                        <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="text-align: center; font-style: italic;">
-                        <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
-                        <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" id="btnTitulo">Agregar Capitulo</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <table class="table" style="background-color: white; border-radius: 5px;">
-                        <thead>
-                            <tr>
-                                <td></td>
-                                <th scope="col">Nombre del capitulo</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaCapitulo">
-                            @php
-                                $cont = 0;
-                            @endphp
-                            @foreach ($capitulos as $capitulo)
-                                <script>
-                                    seccion("<?php echo $capitulo->nombre_capitulo ?>", <?php echo $capitulo->id ?>);
-                                </script>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-8" style="display: flex; flex-direction: row; justify-content:end;">
-                    <button style="display:none" class="btn btn-success mb-3"  id="guardarOrden" onclick="modificarOrden()">Guardar orden</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="tituloCap"></p>
-                    <p>TODO EL CONTENIDO DE DICHO CAPITULO SE BORRARÁ PERMANENTEMENTE!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btnBorrar" onclick="eliminarCapitulo(idT, idC)">Eliminar</button>
-                </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-            <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        Se guardo de manera exitosa!
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
+<div class="container" style="background-color: silver; border-radius: 5px;">
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <label for="basic-url" style="display: none;" class="form-label">Nombre del capitulo</label>
+            <div class="input-group mb-3 mt-3">
+                <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
+                <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="text-align: center; font-style: italic;">
+                <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
+                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" id="btnTitulo">Agregar Capitulo</button>
             </div>
         </div>
     </div>
-</body>
-</html>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table" style="background-color: white; border-radius: 5px;">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <th scope="col">Nombre del capitulo</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCapitulo">
+                    @php
+                        $cont = 0;
+                    @endphp
+                    @foreach ($capitulos as $capitulo)
+                        <script>
+                            seccion("<?php echo $capitulo->nombre_capitulo ?>", <?php echo $capitulo->id ?>);
+                        </script>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8" style="display: flex; flex-direction: row; justify-content:end;">
+            <button style="display:none" class="btn btn-success mb-3"  id="guardarOrden" onclick="modificarOrden()">Guardar orden</button>
+        </div>
+    </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="tituloCap"></p>
+            <p>TODO EL CONTENIDO DE DICHO CAPITULO SE BORRARÁ PERMANENTEMENTE!</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btnBorrar" onclick="eliminarCapitulo(idT, idC)">Eliminar</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Se guardo de manera exitosa!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+@endsection

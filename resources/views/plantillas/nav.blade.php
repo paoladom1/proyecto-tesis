@@ -38,7 +38,7 @@
 
     </div>
 
-    <div class="menuButton">
+    <div class="menuButton" id="menuB">
         <a href="#" id="menu" onclick="openNav()">
             <i class="bi bi-list"></i>
         </a>
@@ -53,6 +53,7 @@
             document.getElementById("SideNav").style.width = "250px";
             document.getElementById("nav").style.marginLeft = "250px";
             document.getElementById("content").style.marginLeft = "250px";
+            //document.getElementById("menuB").style.marginLeft = "250px";
             document.getElementById("menu").style.display = 'none';
         }
         function closeNav(){
@@ -67,5 +68,12 @@
                 closeNav();
             }
         });
+        /*document.getElementById("menu").addEventListener("click", toggleNav);
+        function toggleNav(){
+            if(document.getElementById("SideNav").style.width = 0){
+                return closeNav();
+            }
+            return openNav();
+        }*/
     </script>
 @include('plantillas.footer')
