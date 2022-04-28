@@ -19,7 +19,7 @@
 
     <!-- Menu desplegable lateral -->
     <div id="SideNav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
+        <a href="javascript:void(0)" class="btn-close btn-close-white centered" style="color: white;" onclick="closeNav()"></a>
         <a href="#">Cerrar Sesion</a>
     </div>
 

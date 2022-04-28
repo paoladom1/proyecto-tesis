@@ -56,9 +56,9 @@ Route::post('/eliminar', 'App\Http\Controllers\PruebasController@eliminar');
 
 
 //Rutas de prueba para UI
-Route::get('/menu', function () {
+/*Route::get('/menu', function () {
     return view('plantillas.menuprincipal');
-});
+});*/
 
 Route::get('/user', function () {
     return view('usuarios.usuario');
