@@ -78,16 +78,16 @@
     background-color: #003C71;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 0.85%;
 }
 
 .sidenav a{
-    padding: 8px 8px 8px 32px;
+    text-align: center;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 1.5em;
     color: white;
     display: block;
-    transition: 0.3s;
+    /*transition: 0.3s;*/
 }
 
 .sidenav a:hover{
@@ -151,9 +151,51 @@
     text-align: center;
 }
 
-.closeBtn i{
-    width: 50%;
-    float: left;
+.btn-close {
+    width: 15%;
+    float: right;
+    color: white;
+    opacity: 100;
+    margin-bottom: 4%;
+    font-size: 2em;
+}
+
+.profileItem{
+    width: 95%;
+    margin: 2%;
+    background-color: #AAAAAA;
+    border-radius: 5px;
+}
+
+.profileImg{
+    width: 100%;
+    margin: 5%;
+    border-radius: 5px;
+}
+
+.infoContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.userName{
+    color: white;
+    font-size: 1em;
+    margin-top: 6%;
+}
+
+.groupName{
+    color: white;
+    font-size: 1em;
+}
+
+.logOut{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #E87B2A;
 }
 
 /*----------------------------------Menu principal-------------------------------------------*/

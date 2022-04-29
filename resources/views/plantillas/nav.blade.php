@@ -28,14 +28,29 @@
 
      <!-- Menu desplegable lateral -->
      <div id="SideNav" class="sidenav">
-        <div class="closeBtn">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa-solid fa-circle-xmark"> </i></a>
-        </div>
-        <div>
-            <a href="#">Cerrar Sesion</a>
-        </div>
+        <div id="navMenu">
+            <div class="closeBtn">
+                <a href="javascript:void(0)" class="btn-close btn-close-white" onclick="closeNav()"></a>
+            </div>
 
+            <div class="profileItem row">
+                <div class = "col">
+                    <img class="profileImg" src="/img/profile.png" alt="" class="d-inline-block align-text-top">
+                </div>
+                <div class = "col infoContainer">
+                    <div class="row userName">
+                        <p>Usuario x</p>
+                    </div>
+                    <div class="row groupName">
+                        <p>Grupo x</p>
+                    </div>
+                </div>
+            </div>
 
+            <div class="logOut">
+                <a href="#">Cerrar Sesion</a>
+            </div>
+        </div>
     </div>
 
     <div class="menuButton" id="menuB">
@@ -61,19 +76,15 @@
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
             document.getElementById("menu").style.display = 'initial';
+            document.getElementById("navMenu").style.fontSize="100%"
         }
-        window.addEventListener('mouseup', function(event){
-            var box = document.getElementById("SideNav");
-            if (event.target != box){
-                closeNav();
-            }
-        });
-        /*document.getElementById("menu").addEventListener("click", toggleNav);
+
+        document.getElementById("menu").addEventListener("click", toggleNav);
         function toggleNav(){
             if(document.getElementById("SideNav").style.width = 0){
                 return closeNav();
             }
             return openNav();
-        }*/
+        }
     </script>
 @include('plantillas.footer')
