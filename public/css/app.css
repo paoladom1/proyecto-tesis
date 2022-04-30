@@ -69,8 +69,11 @@
 
 /*---------------------Estilos de la barra lateral del nav---------------------*/
 .sidenav {
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    width: 0;
+    width: 250px;
+    margin-left: -250px;
     position: fixed;
     z-index: auto;
     top: 0;
@@ -196,6 +199,20 @@
     bottom: 0;
     width: 100%;
     background-color: #E87B2A;
+}
+
+
+.sidenav hr{
+    text-align: center;
+    width: 90%;
+    height: 2px;
+    color: white;
+    opacity: 1;
+    margin: 10px;
+}
+
+.opMenu{
+
 }
 
 /*----------------------------------Menu principal-------------------------------------------*/

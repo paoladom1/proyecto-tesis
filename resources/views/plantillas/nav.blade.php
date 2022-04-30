@@ -46,9 +46,22 @@
                     </div>
                 </div>
             </div>
-
+            <hr>
+                <div class="dropdown opMenu">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item active" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            <hr>
             <div class="logOut">
-                <a href="#">Cerrar Sesion</a>
+                <a href="#">Cerrar sesión</a>
             </div>
         </div>
     </div>
@@ -66,13 +79,14 @@
     <script>
         function openNav(){
             document.getElementById("SideNav").style.width = "250px";
+            document.getElementById("SideNav").style.marginLeft = "0";
             document.getElementById("nav").style.marginLeft = "250px";
             document.getElementById("content").style.marginLeft = "250px";
             //document.getElementById("menuB").style.marginLeft = "250px";
             document.getElementById("menu").style.display = 'none';
         }
         function closeNav(){
-            document.getElementById("SideNav").style.width = "0";
+            document.getElementById("SideNav").style.marginLeft = "-250px";
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
             document.getElementById("menu").style.display = 'initial';
@@ -86,5 +100,10 @@
             }
             return openNav();
         }
+
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl)
+        })
     </script>
 @include('plantillas.footer')
