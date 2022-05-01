@@ -28,12 +28,41 @@
 
      <!-- Menu desplegable lateral -->
      <div id="SideNav" class="sidenav">
-        <div>
-            <a href="#">Cerrar Sesion</a>
-        </div>
-        <hr>
-        <div>
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Cerrar</a>
+        <div id="navMenu">
+            <div class="closeBtn">
+                <a href="javascript:void(0)" class="btn-close btn-close-white" onclick="closeNav()"></a>
+            </div>
+
+            <div class="profileItem row">
+                <div class = "col">
+                    <img class="profileImg" src="/img/profile.png" alt="" class="d-inline-block align-text-top">
+                </div>
+                <div class = "col infoContainer">
+                    <div class="row userName">
+                        <p>Usuario x</p>
+                    </div>
+                    <div class="row groupName">
+                        <p>Grupo x</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+                <div class="dropdown opMenu">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item active" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            <hr>
+            <div class="logOut">
+                <a href="#">Cerrar sesión</a>
+            </div>
         </div>
     </div>
 
@@ -50,29 +79,31 @@
     <script>
         function openNav(){
             document.getElementById("SideNav").style.width = "250px";
+            document.getElementById("SideNav").style.marginLeft = "0";
             document.getElementById("nav").style.marginLeft = "250px";
             document.getElementById("content").style.marginLeft = "250px";
             //document.getElementById("menuB").style.marginLeft = "250px";
             document.getElementById("menu").style.display = 'none';
         }
         function closeNav(){
-            document.getElementById("SideNav").style.width = "0";
+            document.getElementById("SideNav").style.marginLeft = "-250px";
             document.getElementById("nav").style.marginLeft = "0";
             document.getElementById("content").style.marginLeft = "0";
             document.getElementById("menu").style.display = 'initial';
+            document.getElementById("navMenu").style.fontSize="100%"
         }
-        window.addEventListener('mouseup', function(event){
-            var box = document.getElementById("SideNav");
-            if (event.target != box){
-                closeNav();
-            }
-        });
-        /*document.getElementById("menu").addEventListener("click", toggleNav);
+
+        document.getElementById("menu").addEventListener("click", toggleNav);
         function toggleNav(){
             if(document.getElementById("SideNav").style.width = 0){
                 return closeNav();
             }
             return openNav();
-        }*/
+        }
+
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl)
+        })
     </script>
 @include('plantillas.footer')
