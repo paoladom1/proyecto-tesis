@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 
 Route::get('/menu', function () {
-    return view('plantillas.plantillaMenu');
+    return view('plantillas.plantillaMenuC');
 });
 
 Route::get('/navChino', function(){
