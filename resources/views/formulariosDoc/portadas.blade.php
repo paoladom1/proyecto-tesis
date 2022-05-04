@@ -66,8 +66,6 @@ button.active {
             </div>
             <div class="contentWrapper">
                 <div class="content active" id="portada">
-                    <h2>Portada</h2>
-                    <hr>
                     <div class="mb-3">
                         <label for="tema" class="form-label">Tema del proyecto</label>
                         <input type="text" class="form-control" id='tema' name='tema'>
@@ -119,8 +117,6 @@ button.active {
                     </div>
                 </div>
                 <div class="content" id="portada2">
-                    <h2>Segunda portada</h2>
-                    <hr>
                     <div class="mb-3">
                         <label for="rector" class="form-label">Rector</label>
                         <input type="text" class="form-control" name='rector' id='rector'>
@@ -153,7 +149,7 @@ button.active {
                 </div>
             </div>
         </div>
-        <input type="submit" class="btn btn-success mt-3" value="Crear portada" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+        <input type="submit" class="btn btn-success mt-3" value="Guardar portada" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
     </form>
     <br>
 </div>

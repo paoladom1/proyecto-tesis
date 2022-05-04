@@ -179,10 +179,10 @@ a[aria-expanded="true"] {
                         <li> <a href="#">Segunda Portada</a> </li>
                     </ul>
                 </li>
-                <li> <a href="#">Timeline</a> </li>
-                <li> <a href="#">Live Chat</a> </li>
-                <li> <a href="#">Likes</a> </li>
-                <li> <a href="#">Comments</a> </li>
+                <li> <a href="#">Agradecimientos</a> </li>
+                <li> <a href="#">Resumen</a> </li>
+                <li> <a href="#">S. A. y N.</a> </li>
+                <li> <a href="#">Glosario</a> </li>
             </ul>
             
             <hr>

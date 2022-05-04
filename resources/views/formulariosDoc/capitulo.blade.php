@@ -224,7 +224,7 @@ crossorigin="anonymous"></script>
             <label for="basic-url" style="display: none;" class="form-label">Nombre del capitulo</label>
             <div class="input-group mb-3 mt-3">
                 <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
-                <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="text-align: center; font-style: italic;">
+                <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="font-style: italic;">
                 <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
                 <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" id="btnTitulo">Agregar Capitulo</button>
             </div>

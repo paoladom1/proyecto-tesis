@@ -39,10 +39,6 @@
 
     <div class="container" style="background-color: white">
         <div class="row">
-            <h4 style="font-style: italic">Usuario x \ Menu Principal</h4>
-        </div>
-
-        <div class="row">
             <div class="container mPrincipal">
                 <div class="row " style="margin-top: 2em;">
                     <center><h1>Tema tesis</h1></center>
@@ -78,7 +74,7 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="container" style="background-color: white; border-radius: 10px;">
+            <div class="container" style="background-color: #e3eef5; border:1px #003C71 solid; border-top: #003C71 7px solid;">
                 <center><h3 class="mt-3">Ultimos cambios</h3></center>
                 <div class="list-group list-group-horizontal justify-content-center m-3">
                     <input type="text" class="list-group-item" placeholder="Seccion"/>
