@@ -74,13 +74,13 @@ crossorigin="anonymous"></script>
         ++a;
         var nombre = document.getElementById('nombreCap');
         fragmento = `
-                        <th class="align-middle"><i class="bi bi-list"></i></td>
+                        <th class="align-middle" style="cursor: grab;"><i class="bi bi-list"></i></td>
                         <th scope="row" style="display:none" class="align-middle" name="numeracion" id="num${a}">${a} </th><span name="idCapitulos" style="display:none">${idC}</span>
                         <td class="align-middle" name="titulacion"><span name="numCapitulo">Capitulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a class="btn btn-success" href="{{ url('/fdinamico/${idC}') }}">Modificar contenido</a>
-                            <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning">Modificar titulo</button>
+                            <a class="btn btn-success" style="background-color: #003C71;" href="{{ url('/fdinamico/${idC}') }}">Modificar contenido</a>
+                            <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar titulo</button>
                             <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capitulo</button>
                         </div>
                         </td>
@@ -232,7 +232,7 @@ crossorigin="anonymous"></script>
                 <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
                 <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="font-style: italic;">
                 <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
-                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" id="btnTitulo">Agregar Capitulo</button>
+                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" style="background-color: #003C71;" id="btnTitulo">Agregar Capitulo</button>
             </div>
         </div>
     </div>

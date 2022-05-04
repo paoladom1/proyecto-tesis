@@ -186,8 +186,11 @@ a[aria-expanded="true"] {
             </ul>
             
             <hr>
+            <!--<div >
+                <a href="#">Crear documento</a>
+            </div>-->
             <div class="logOut">
-                <a href="#">Cerrar sesión</a>
+                <a href="#">Crear documento</a>
             </div>
         </div>
     </div>
