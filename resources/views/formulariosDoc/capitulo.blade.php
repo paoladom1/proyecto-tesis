@@ -12,21 +12,7 @@ crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<style>
-    table{
-        table-layout: fixed;
-        width: 250px;
-    }
 
-    td {
-        width: 100px;
-        word-wrap: break-word;
-    }
-
-    th{
-        text-align: center;
-    } 
-</style>
 
 <script>
     function modificarCapitulo(i) {
@@ -216,8 +202,28 @@ crossorigin="anonymous"></script>
         }
 </script>
 
+<style>
+    table{
+        table-layout: fixed;
+        width: 250px;
+    }
 
-<div class="container" style="background-color: silver; border-radius: 5px;">
+    td {
+        width: 100px;
+        word-wrap: break-word;
+    }
+
+    th{
+        text-align: center;
+    }
+    
+    .capitulos{
+        background-color: #e3eef5;
+        border: 1px #003C71 solid;
+        border-top: 7px #003C71 solid; 
+    }
+</style>
+<div class="container capitulos" >
     <br>
     <div class="row justify-content-center">
         <div class="col-md-8">
