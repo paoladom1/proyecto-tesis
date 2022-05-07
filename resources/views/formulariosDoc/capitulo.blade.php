@@ -226,7 +226,7 @@ crossorigin="anonymous"></script>
 <div class="container capitulos" >
     <br>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <label for="basic-url" style="display: none;" class="form-label">Nombre del capitulo</label>
             <div class="input-group mb-3 mt-3">
                 <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
@@ -238,7 +238,7 @@ crossorigin="anonymous"></script>
     </div>
     
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <table class="table" style="background-color: white; border-radius: 5px;">
                 <thead>
                     <tr>
@@ -261,7 +261,7 @@ crossorigin="anonymous"></script>
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-8" style="display: flex; flex-direction: row; justify-content:end;">
+        <div class="col-md-9" style="display: flex; flex-direction: row; justify-content:end;">
             <button style="display:none" class="btn btn-success mb-3"  id="guardarOrden" onclick="modificarOrden()">Guardar orden</button>
         </div>
     </div>

@@ -100,6 +100,10 @@ a[aria-expanded="true"] {
     background: #E87B2A
 }
 
+#listadoSecciones li{
+    display: none;
+}
+
 </style>
 
 
@@ -114,9 +118,11 @@ a[aria-expanded="true"] {
                 <img src="img/profile.png" id="profile" style="width: 2.5em; border-radius: 100%;"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="user-btn">
-              <a class="dropdown-item" href="#">Editar perfil</a>
-              <hr class="dropdown-divider">
-              <a class="dropdown-item" href="#">Cerrar sesion</a>
+                <a class="dropdown-item" href="#" style="background-color: #003C71;  width: 100%; height: 100%; color: white;">Joshua Steven Sharp Reyes</a>
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="#" style="width: 100%">Editar perfil</a>
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="#" style="width: 100%">Cerrar sesion</a>
             </div>
           </div>
         <!--<div id="user-settings">
@@ -173,68 +179,220 @@ a[aria-expanded="true"] {
                 </div>
               </div>-->
               <ul class="list-unstyled components">
-                <li> <a href="#portadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Portada</a>
+                <li> {{--  <a href="#portadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Portada</a>
                     <ul class="collapse list-unstyled" id="portadas">
                         <li> <a href="#">Primer Portada</a> </li>
                         <li> <a href="#">Segunda Portada</a> </li>
-                    </ul>
+                    </ul>--}}
+                    <a href="{{ url('/menu') }}">Menu Principal</a> 
                 </li>
-                <li> <a href="#">Agradecimientos</a> </li>
-                <li> <a href="#">Resumen</a> </li>
-                <li> <a href="#">S. A. y N.</a> </li>
-                <li> <a href="#">Glosario</a> </li>
+            </ul>
+              <hr>
+              <ul class="list-unstyled components">
+                <li> {{--  <a href="#portadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Portada</a>
+                    <ul class="collapse list-unstyled" id="portadas">
+                        <li> <a href="#">Primer Portada</a> </li>
+                        <li> <a href="#">Segunda Portada</a> </li>
+                    </ul>--}}
+                    <a href="{{ url('/portada') }}">Portada</a> 
+                </li>
+                <li> <a href="{{ url('/agradecimientos') }}">Agradecimientos</a> </li>
+                <li> <a href="{{ url('/resumen') }}">Resumen</a> </li>
+                <li> <a href="{{ url('/capitulos') }}">Capitulos</a> </li>
+                <li> <a href="{{ url('/abreviaturas') }}">S. A. y N.</a> </li>
+                <li> <a href="{{ url('/glosario') }}">Glosario</a> </li>
             </ul>
             
             <hr>
-            <!--<div >
-                <a href="#">Crear documento</a>
-            </div>-->
             <div class="logOut">
                 <a href="#">Crear documento</a>
             </div>
+            <!--<div class="logOut">
+                <a data-bs-toggle="modal" href="#exampleModalToggle" role="button">Crear documento</a>
+            </div>-->
         </div>
     </div>
 
     <div class="menuButton" id="menuB">
-        <a href="#" id="menu" onclick="openNav()">
+        <a href="#" id="menu" onclick="openNav()" >
             <i class="bi bi-list"></i>
         </a>
     </div>
 
     <main class="main-content" id="content" style="background-color: white">
+        <!-- Modal para crear documento -->
+      {{--  <!--<div>
+              <form action="{{ url('/crearDocumento') }}" method="post">
+                {{ csrf_field() }}
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalToggleLabel">Creación del documento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
+                        </div>
+                        <div class="modal-body checkSeccion">
+                            <div class="form-check">
+                                <input class="form-check-input" onclick="cambio2()" type="checkbox"  name='seccionToda' id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Todo el documento
+                                </label>
+                            </div>  
+                            @php
+                                $cont = 0;
+                                $estaticas = 0;
+                            @endphp
+                            @foreach ($secciones as $seccion)
+                                @php
+                                    ++$cont;
+                                @endphp
+                                @if ($seccion[1] != -1 && $seccion[1] != -2)
+                                    <div class="form-check offset-md-1">
+                                        <input class="form-check-input" onclick="cambio(<?=$cont?>)" type="checkbox" value="{{$seccion[1]}}" name='seccion2[]' id="flexCheckDefault{{$cont}}">
+                                        <label class="form-check-label" for="flexCheckDefault{{$cont}}">
+                                            {{$seccion[0]}}
+                                        </label>
+                                    </div>   
+                                @elseif ($seccion[1] == -1)
+                                    @php
+                                        ++$estaticas;
+                                    @endphp
+                                    <div class="form-check offset-md-1">
+                                        <input class="form-check-input" onclick="cambio(<?=$cont?>)" type="checkbox" value="{{$estaticas}}" name='seccion[]' id="flexCheckDefault{{$cont}}">
+                                        <label class="form-check-label" for="flexCheckDefault{{$cont}}">
+                                            {{$seccion[0]}}
+                                        </label>
+                                    </div>
+                                @elseif ($seccion[1] == -2)
+                                    @php
+                                        ++$estaticas;
+                                    @endphp
+                                    <div class="form-check offset-md-1">
+                                        <input class="form-check-input" disabled type="checkbox" value="{{$estaticas}}" name='seccion[]' id="flexCheckDefault{{$cont}}">
+                                        <label class="form-check-label" for="flexCheckDefault{{$cont}}">
+                                            {{$seccion[0]}}
+                                        </label>
+                                    </div>
+                                @endif                         
+                            @endforeach
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Siguiente</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalToggleLabel2">Confirmar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Estas partes del documento serán descargados en formato Word</p>
+                            <ul id='listadoSecciones'>
+                                @foreach ($secciones as $seccion)
+                                    @php
+                                        ++$cont;
+                                    @endphp
+                                    <li>{{$seccion[0]}}</li>                          
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Atras</button>
+                            <button class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">Crear</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>-->--}}
         @yield('content')
     </main>
 
-    <script>
-        function openNav(){
-            document.getElementById("SideNav").style.width = "250px";
-            document.getElementById("SideNav").style.marginLeft = "0";
-            document.getElementById("nav").style.marginLeft = "250px";
-            document.getElementById("content").style.marginLeft = "250px";
-            //document.getElementById("menuB").style.marginLeft = "250px";
-            document.getElementById("menu").style.display = 'none';
-            document.getElementById("user-settings").style.marginRight = "15em";
-            document.getElementById("user-settings").style.transition = "all 0.5s";
+<script>
+    function openNav(){
+        document.getElementById("SideNav").style.width = "250px";
+        document.getElementById("SideNav").style.marginLeft = "0";
+        document.getElementById("nav").style.marginLeft = "250px";
+        document.getElementById("content").style.marginLeft = "250px";
+        //document.getElementById("menuB").style.marginLeft = "250px";
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("user-settings").style.marginRight = "15em";
+        document.getElementById("user-settings").style.transition = "all 0.5s";
+    }
+    function closeNav(){
+        document.getElementById("SideNav").style.marginLeft = "-250px";
+        document.getElementById("nav").style.marginLeft = "0";
+        document.getElementById("content").style.marginLeft = "0";
+        document.getElementById("menu").style.display = 'initial';
+        document.getElementById("navMenu").style.fontSize="100%";
+        document.getElementById("user-settings").style.marginRight = "0.25em";
+    }
+
+    document.getElementById("menu").addEventListener("click", toggleNav);
+    function toggleNav(){
+        if(document.getElementById("SideNav").style.width = 0){
+            return closeNav();
         }
-        function closeNav(){
-            document.getElementById("SideNav").style.marginLeft = "-250px";
-            document.getElementById("nav").style.marginLeft = "0";
-            document.getElementById("content").style.marginLeft = "0";
-            document.getElementById("menu").style.display = 'initial';
-            document.getElementById("navMenu").style.fontSize="100%";
-            document.getElementById("user-settings").style.marginRight = "0.25em";
+        return openNav();
+    }
+
+    function dropdown() {
+        document.getElementById("user-dropdown").classList.toggle("show");
         }
 
-        document.getElementById("menu").addEventListener("click", toggleNav);
-        function toggleNav(){
-            if(document.getElementById("SideNav").style.width = 0){
-                return closeNav();
-            }
-            return openNav();
-        }
+    /* Funciones para abrir modal de creacion de documento */
 
-        function dropdown() {
-            document.getElementById("user-dropdown").classList.toggle("show");
+   /* var listado = document.querySelectorAll("#listadoSecciones li");
+    
+    var check = document.querySelectorAll('.checkSeccion .form-check-input');
+
+    function cambio(checkbox){
+        if(check[checkbox].checked){
+            listado[checkbox-1].style.display = 'block';
+            var cont = 0;
+            for (let index = 1; index < check.length; index++) {
+                if(check[index].checked){
+                    ++cont;
+                }  
             }
-    </script>
+            if(cont == check.length-1){
+                check[0].checked = true;
+            }
+        }
+        else{
+            check[0].checked = false;
+            listado[checkbox-1].style.display = 'none';
+        }
+    }
+
+    function cambio2(){
+        if(check[0].checked){
+            for (let index = 1; index < check.length; index++) {
+                if (!check[index].disabled) {
+                    check[index].checked = true;
+                    cambio(index);   
+                }
+            }
+        }
+        else{
+            for (let index = 1; index < check.length; index++) {
+                if (!check[index].disabled) {
+                    check[index].checked = false;
+                    cambio(index);
+                }
+            }
+        }
+    }
+
+    function desmarcar() {
+        for (let index = 0; index < check.length; index++) {
+            check[index].checked = false;
+            listado[index].style.display = 'none';
+        }
+    }*/
+</script>
 @include('plantillas.footer')

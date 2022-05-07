@@ -68,3 +68,14 @@ Route::get('/portada', function(){
     return view('formulariosDoc.portadas');
 });
 
+Route::get('/resumen', function(){
+    return view('formulariosDoc.resumen');
+});
+
+Route::get('/abreviaturas', function(){
+    return view('formulariosDoc.abreviaturas');
+});
+
+Route::get('/agradecimientos', function(){
+    return view('formulariosDoc.agradecimientos');
+});

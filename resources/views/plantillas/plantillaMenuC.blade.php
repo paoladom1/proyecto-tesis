@@ -49,7 +49,7 @@
                         <div class="card m-3 position-static card-menu" style="width: 18rem;" >
                             <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
-                                <h5 class="card-title">Portada</h5>
+                                <a href="{{ url('/portada') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Portada</h5></a>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="card m-3 position-static card-menu" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
-                                <h5 class="card-title">Resumen</h5>
+                                <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Resumen</h5></a>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <div class="card m-3 position-static card-menu" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
-                                <h5 class="card-title">Agradecimientos</h5>
+                                <a href="{{ url('/agradecimientos') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Agradecimientos</h5></a>
                             </div>
                         </div>
                     </div>
