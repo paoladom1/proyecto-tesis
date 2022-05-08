@@ -138,7 +138,11 @@ class PruebasController extends Controller
         }
         $array[$cont][0] = 'Referencias'; $array[$cont++][1] = '-1'; 
         $array[$cont][0] = 'Anexos'; $array[$cont++][1] = '-1'; 
-        return view('formulariosDoc.secciones', array(
+        //return view('formulariosDoc.secciones', array(
+        //    'secciones' => $array
+        //));
+
+        return view('plantillas.nav', array(
             'secciones' => $array
         ));
     }

@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 
 Route::get('/menu', function () {
-    return view('plantillas.plantillaMenu');
+    return view('plantillas.plantillaMenuC');
 });
 
 Route::get('/navChino', function(){
@@ -64,3 +64,18 @@ Route::get('/user', function () {
     return view('usuarios.usuario');
 });
 
+Route::get('/portada', function(){
+    return view('formulariosDoc.portadas');
+});
+
+Route::get('/resumen', function(){
+    return view('formulariosDoc.resumen');
+});
+
+Route::get('/abreviaturas', function(){
+    return view('formulariosDoc.abreviaturas');
+});
+
+Route::get('/agradecimientos', function(){
+    return view('formulariosDoc.agradecimientos');
+});

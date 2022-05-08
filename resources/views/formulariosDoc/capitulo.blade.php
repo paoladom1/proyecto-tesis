@@ -12,21 +12,7 @@ crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<style>
-    table{
-        table-layout: fixed;
-        width: 250px;
-    }
 
-    td {
-        width: 100px;
-        word-wrap: break-word;
-    }
-
-    th{
-        text-align: center;
-    } 
-</style>
 
 <script>
     function modificarCapitulo(i) {
@@ -88,13 +74,13 @@ crossorigin="anonymous"></script>
         ++a;
         var nombre = document.getElementById('nombreCap');
         fragmento = `
-                        <th class="align-middle"><i class="bi bi-list"></i></td>
+                        <th class="align-middle" style="cursor: grab;"><i class="bi bi-list"></i></td>
                         <th scope="row" style="display:none" class="align-middle" name="numeracion" id="num${a}">${a} </th><span name="idCapitulos" style="display:none">${idC}</span>
                         <td class="align-middle" name="titulacion"><span name="numCapitulo">Capitulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a class="btn btn-success" href="{{ url('/fdinamico/${idC}') }}">Modificar contenido</a>
-                            <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning">Modificar titulo</button>
+                            <a class="btn btn-success" style="background-color: #003C71;" href="{{ url('/fdinamico/${idC}') }}">Modificar contenido</a>
+                            <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar titulo</button>
                             <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capitulo</button>
                         </div>
                         </td>
@@ -216,23 +202,43 @@ crossorigin="anonymous"></script>
         }
 </script>
 
+<style>
+    table{
+        table-layout: fixed;
+        width: 250px;
+    }
 
-<div class="container" style="background-color: silver; border-radius: 5px;">
+    td {
+        width: 100px;
+        word-wrap: break-word;
+    }
+
+    th{
+        text-align: center;
+    }
+    
+    .capitulos{
+        background-color: #e3eef5;
+        border: 1px #003C71 solid;
+        border-top: 7px #003C71 solid; 
+    }
+</style>
+<div class="container capitulos" >
     <br>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <label for="basic-url" style="display: none;" class="form-label">Nombre del capitulo</label>
             <div class="input-group mb-3 mt-3">
                 <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
-                <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="text-align: center; font-style: italic;">
+                <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="font-style: italic;">
                 <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
-                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" id="btnTitulo">Agregar Capitulo</button>
+                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" style="background-color: #003C71;" id="btnTitulo">Agregar Capitulo</button>
             </div>
         </div>
     </div>
     
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <table class="table" style="background-color: white; border-radius: 5px;">
                 <thead>
                     <tr>
@@ -255,7 +261,7 @@ crossorigin="anonymous"></script>
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-8" style="display: flex; flex-direction: row; justify-content:end;">
+        <div class="col-md-9" style="display: flex; flex-direction: row; justify-content:end;">
             <button style="display:none" class="btn btn-success mb-3"  id="guardarOrden" onclick="modificarOrden()">Guardar orden</button>
         </div>
     </div>
