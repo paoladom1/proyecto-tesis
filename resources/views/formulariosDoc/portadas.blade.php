@@ -3,56 +3,8 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-<style>
 
-.wrapper {
-  margin: auto;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, .1);
-}
-
-.buttonWrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-button {
-  letter-spacing: 3px;
-  border: none;
-  padding: 10px;
-  background-color: #003C71;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.5s;
-}
-
-button:hover {
-  background-color: #d5e3ff;
-}
-
-button.active {
-  background-color: #E87B2A;
-}
-
-.active {
-  background-color: white;
-}
-
-.content {
-  display: none;
-  padding: 10px 20px;
-}
-
-.content.active {
-  display: block;
-}
-
-</style>
-
-
-<div class='container'>
+<div class='container portadaContainer'>
     <br>
     <h1>Crear portada</h1>
     <hr>
@@ -61,8 +13,8 @@ button.active {
         {{ csrf_field() }}
         <div class="wrapper">
             <div class="buttonWrapper">
-            <button class="tab-button active" style="border-top-left-radius: 10px;" data-id="portada" type="button">Portada</button>
-            <button class="tab-button" data-id="portada2" type="button">Segunda Portada</button>
+                <button class="tab-button active" style="border-top-left-radius: 10px;" data-id="portada" type="button">Portada</button>
+                <button class="tab-button" style="border-top-right-radius: 10px;" data-id="portada2" type="button">Segunda Portada</button>
             </div>
             <div class="contentWrapper">
                 <div class="content active" id="portada">
@@ -206,7 +158,7 @@ button.active {
             document.getElementsByClassName('integrante1')[0].style.display = 'block';
             document.getElementsByClassName('integrante2')[0].style.display = 'block';
             document.getElementsByClassName('integrante3')[0].style.display = 'block';
-        }   
+        }
     }
 </script>
 @endsection

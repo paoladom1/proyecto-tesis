@@ -1,0 +1,219 @@
+
+/*---------------------Estilos de la pantalla de Login------------------------*/
+.navbar{
+    background-color: #E87B2A;
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+}
+.navbar-main{
+    /*background-color: #003C71;*/
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+}
+
+
+.navbar h4{
+    color: white;
+}
+
+.canva{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+  }
+
+.canva .sector1 {
+    grid-column-start: 1;
+    width: 100%;
+    text-align: center;
+
+}
+
+.canva .sector1 img{
+    width: 30%;
+    margin-top: 20%;
+}
+
+.canva .sector1 p{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 50px;
+    color: white;
+    margin-top: 5%;
+}
+
+.canva .sector2 {
+    grid-column-start: 2;
+    background-color: #003C71;
+    width: 100%;
+}
+.sector2{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+.formulario{
+    background-color: white;
+    border-radius: 5px;
+    align-self: center;
+    padding-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 2em;
+    width: 65%;
+}
+
+
+/*---------------------Estilos de la barra lateral del nav---------------------*/
+.sidenav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 250px;
+    margin-left: -250px;
+    position: fixed;
+    z-index: auto;
+    top: 0;
+    left: 0;
+    background-color: #003C71;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 0.85%;
+}
+
+.sidenav a{
+    padding-left: 1em;
+    text-decoration: none;
+    font-size: 1.5em;
+    color: white;
+    display: block;
+    /*transition: 0.3s;*/
+}
+
+.sidenav a:hover{
+    color: #f1f1f1;
+}
+
+#content {
+    transition: margin-left .5s;
+}
+
+#nav{
+    transition: margin-left .5s;
+}
+
+.main-content{
+    padding-top: 10.5rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-bottom: 1rem;
+}
+
+.navGral{
+    background: #003C71;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: margin-left .5s;
+}
+
+.navImg{
+    width: 100%;
+    margin: 5%;
+    float: left;
+}
+
+.navGral a{
+    width: 10%;
+}
+
+.navTitle{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.menuButton i{
+    float: left;
+    margin-top: 4%;
+    margin-left: 1%;
+    color: white;
+    background-color: #003C71;
+    border-radius: 5px;
+    height: 3%;
+    width: 2.5%;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.btn-close {
+    width: 15%;
+    float: right;
+    color: white;
+    opacity: 100;
+    margin-bottom: 4%;
+   
+}
+
+.profileItem{
+    width: 95%;
+    margin: 2%;
+    background-color: #AAAAAA;
+    border-radius: 5px;
+}
+
+.profileImg{
+    width: 100%;
+    margin: 5%;
+    border-radius: 5px;
+}
+
+.infoContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.userName{
+    color: white;
+    font-size: 1em;
+    margin-top: 6%;
+}
+
+.groupName{
+    color: white;
+    font-size: 1em;
+}
+
+.logOut{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #E87B2A;
+}
+
+
+.sidenav hr{
+    text-align: center;
+    width: 90%;
+    height: 2px;
+    color: white;
+    opacity: 1;
+    margin: 10px;
+}
+
+.opMenu{
+
+}
+
+/*----------------------------------Menu principal-------------------------------------------*/
+
