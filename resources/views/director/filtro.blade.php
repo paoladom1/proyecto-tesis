@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('plantillas.nav')
+@section('content')
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,8 +63,7 @@
         overflow-x: hidden;
     }
 </style>
-
-<body>      
+   
     <br>
     <div class="container">
         <!--<form action="{{ url('/asignarDocente') }}" method="post">
@@ -325,12 +324,50 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Crear grupo</button>
                 </div>
             </div>
         </div>
     </div>
-    <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
+
+    <!-- Pantalla de grupos de tesis CRUD -->
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tema de Tesis</th>
+                <th scope="col">Numero de integrantes</th>
+                <th scope="col">Acciones</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Proyecto para el desarrollo de plantillas para documentos de tesis</td>
+                <td>Otto</td>
+                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()">Editar</button><button class="btn btn-danger" onclick="">Eliminar</button></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Crear grupo de tesis</a>
     <br>
 
     <!--------------------------------------------------Modal para estudiantes----------------------------------------->
@@ -430,8 +467,6 @@
         </div>
     </div>
     </div>
-</body>
-</html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -727,3 +762,4 @@
     }
     
 </script>
+@endsection

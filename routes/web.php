@@ -64,6 +64,10 @@ Route::get('/user', function () {
     return view('usuarios.usuario');
 });
 
+Route::get('/menudirector', function () {
+    return view('plantillas.plantillaMenuDirector');
+});
+
 Route::get('/portada', function(){
     return view('formulariosDoc.portadas');
 });
