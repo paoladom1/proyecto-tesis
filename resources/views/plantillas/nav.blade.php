@@ -30,95 +30,19 @@
 
     <title>Proceso de graduación</title>
 </head>
-<style>
-
-#user-btn{
-    margin-right: 1em;
-    background-color: #003C71;
-    border: none;
-    transition: all 0.3s;
-}
-
-#profile{
-    transition: all 0.3s;
-}
-
-#user-btn:hover #profile{
-    transform: scale(1.15);
-}
-#triangulo{
-    width: 0;
-    height: 0;
-    border-top: 8px solid white;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    align-self: center;
-}
-.user-content{
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    width: 4%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.user-content a {
-  color: black;
-  text-decoration: none;
-    padding: 1em;
-  display: block;
-  font-size: 0.85em;
-}
-.user-content a:hover {
-    background-color: white;
-}
-
-.show {display:block;}
-
-#accordion{
-    transition: all 0.5s;
-}
-
-#accordion:hover{
-    background-color: skyblue;
-}
-
-.dropdown-btn{
-    background-color: skyblue;
-    border: none;
-    color: white;
-}
-
-ul li a:hover {
-    color: #fff;
-    background: #E87B2A
-}
-ul li.active>a,
-a[aria-expanded="true"] {
-    color: #fff;
-    background: #E87B2A
-}
-
-#listadoSecciones li{
-    display: none;
-}
-
-</style>
-
 
 <body>
     <nav class="navGral d-flex justify-content-between" id="nav">
         <a href="#">
             <img src="/img/Logo.png" alt="" class="d-inline-block align-text-top navImg">
-           
+
         </a>
         <div class="dropdown" id="user-settings">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="user-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="img/profile.png" id="profile" style="width: 2.5em; border-radius: 100%;"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="user-btn">
-                <a class="dropdown-item" href="#" style="background-color: #003C71;  width: 100%; height: 100%; color: white;">Joshua Steven Sharp Reyes</a>
+                <a class="dropdown-item user-btn-name" href="#">Joshua Steven Sharp Reyes</a>
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" href="#" style="width: 100%">Editar perfil</a>
                 <hr class="dropdown-divider">
@@ -145,19 +69,6 @@ a[aria-expanded="true"] {
                 <a href="javascript:void(0)" class="btn-close btn-close-white" onclick="closeNav()"></a>
             </div>
 
-            <!--<div class="profileItem row">
-                <div class = "col">
-                    <img class="profileImg" src="/img/profile.png" alt="" class="d-inline-block align-text-top">
-                </div>
-                <div class = "col infoContainer">
-                    <div class="row userName">
-                        <p>Usuario x</p>
-                    </div>
-                    <div class="row groupName">
-                        <p>Grupo x</p>
-                    </div>
-                </div>
-            </div>-->
             <hr>
             <!--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
@@ -184,7 +95,7 @@ a[aria-expanded="true"] {
                         <li> <a href="#">Primer Portada</a> </li>
                         <li> <a href="#">Segunda Portada</a> </li>
                     </ul>--}}
-                    <a href="{{ url('/menu') }}">Menu Principal</a> 
+                    <a href="{{ url('/menu') }}">Menu Principal</a>
                 </li>
             </ul>
               <hr>
@@ -194,7 +105,7 @@ a[aria-expanded="true"] {
                         <li> <a href="#">Primer Portada</a> </li>
                         <li> <a href="#">Segunda Portada</a> </li>
                     </ul>--}}
-                    <a href="{{ url('/portada') }}">Portada</a> 
+                    <a href="{{ url('/portada') }}">Portada</a>
                 </li>
                 <li> <a href="{{ url('/agradecimientos') }}">Agradecimientos</a> </li>
                 <li> <a href="{{ url('/resumen') }}">Resumen</a> </li>
@@ -202,9 +113,9 @@ a[aria-expanded="true"] {
                 <li> <a href="{{ url('/abreviaturas') }}">S. A. y N.</a> </li>
                 <li> <a href="{{ url('/glosario') }}">Glosario</a> </li>
             </ul>
-            
+
             <hr>
-            <div class="logOut">
+            <div class="crearDoc">
                 <a href="#">Crear documento</a>
             </div>
             <!--<div class="logOut">
@@ -237,7 +148,7 @@ a[aria-expanded="true"] {
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Todo el documento
                                 </label>
-                            </div>  
+                            </div>
                             @php
                                 $cont = 0;
                                 $estaticas = 0;
@@ -252,7 +163,7 @@ a[aria-expanded="true"] {
                                         <label class="form-check-label" for="flexCheckDefault{{$cont}}">
                                             {{$seccion[0]}}
                                         </label>
-                                    </div>   
+                                    </div>
                                 @elseif ($seccion[1] == -1)
                                     @php
                                         ++$estaticas;
@@ -273,7 +184,7 @@ a[aria-expanded="true"] {
                                             {{$seccion[0]}}
                                         </label>
                                     </div>
-                                @endif                         
+                                @endif
                             @endforeach
                         </div>
                         <div class="modal-footer">
@@ -296,7 +207,7 @@ a[aria-expanded="true"] {
                                     @php
                                         ++$cont;
                                     @endphp
-                                    <li>{{$seccion[0]}}</li>                          
+                                    <li>{{$seccion[0]}}</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -347,7 +258,7 @@ a[aria-expanded="true"] {
     /* Funciones para abrir modal de creacion de documento */
 
    /* var listado = document.querySelectorAll("#listadoSecciones li");
-    
+
     var check = document.querySelectorAll('.checkSeccion .form-check-input');
 
     function cambio(checkbox){
@@ -357,7 +268,7 @@ a[aria-expanded="true"] {
             for (let index = 1; index < check.length; index++) {
                 if(check[index].checked){
                     ++cont;
-                }  
+                }
             }
             if(cont == check.length-1){
                 check[0].checked = true;
@@ -374,7 +285,7 @@ a[aria-expanded="true"] {
             for (let index = 1; index < check.length; index++) {
                 if (!check[index].disabled) {
                     check[index].checked = true;
-                    cambio(index);   
+                    cambio(index);
                 }
             }
         }
