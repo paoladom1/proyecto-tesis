@@ -33,7 +33,7 @@
 
 <body>
     <nav class="navGral d-flex justify-content-between" id="nav">
-        <a href="#">
+        <a href="/menu">
             <img src="/img/Logo.png" alt="" class="d-inline-block align-text-top navImg">
 
         </a>
@@ -107,10 +107,10 @@
                     </ul>--}}
                     <a href="{{ url('/portada') }}">Portada</a>
                 </li>
-                <li> <a href="{{ url('/agradecimientos') }}">Agradecimientos</a> </li>
                 <li> <a href="{{ url('/resumen') }}">Resumen</a> </li>
+                <li> <a href="{{ url('/agradecimientos') }}">Agradecimientos</a> </li>
+                <li> <a href="{{ url('/abreviaturas') }}">Abreviaturas</a> </li>
                 <li> <a href="{{ url('/capitulos') }}">Capitulos</a> </li>
-                <li> <a href="{{ url('/abreviaturas') }}">S. A. y N.</a> </li>
                 <li> <a href="{{ url('/glosario') }}">Glosario</a> </li>
             </ul>
 

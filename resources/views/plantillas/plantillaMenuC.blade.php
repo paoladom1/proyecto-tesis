@@ -33,6 +33,32 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col">
+                        <div class="card m-3 position-static card-menu" style="width: 18rem;" >
+                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                            <div class="card-body body-card mt-2">
+                                <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Abreviaturas</h5></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                            <div class="card-body body-card mt-2">
+                                <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Capítulos</h5></a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                            <div class="card-body body-card mt-2">
+                                <a href="{{ url('/glosario') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Glosario</h5></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 </center>
             </div>

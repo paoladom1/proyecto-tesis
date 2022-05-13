@@ -13,11 +13,11 @@ function agregarEditor() {
             extraPlugins: 'liststyle'
         });
 
-        editor.config.contentsCss = "/css/content.css";  
+        editor.config.contentsCss = "/css/content.css";
     }
 
 </script>
-    <div style="background-color: #e3eef5; border: 1px #003C71 solid; border-top: 7px #003C71 solid;">
+    <div class="agradecimientosContainer">
         <div id="collapseTwo" aria-labelledby="headingTwo">
             <div class="accordion-body">
                 <div class="row">
@@ -30,13 +30,13 @@ function agregarEditor() {
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col">
-                            <textarea class="form-control" id="seccionTexto" name="seccion2[]" aria-label="With textarea" rows=15></textarea>
+                        <div class="col textAgradecimientos">
+                            <textarea class="form-control" id="seccionTexto" name="seccion2[]" aria-label="With textarea" ></textarea>
                             <script>
                                 agregarEditor();
                             </script>
                         </div>
-                        <button type="button" class="btn btn-success">Guardar portada</button>
+                        <button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>
                     </div>
                 </div>
             </div>

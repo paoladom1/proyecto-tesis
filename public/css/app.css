@@ -118,6 +118,8 @@
     padding-left: 3rem;
     padding-right: 3rem;
     padding-bottom: 1rem;
+    display: flex;
+    justify-content: center;
 }
 
 .navGral{
@@ -355,4 +357,41 @@ a[aria-expanded="true"] {
     width: 100%;
     border: #003C71 1px solid;
     border-top: #003C71 7px solid;
+}
+
+
+/*-------------------------------Resumen----------------------------*/
+.resumenContainer{
+    background-color: #e3eef5;
+    border: 1px #003C71 solid;
+    border-top: 7px #003C71 solid;
+    width: 80%;
+
+}
+
+.saveResumen{
+    margin: 1.5%;
+    width: 97%;
+}
+
+
+/*---------------------------Agradecimientos------------------------*/
+.agradecimientosContainer{
+    background-color: #e3eef5;
+    border: 1px #003C71 solid;
+    border-top: 7px #003C71 solid;
+    width: 80%;
+}
+
+.textAgradecimientos{
+    height: 50vh;
+}
+
+.textAgradecimientos textarea{
+    height: 100%;
+}
+
+.saveAgradecimientos{
+    margin: 1.5%;
+    width: 97%;
 }
