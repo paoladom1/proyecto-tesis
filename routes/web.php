@@ -68,6 +68,10 @@ Route::get('/menudirector', function () {
     return view('plantillas.plantillaMenuDirector');
 });
 
+Route::get('/lector', function () {
+    return view('director.lector');
+});
+
 Route::get('/portada', function(){
     return view('formulariosDoc.portadas');
 });

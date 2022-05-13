@@ -1,4 +1,4 @@
-@extends('plantillas.nav')
+@extends('plantillas.navdirector')
 @section('content')
 <style>
 
@@ -57,7 +57,7 @@
                         <div class="card m-3 position-static card-menu" style="width: 18rem;">
                             <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
-                                <a href="" style="text-decoration: none; color: black;"><h5 class="card-title">Lectores de Tesis Externos</h5></a>
+                                <a href="" style="text-decoration: none; color: black;"><h5 class="card-title">Lectores Externos</h5></a>
                             </div>
                         </div>
                     </div>
