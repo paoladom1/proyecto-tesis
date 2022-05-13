@@ -1,6 +1,7 @@
 @extends('plantillas.nav')
 @section('content')
 <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+
 <script>
 
 function agregarEditor() {
@@ -13,11 +14,12 @@ function agregarEditor() {
             extraPlugins: 'liststyle'
         });
 
-        editor.config.contentsCss = "/css/content.css";  
+        editor.config.contentsCss = "/css/content.css";
     }
 
 </script>
-    <div style="background-color: #e3eef5; border: 1px #003C71 solid; border-top: 7px #003C71 solid;">
+
+    <div class="resumenContainer">
         <div id="collapseTwo" aria-labelledby="headingTwo">
             <div class="accordion-body">
                 <div class="row">
@@ -36,7 +38,7 @@ function agregarEditor() {
                                 agregarEditor();
                             </script>
                         </div>
-                        <button type="button" class="btn btn-success">Guardar portada</button>
+                        <button type="button" class="btn btn-success saveResumen">Guardar</button>
                     </div>
                 </div>
             </div>
