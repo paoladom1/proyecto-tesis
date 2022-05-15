@@ -22,8 +22,9 @@ function agregarEditor() {
             <div class="accordion-body">
                 <div class="row">
                         <div class="col seccion_">
-                            <h1>Agradecimientos</h1>
+                            <h1 class="mb-3 mt-3">Agradecimientos</h1>
                         </div>
+                        <hr>
                         <input hidden type="text" name="seccion3[]"  value="$" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         <input hidden type="text" name="seccion4[]"  value="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         <input hidden type="text" name="seccion6[]"  value="0" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">

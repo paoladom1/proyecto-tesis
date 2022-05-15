@@ -1,6 +1,29 @@
 @extends('plantillas.nav')
 @section('content')
 
+<style>
+
+.float-button{
+    font-size: 3em;
+    color: white;
+    text-align: center;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    opacity: 50%;
+}
+.float-button:hover{
+    opacity: 100%;
+    color: black;
+}
+
+.float-icon{
+    background-color: #E87B2A;
+    border-radius: 50px;
+    padding: 0.25em;
+}
+</style>
+
     <div class="container" style="background-color: white">
         <div class="row">
             <div class="container mPrincipal">
@@ -73,7 +96,10 @@
                     <button class="list-group-item" style="color: white; background-color: #003C71">Ver</button>
                 </div>
             </div>
-
         </div>
+
     </div>
+    <a class="float-button"><i class="bi bi-file-earmark-text float-icon"></i></a>
 @endsection
+
+

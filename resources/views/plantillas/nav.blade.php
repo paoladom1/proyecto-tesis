@@ -112,6 +112,7 @@
                 <li> <a href="{{ url('/abreviaturas') }}">Abreviaturas</a> </li>
                 <li> <a href="{{ url('/capitulos') }}">Capitulos</a> </li>
                 <li> <a href="{{ url('/glosario') }}">Glosario</a> </li>
+                <li> <a href="{{ url('/referencias') }}">Referencias</a> </li>
             </ul>
 
             <hr>

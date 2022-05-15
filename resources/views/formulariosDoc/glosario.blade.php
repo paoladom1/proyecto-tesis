@@ -1,7 +1,6 @@
 @extends('plantillas.nav')
 @section('content')
 <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-
 <script>
 
 function agregarEditor() {
@@ -18,13 +17,12 @@ function agregarEditor() {
     }
 
 </script>
-
-    <div class="resumenContainer">
+    <div class="agradecimientosContainer">
         <div id="collapseTwo" aria-labelledby="headingTwo">
             <div class="accordion-body">
                 <div class="row">
                         <div class="col seccion_">
-                            <h1>Resumen</h1>
+                            <h1 class="mb-3 mt-3">Glosario</h1>
                         </div>
                         <hr>
                         <input hidden type="text" name="seccion3[]"  value="$" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -33,13 +31,13 @@ function agregarEditor() {
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col">
-                            <textarea class="form-control" id="seccionTexto" name="seccion2[]" aria-label="With textarea" rows=15></textarea>
+                        <div class="col textAgradecimientos">
+                            <textarea class="form-control" id="seccionTexto" name="seccion2[]" aria-label="With textarea" ></textarea>
                             <script>
                                 agregarEditor();
                             </script>
                         </div>
-                        <button type="button" class="btn btn-success saveResumen">Guardar</button>
+                        <button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>
                     </div>
                 </div>
             </div>

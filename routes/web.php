@@ -87,3 +87,11 @@ Route::get('/abreviaturas', function(){
 Route::get('/agradecimientos', function(){
     return view('formulariosDoc.agradecimientos');
 });
+
+Route::get('/referencias', function(){
+    return view('formulariosDoc.referencias');
+});
+
+Route::get('/glosario', function(){
+    return view('formulariosDoc.glosario');
+});
