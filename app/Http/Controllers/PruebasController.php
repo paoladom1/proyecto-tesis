@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpWord\Style\Language;
 use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
-use App\Models\Capitulos;
-use App\Models\ContenidoCapitulo;
-use App\Models\ContenidoCapitulo2;
+
+use App\Models\SeccionCapitulo;
+use App\Models\ContenidoSeccionCapitulo;
+use App\Models\SubcontenidoSeccionCapitulo;
 
 class PruebasController extends Controller
 {
@@ -130,7 +131,7 @@ class PruebasController extends Controller
         $array[$cont][0] = 'Portada y Segunda Portada'; $array[$cont++][1] = '-1'; 
         $array[$cont][0] = 'Indice'; $array[$cont++][1] = '-1'; 
 
-        $capitulo = Capitulos::orderBy("orden_capitulo", 'asc')->get();
+        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
         $numCap = 1;
         
         foreach($capitulo as $cap){
@@ -167,7 +168,7 @@ class PruebasController extends Controller
 
         $phpWord->setDefaultFontSize(11);
         $phpWord->setDefaultFontName('Times New Roman');
-        //$phpWord->getSettings()->setUpdateFields(true);
+        $phpWord->getSettings()->setUpdateFields(true);
         $center = array(
             'align' => 'center'
         );
@@ -288,30 +289,30 @@ class PruebasController extends Controller
         $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE', array('format' => 'roman'));
     }
 
-    private function seccion($documento, $numero){
-        if($numero == 1){
+    private function seccion($documento, $numero, $numCap){
+        if($numCap == 1){
             $section = $documento->addSection(array('pageNumberingStart' => 1), PruebasController::margenes());
             $footer = $section->addFooter();
-            $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE');
+            $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE', array('format'=>'roman'), array('PreserveFormat'));
         } else{
             $section = $documento->addSection(PruebasController::margenes());
         }
-        
-        $capitulo = Capitulos::findOrFail($numero);
+
+        $capitulo = SeccionCapitulo::findOrFail($numero);
         //$contenido = ContenidoCapitulo::orderBy("orden_contenido", 'asc')->where('id_capitulo', $capitulo->id)->get();
-        $contenido = ContenidoCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('capitulos_id', '=', $numero)->get();
+        $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $numero)->get();
         
         $section->addTitle(mb_strtoupper('Capitulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo), 1);
         $numSegundo = 1;
         foreach($contenido as $con){
             $section->addTextBreak(1);
-            $section->addTitle($capitulo->orden_capitulo.'.'.$numSegundo.' '.$con->titulo_subtitulo,2);
+            $section->addTitle($capitulo->orden_capitulo.'.'.$numSegundo.' '.$con->tema,2);
             $section->addTextBreak(1);
             \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con->contenido, false, false);
             $section->addTextBreak(1);
             $numTercero = 1;
             foreach($con->contenidoCapitulo2 as $con2){
-                $section->addTitle($capitulo->orden_capitulo.'.'.$numSegundo.'.'.$numTercero++.' '.$con2->titulo_subtitulo,3);
+                $section->addTitle($capitulo->orden_capitulo.'.'.$numSegundo.'.'.$numTercero++.' '.$con2->subtema,3);
                 $section->addTextBreak(1);
                 \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con2->contenido, false, false);
                 $section->addTextBreak(1);
@@ -337,7 +338,7 @@ class PruebasController extends Controller
         $i = 0;
         while (isset($_REQUEST['seccion2'][$i])) {
             $dato = $request->input('seccion2')[$i];
-            PruebasController::seccion($documento, $dato);
+            PruebasController::seccion($documento, $dato, $i+1);
             ++$i;
         }
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
@@ -348,9 +349,9 @@ class PruebasController extends Controller
     //-----------------------------------Agregar temas y subtemas de capitulos-------------------------------------------
 
     public function formularioDinamico($id){ 
-        $capitulo = Capitulos::with('contenidoCapitulo')->findOrFail($id);
+        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->findOrFail($id);
 
-        $contenido = ContenidoCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('capitulos_id', '=', $id)->get();
+        $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $id)->get();
         return view('formulariosDoc.dinamico', array(
             "capitulo" => $capitulo,
             "contenido" => $contenido
@@ -367,18 +368,18 @@ class PruebasController extends Controller
             $idTitulo;
             if($tipo == 2){
                 if ($idCont == 0) {
-                    $contenidoCapitulo2 = new ContenidoCapitulo2();
+                    $contenidoCapitulo2 = new SubcontenidoSeccionCapitulo();
                 } else{
-                    $contenidoCapitulo2 = ContenidoCapitulo2::findOrFail($idCont);
+                    $contenidoCapitulo2 = SubcontenidoSeccionCapitulo::findOrFail($idCont);
                 }
-                $contenidoCapitulo2->titulo_subtitulo = $seccion;
+                $contenidoCapitulo2->subtema = $seccion;
                 $contenidoCapitulo2->contenido = $request->input('seccion2')[$i];
-                $contenidoCapitulo2->orden_contenido = $i;
+                $contenidoCapitulo2->orden_subcontenido = $i;
                 echo $request->input('seccion5')[$i2]."<br>";
                 if($request->input('seccion5')[$i2] == 0){
-                    $contenidoCapitulo2->contenido_Capitulo_id = $idTitulo;
+                    $contenidoCapitulo2->contenido_seccion_capitulo_id  = $idTitulo;
                 } else{
-                    $contenidoCapitulo2->contenido_Capitulo_id = $request->input('seccion5')[$i2];
+                    $contenidoCapitulo2->contenido_seccion_capitulo_id = $request->input('seccion5')[$i2];
                 }
                 if ($idCont == 0) {
                     $contenidoCapitulo2->save(); 
@@ -388,14 +389,14 @@ class PruebasController extends Controller
                 ++$i2;
             } else{
                 if ($idCont == 0) {
-                    $contenidoCapitulo = new ContenidoCapitulo();
+                    $contenidoCapitulo = new ContenidoSeccionCapitulo();
                 } else{
-                    $contenidoCapitulo = ContenidoCapitulo::findOrFail($idCont);
+                    $contenidoCapitulo = ContenidoSeccionCapitulo::findOrFail($idCont);
                 }
-                $contenidoCapitulo->titulo_subtitulo = $seccion;
+                $contenidoCapitulo->tema = $seccion;
                 $contenidoCapitulo->contenido = $request->input('seccion2')[$i];
                 $contenidoCapitulo->orden_contenido = $i+1;
-                $contenidoCapitulo->capitulos_id = $id;
+                $contenidoCapitulo->seccion_capitulo_id = $id;
                 if ($idCont == 0) {
                     $contenidoCapitulo->save(); 
                     $idTitulo=  $contenidoCapitulo->id;
@@ -411,14 +412,14 @@ class PruebasController extends Controller
     public function eliminarContenido(Request $request)
     {
         $id = $request->input('id');
-        $contenido = ContenidoCapitulo::findOrFail($id);
+        $contenido = ContenidoSeccionCapitulo::findOrFail($id);
         $contenido->delete();
     }
 
     public function eliminarContenido2(Request $request)
     {
         $id = $request->input('id');
-        $contenido = ContenidoCapitulo2::findOrFail($id);
+        $contenido = SubcontenidoSeccionCapitulo::findOrFail($id);
         $contenido->delete();
     }
 
@@ -426,7 +427,7 @@ class PruebasController extends Controller
     
     public function formCapitulos()
     {
-        $capitulo = Capitulos::orderBy("orden_capitulo", 'asc')->get();
+        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
         return view("formulariosDoc.capitulo", array(
             "capitulos" => $capitulo
         ));
@@ -434,12 +435,13 @@ class PruebasController extends Controller
 
     public function registrar(Request $request)
     {
-        $capitulo = new Capitulos();
+        $capitulo = new SeccionCapitulo();
         $capitulo->nombre_capitulo = $request->input('nombreTitulo');
         $capitulo->orden_capitulo = $request->input('orden_capitulo');
+        //$capitulo->grupo_trabajo_id = $request->input('orden_capitulo');
         $capitulo->save();
 
-        $capitulos = Capitulos::orderBy("orden_capitulo", 'asc')->get();
+        $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
         return $capitulos;
     }
 
@@ -449,17 +451,17 @@ class PruebasController extends Controller
             $ids = json_decode($request->input('idList'));
             $cont = 1;
             foreach ($ids as $id) {
-                $capitulo = Capitulos::findOrFail($id);
+                $capitulo = SeccionCapitulo::findOrFail($id);
                 $capitulo->orden_capitulo = $cont++;
                 $capitulo->update();
             }   
         } else if($request->input('id')){
             $id = $request->input('id');
             $nombre = $request->input('nombre');
-            $capitulo = Capitulos::findOrFail($id);
+            $capitulo = SeccionCapitulo::findOrFail($id);
             $capitulo->nombre_capitulo = $nombre;
             $capitulo->update();   
-            $capitulos = Capitulos::orderBy("orden_capitulo", 'asc')->get();
+            $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
             return $capitulos;
         }
     }
@@ -467,7 +469,7 @@ class PruebasController extends Controller
     public function eliminar(Request $request)
     {
         $id = $request->input('id');
-        $capitulo = Capitulos::findOrFail($id);
+        $capitulo = SeccionCapitulo::findOrFail($id);
         $capitulo->delete();
     }
 }

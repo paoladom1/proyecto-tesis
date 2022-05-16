@@ -70,36 +70,8 @@
             </div>
 
             <hr>
-            <!--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Portadas
-                      </a>
-                    </h4>
-                  </div>
-                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                      <ul>
-                        <a><button class="dropdown-btn">Primer Portada</button></a>
-                        <a><button class="dropdown-btn">Segunda Portada</button></a>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>-->
-              <ul class="list-unstyled components">
-                <li> {{--  <a href="#portadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Portada</a>
-                    <ul class="collapse list-unstyled" id="portadas">
-                        <li> <a href="#">Primer Portada</a> </li>
-                        <li> <a href="#">Segunda Portada</a> </li>
-                    </ul>--}}
-                    <a href="{{ url('/menu') }}">Menu Principal</a>
-                </li>
-            </ul>
-              <hr>
-              <ul class="list-unstyled components">
+            
+            <ul class="list-unstyled components">
                 <li> {{--  <a href="#portadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Portada</a>
                     <ul class="collapse list-unstyled" id="portadas">
                         <li> <a href="#">Primer Portada</a> </li>
@@ -115,10 +87,7 @@
                 <li> <a href="{{ url('/referencias') }}">Referencias</a> </li>
             </ul>
 
-            <hr>
-            <div class="crearDoc">
-                <a href="#">Crear documento</a>
-            </div>
+          
             <!--<div class="logOut">
                 <a data-bs-toggle="modal" href="#exampleModalToggle" role="button">Crear documento</a>
             </div>-->

@@ -185,8 +185,9 @@
     text-align: center;
     width: 90%;
     height: 2px;
-    color: white;
-    opacity: 1;
+    /*color: white;*/
+    color: #E87B2A;
+    opacity: 100%;
     margin: 10px;
 }
 
@@ -394,3 +395,26 @@ a[aria-expanded="true"] {
     margin: 1.5%;
     width: 97%;
 }
+
+
+/*-------------------------Boton Flotante--------------------------*/
+.float-button{
+    font-size: 3em;
+    color: white;
+    text-align: center;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    opacity: 100%;
+}
+
+.float-button:hover{
+    opacity: 100%;
+    color: black;
+}
+
+.float-icon{
+    background-color: #E87B2A;
+    border-radius: 10px;
+    padding: 0.25em;
+}   

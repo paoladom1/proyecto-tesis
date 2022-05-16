@@ -3,25 +3,7 @@
 
 <style>
 
-.float-button{
-    font-size: 3em;
-    color: white;
-    text-align: center;
-    position: fixed;
-    right: 50px;
-    bottom: 50px;
-    opacity: 50%;
-}
-.float-button:hover{
-    opacity: 100%;
-    color: black;
-}
 
-.float-icon{
-    background-color: #E87B2A;
-    border-radius: 50px;
-    padding: 0.25em;
-}
 </style>
 
     <div class="container" style="background-color: white">
@@ -32,57 +14,79 @@
                 </div>
                 <center>
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-3">
+                
+
                     <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/portada') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Portada</h5></a>
+                        <a  href="{{ url('/portada') }}" style="text-decoration: none; color: black;" >
+                            <div class="card m-3 position-static card-menu" style="width: 18rem;" >
+                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                                <div class="card-body body-card mt-2">
+                                    <h5 class="card-title">Portada</h5>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Resumen</h5></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/agradecimientos') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Agradecimientos</h5></a>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Abreviaturas</h5></a>
+                        <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
+                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                                <div class="card-body body-card mt-2">
+                                    <h5 class="card-title">Resumen</h5>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                    <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Capítulos</h5></a>
-                            </div>
 
-                        </div>
-                    </div>
                     <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/glosario') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Glosario</h5></a>
+                        <a href="{{ url('/agradecimientos') }}" style="text-decoration: none; color: black;">
+                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                                <div class="card-body body-card mt-2">
+                                    <h5 class="card-title">Agradecimientos</h5>
+                                </div>
                             </div>
-                        </div>
+                        </a>   
                     </div>
+
+
+                    <!------------------------------------------------------------------------------------------------------>
+
+                    <div class="col">
+                        <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;">
+                            <div class="card m-3 position-static card-menu" style="width: 18rem;" >
+                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                                <div class="card-body body-card mt-2">
+                                    <h5 class="card-title">Abreviaturas</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col">
+                        <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;">
+                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                                <div class="card-body body-card mt-2">
+                                    <h5 class="card-title">Capítulos</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col">
+                        <a href="{{ url('/glosario') }}" style="text-decoration: none; color: black;">
+                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
+                                <div class="card-body body-card mt-2">
+                                    <h5 class="card-title">Glosario</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
                 </div>
+
                 </center>
             </div>
         </div>
