@@ -399,14 +399,14 @@
         @endphp
         @foreach ($contenido as $cont)
             <script>
-                addSeccion("<?php echo $cont->titulo_subtitulo; ?>", `<?php echo $cont->contenido; ?>`, <?php echo $cont->id; ?>);
+                addSeccion("<?php echo $cont->tema; ?>", `<?php echo $cont->contenido; ?>`, <?php echo $cont->id; ?>);
             </script>
             @php
                 ++$numSeccion;
             @endphp
             @foreach ($cont->contenidoCapitulo2 as $subtitulos)
                 <script>
-                    addSubSeccion(<?php echo $numSeccion; ?>, <?php echo $cont->id; ?>, "<?php echo $subtitulos->titulo_subtitulo; ?>", `<?php echo $subtitulos->contenido; ?>`, <?php echo $subtitulos->id; ?>);
+                    addSubSeccion(<?php echo $numSeccion; ?>, <?php echo $cont->id; ?>, "<?php echo $subtitulos->subtema; ?>", `<?php echo $subtitulos->contenido; ?>`, <?php echo $subtitulos->id; ?>);
                 </script>
             @endforeach
         @endforeach
