@@ -1,4 +1,4 @@
-@extends('plantillas.nav')
+@extends('plantillas.navdirector')
 @section('content')
 <head>
     <meta charset="UTF-8">
@@ -116,9 +116,9 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tituloModal"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
+            <div class="modal-header" style="background-color: #003C71;">
+                <h5 class="modal-title" id="tituloModal" style="color: white;"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
             </div>
             <div class="modal-body">
             <div class='container'>
@@ -162,7 +162,7 @@
                     {{ csrf_field() }}
                     <label>Docente</label> 
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="dropdown">
                                 <button onclick="myFunction(3)" type="button" class="btn btn-warning dropdown-toggle">Seleccionar</button>
                                 <div id="myDropdown3" class="dropdown-content">
@@ -173,9 +173,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="input-group">                                    
-                                <input type="text" disabled class="form-control" id="nombres" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" disabled class="form-control ms-3" id="nombres" aria-label="Username" aria-describedby="basic-addon1">
                                 <input type="text" style='display: none' disabled class="form-control" id="id" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                         </div>
@@ -195,12 +195,12 @@
     
     <!------------------------------------------------Modal para Asesores o Lector externo-------------------------------------->
     
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tituloModal2"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
+            <div class="modal-header" style="background-color: #003C71;">
+                <h5 class="modal-title" id="tituloModal2" style="color: white;"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -244,26 +244,27 @@
 
     <!--------------------------------------------------Modal para crear grupo----------------------------------------->
 
-    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel">Crear Grupo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header" style="background-color: #003C71;">
+                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Crear Grupo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Tema</label> 
-                            <div class="input-group">
-                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                             
+                            <div class="form-group form-floating">
+                                <input type="text" id="tema" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Ingrese el tema de trabajo de graduacion">
+                                <label for="tema">Tema de trabajo de graduacion</label>
                             </div>
                             <br>
                             <label>Asesor</label> 
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="dropdown">
-                                        <button onclick="myFunction(1)" type="button" id="seleccionar1" class="btn btn-warning dropdown-toggle" style="width: 100%;">Seleccionar</button>
+                                        <button onclick="myFunction(1)" type="button" id="seleccionar1" class="btn btn-warning dropdown-toggle">Seleccionar</button>
                                         <div id="myDropdown1" class="dropdown-content">
                                             <input type="text" placeholder="Buscar.." id="myInput" onkeyup="filterFunction()">
                                             <div class="scrollable-menu">
@@ -275,8 +276,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input type="text" readonly class="form-control" id="nombresD" name="nombresD" aria-label="Username" aria-describedby="basic-addon1">
+                                    <div class="input-group ms-4" style="width: 95%">
+                                        <input type="text" readonly class="form-control" id="nombresD" name="nombresD" aria-label="Username" aria-describedby="basic-addon1" style="background-color: white">
                                         <input type="text" readonly style='display: none' class="form-control" id="idD" name="idD" aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
@@ -286,7 +287,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="dropdown">
-                                        <button onclick="myFunction(2)" type="button" id="seleccionar2" class="btn btn-warning dropdown-toggle" style="width: 100%;">Seleccionar</button>
+                                        <button onclick="myFunction(2)" type="button" id="seleccionar2" class="btn btn-warning dropdown-toggle" >Seleccionar</button>
                                         <div id="myDropdown2" class="dropdown-content">
                                             <input type="text" placeholder="Buscar.." id="myInput" onkeyup="filterFunction()">
                                             <div class="scrollable-menu">
@@ -298,8 +299,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input type="text" readonly class="form-control" id="nombresL" name="nombresL" aria-label="Username" aria-describedby="basic-addon1">
+                                    <div class="input-group ms-4" style="width: 95%">
+                                        <input type="text" readonly class="form-control" id="nombresL" name="nombresL" aria-label="Username" aria-describedby="basic-addon1" style="background-color: white">
                                         <input type="text" readonly style='display: none' class="form-control" id="idL" name="idL" aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
@@ -334,7 +335,7 @@
 
     <div class="table-responsive">
         <table class="table table-hover">
-            <thead class="thead-dark">
+            <thead class="thead-dark" style="background-color: #003C71; color: white;">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tema de Tesis</th>
@@ -347,8 +348,8 @@
             <tr>
                 <th scope="row">1</th>
                 <td>Proyecto para el desarrollo de plantillas para documentos de tesis</td>
-                <td>Otto</td>
-                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()">Editar</button><button class="btn btn-danger" onclick="">Eliminar</button></td>
+                <td>4</td>
+                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button><button class="btn btn-danger ms-1" onclick="">Eliminar</button></td>
                 <td></td>
             </tr>
             <tr>
@@ -367,7 +368,9 @@
             </tbody>
         </table>
     </div>
-    <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Crear grupo de tesis</a>
+    <div class="row d-flex flex-row-reverse mt-3">
+        <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: 0px;" ><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
+    </div>
     <br>
 
     <!--------------------------------------------------Modal para estudiantes----------------------------------------->
@@ -375,9 +378,9 @@
     <div class="modal fade" id="exampleModal45" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Estudiantes</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header" style="background-color: #003C71;">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: white">Estudiantes</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="input-group input-group-sm">
@@ -759,7 +762,7 @@
                 console.log(data);
             }
         })
-    }
+    }  
     
 </script>
-@endsection
+@endsection 

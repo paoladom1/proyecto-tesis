@@ -107,7 +107,7 @@
                     </ul>--}}
                     <a href="{{ url('/filtro') }}">Grupos de tesis</a>
                 </li>
-                <li> <a href="{{ url('/agradecimientos') }}">Asesores y lectores</a> </li>
+                <li> <a href="{{ url('/lector') }}">Asesores y lectores</a> </li>
                 {{--<li> <a href="{{ url('/resumen') }}">Resumen</a> </li>--}}
             </ul>
             <!--<div class="logOut">
