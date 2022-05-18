@@ -18,9 +18,12 @@ Route::get('/', function () {
 });
 
 
-Route::get('/menu', function () {
+/*Route::get('/menu', function () {
     return view('plantillas.plantillaMenuC');
-});
+});*/
+
+Route::get('/menu', 'App\Http\Controllers\PruebasController@formularioModal');
+Route::post('/crearDocumento', 'App\Http\Controllers\PruebasController@seccionesDocumento');
 
 Route::get('/navChino', function(){
     return view('plantillas.maintemplate');

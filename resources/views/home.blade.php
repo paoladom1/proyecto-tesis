@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href = "{{URL::asset('css/app.css')}}" rel="stylesheet">
 
     <title>Proceso de graduación</title>
@@ -53,10 +53,31 @@
                             <input type="submit" value="Iniciar sesion" style="background-color: #E87B2A; color:white; border: #E87B2A; border-radius: 3px; size: 2em; padding: .5em;" >
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            <a><i class="bi bi-facebook ms-2 me-2 licon fb" ></i></a>
+                            <a><i class="bi bi-instagram ms-2 me-2 licon in"></i></a>
+                            <a><i class="bi bi-twitter ms-2 me-2 licon tw"></i></a>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
+<style>
+    .licon{
+        font-size: 1.5em;
+    }
+    .fb{
+        color: blue;
+    }
+    .in{
+        color: fuchsia;
+    }
+    .tw{
+        color: skyblue;
+    }
+</style>
 </body>
 </html>
