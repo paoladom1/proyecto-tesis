@@ -37,14 +37,14 @@
 
 </style>
 
-    <div class="container" style="background-color: white">
+    <div class="container-fluid" style="background-color: white">
         <div class="row">
             <div class="container mPrincipal">
                 <div class="row " style="margin-top: 2em;">
                     <center><h1>Menu principal</h1></center>
                 </div>
                 <center>
-                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3">
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
                     <div class="col">
                         <div class="card m-3 position-static card-menu" style="width: 18rem;" >
                             <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
