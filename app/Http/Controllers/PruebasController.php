@@ -143,7 +143,7 @@ class PruebasController extends Controller
         //    'secciones' => $array
         //));
 
-        return view('plantillas.nav', array(
+        return view('plantillas.plantillaMenuC', array(
             'secciones' => $array
         ));
     }
