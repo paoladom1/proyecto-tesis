@@ -8,7 +8,7 @@ function agregarEditor(n) {
         // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto'+n, {
-            height: 250,
+            height: 275,
             removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
             extraPlugins: 'liststyle'
         });
@@ -49,7 +49,7 @@ function agregarEditor(n) {
                                     </script>
                                 </div>
                                 <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                <input type="submit" class="btn btn-success mt-3" value="Guardar agradecimientos" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                <input type="submit" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar agradecimientos" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ function agregarEditor(n) {
                                     </script>
                                 </div>
                                 <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                <input type="submit" class="btn btn-success mt-3" value="Guardar dedicatoria" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                <input type="submit" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar dedicatoria" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
                             </div>
                         </div>
                     </div>

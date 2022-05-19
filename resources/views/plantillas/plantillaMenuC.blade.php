@@ -1,11 +1,6 @@
 @extends('plantillas.nav')
 @section('content')
 
-<style>
-
-
-</style>
-
     <div class="container" style="background-color: white">
         <div class="row">
             <div class="container mPrincipal">
@@ -91,7 +86,7 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="container" style="background-color: #e3eef5; border:1px #003C71 solid; border-top: #003C71 7px solid;">
+            <div class="container" style="background-color: #e3eef5; border:1px #003C71 solid; border-top: #003C71 7px solid; box-shadow: 5px 7px 7px gray;">
                 <center><h3 class="mt-3">Ultimos cambios</h3></center>
                 <div class="list-group list-group-horizontal justify-content-center m-3">
                     <input type="text" class="list-group-item" placeholder="Seccion" readonly/>

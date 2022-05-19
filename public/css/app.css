@@ -270,6 +270,7 @@ a[aria-expanded="true"] {
     border: #003C71 1px solid;
     background-color: #e3eef5;
     border-top: #003C71 7px solid;
+    box-shadow: 5px 7px 7px gray;
 }
 
 .card-menu{
@@ -358,6 +359,7 @@ a[aria-expanded="true"] {
     width: 100%;
     border: #003C71 1px solid;
     border-top: #003C71 7px solid;
+    box-shadow: 5px 7px 7px gray;
 }
 
 
@@ -367,7 +369,7 @@ a[aria-expanded="true"] {
     border: 1px #003C71 solid;
     border-top: 7px #003C71 solid;
     width: 80%;
-
+    box-shadow: 5px 7px 7px gray;
 }
 
 .saveResumen{
@@ -381,19 +383,14 @@ a[aria-expanded="true"] {
     background-color: #e3eef5;
     border: 1px #003C71 solid;
     border-top: 7px #003C71 solid;
+    box-shadow: 5px 7px 7px gray;
 }
 
-.textAgradecimientos{
-    height: 50vh;
-}
-
-.textAgradecimientos textarea{
-    height: 100%;
-}
 
 .saveAgradecimientos{
     margin: 1.5%;
     width: 97%;
+    color: white;
 }
 
 
