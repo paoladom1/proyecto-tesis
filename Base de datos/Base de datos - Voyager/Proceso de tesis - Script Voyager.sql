@@ -1,4 +1,4 @@
-CREATE TABLE `settings` (
+CREATE TABLE `SETTINGS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `key` varchar(255),
   `display_name` varchar(255),
@@ -9,13 +9,13 @@ CREATE TABLE `settings` (
   `group` varchar(255)
 );
 
-CREATE TABLE `password_resets` (
+CREATE TABLE `PASSWORD_RESETS` (
   `email` varchar(255),
   `token` varchar(255),
   `created_at` timestamp
 );
 
-CREATE TABLE `translations` (
+CREATE TABLE `TRANSLATIONS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `table_name` varchar(255),
   `column_name` varchar(255),
@@ -26,35 +26,13 @@ CREATE TABLE `translations` (
   `updated_at` timestamp
 );
 
-CREATE TABLE `personal_access_tokens` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `tokenable_type` varchar(255),
-  `tokenable_id` bigint(20),
-  `name` varchar(255),
-  `token` varchar(64),
-  `abilities` text,
-  `last_used_at` timestamp,
-  `created_at` timestamp,
-  `updated_at` timestamp
-);
-
-CREATE TABLE `failed_jobs` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255),
-  `connection` text,
-  `queue` text,
-  `payload` longtext,
-  `exception` longtext,
-  `failed_at` timestamp
-);
-
-CREATE TABLE `migrations` (
+CREATE TABLE `MIGRATIONS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `migration` varchar(255),
   `batch` int(11)
 );
 
-CREATE TABLE `data_types` (
+CREATE TABLE `DATA_TYPES` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(255),
   `slug` varchar(255),
@@ -72,7 +50,7 @@ CREATE TABLE `data_types` (
   `updated_at` timestamp
 );
 
-CREATE TABLE `data_rows` (
+CREATE TABLE `DATA_ROWS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `data_type_id` int(10),
   `field` varchar(255),
@@ -88,14 +66,14 @@ CREATE TABLE `data_rows` (
   `order` tinyint(1)
 );
 
-CREATE TABLE `menus` (
+CREATE TABLE `MENUS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(255),
   `created_at` timestamp,
   `updated_at` timestamp
 );
 
-CREATE TABLE `menu_items` (
+CREATE TABLE `MENU_ITEMS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `menu_id` int(10),
   `title` varchar(255),
@@ -111,7 +89,7 @@ CREATE TABLE `menu_items` (
   `parameters` text
 );
 
-CREATE TABLE `roles` (
+CREATE TABLE `ROLES` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(255),
   `display_name` varchar(255),
@@ -119,7 +97,7 @@ CREATE TABLE `roles` (
   `updated_at` timestamp
 );
 
-CREATE TABLE `users` (
+CREATE TABLE `USERS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20),
   `name` varchar(255),
@@ -133,13 +111,13 @@ CREATE TABLE `users` (
   `updated_at` timestamp
 );
 
-CREATE TABLE `user_roles` (
+CREATE TABLE `USER_ROLES` (
   `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
   PRIMARY KEY (`user_id`, `role_id`)
 );
 
-CREATE TABLE `permissions` (
+CREATE TABLE `PERMISSIONS` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `key` varchar(255),
   `table_name` varchar(255),
@@ -147,22 +125,22 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp
 );
 
-CREATE TABLE `permission_role` (
+CREATE TABLE `PERMISSION_ROLE` (
   `permission_id` int NOT NULL,
   `role_id` int NOT NULL,
   PRIMARY KEY (`permission_id`, `role_id`)
 );
 
-ALTER TABLE `data_rows` ADD FOREIGN KEY (`data_type_id`) REFERENCES `data_types` (`id`);
+ALTER TABLE `DATA_ROWS` ADD FOREIGN KEY (`data_type_id`) REFERENCES `DATA_TYPES` (`id`);
 
-ALTER TABLE `menu_items` ADD FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`);
+ALTER TABLE `MENU_ITEMS` ADD FOREIGN KEY (`menu_id`) REFERENCES `MENUS` (`id`);
 
-ALTER TABLE `users` ADD FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+ALTER TABLE `USERS` ADD FOREIGN KEY (`role_id`) REFERENCES `ROLES` (`id`);
 
-ALTER TABLE `user_roles` ADD FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+ALTER TABLE `USER_ROLES` ADD FOREIGN KEY (`role_id`) REFERENCES `ROLES` (`id`);
 
-ALTER TABLE `user_roles` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `USER_ROLES` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
 
-ALTER TABLE `permission_role` ADD FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+ALTER TABLE `PERMISSION_ROLE` ADD FOREIGN KEY (`role_id`) REFERENCES `ROLES` (`id`);
 
-ALTER TABLE `permission_role` ADD FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`);
+ALTER TABLE `PERMISSION_ROLE` ADD FOREIGN KEY (`permission_id`) REFERENCES `PERMISSIONS` (`id`);
