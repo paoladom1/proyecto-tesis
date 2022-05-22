@@ -41,20 +41,20 @@ Route::post('/asignarDocente', 'App\Http\Controllers\PruebasController@asignarD'
 Route::post('/buscador', 'App\Http\Controllers\PruebasController@buscador');
 
 // Ventana donde se muestra la modal para crear documento
-Route::get('/secciones', 'App\Http\Controllers\PruebasController@formularioModal');
-Route::post('/crearDocumento', 'App\Http\Controllers\PruebasController@seccionesDocumento');
+Route::get('/secciones', 'App\Http\Controllers\DocumentoController@formularioModal');
+Route::post('/crearDocumento', 'App\Http\Controllers\DocumentoController@seccionesDocumento');
 
 // Temas y subtemas de cada capitulo
-Route::get('/fdinamico/{id}', 'App\Http\Controllers\PruebasController@formularioDinamico');
-Route::post('/fdinamico/guardarTemas', 'App\Http\Controllers\PruebasController@crearDinamico');
-Route::post('/fdinamico/eliminarTema', 'App\Http\Controllers\PruebasController@eliminarContenido');
-Route::post('/fdinamico/eliminarSubTema', 'App\Http\Controllers\PruebasController@eliminarContenido2');
+Route::get('/fdinamico/{id}', 'App\Http\Controllers\EstudianteController@formularioDinamico');
+Route::post('/fdinamico/guardarTemas', 'App\Http\Controllers\EstudianteController@crearDinamico');
+Route::post('/fdinamico/eliminarTema', 'App\Http\Controllers\EstudianteController@eliminarContenido');
+Route::post('/fdinamico/eliminarSubTema', 'App\Http\Controllers\EstudianteController@eliminarContenido2');
 
 // Capitulos
-Route::get('/capitulos', 'App\Http\Controllers\PruebasController@formCapitulos');
-Route::post('/insertarCapitulo', 'App\Http\Controllers\PruebasController@registrar');
-Route::post('/modificar', 'App\Http\Controllers\PruebasController@modificar');
-Route::post('/eliminar', 'App\Http\Controllers\PruebasController@eliminar');
+Route::get('/capitulos', 'App\Http\Controllers\EstudianteController@formCapitulos');
+Route::post('/insertarCapitulo', 'App\Http\Controllers\EstudianteController@registrar');
+Route::post('/modificar', 'App\Http\Controllers\EstudianteController@modificar');
+Route::post('/eliminar', 'App\Http\Controllers\EstudianteController@eliminar');
 
 
 

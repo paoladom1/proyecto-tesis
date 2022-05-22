@@ -380,6 +380,44 @@
     @endif
     <form action="{{ url('/fdinamico/guardarTemas') }}" id="formulario" method="POST">
         {{ csrf_field() }}
+        <div class="accordion3" id="accordionExample34">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Introducción del capitulo "{{$capitulo->nombre_capitulo}}"
+                </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="row">
+                            <input hidden type="text" name="seccion1[]" value="Introducción del capitulo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input hidden type="text" name="seccion4[]" value="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <?php
+                                if (isset($introduccion[0])) {
+                                    $idI = $introduccion[0]->id; 
+                                    if ($introduccion[0]->contenido == "<p>null</p>") {
+                                        $contenidoI = "";
+                                    } else{
+                                        $contenidoI = $introduccion[0]->contenido;
+                                    }
+                                } else{
+                                    $idI = "";
+                                    $contenidoI = "";
+                                }
+                            ?>
+                            <input hidden type="text" name="seccion3[]" value="{{$idI}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <div class="col seccion_0">
+                                <textarea class="form-control" id="seccionTexto0" name="seccion2[]" aria-label="With textarea" rows=10>{{$contenidoI}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <script>
+            agregarEditor(0);
+        </script>
         <div class="row justify-content-start">
             <div class="">
                 <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
