@@ -22,8 +22,7 @@ Route::get('/', function () {
     return view('plantillas.plantillaMenuC');
 });*/
 
-Route::get('/menu', 'App\Http\Controllers\PruebasController@formularioModal');
-Route::post('/crearDocumento', 'App\Http\Controllers\PruebasController@seccionesDocumento');
+Route::get('/menu', 'App\Http\Controllers\DocumentoController@formularioModal');
 
 Route::get('/navChino', function(){
     return view('plantillas.maintemplate');
@@ -41,22 +40,36 @@ Route::post('/asignarDocente', 'App\Http\Controllers\PruebasController@asignarD'
 Route::post('/buscador', 'App\Http\Controllers\PruebasController@buscador');
 
 // Ventana donde se muestra la modal para crear documento
-Route::get('/secciones', 'App\Http\Controllers\PruebasController@formularioModal');
-Route::post('/crearDocumento', 'App\Http\Controllers\PruebasController@seccionesDocumento');
+Route::get('/secciones', 'App\Http\Controllers\DocumentoController@formularioModal');
+Route::post('/crearDocumento', 'App\Http\Controllers\DocumentoController@seccionesDocumento');
 
 // Temas y subtemas de cada capitulo
-Route::get('/fdinamico/{id}', 'App\Http\Controllers\PruebasController@formularioDinamico');
-Route::post('/fdinamico/guardarTemas', 'App\Http\Controllers\PruebasController@crearDinamico');
-Route::post('/fdinamico/eliminarTema', 'App\Http\Controllers\PruebasController@eliminarContenido');
-Route::post('/fdinamico/eliminarSubTema', 'App\Http\Controllers\PruebasController@eliminarContenido2');
+Route::get('/fdinamico/{id}', 'App\Http\Controllers\EstudianteController@formularioDinamico');
+Route::post('/fdinamico/guardarTemas', 'App\Http\Controllers\EstudianteController@crearDinamico');
+Route::post('/fdinamico/eliminarTema', 'App\Http\Controllers\EstudianteController@eliminarContenido');
+Route::post('/fdinamico/eliminarSubTema', 'App\Http\Controllers\EstudianteController@eliminarContenido2');
 
 // Capitulos
-Route::get('/capitulos', 'App\Http\Controllers\PruebasController@formCapitulos');
-Route::post('/insertarCapitulo', 'App\Http\Controllers\PruebasController@registrar');
-Route::post('/modificar', 'App\Http\Controllers\PruebasController@modificar');
-Route::post('/eliminar', 'App\Http\Controllers\PruebasController@eliminar');
+Route::get('/capitulos', 'App\Http\Controllers\EstudianteController@formCapitulos');
+Route::post('/insertarCapitulo', 'App\Http\Controllers\EstudianteController@registrar');
+Route::post('/modificar', 'App\Http\Controllers\EstudianteController@modificar');
+Route::post('/eliminar', 'App\Http\Controllers\EstudianteController@eliminar');
 
+// Resumen
+Route::get('/resumen', 'App\Http\Controllers\EstudianteController@frmResumen');
+Route::post('/guardarResumen', 'App\Http\Controllers\EstudianteController@saveResumen');
 
+// Referencias
+Route::get('/referencias', 'App\Http\Controllers\EstudianteController@frmReferencia');
+Route::post('/guardarReferencia', 'App\Http\Controllers\EstudianteController@saveReferencia');
+
+// Glosario
+Route::get('/glosario', 'App\Http\Controllers\EstudianteController@frmGlosario');
+Route::post('/guardarGlosario', 'App\Http\Controllers\EstudianteController@saveGlosario');
+
+// Abreviatura, nomenclaturas y siglas
+Route::get('/abreviaturas', 'App\Http\Controllers\EstudianteController@frmAbreviatura');
+Route::post('/guardarAbreviatura', 'App\Http\Controllers\EstudianteController@saveAbreviatura');
 
 //Rutas de prueba para UI
 /*Route::get('/menu', function () {
@@ -79,22 +92,6 @@ Route::get('/portada', function(){
     return view('formulariosDoc.portadas');
 });
 
-Route::get('/resumen', function(){
-    return view('formulariosDoc.resumen');
-});
-
-Route::get('/abreviaturas', function(){
-    return view('formulariosDoc.abreviaturas');
-});
-
 Route::get('/agradecimientos', function(){
     return view('formulariosDoc.agradecimientos');
-});
-
-Route::get('/referencias', function(){
-    return view('formulariosDoc.referencias');
-});
-
-Route::get('/glosario', function(){
-    return view('formulariosDoc.glosario');
 });

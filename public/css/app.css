@@ -317,6 +317,11 @@ a[aria-expanded="true"] {
     grid-template-columns: 1fr 1fr;
   }
 
+  .buttonWrapper2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
   button {
     letter-spacing: 3px;
     border: none;

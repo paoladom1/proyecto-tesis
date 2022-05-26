@@ -134,7 +134,7 @@ CREATE TABLE `CONTENIDO_SECCION_CAPITULO` (
   `tema` varchar(255),
   `contenido` text NOT NULL,
   `orden_contenido` int NOT NULL,
-  `seccion_capitulos_id` int NOT NULL,
+  `seccion_capitulo_id` int NOT NULL,
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDb;
