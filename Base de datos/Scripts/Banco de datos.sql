@@ -67,6 +67,8 @@ INSERT INTO DEPARTAMENTO_UNIDAD(nombre_departamento, facultad_id) VALUES('Decana
 INSERT INTO DEPARTAMENTO_UNIDAD(nombre_departamento, facultad_id) VALUES('Decanato de Ciencias Sociales y Humanidades', 3);
 INSERT INTO DEPARTAMENTO_UNIDAD(nombre_departamento, facultad_id) VALUES('Decanato de Ingeniería y Arquitectura', 1);
 INSERT INTO DEPARTAMENTO_UNIDAD(nombre_departamento, facultad_id) VALUES('Decanato de Postgrados', 4);
+INSERT INTO DEPARTAMENTO_UNIDAD(nombre_departamento, facultad_id) VALUES('Rectoría', null);
+INSERT INTO DEPARTAMENTO_UNIDAD(nombre_departamento, facultad_id) VALUES('Secretaría General', null);
 
 INSERT INTO TIPO_ABREVIATURA(nombre_tipo_abreviatura) VALUES ('Abreviatura');
 INSERT INTO TIPO_ABREVIATURA(nombre_tipo_abreviatura) VALUES ('Sigla');

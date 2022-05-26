@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Carrera extends Model
 {
     protected $table = 'carrera';
+
+    public function facultad(){
+        return $this -> belongsTo('App\Models\Facultad', 'facultad_id');
+    }
 }

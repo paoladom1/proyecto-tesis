@@ -123,7 +123,7 @@
                 </div>
                 <div class="modal-body checkSeccion">
                     <div class="form-check">
-                        <input class="form-check-input" onclick="cambio2()" type="checkbox"  name='seccionToda' id="flexCheckDefault">
+                        <input class="form-check-input" onclick="cambio2()" type="checkbox" value="0" name='seccionToda' id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             Todo el documento
                         </label>
@@ -136,7 +136,7 @@
                         @php
                             ++$cont;
                         @endphp
-                        @if ($seccion[1] != -1 && $seccion[1] != -2)
+                        @if ($seccion[1] > 0)
                             <div class="form-check offset-md-1">
                                 <input class="form-check-input" onclick="cambio(<?=$cont?>)" type="checkbox" value="{{$seccion[1]}}" name='seccion2[]' id="flexCheckDefault{{$cont}}">
                                 <label class="form-check-label" for="flexCheckDefault{{$cont}}">
@@ -158,12 +158,29 @@
                                 ++$estaticas;
                             @endphp
                             <div class="form-check offset-md-1">
+                                <input class="form-check-input" onclick="cambio(<?=$cont?>)" type="checkbox" value="{{$estaticas}}" name='seccion3[]' id="flexCheckDefault{{$cont}}">
+                                <label class="form-check-label" for="flexCheckDefault{{$cont}}">
+                                    {{$seccion[0]}}
+                                </label>
+                            </div>
+                        @elseif ($seccion[1] == -3)
+                            @php
+                                ++$estaticas;
+                            @endphp
+                            <div class="form-check offset-md-1">
                                 <input class="form-check-input" disabled type="checkbox" value="{{$estaticas}}" name='seccion[]' id="flexCheckDefault{{$cont}}">
                                 <label class="form-check-label" for="flexCheckDefault{{$cont}}">
                                     {{$seccion[0]}}
                                 </label>
                             </div>
-                        @endif                         
+                        @elseif ($seccion[1] == -4)
+                            <div class="form-check offset-md-1">
+                                <input class="form-check-input" disabled type="checkbox" value="" name='seccion4[]' id="flexCheckDefault{{$cont}}">
+                                <label class="form-check-label" for="flexCheckDefault{{$cont}}">
+                                    {{$seccion[0]}}
+                                </label>
+                            </div>
+                        @endif                            
                     @endforeach
                 </div>
                 <div class="modal-footer">
@@ -202,7 +219,12 @@
         var listado = document.querySelectorAll("#listadoSecciones li");
         
         var check = document.querySelectorAll('.checkSeccion .form-check-input');
-    
+        var desabilitados = 0;
+        for (let index = 1; index < check.length; index++) {
+            if (check[index].disabled) {
+                ++desabilitados;
+            }
+        }
         function cambio(checkbox){
             if(check[checkbox].checked){
                 listado[checkbox-1].style.display = 'block';
@@ -212,7 +234,7 @@
                         ++cont;
                     }  
                 }
-                if(cont == check.length-1){
+                if(cont == check.length-(1+desabilitados)){
                     check[0].checked = true;
                 }
             }
