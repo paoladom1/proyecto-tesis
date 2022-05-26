@@ -1,7 +1,7 @@
 @extends('plantillas.nav')
 @section('content')
 
-    <div class="container" style="background-color: white">
+    <div class="container mainContainer" style="background-color: white">
         <div class="row">
             <div class="container mPrincipal">
                 <div class="row " style="margin-top: 2em;">
@@ -9,18 +9,6 @@
                 </div>
                 <center>
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-3">
-                
-
-                    <div class="col">
-                        <a  href="{{ url('/portada') }}" style="text-decoration: none; color: black;" >
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">Portada</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
                     <div class="col">
                         <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
@@ -41,11 +29,8 @@
                                     <h5 class="card-title">Agradecimientos</h5>
                                 </div>
                             </div>
-                        </a>   
+                        </a>
                     </div>
-
-
-                    <!------------------------------------------------------------------------------------------------------>
 
                     <div class="col">
                         <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;">
@@ -57,6 +42,9 @@
                             </div>
                         </a>
                     </div>
+
+
+                    <!------------------------------------------------------------------------------------------------------>
 
                     <div class="col">
                         <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;">
@@ -127,7 +115,7 @@
                         <label class="form-check-label" for="flexCheckDefault">
                             Todo el documento
                         </label>
-                    </div>  
+                    </div>
                     @php
                         $cont = 0;
                         $estaticas = 0;
@@ -142,7 +130,7 @@
                                 <label class="form-check-label" for="flexCheckDefault{{$cont}}">
                                     {{$seccion[0]}}
                                 </label>
-                            </div>   
+                            </div>
                         @elseif ($seccion[1] == -1)
                             @php
                                 ++$estaticas;
@@ -163,7 +151,7 @@
                                     {{$seccion[0]}}
                                 </label>
                             </div>
-                        @endif                         
+                        @endif
                     @endforeach
                 </div>
                 <div class="modal-footer">
@@ -186,7 +174,7 @@
                             @php
                                 ++$cont;
                             @endphp
-                            <li>{{$seccion[0]}}</li>                          
+                            <li>{{$seccion[0]}}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -198,11 +186,11 @@
             </div>
         </div>
     </form>
-<script>    
+<script>
         var listado = document.querySelectorAll("#listadoSecciones li");
-        
+
         var check = document.querySelectorAll('.checkSeccion .form-check-input');
-    
+
         function cambio(checkbox){
             if(check[checkbox].checked){
                 listado[checkbox-1].style.display = 'block';
@@ -210,7 +198,7 @@
                 for (let index = 1; index < check.length; index++) {
                     if(check[index].checked){
                         ++cont;
-                    }  
+                    }
                 }
                 if(cont == check.length-1){
                     check[0].checked = true;
@@ -221,13 +209,13 @@
                 listado[checkbox-1].style.display = 'none';
             }
         }
-    
+
         function cambio2(){
             if(check[0].checked){
                 for (let index = 1; index < check.length; index++) {
                     if (!check[index].disabled) {
                         check[index].checked = true;
-                        cambio(index);   
+                        cambio(index);
                     }
                 }
             }
@@ -240,7 +228,7 @@
                 }
             }
         }
-    
+
         function desmarcar() {
             for (let index = 0; index < check.length; index++) {
                 check[index].checked = false;

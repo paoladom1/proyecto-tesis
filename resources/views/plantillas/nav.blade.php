@@ -44,7 +44,7 @@
             <div class="dropdown-menu" aria-labelledby="user-btn">
                 <a class="dropdown-item user-btn-name" href="#">Joshua Steven Sharp Reyes</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="#" style="width: 100%">Editar perfil</a>
+                <a class="dropdown-item" href="{{ url('/user') }}" style="width: 100%">Editar perfil</a>
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" href="#" style="width: 100%">Cerrar sesion</a>
             </div>
@@ -70,17 +70,8 @@
             </div>
 
             <hr>
-            
+
             <ul class="list-unstyled components">
-                <li> {{--  <a href="#portadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Portada</a>
-                    <ul class="collapse list-unstyled" id="portadas">
-                        <li> <a href="#">Primer Portada</a> </li>
-                        <li> <a href="#">Segunda Portada</a> </li>
-                    </ul>--}}
-                    <a href="{{ url('/menu') }}">Menu Principal</a>
-                    <hr>
-                    <a href="{{ url('/portada') }}">Portada</a>
-                </li>
                 <li> <a href="{{ url('/resumen') }}">Resumen</a> </li>
                 <li> <a href="{{ url('/agradecimientos') }}">Agradecimientos</a> </li>
                 <li> <a href="{{ url('/abreviaturas') }}">Abreviaturas</a> </li>
@@ -89,7 +80,7 @@
                 <li> <a href="{{ url('/referencias') }}">Referencias</a> </li>
             </ul>
 
-          
+
             <!--<div class="logOut">
                 <a data-bs-toggle="modal" href="#exampleModalToggle" role="button">Crear documento</a>
             </div>-->
