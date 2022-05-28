@@ -82,10 +82,6 @@ Route::get('/lector', function () {
     return view('director.lector');
 });
 
-Route::get('/portada', function(){
-    return view('formulariosDoc.portadas');
-});
-
 Route::get('/agradecimientos', function(){
     return view('formulariosDoc.agradecimientos');
 });

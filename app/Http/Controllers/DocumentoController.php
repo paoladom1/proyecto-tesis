@@ -34,7 +34,7 @@ class DocumentoController extends Controller
         /*
             -1 => Significa que es una sección obligatoria parte 1.
             -2 => Significa que es una sección obligatoria parte 2.
-            -3 => Significa que es una sección opcional.
+            -3 => Significa que es una sección que no tiene datos.
             -4 => Significa que no hay capitulos ingresados.
             numeros naturales => Significa que es un capitulo y se le pasa el respectivo ID.
         */ 
@@ -47,8 +47,8 @@ class DocumentoController extends Controller
 
         $cont = 0;
         $array[$cont][0] = 'Portada y Segunda Portada (Autogenerado)'; $array[$cont++][1] = '-1'; 
-        $array[$cont][0] = 'Agradecimiento'; $array[$cont++][1] = '-3'; 
-        $array[$cont][0] = 'Dedicatoria'; $array[$cont++][1] = '-3'; 
+        $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-1';;
+        $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-1'; ;
 
         if ($resumen == "[]") {
             $array[$cont][0] = 'Resumen (No tiene datos)'; $array[$cont++][1] = '-3';    
@@ -67,13 +67,13 @@ class DocumentoController extends Controller
         if ($abreviatura == "[]") {
             $array[$cont][0] = 'Abreviaciones (No tiene datos)'; $array[$cont++][1] = '-3';     
         } else{
-            $array[$cont][0] = 'Abreviaciones'; $array[$cont++][1] = '-1'; 
+            $array[$cont][0] = 'Abreviaciones'; $array[$cont++][1] = '-1';
         }
 
         if ($nomenclatura == "[]") {
             $array[$cont][0] = 'Nomenclaturas (No tiene datos)'; $array[$cont++][1] = '-3';   
         } else{
-            $array[$cont][0] = 'Nomenclaturas'; $array[$cont++][1] = '-1'; 
+            $array[$cont][0] = 'Nomenclaturas'; $array[$cont++][1] = '-1';
         }
 
         $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
@@ -91,7 +91,7 @@ class DocumentoController extends Controller
             $array[$cont][0] = 'Glosario (No tiene datos)'; $array[$cont++][1] = '-3';    
         } else{
             if ($glosario[0]->opcional == 0) {
-                $array[$cont][0] = 'Glosario'; $array[$cont++][1] = '-2'; 
+                $array[$cont][0] = 'Glosario (seccion opcional)'; $array[$cont++][1] = '-2';;
             } else{
                 $array[$cont][0] = 'Glosario (seccion opcional)'; $array[$cont++][1] = '-3'; 
             }

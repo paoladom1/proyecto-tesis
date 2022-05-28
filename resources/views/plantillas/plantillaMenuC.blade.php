@@ -11,17 +11,6 @@
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-3">
 
                     <div class="col">
-                        <a  href="{{ url('/portada') }}" style="text-decoration: none; color: black;" >
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                                <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">Portada</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col">
                         <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
                                 <img src="img/Fondo.jpg" class="card-img-top img-card" alt="Card image cap">
@@ -43,9 +32,6 @@
                         </a>   
                     </div>
 
-
-                    <!------------------------------------------------------------------------------------------------------>
-
                     <div class="col">
                         <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;" >
@@ -56,6 +42,8 @@
                             </div>
                         </a>
                     </div>
+
+                    <!------------------------------------------------------------------------------------------------------>
 
                     <div class="col">
                         <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;">
@@ -218,28 +206,26 @@
         var listado = document.querySelectorAll("#listadoSecciones li");
         
         var check = document.querySelectorAll('.checkSeccion .form-check-input');
-        var desabilitados = 0;
-        for (let index = 1; index < check.length; index++) {
-            if (check[index].disabled) {
-                ++desabilitados;
-            }
-        }
         function cambio(checkbox){
             if(check[checkbox].checked){
                 listado[checkbox-1].style.display = 'block';
                 var cont = 0;
                 for (let index = 1; index < check.length; index++) {
-                    if(check[index].checked){
+                    if(check[index].checked && check[index].value != 9 && check[index].value != 2 && check[index].value != 3){
                         ++cont;
                     }  
                 }
-                if(cont == check.length-(1+desabilitados)){
+                if(cont == check.length-(4)){
                     check[0].checked = true;
                 }
             }
             else{
-                check[0].checked = false;
-                listado[checkbox-1].style.display = 'none';
+                if (check[checkbox].value == 9 || check[checkbox].value == 2 || check[checkbox].value == 3) {
+                    check[0].checked = true; 
+                } else{
+                    check[0].checked = false; 
+                }
+                listado[checkbox-1].style.display = 'none';  
             }
         }
     

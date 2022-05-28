@@ -79,7 +79,6 @@
                     </ul>--}}
                     <a href="{{ url('/menu') }}">Menu Principal</a>
                     <hr>
-                    <a href="{{ url('/portada') }}">Portada</a>
                 </li>
                 <li> <a href="{{ url('/resumen') }}">Resumen</a> </li>
                 <li> <a href="{{ url('/agradecimientos') }}">Agradecimientos</a> </li>
