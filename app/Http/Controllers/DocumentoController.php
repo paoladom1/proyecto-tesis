@@ -23,6 +23,13 @@ use App\Models\SubcontenidoSeccionCapitulo;
 
 class DocumentoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
+    //Arreglar
+
     public function formularioModal(){
         /*
             -1 => Significa que es una sección obligatoria parte 1.
@@ -231,7 +238,7 @@ class DocumentoController extends Controller
         );
 
         $section->addText("RECTOR", $estilo, 'portadaStyle');
-        $section->addText(mb_strtoupper($rector->nombre).' '.mb_strtoupper($rector->apellido).", S.J.", $estilo, 'portadaStyle');
+        $section->addText(mb_strtoupper($rector->nombre).' '.mb_strtoupper($rector->apellido), $estilo, 'portadaStyle');
         $section->addTextBreak(1);
         $section->addTextBreak(1);
         $section->addTextBreak(1);

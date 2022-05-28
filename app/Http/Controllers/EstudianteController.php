@@ -14,14 +14,26 @@ use App\Models\SeccionGlosario;
 use App\Models\SeccionReferencia;
 use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
+use App\Models\Estudiante;
 
 class EstudianteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
+    public function obtenerGrupo(){
+        $grupo = auth()->guard('admin')->user()->id;
+        $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
+        return $estudiante->grupo_trabajo_id;
+    }
+
     //-------------------------------------Creación de capitulos-----------------------------------
         
     public function formCapitulos()
     {
-        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->where('grupo_trabajo_id', '=', 1)->get();
+        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return view("formulariosDoc.capitulo", array(
             "capitulos" => $capitulo
         ));
@@ -33,7 +45,7 @@ class EstudianteController extends Controller
         $capitulo->nombre_capitulo = $request->input('nombreTitulo');
         $capitulo->orden_capitulo = $request->input('orden_capitulo');
         //$capitulo->grupo_trabajo_id = $request->input('orden_capitulo');
-        $capitulo->grupo_trabajo_id = 1;
+        $capitulo->grupo_trabajo_id = $this->obtenerGrupo();
         $capitulo->save();
 
         $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
@@ -72,7 +84,7 @@ class EstudianteController extends Controller
 
     public function formularioDinamico($id){ 
         // Validar que el contenido que se pueda ver corresponda al equipo
-        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->where('grupo_trabajo_id', '=', 1)->findOrFail($id);
+        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->findOrFail($id);
 
         $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '>',0)->get();
         $contenido_introduccion = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '=',0)->get();
@@ -157,7 +169,7 @@ class EstudianteController extends Controller
 
     //---------------------------------------Sección de resumen---------------------------------------------
     public function frmResumen(){ 
-        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', 1)->get();
+        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return view('formulariosDoc.resumen', array(
             "resumen" => $resumen
         ));
@@ -175,12 +187,12 @@ class EstudianteController extends Controller
             if($id == null){
                 $resumen = new SeccionResumen();
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->save();
             } else{
                 $resumen = SeccionResumen::findOrFail($id);
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->update();
             }
             $mensaje = array(
@@ -193,7 +205,7 @@ class EstudianteController extends Controller
 
     //---------------------------------------Sección de referencias---------------------------------------------
     public function frmReferencia(){ 
-        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', 1)->get();
+        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return view('formulariosDoc.referencias', array(
             "referencia" => $referencia
         ));
@@ -211,12 +223,12 @@ class EstudianteController extends Controller
             if($id == null){
                 $resumen = new SeccionReferencia();
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->save();
             } else{
                 $resumen = SeccionReferencia::findOrFail($id);
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->update();
             }
             $mensaje = array(
@@ -229,7 +241,7 @@ class EstudianteController extends Controller
 
     //---------------------------------------Sección de glosario---------------------------------------------
     public function frmGlosario(){ 
-        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', 1)->get();
+        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return view('formulariosDoc.glosario', array(
             "glosario" => $glosario
         ));
@@ -248,13 +260,13 @@ class EstudianteController extends Controller
             if($id == null){
                 $resumen = new SeccionGlosario();
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen -> opcional = $opcional;
                 $resumen->save();
             } else{
                 $resumen = SeccionGlosario::findOrFail($id);
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen -> opcional = $opcional;
                 $resumen->update();
             }
@@ -268,9 +280,9 @@ class EstudianteController extends Controller
 
     //--------------------------------Sección de abreviatura, nomenclatura y glosario-----------------------------------------
     public function frmAbreviatura(){ 
-        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 1)->get();
-        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 3)->get();
-        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 2)->get();
+        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 1)->get();
+        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 3)->get();
+        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 2)->get();
         return view('formulariosDoc.abreviaturas', array(
             "abreviatura" => $abreviatura,
             "nomenclatura" => $nomenclatura,
@@ -291,13 +303,13 @@ class EstudianteController extends Controller
             if($id == null){
                 $abreviatura = new SeccionAbreviaturaNomenclaturaSigla();
                 $abreviatura -> contenido = $contenido;
-                $abreviatura -> grupo_trabajo_id = 1;
+                $abreviatura -> grupo_trabajo_id = $this->obtenerGrupo();
                 $abreviatura -> tipo_abreviatura_id  = $tipo;
                 $abreviatura->save();
             } else{
                 $abreviatura = SeccionAbreviaturaNomenclaturaSigla::findOrFail($id);
                 $abreviatura -> contenido = $contenido;
-                $abreviatura -> grupo_trabajo_id = 1;
+                $abreviatura -> grupo_trabajo_id = $this->obtenerGrupo();
                 $abreviatura -> tipo_abreviatura_id  = $tipo;
                 $abreviatura->update();
             }

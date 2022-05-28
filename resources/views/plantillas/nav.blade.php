@@ -42,11 +42,11 @@
                 <img src="img/profile.png" id="profile" style="width: 2.5em; border-radius: 100%;"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="user-btn">
-                <a class="dropdown-item user-btn-name" href="#">Joshua Steven Sharp Reyes</a>
+                <a class="dropdown-item user-btn-name" href="#">{{auth()->guard('admin')->user()->email}}</a>
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" href="#" style="width: 100%">Editar perfil</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="#" style="width: 100%">Cerrar sesion</a>
+                <a class="dropdown-item" href="{{route('logout')}}" style="width: 100%" href="{{route('logout')}}">Cerrar sesion</a>
             </div>
           </div>
         <!--<div id="user-settings">

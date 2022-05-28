@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
+Route::get('/', "App\Http\Controllers\Auth\LoginController@showLogin");
+Route::post('login', 'App\Http\Controllers\Auth\LoginController@login')->name('login');
+Route::get('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 /*Route::get('/menu', function () {
     return view('plantillas.plantillaMenuC');
@@ -33,11 +32,11 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 // Filtros de asesores y directores de trabajo de graduación.
-Route::get('/filtro', 'App\Http\Controllers\PruebasController@formularioFiltro');
-Route::post('/filtroPost', 'App\Http\Controllers\PruebasController@filtro');
-Route::post('/filtroPost2', 'App\Http\Controllers\PruebasController@filtro2');
-Route::post('/asignarDocente', 'App\Http\Controllers\PruebasController@asignarD');
-Route::post('/buscador', 'App\Http\Controllers\PruebasController@buscador');
+Route::get('/filtro', 'App\Http\Controllers\DirectorController@formularioFiltro');
+Route::post('/filtroPost', 'App\Http\Controllers\DirectorController@filtro');
+Route::post('/filtroPost2', 'App\Http\Controllers\DirectorController@filtro2');
+Route::post('/asignarDocente', 'App\Http\Controllers\DirectorController@asignarD');
+Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 
 // Ventana donde se muestra la modal para crear documento
 Route::get('/secciones', 'App\Http\Controllers\DocumentoController@formularioModal');
@@ -70,11 +69,6 @@ Route::post('/guardarGlosario', 'App\Http\Controllers\EstudianteController@saveG
 // Abreviatura, nomenclaturas y siglas
 Route::get('/abreviaturas', 'App\Http\Controllers\EstudianteController@frmAbreviatura');
 Route::post('/guardarAbreviatura', 'App\Http\Controllers\EstudianteController@saveAbreviatura');
-
-//Rutas de prueba para UI
-/*Route::get('/menu', function () {
-    return view('plantillas.menuprincipal');
-});*/
 
 Route::get('/user', function () {
     return view('usuarios.usuario');
