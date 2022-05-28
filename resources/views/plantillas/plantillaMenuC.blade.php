@@ -249,9 +249,14 @@
         }
     
         function desmarcar() {
-            for (let index = 0; index < check.length; index++) {
-                check[index].checked = false;
-                listado[index].style.display = 'none';
+            if(check[0].checked){
+                check[0].checked = false;
+            }
+            for (let index = 1; index < check.length; index++) {
+                if (check[index].checked) {
+                    check[index].checked = false;
+                    listado[index-1].style.display = 'none';   
+                }
             }
         }
 </script>
