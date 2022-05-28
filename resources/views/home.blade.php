@@ -46,7 +46,7 @@
                         {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="row mb-3">
-                        <div class="">
+                        <div class="olvidasteC">
                             <a href="#" style="font-size: .75rem; font-weight: bold; text-decoration: none"  onMouseOver="this.style.color='#f00'"
                             onMouseOut="this.style.color='blue'">¿Olvidaste la contraseña?</a>
                         </div>

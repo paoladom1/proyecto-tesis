@@ -9,7 +9,6 @@
                 </div>
                 <center>
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-3">
-
                     <div class="col">
                         <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
@@ -96,6 +95,7 @@
         </div>
 
     </div>
+
     <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="bi bi-file-earmark-text float-icon"></i></a>
 
     <!-- Crear documento -->
@@ -203,6 +203,10 @@
         </div>
     </form>
 <script>    
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
         var listado = document.querySelectorAll("#listadoSecciones li");
         
         var check = document.querySelectorAll('.checkSeccion .form-check-input');

@@ -5,17 +5,33 @@
     justify-content: center;
     position: fixed;
     width: 100%;
+    margin: 0;
 }
+
 .navbar-main{
     /*background-color: #003C71;*/
     justify-content: center;
     position: fixed;
     width: 100%;
+    margin: 0;
 }
 
+#user-settings .dropdown-menu{
+    padding: 0;
+}
+
+#user-settings .dropdown-item{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.olvidasteC{
+    text-align: center;
+}
 
 .navbar h4{
     color: white;
+    font-size: 1.2em;
 }
 
 .canva{
@@ -34,7 +50,7 @@
 }
 
 .canva .sector1 img{
-    width: 30%;
+    width: 20%;
     margin-top: 20%;
 }
 
@@ -85,7 +101,9 @@
 }
 
 .sidenav a{
-    padding-left: 1em;
+    padding-left: 0.8em;
+    padding-top: 5px;
+    padding-bottom: 5px;
     text-decoration: none;
     font-size: 1.5em;
     color: white;
@@ -114,15 +132,17 @@
 }
 
 .main-content{
-    padding-top: 10.5rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-top: 8.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     padding-bottom: 1rem;
     display: flex;
     justify-content: center;
 }
 
 .navGral{
+    padding-top: 3px;
+    padding-bottom: 3px;
     background: #003C71;
     text-align: center;
     position: fixed;
@@ -153,7 +173,7 @@
 
 .menuButton i{
     float: left;
-    margin-top: 4%;
+    margin-top: 5%;
     margin-left: 1%;
     color: white;
     background-color: #003C71;
@@ -170,7 +190,6 @@
     color: white;
     opacity: 100;
     margin-bottom: 4%;
-
 }
 
 .crearDoc{
@@ -252,7 +271,8 @@
 
 ul li a:hover {
     color: #fff;
-    background: #E87B2A
+    background: #E87B2A;
+    transition: 0.5s;
 }
 ul li.active>a,
 a[aria-expanded="true"] {
@@ -401,12 +421,12 @@ a[aria-expanded="true"] {
 
 /*-------------------------Boton Flotante--------------------------*/
 .float-button{
-    font-size: 3em;
+    font-size: 3.1em;
     color: white;
     text-align: center;
     position: fixed;
     right: 50px;
-    bottom: 50px;
+    bottom: 40px;
     opacity: 100%;
 }
 
@@ -417,6 +437,8 @@ a[aria-expanded="true"] {
 
 .float-icon{
     background-color: #E87B2A;
-    border-radius: 10px;
-    padding: 0.25em;
+    border-radius: 100%;
+    display: block;
+    width: 80px;
+    height: 80px;
 }   

@@ -70,7 +70,7 @@ Route::post('/guardarGlosario', 'App\Http\Controllers\EstudianteController@saveG
 Route::get('/abreviaturas', 'App\Http\Controllers\EstudianteController@frmAbreviatura');
 Route::post('/guardarAbreviatura', 'App\Http\Controllers\EstudianteController@saveAbreviatura');
 
-Route::get('/user', function () {
+Route::get('/perfil', function () {
     return view('usuarios.usuario');
 });
 
