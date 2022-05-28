@@ -189,6 +189,7 @@ class EstudianteController extends Controller
                 $resumen -> contenido = $contenido;
                 $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->save();
+                $id = $resumen->id;
             } else{
                 $resumen = SeccionResumen::findOrFail($id);
                 $resumen -> contenido = $contenido;
@@ -197,7 +198,8 @@ class EstudianteController extends Controller
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
         }
         return $mensaje;
@@ -221,19 +223,21 @@ class EstudianteController extends Controller
             );
         } else{
             if($id == null){
-                $resumen = new SeccionReferencia();
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
-                $resumen->save();
+                $referencia = new SeccionReferencia();
+                $referencia -> contenido = $contenido;
+                $referencia -> grupo_trabajo_id = $this->obtenerGrupo();
+                $referencia->save();
+                $id = $referencia->id;
             } else{
-                $resumen = SeccionReferencia::findOrFail($id);
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
-                $resumen->update();
+                $referencia = SeccionReferencia::findOrFail($id);
+                $referencia -> contenido = $contenido;
+                $referencia -> grupo_trabajo_id = $this->obtenerGrupo();
+                $referencia->update();
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
         }
         return $mensaje;
@@ -258,21 +262,23 @@ class EstudianteController extends Controller
             );
         } else{
             if($id == null){
-                $resumen = new SeccionGlosario();
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
-                $resumen -> opcional = $opcional;
-                $resumen->save();
+                $glosario = new SeccionGlosario();
+                $glosario -> contenido = $contenido;
+                $glosario -> grupo_trabajo_id = $this->obtenerGrupo();
+                $glosario -> opcional = $opcional;
+                $glosario->save();
+                $id = $glosario->id;
             } else{
-                $resumen = SeccionGlosario::findOrFail($id);
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
-                $resumen -> opcional = $opcional;
-                $resumen->update();
+                $glosario = SeccionGlosario::findOrFail($id);
+                $glosario -> contenido = $contenido;
+                $glosario -> grupo_trabajo_id = $this->obtenerGrupo();
+                $glosario -> opcional = $opcional;
+                $glosario->update();
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
         }
         return $mensaje;
@@ -306,6 +312,7 @@ class EstudianteController extends Controller
                 $abreviatura -> grupo_trabajo_id = $this->obtenerGrupo();
                 $abreviatura -> tipo_abreviatura_id  = $tipo;
                 $abreviatura->save();
+                $id = $abreviatura->id;
             } else{
                 $abreviatura = SeccionAbreviaturaNomenclaturaSigla::findOrFail($id);
                 $abreviatura -> contenido = $contenido;
@@ -315,7 +322,8 @@ class EstudianteController extends Controller
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
         }
         return $mensaje;

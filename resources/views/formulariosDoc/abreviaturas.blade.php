@@ -173,23 +173,24 @@ function agregarEditor(n) {
             var id;
             var contenido;
             if(tipo == 1){
-                id = document.getElementsByName('idA')[0].value;
+                id = document.getElementsByName('idA')[0];
                 contenido = CKEDITOR.instances['seccionTexto1'].getData();
             } else if(tipo == 2){
-                id = document.getElementsByName('idS')[0].value;
+                id = document.getElementsByName('idS')[0];
                 contenido = CKEDITOR.instances['seccionTexto3'].getData();
             } else if(tipo == 3){
-                id = document.getElementsByName('idN')[0].value;
+                id = document.getElementsByName('idN')[0];
                 contenido = CKEDITOR.instances['seccionTexto2'].getData();
             }
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
                 url : "./guardarAbreviatura",
-                data: {"_token": "{{ csrf_token() }}", "id": id, "contenido": contenido, "tipo": tipo},
+                data: {"_token": "{{ csrf_token() }}", "id": id.value, "contenido": contenido, "tipo": tipo},
                 success : function(r) {
                     if (r['code'] == 200) {
                         alert(r['mensaje'], 'success', 1);   
+                        id.setAttribute("value", r['id']);
                     } else{
                         alert(r['mensaje'], 'danger', 2);
                     }

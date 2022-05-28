@@ -105,7 +105,8 @@ function agregarEditor() {
                 data: {"_token": "{{ csrf_token() }}", "id": id, "contenido": contenidoR},
                 success : function(r) {
                     if (r['code'] == 200) {
-                        alert(r['mensaje'], 'success', 1);   
+                        alert(r['mensaje'], 'success', 1);  
+                        document.getElementsByName('id')[0].setAttribute("value", r['id']); 
                     } else{
                         alert(r['mensaje'], 'danger', 2);
                     }

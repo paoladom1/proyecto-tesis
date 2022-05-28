@@ -100,7 +100,7 @@ function agregarEditor() {
         }
         
         function registrarResumen() {
-            var id = document.getElementsByName('id')[0].value ;
+            var id = document.getElementsByName('id')[0].value;
             var contenidoR = CKEDITOR.instances['seccionTexto'].getData();
             $.ajax({
                 type : "POST",
@@ -110,6 +110,7 @@ function agregarEditor() {
                 success : function(r) {
                     if (r['code'] == 200) {
                         alert(r['mensaje'], 'success', 1);   
+                        document.getElementsByName('id')[0].setAttribute("value", r['id']);
                     } else{
                         alert(r['mensaje'], 'danger', 2);
                     }
