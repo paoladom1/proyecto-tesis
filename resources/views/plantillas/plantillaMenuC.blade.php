@@ -207,9 +207,19 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+
+        var desabilitados = 0;
+
         var listado = document.querySelectorAll("#listadoSecciones li");
         
         var check = document.querySelectorAll('.checkSeccion .form-check-input');
+
+        for (let index = 1; index < check.length; index++) {
+            if(check[index].disabled && check[index].value != 9 && check[index].value != 2 && check[index].value != 3){
+                ++desabilitados;
+            }  
+        }
+        
         function cambio(checkbox){
             if(check[checkbox].checked){
                 listado[checkbox-1].style.display = 'block';
@@ -219,7 +229,7 @@
                         ++cont;
                     }  
                 }
-                if(cont == check.length-(4)){
+                if(cont == check.length-(4+desabilitados)){
                     check[0].checked = true;
                 }
             }

@@ -126,6 +126,16 @@ class DocumentoController extends Controller
             'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH
         ));
 
+        $phpWord->addNumberingStyle(
+            'hNum',
+            array('type' => 'multilevel', 'levels' => array(
+                array('pStyle' => 'Heading1', 'format' => 'lowerRoman', 'text' => '%1'),
+                array('pStyle' => 'Heading2', 'format' => 'lowerRoman', 'text' => '%1.%2'),
+                array('pStyle' => 'Heading3', 'format' => 'lowerRoman', 'text' => '%1.%2.%3'),
+                )
+            )
+        );
+
         $phpWord->setDefaultFontSize(11);
         $phpWord->setDefaultFontName('Times New Roman');
         $phpWord->getSettings()->setUpdateFields(true);
@@ -151,6 +161,8 @@ class DocumentoController extends Controller
         $phpWord->getCompatibility()->setOoxmlVersion(15);
         $phpWord->getSettings()->setMirrorMargins(true);
         $phpWord->getSettings()->setThemeFontLang(new Language("ES-SV"));
+
+
         return $phpWord;
     }
 
@@ -332,7 +344,7 @@ class DocumentoController extends Controller
         if($documentoTodo == null){
             $section = $documento->addSection(DocumentoController::margenes());
         } else{
-            $section = $documento->addSection(array('pageNumberingStart' => 1), DocumentoController::margenes());
+            $section = $documento->addSection(array('pageNumberingStart' => "i"), DocumentoController::margenes());
             $footer = $section->addFooter();
             $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE', array('format' => 'roman'));
         }
