@@ -20,6 +20,8 @@ use App\Models\SeccionGlosario;
 use App\Models\SeccionReferencia;
 use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
+use App\Models\SeccionAgradecimiento;
+use App\Models\SeccionDedicatoria;
 
 class DocumentoController extends Controller
 {
@@ -28,7 +30,11 @@ class DocumentoController extends Controller
         $this->middleware('auth:admin');
     }
 
-    //Arreglar
+    public function obtenerGrupo(){
+        $grupo = auth()->guard('admin')->user()->id;
+        $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
+        return $estudiante->grupo_trabajo_id;
+    }
 
     public function formularioModal(){
         /*
@@ -38,17 +44,50 @@ class DocumentoController extends Controller
             -4 => Significa que no hay capitulos ingresados.
             numeros naturales => Significa que es un capitulo y se le pasa el respectivo ID.
         */ 
+
         $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', 1)->get();
         $resumen = SeccionResumen::where('grupo_trabajo_id', '=', 1)->get();
         $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 1)->get();
         $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 3)->get();
         $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 2)->get();
         $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', 1)->get();
+        $estudiantes = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->orderBy("apellido", 'asc')->get();
+        $dedicatoriaEstado =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
+        $agradecimientoEstado =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
+        $dedicatoriaContador =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
+        $agradecimientoContador =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
+        $tema_graduacion = GrupoTrabajo::where('id', '=', $this->obtenerGrupo())->first();
 
         $cont = 0;
         $array[$cont][0] = 'Portada y Segunda Portada (Autogenerado)'; $array[$cont++][1] = '-1'; 
-        $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-1';;
-        $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-1'; ;
+
+        if ($dedicatoriaEstado != null) {
+            if (count($dedicatoriaContador) != count($estudiantes)) {
+                $array[$cont][0] = 'Dedicatoria (No todos los integrantes han escrito dedicatoria)'; $array[$cont++][1] = '-3';
+            } else{
+                if ($dedicatoriaEstado->opcional == 0) {
+                    $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-1';
+                } else if ($dedicatoriaEstado->opcional == 1) {
+                    $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-3';
+                }
+            }
+        } else{
+            $array[$cont][0] = 'Dedicatoria (No tiene datos)'; $array[$cont++][1] = '-3'; 
+        }
+
+        if ($agradecimientoEstado != null) {
+            if (count($agradecimientoContador) != count($estudiantes)) {
+                $array[$cont][0] = 'Agradecimiento (No todos los integrantes han escrito agradecimientos)'; $array[$cont++][1] = '-3';
+            } else{
+                if ($agradecimientoEstado->opcional == 0) {
+                    $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-1';
+                } else if ($agradecimientoEstado->opcional == 1) {
+                    $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-3';
+                }
+            }
+        } else{
+            $array[$cont][0] = 'Agradecimiento (No tiene datos)'; $array[$cont++][1] = '-3';
+        }
 
         if ($resumen == "[]") {
             $array[$cont][0] = 'Resumen (No tiene datos)'; $array[$cont++][1] = '-3';    
@@ -104,7 +143,8 @@ class DocumentoController extends Controller
         }
 
         return view('plantillas.plantillaMenuC', array(
-            'secciones' => $array
+            'secciones' => $array, 
+            'tema' => mb_strtoupper($tema_graduacion->tema)
         ));
     }
 
@@ -125,16 +165,6 @@ class DocumentoController extends Controller
             'lineHeight' => 1.5, 
             'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH
         ));
-
-        $phpWord->addNumberingStyle(
-            'hNum',
-            array('type' => 'multilevel', 'levels' => array(
-                array('pStyle' => 'Heading1', 'format' => 'lowerRoman', 'text' => '%1'),
-                array('pStyle' => 'Heading2', 'format' => 'lowerRoman', 'text' => '%1.%2'),
-                array('pStyle' => 'Heading3', 'format' => 'lowerRoman', 'text' => '%1.%2.%3'),
-                )
-            )
-        );
 
         $phpWord->setDefaultFontSize(11);
         $phpWord->setDefaultFontName('Times New Roman');
@@ -344,7 +374,7 @@ class DocumentoController extends Controller
         if($documentoTodo == null){
             $section = $documento->addSection(DocumentoController::margenes());
         } else{
-            $section = $documento->addSection(array('pageNumberingStart' => "i"), DocumentoController::margenes());
+            $section = $documento->addSection(array('pageNumberingStart' => 1), DocumentoController::margenes());
             $footer = $section->addFooter();
             $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE', array('format' => 'roman'));
         }
@@ -412,22 +442,22 @@ class DocumentoController extends Controller
 
         while (isset($_REQUEST['seccion'][$i])) {
             $dato = $request->input('seccion')[$i];
-            if ($dato == 1) {
+            if ($dato == -1) {
                 DocumentoController::portada($documento);
                 DocumentoController::segundo($documento);
-            } else if($dato == 2){ 
+            } else if($dato == -2){ 
                 // Agradecimiento
-            } else if($dato == 3){ 
+            } else if($dato == -3){ 
                 // Dedicatoria
-            } else if($dato == 4){ 
+            } else if($dato == -4){ 
                 DocumentoController::seccionResumen($documento, $documentoTodo);
-            } else if($dato == 5){ 
+            } else if($dato == -5){ 
                 DocumentoController::indice($documento);
-            } else if($dato == 6){ 
+            } else if($dato == -6){ 
                 DocumentoController::seccionSiglas($documento);
-            } else if($dato == 7){ 
+            } else if($dato == -7){ 
                 DocumentoController::seccionAbreviaturas($documento);
-            } else if($dato == 8){ 
+            } else if($dato == -8){ 
                 DocumentoController::seccionNomenclaturas($documento);
             }
             ++$i;
@@ -441,9 +471,9 @@ class DocumentoController extends Controller
         $i = 0;
         while (isset($_REQUEST['seccion3'][$i])) {
             $dato = $request->input('seccion3')[$i];
-            if ($dato == 9) {
+            if ($dato == -9) {
                 DocumentoController::seccionGlosario($documento);
-            } else if($dato == 10){ 
+            } else if($dato == -10){ 
                 DocumentoController::seccionReferencia($documento);
             } 
             ++$i;

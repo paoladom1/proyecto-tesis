@@ -34,7 +34,6 @@
     <nav class="navGral d-flex justify-content-between" id="nav">
         <a href="/menu">
             <img src="/img/Logo.png" alt="" class="d-inline-block align-text-top navImg">
-
         </a>
         <div class="dropdown" id="user-settings">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="user-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,15 +75,15 @@
                         <li> <a href="#">Primer Portada</a> </li>
                         <li> <a href="#">Segunda Portada</a> </li>
                     </ul>--}}
-                    <a href="{{ url('/menu') }}">Menu Principal</a>
+                    <a href="{{ url('/menu') }}"><i class="bi bi-house-door"></i> Menu Principal</a>
                     <hr>
                 </li>
-                <li> <a href="{{ url('/resumen') }}">Resumen</a> </li>
-                <li> <a href="{{ url('/agradecimientos') }}">Agradecimientos</a> </li>
-                <li> <a href="{{ url('/abreviaturas') }}">Abreviaturas</a> </li>
-                <li> <a href="{{ url('/capitulos') }}">Capitulos</a> </li>
-                <li> <a href="{{ url('/glosario') }}">Glosario</a> </li>
-                <li> <a href="{{ url('/referencias') }}">Referencias</a> </li>
+                <li> <a href="{{ url('/resumen') }}"><i class="bi bi-clipboard2-data"></i> Resumen</a> </li>
+                <li> <a href="{{ url('/agradecimientos') }}"><i class="bi bi-heart"></i> Agradecimientos</a> </li>
+                <li> <a href="{{ url('/abreviaturas') }}"><i class="bi bi-explicit"></i> Abreviaturas</a> </li>
+                <li> <a href="{{ url('/capitulos') }}"><i class="bi bi-pen"></i> Capitulos</a> </li>
+                <li> <a href="{{ url('/glosario') }}"><i class="bi bi-journal-bookmark-fill"></i> Glosario</a> </li>
+                <li> <a href="{{ url('/referencias') }}"><i class="bi bi-list-columns-reverse"></i> Referencias</a> </li>
             </ul>
 
           
@@ -199,7 +198,6 @@
         document.getElementById("SideNav").style.marginLeft = "0";
         document.getElementById("nav").style.marginLeft = "250px";
         document.getElementById("content").style.marginLeft = "250px";
-        //document.getElementById("menuB").style.marginLeft = "250px";
         document.getElementById("menu").style.display = 'none';
         document.getElementById("user-settings").style.marginRight = "15em";
         document.getElementById("user-settings").style.transition = "all 0.5s";
@@ -208,7 +206,7 @@
         document.getElementById("SideNav").style.marginLeft = "-250px";
         document.getElementById("nav").style.marginLeft = "0";
         document.getElementById("content").style.marginLeft = "0";
-        document.getElementById("menu").style.display = 'initial';
+        setTimeout(() => {  document.getElementById("menu").style.display = 'initial'; }, 600);
         document.getElementById("navMenu").style.fontSize="100%";
         document.getElementById("user-settings").style.marginRight = "0.25em";
     }
@@ -224,56 +222,5 @@
     function dropdown() {
         document.getElementById("user-dropdown").classList.toggle("show");
         }
-
-    /* Funciones para abrir modal de creacion de documento */
-
-   /* var listado = document.querySelectorAll("#listadoSecciones li");
-
-    var check = document.querySelectorAll('.checkSeccion .form-check-input');
-
-    function cambio(checkbox){
-        if(check[checkbox].checked){
-            listado[checkbox-1].style.display = 'block';
-            var cont = 0;
-            for (let index = 1; index < check.length; index++) {
-                if(check[index].checked){
-                    ++cont;
-                }
-            }
-            if(cont == check.length-1){
-                check[0].checked = true;
-            }
-        }
-        else{
-            check[0].checked = false;
-            listado[checkbox-1].style.display = 'none';
-        }
-    }
-
-    function cambio2(){
-        if(check[0].checked){
-            for (let index = 1; index < check.length; index++) {
-                if (!check[index].disabled) {
-                    check[index].checked = true;
-                    cambio(index);
-                }
-            }
-        }
-        else{
-            for (let index = 1; index < check.length; index++) {
-                if (!check[index].disabled) {
-                    check[index].checked = false;
-                    cambio(index);
-                }
-            }
-        }
-    }
-
-    function desmarcar() {
-        for (let index = 0; index < check.length; index++) {
-            check[index].checked = false;
-            listado[index].style.display = 'none';
-        }
-    }*/
 </script>
 @include('plantillas.footer')

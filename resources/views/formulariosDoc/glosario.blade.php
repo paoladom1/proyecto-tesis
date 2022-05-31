@@ -18,13 +18,12 @@ function agregarEditor() {
 
 </script>
     <div class="resumenContainer">
+        <div class="col seccion_" id="titulosApp">
+            <h2>GLOSARIO</h2>
+        </div>
         <div id="collapseTwo" aria-labelledby="headingTwo">
             <div class="accordion-body">
                 <div class="row">
-                        <div class="col seccion_">
-                            <h1>Glosario</h1>
-                        </div>
-                        <hr>
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
@@ -51,7 +50,6 @@ function agregarEditor() {
                         ?>
                         <input hidden type="text" name="id"  value="{{$idR}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
-                    <br>
                     <div class="row">
                         <div class="col">
                             <div class="form-check form-switch form-check-reverse">

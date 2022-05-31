@@ -220,12 +220,14 @@ crossorigin="anonymous"></script>
     .capitulos{
         background-color: #e3eef5;
         border: 1px #003C71 solid;
-        border-top: 7px #003C71 solid; 
+        padding: 0;
     }
 </style>
 <div class="container capitulos" >
-    <br>
-    <div class="row justify-content-center">
+    <div class="col seccion_" id="titulosApp">
+        <h2>CAPÍTULOS</h2>
+    </div>
+    <div class="row justify-content-center" style="margin-top: 20px;">
         <div class="col-md-9">
             <label for="basic-url" style="display: none;" class="form-label">Nombre del capitulo</label>
             <div class="input-group mb-3 mt-3">

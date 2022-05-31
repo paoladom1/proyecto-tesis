@@ -8,6 +8,8 @@ use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 use App\Models\SeccionResumen;
+use App\Models\SeccionAgradecimiento;
+use App\Models\SeccionDedicatoria;
 use App\Models\SeccionAbreviaturaNomenclaturaSigla;
 use App\Models\SeccionCapitulo;
 use App\Models\SeccionGlosario;
@@ -326,6 +328,159 @@ class EstudianteController extends Controller
                 'id' => $id
             );
         }
+        return $mensaje;
+    }
+
+     //-------------------------------------Creación de agradecimientos y dedicatoria-----------------------------------
+
+    public function frmAgradecimientoDedicatoria(){ 
+        $dedicatoria = SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id', 'right outer')->selectRaw('*, seccion_dedicatoria.id as idDedicatoria, estudiante.id as idEstudiante')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $agradecimiento = SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id', 'right outer')->selectRaw('*, seccion_agradecimiento.id as idAgradecimiento, estudiante.id as idEstudiante')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $dedicatoriaEstado =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
+        $agradecimientoEstado =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
+        $dedicatoriaContador =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
+        $agradecimientoContador =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
+        $opcionDedicatoria = "";
+        $opcionAgradecimiento = "";
+        $desabilitarDedicatoria = "";
+        $desabilitarAgradecimiento = "";
+
+        if ($dedicatoriaEstado != null) {
+            if ($dedicatoriaEstado->opcional == 1) {
+                $opcionDedicatoria = "checked";
+            }
+        } 
+
+        if ($agradecimientoEstado != null) {
+            if ($agradecimientoEstado->opcional == 1) {
+                $opcionAgradecimiento = "checked";
+            }
+        }
+
+        if(count($dedicatoriaContador) == 0){
+            $desabilitarDedicatoria = "disabled";
+        }
+
+        if(count($agradecimientoContador) == 0){
+            $desabilitarAgradecimiento = "disabled";
+        }
+
+        return view('formulariosDoc.agradecimientos', array(
+            "dedicatoria" => $dedicatoria,
+            "agradecimiento" => $agradecimiento,
+            "dedicatoriaEstado" => $opcionDedicatoria,
+            "agradecimientoEstado" => $opcionAgradecimiento,
+            "desabilitarDedicatoria" => $desabilitarDedicatoria,
+            "desabilitarAgradecimiento" => $desabilitarAgradecimiento,
+        ));
+    }
+
+    public function saveAgradecimiento(Request $request){
+        $id = $request->input('id');
+        $idEstudiante = $request->input('idEstudiante');
+        $contenido = $request->input('contenido');
+        $autor = $request->input('autor');
+        $opcional = $request->input('opcional');
+        if($contenido == "" || $autor == ""){
+            $mensaje = array(
+                'code'=> 400,
+                'mensaje' => "No pueden quedar campos vacios!"
+            );
+        } else{
+            if($id == null){
+                $agradecimiento = new SeccionAgradecimiento();
+                $agradecimiento -> contenido = $contenido;
+                $agradecimiento -> autor = $autor;
+                $agradecimiento -> estudiante_id  = $idEstudiante;
+                $agradecimiento -> opcional  = $opcional;
+                $agradecimiento->save();
+                $id = $agradecimiento->id;
+            } else{ 
+                $agradecimiento = SeccionAgradecimiento::findOrFail($id);
+                $agradecimiento -> contenido = $contenido;
+                $agradecimiento -> autor = $autor;
+                $agradecimiento -> estudiante_id  = $idEstudiante;
+                $agradecimiento -> opcional  = $opcional;
+                $agradecimiento->update();
+            }
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
+            );
+        }
+        return $mensaje;
+    }
+
+    public function saveDedicatoria(Request $request){
+        $id = $request->input('id');
+        $idEstudiante = $request->input('idEstudiante');
+        $contenido = $request->input('contenido');
+        $autor = $request->input('autor');
+        $opcional = $request->input('opcional');
+        if($contenido == "" || $autor == ""){
+            $mensaje = array(
+                'code'=> 400,
+                'mensaje' => "No pueden quedar campos vacios!"
+            );
+        } else{
+            if($id == null){
+                $dedicatoria = new SeccionDedicatoria();
+                $dedicatoria -> contenido = $contenido;
+                $dedicatoria -> autor = $autor;
+                $dedicatoria -> estudiante_id  = $idEstudiante;
+                $dedicatoria -> opcional  = $opcional;
+                $dedicatoria->save();
+                $id = $dedicatoria->id;
+            } else{ 
+                $dedicatoria = SeccionDedicatoria::findOrFail($id);
+                $dedicatoria -> contenido = $contenido;
+                $dedicatoria -> autor = $autor;
+                $dedicatoria -> estudiante_id  = $idEstudiante;
+                $dedicatoria -> opcional  = $opcional;
+                $dedicatoria->update();
+            }
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
+            );
+        }
+        return $mensaje;
+    }
+
+    public function cambioEstado(Request $request)
+    {
+        $opcional = $request->input('opcional');
+        $tipo = $request->input('tipo');
+        if ($tipo == 1) {
+            $agradecimiento = SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->selectRaw('*, seccion_agradecimiento.id as idAgradecimiento')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get('idAgradecimiento');
+            foreach ($agradecimiento as $dato) {
+                $agradecimiento = SeccionAgradecimiento::findOrFail($dato->idAgradecimiento);
+                $agradecimiento -> opcional  = $opcional;
+                $agradecimiento->update();   
+            }
+        } else if ($tipo == 2) {
+            $dedicatoria = SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->selectRaw('*, seccion_dedicatoria.id as idDedicatoria')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get('idDedicatoria');
+            foreach ($dedicatoria as $dato) {
+                $dedicatoria = SeccionDedicatoria::findOrFail($dato->idDedicatoria);
+                $dedicatoria -> opcional  = $opcional;
+                $dedicatoria->update();   
+            }
+        }
+
+        if($opcional == 1){
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: Es opcional"
+            );
+        } else{
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: No es opcional"
+            );
+        }
+
         return $mensaje;
     }
 }

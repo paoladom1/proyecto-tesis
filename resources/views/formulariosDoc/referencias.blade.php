@@ -18,13 +18,12 @@ function agregarEditor() {
 
 </script>
     <div class="resumenContainer">
+        <div class="col seccion_" id="titulosApp">
+            <h2>REFERENCIAS</h2>
+        </div>
         <div id="collapseTwo" aria-labelledby="headingTwo">
             <div class="accordion-body">
                 <div class="row">
-                        <div class="col seccion_">
-                            <h1>Referencias</h1>
-                        </div>
-                        <hr>
 
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">

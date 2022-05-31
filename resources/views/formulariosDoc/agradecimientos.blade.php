@@ -15,32 +15,37 @@ function agregarEditor(n) {
 
         editor.config.contentsCss = "/css/content.css";
     }
-    function addSeccion(id = 0, contenido = '', numIntegrante){
+
+    num = 0;
+
+    function addSeccion(nombreIntegrante, id = '', idE = '', contenido = '', numIntegrante, firma, contenedor, tipo){
+            var etiqueta = '';
+            if (tipo == 1) {
+                etiqueta = 'Agradecimiento de';
+            } else if(tipo == 2){
+                etiqueta = 'Dedicatoria de';
+            }
             fragmento = `<br>
                         <div class="accordion-item">
                             <div class="contenedorBotones">
                                 <div class="btn-group btnEliminarAgregar" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick=""><i class="bi bi-plus-circle"></i> Guardar</button>
+                                    <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="guardarDA('${tipo}', '${numIntegrante}')"><i class="bi bi-plus-circle"></i> Guardar</button>
                                 </div>
                             </div>
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo${numIntegrante}" aria-expanded="false" aria-controls="collapseTwo${numIntegrante}">
-                                    <span>Eduardo Alberto López Torres</span>
+                                    <span>${etiqueta} ${nombreIntegrante}</span>
                                 </button>
                             </h2>
                             <div id="collapseTwo${numIntegrante}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="row">
                                             <div class="col">
-                                                <label>Estudiante</label>
-                                                <input disabled type="text" id="nombreEstudiante${numIntegrante}" value="Eduardo Alberto López Torres" onkeyup="temasSubTemas(${numIntegrante}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                            </div>
-                                            <div class="col">
                                                 <label>Firma del estudiante</label>
-                                                <input type="text" id="firma${numIntegrante}" value="Eduardo López" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                <input type="text" id="firma${numIntegrante}" value="${firma}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                             </div>
-                                            <input hidden type="text" id="idI${numIntegrante}" value="${id}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                            <input hidden type="text" id="seccionAD${numIntegrante}" value="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                            <input hidden type="text" id="idDA${numIntegrante}" value="${id}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                            <input hidden type="text" id="idEstudiante${numIntegrante}" value="${idE}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                         </div>
                                         <br>
                                         <div class="row">
@@ -57,7 +62,7 @@ function agregarEditor(n) {
             var div = document.createElement('div');
             div.setAttribute('id', 'part-'+numIntegrante);
                 div.innerHTML = fragmento;
-                document.getElementById('accordionExample').appendChild(div);
+                document.getElementById(contenedor).appendChild(div);
             agregarEditor(numIntegrante);
     }
 
@@ -126,7 +131,15 @@ function agregarEditor(n) {
 </style>
 <div class='container agradecimientosContainer'>
     <h1 class="mt-3">Agradecimientos y dedicatoria</h1>
-    <hr class="mb-3">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+    </svg>
+    <div id="liveAlertPlaceholder"></div>
     <form class="col mt-3 mb-4"  action="{{ url('/crear') }}" method='POST'>
         {{ csrf_field() }}
         <div class="wrapper">
@@ -136,32 +149,60 @@ function agregarEditor(n) {
             </div>
             <div class="contentWrapper" >
                 <div class="content active" id="agradecimientos">
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check form-switch form-check-reverse">
+                                <input class="form-check-input" value="1" name="opcional" type="checkbox" id="opcional1" onclick="cambioEstado(1)" {{$desabilitarAgradecimiento}} {{$agradecimientoEstado}}>
+                                <label class="form-check-label" for="flexSwitchCheckReverse">Opcional</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="agradecimientosContainer2">
                         <div class="accordion" id="accordionExample">
-                            <script>
-                                addSeccion(1, `Hola`, 1);
-                            </script>
+                            @foreach ($agradecimiento as $integrante)
+                                <script>
+                                    addSeccion("<?php echo $integrante->nombre.' '.$integrante->apellido; ?>",'<?php echo $integrante->idAgradecimiento; ?>', '<?php echo $integrante->idEstudiante; ?>', `<?php echo $integrante->contenido?>`, ++num, '<?php 
+                                    if (!$integrante->autor) {
+                                        echo $integrante->nombre.' '.$integrante->apellido;
+                                    } else{
+                                        echo $integrante->autor;
+                                    } ?>', 'accordionExample', '1');
+                                </script>
+                            @endforeach
                         </div>  
                     </div>
                 </div>
             </div>
-                <div class="content" id="dedicatoria"  >
+                <div class="content" id="dedicatoria">
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check form-switch form-check-reverse">
+                                <input class="form-check-input" value="1" name="opcional" type="checkbox" id="opcional2" onclick="cambioEstado(2)" {{$desabilitarDedicatoria}} {{$dedicatoriaEstado}}>
+                                <label class="form-check-label" for="flexSwitchCheckReverse">Opcional</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="dedicatoriaContainer">
                         <div class="row">
                                 <input hidden type="text" name="seccion3[]"  value="$" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                 <input hidden type="text" name="seccion4[]"  value="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                 <input hidden type="text" name="seccion6[]"  value="0" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
-                            <br>
                             <div class="row">
-                                <div class="col textAgradecimientos">
-                                    <textarea class="form-control" id="seccionTexto2" name="seccion2[]" aria-label="With textarea" ></textarea>
-                                    <script>
-                                        //agregarEditor(2);
-                                    </script>
-                                </div>
-                                <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                <input type="submit" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar dedicatoria" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                <div class="accordion" id="accordionExample2">
+                                    @foreach ($dedicatoria as $integrante)
+                                        <script>
+                                            addSeccion("<?php echo $integrante->nombre.' '.$integrante->apellido; ?>", '<?php echo $integrante->idDedicatoria; ?>', '<?php echo $integrante->idEstudiante; ?>', `<?php echo $integrante->contenido?>`, ++num, '<?php 
+                                            if (!$integrante->autor) {
+                                                echo $integrante->nombre.' '.$integrante->apellido;
+                                            } else{
+                                                echo $integrante->autor;
+                                            } ?>', 'accordionExample2', 2);
+                                        </script>
+                                    @endforeach
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -207,19 +248,117 @@ function agregarEditor(n) {
     const contents = document.querySelectorAll(".content");
 
     tabs.onclick = e => {
-    const id = e.target.dataset.id;
-    if (id) {
-        tabButton.forEach(btn => {
-        btn.classList.remove("active");
-        });
-        e.target.classList.add("active");
+        const id = e.target.dataset.id;
+        if (id) {
+            tabButton.forEach(btn => {
+            btn.classList.remove("active");
+            });
+            e.target.classList.add("active");
 
-        contents.forEach(content => {
-        content.classList.remove("active");
-        });
-        const element = document.getElementById(id);
-        element.classList.add("active");
+            contents.forEach(content => {
+            content.classList.remove("active");
+            });
+            const element = document.getElementById(id);
+            element.classList.add("active");
+        }
     }
+
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+
+    const alert = (message, type, icon) => {
+        const wrapper = document.createElement('div')
+        var icon_f;
+        if (icon == 2) {
+            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
+        } else if(icon == 1){
+            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
+        }
+        wrapper.innerHTML = 
+            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
+            icon_f+
+            `   <div>${message}</div>`+
+            '</div>';
+            alertPlaceholder.append(wrapper)
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 2500);
+    }
+
+    function guardarDA(tipo, idEtiqueta) {
+        var id = document.getElementById('idDA'+idEtiqueta).value; 
+        var idE = document.getElementById('idEstudiante'+idEtiqueta).value;
+        var autor = document.getElementById('firma'+idEtiqueta).value;
+        var contenido = CKEDITOR.instances['contenido'+idEtiqueta].getData();
+        var tipoURL = "";
+        var opcional = 0;
+        
+        if (tipo == 1) {
+            tipoURL = "./guardarAgradecimiento";
+            if ($('#opcional1').is(':checked') ) {
+                opcional = 1;
+            }
+        } else if(tipo == 2){
+            tipoURL = "./guardarDedicatoria";
+            if ($('#opcional2').is(':checked') ) {
+                opcional = 1;
+            }
+        }
+
+        $.ajax({
+            type : "POST",
+            "serverSide" : true,
+            url : tipoURL,
+            data: {"_token": "{{ csrf_token() }}", "id": id, "idEstudiante": idE, "contenido": contenido, "autor": autor, "opcional": opcional},
+            success : function(r) {
+                if (r['code'] == 200) {
+                    alert(r['mensaje'], 'success', 1);   
+                    document.getElementById('idDA'+idEtiqueta).setAttribute("value", r['id']);
+                    if (tipo == 1) {
+                        document.getElementById('opcional1').disabled = false;
+                    } else if (tipo == 2) {
+                        document.getElementById('opcional2').disabled = false;
+                    }
+                } else{
+                    alert(r['mensaje'], 'danger', 2);
+                }
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
+    }
+
+    function cambioEstado(tipo) {
+        var opcional = 0;
+
+        if (tipo == 1) {
+            if ($('#opcional1').is(':checked') ) {
+                opcional = 1;
+            }
+        } else if (tipo == 2) {
+            if ($('#opcional2').is(':checked') ) {
+                opcional = 1;
+            }
+        }
+
+        $.ajax({
+            type : "POST",
+            "serverSide" : true,
+            url : "./cambiarEstado",
+            data: {"_token": "{{ csrf_token() }}", "opcional": opcional, "tipo": tipo},
+            success : function(r) {
+                if (r['code'] == 200) {
+                    alert(r['mensaje'], 'success', 1);   
+                } else{
+                    alert(r['mensaje'], 'danger', 2);
+                }
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
     }
 </script>
 

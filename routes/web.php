@@ -70,6 +70,12 @@ Route::post('/guardarGlosario', 'App\Http\Controllers\EstudianteController@saveG
 Route::get('/abreviaturas', 'App\Http\Controllers\EstudianteController@frmAbreviatura');
 Route::post('/guardarAbreviatura', 'App\Http\Controllers\EstudianteController@saveAbreviatura');
 
+// Agradecimientos y dedicatorias
+Route::get('/agradecimientos', 'App\Http\Controllers\EstudianteController@frmAgradecimientoDedicatoria');
+Route::post('/guardarAgradecimiento', 'App\Http\Controllers\EstudianteController@saveAgradecimiento');
+Route::post('/guardarDedicatoria', 'App\Http\Controllers\EstudianteController@saveDedicatoria');
+Route::post('/cambiarEstado', 'App\Http\Controllers\EstudianteController@cambioEstado');
+
 Route::get('/perfil', function () {
     return view('usuarios.usuario');
 });
@@ -80,8 +86,4 @@ Route::get('/menudirector', function () {
 
 Route::get('/lector', function () {
     return view('director.lector');
-});
-
-Route::get('/agradecimientos', function(){
-    return view('formulariosDoc.agradecimientos');
 });
