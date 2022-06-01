@@ -47,7 +47,7 @@
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
                     <div class="col">
                         <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                            <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
+                            <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
                                 <a href="{{ url('/filtro') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Grupos de tesis</h5></a>
                             </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="col">
                         <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
+                            <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
                                 <a href="{{ url('/lector') }}" style="text-decoration: none; color: black;"><h6 class="card-title">Asesores y Lectores Externos</h6></a>
                             </div>

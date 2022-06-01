@@ -87,3 +87,7 @@ Route::get('/menudirector', function () {
 Route::get('/lector', function () {
     return view('director.lector');
 });
+
+Route::get('/lectorv', function () {
+    return view('director.lectorvergon');
+});

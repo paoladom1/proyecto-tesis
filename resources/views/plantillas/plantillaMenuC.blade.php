@@ -5,10 +5,10 @@
         <div class="row">
             <div class="container mPrincipal">
                 <div class="row" id="titulosApp">
-                    <h1 style="font-size: 1.4em;">"{{$tema}}"</h1>
+                    <h1 class="mt-3" style="font-size: 1.4em;">"{{$tema}}"</h1>
                 </div>
                 <center>
-                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-3">
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-1 mb-3">
                     <div class="col">
                         <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">

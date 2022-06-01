@@ -11,7 +11,7 @@ use App\Models\SeccionCapitulo;
 use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
 
-class PruebasController extends Controller
+class DirectorController extends Controller
 {
     //-------------------------------Filtros de asesores y directores de trabajo de graduación----------------------------
 
