@@ -13,7 +13,6 @@ crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-
 <script>
     function modificarCapitulo(i) {
         let elements = document.getElementsByName("tituloN");
@@ -98,7 +97,7 @@ crossorigin="anonymous"></script>
                 update: function(event, ui)
                 {
                     ordenarCapitulos();
-                    $('#guardarOrden').show();
+                    modificarOrden();
                 }
             }
         );
@@ -165,6 +164,9 @@ crossorigin="anonymous"></script>
                     console.log(data);
                 }
             })
+            var toastLiveExample = document.getElementById('liveToast');
+            var toast = new bootstrap.Toast(toastLiveExample);
+            toast.show();
         }
 
         function eliminarCapituloBD(id){
@@ -183,15 +185,7 @@ crossorigin="anonymous"></script>
         }
 
         window.onload = function () {
-            var toastTrigger = document.getElementById('guardarOrden')
             var toastTrigger2 = document.getElementById('btnBorrar')
-            var toastLiveExample = document.getElementById('liveToast')
-            if (toastTrigger) {
-                toastTrigger.addEventListener('click', function () {
-                var toast = new bootstrap.Toast(toastLiveExample)
-                    toast.show()
-                })
-            }
 
             if (toastTrigger2) {
                 toastTrigger2.addEventListener('click', function () {
@@ -260,11 +254,6 @@ crossorigin="anonymous"></script>
                     @endforeach
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-9" style="display: flex; flex-direction: row; justify-content:end;">
-            <button style="display:none" class="btn btn-success mb-3"  id="guardarOrden" onclick="modificarOrden()">Guardar orden</button>
         </div>
     </div>
 </div>
