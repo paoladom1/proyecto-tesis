@@ -52,7 +52,7 @@ function agregarEditor() {
                                     agregarEditor();
                                 </script>
                             </div>
-                            <button type="button" onclick="registrarResumen()" class="btn btn-success saveResumen">Guardar</button>
+                            <button type="button" onclick="registrarResumen()" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Resumen</button>
                         </div>
                     </div>
                 </div>

@@ -52,7 +52,7 @@
                                 agregarEditor();
                             </script>
                         </div>
-                        <button type="button" onclick="registrarReferencia()" class="btn btn-success saveResumen">Guardar</button>
+                        <button type="button" onclick="registrarReferencia()" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Referencias</button>
                     </div>
                 </div>
             </div>

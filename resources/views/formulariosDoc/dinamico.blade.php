@@ -326,6 +326,8 @@
         });
 </script>
 
+
+
 <div class="container contenidoContainer">
     <div class="col seccion_" id="titulosApp">
         <h2>Capitulo {{$capitulo->orden_capitulo}}. {{$capitulo->nombre_capitulo}}</h2>
@@ -393,7 +395,7 @@
         </script>
         <div class="row justify-content-start">
             <div class="">
-                <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
+                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
             </div>
         </div>
 
@@ -420,7 +422,7 @@
             @endforeach
         @endforeach
         <br>
-        <input type="submit" class="btn btn-warning" value="Guardar" onclick="bandera2 = 0">
+        <input type="submit" class="btn btn-success" value="Guardar" onclick="bandera2 = 0">
     </form>
 
     <!-- Modal -->

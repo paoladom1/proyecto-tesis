@@ -76,7 +76,7 @@
                                         </script>
                                     </div>
                                     <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                    <input type="button" onclick="registrarAbreviatura(1)" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar abreviaturas" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                    <button type="button" onclick="registrarAbreviatura(1);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Abreviaturas</button>
                                 </div>
                             </div>
                         </div>
@@ -94,8 +94,7 @@
                                             agregarEditor(2);
                                         </script>
                                     </div>
-                                    <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                    <input type="button" onclick="registrarAbreviatura(3)" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar nomenclaturas" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                    <button type="button" onclick="registrarAbreviatura(3);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Nomenclaturas</button>
                                 </div>
                             </div>
                         </div>
@@ -113,8 +112,7 @@
                                             agregarEditor(3);
                                         </script>
                                     </div>
-                                    <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                    <input type="button" onclick="registrarAbreviatura(2)" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar siglas" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                    <button type="button" onclick="registrarAbreviatura(2);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Siglas</button>
                                 </div>
                             </div>
                         </div>

@@ -64,7 +64,7 @@
                                 agregarEditor();
                             </script>
                         </div>
-                        <button type="button" onclick="registrarGlosario();" class="btn btn-success saveResumen">Guardar</button>
+                        <button type="button" onclick="registrarGlosario();" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Glosario</button>
                     </div>
                 </div>
             </div>

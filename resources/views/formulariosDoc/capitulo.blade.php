@@ -34,18 +34,16 @@
 
     var a = 0;
 
-    function eliminarCapitulo(position, idCapi){
+    function eliminarCapitulo(position, idCapi, eliminacion = 0){
         a = 0;
         document.getElementById("part-"+position).remove();
         ordenarCapitulos();
         eliminarCapituloBD(idCapi);
         modificarOrden();
-        $('.toast-body').text("Se eliminó exitosamente!");
     }
 
     function guardarOrdenCapitulo() {
         $('#guardarOrden').hide();
-        $('.toast-body').text("Se guardó exitosamente!");
     }
 
     var idT;
@@ -66,7 +64,7 @@
                         <td class="align-middle" name="titulacion"><span name="numCapitulo">Capitulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a class="btn btn-success" style="background-color: #003C71;" href="{{ url('/fdinamico/${idC}') }}">Modificar contenido</a>
+                            <button type="button" onclick="window.location.href='/fdinamico/${idC}'" class="btn btn-warning" style="color: white; background-color: #003C71;">Modificar contenido</button>
                             <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar titulo</button>
                             <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capitulo</button>
                         </div>
@@ -86,6 +84,7 @@
                 {
                     ordenarCapitulos();
                     modificarOrden();
+                    alert("Se cambió el orden con exito!", 'success', 1);
                 }
             }
         );
@@ -94,40 +93,50 @@
     function guardarCapitulo(id) {
         let nombre = $('#nombreCap').val();
         if(id == ""){
-            $.ajax({
-                type : "POST",
-                "serverSide" : true,
-                url : "./insertarCapitulo",
-                data: {"_token": "{{ csrf_token() }}", "nombreTitulo": nombre, "orden_capitulo": a+1},
-                success : function(r) {
-                    a = 0;
-                    $('#tablaCapitulo').empty();
-                    r.forEach(element => {
-                        seccion(element["nombre_capitulo"], element["id"]);
-                    });
-                },
-                error : function(data) {
-                    console.log(data);
-                }
-            })
+            if (nombre.trim() == "") {
+                alert("No puede quedar el campo vacio!", 'danger', 2);
+            } else{
+                $.ajax({
+                    type : "POST",
+                    "serverSide" : true,
+                    url : "./insertarCapitulo",
+                    data: {"_token": "{{ csrf_token() }}", "nombreTitulo": nombre, "orden_capitulo": a+1},
+                    success : function(r) {
+                        a = 0;
+                        $('#tablaCapitulo').empty();
+                        r.forEach(element => {
+                            seccion(element["nombre_capitulo"], element["id"]);
+                        });
+                    },
+                    error : function(data) {
+                        console.log(data);
+                    }
+                })
+                alert("Se guardó el capitulo con exito!", 'success', 1);
+            }
         } else{
-            quitarModificar();
-            $.ajax({
-                type : "POST",
-                "serverSide" : true,
-                url : "./modificar",
-                data: {"_token": "{{ csrf_token() }}", "id": id, "nombre": nombre},
-                success : function(r) {
-                    a = 0;
-                    $('#tablaCapitulo').empty();
-                    r.forEach(element => {
-                        seccion(element["nombre_capitulo"], element["id"]);
-                    });
-                },
-                error : function(data) {
-                    console.log(data);
-                }
-            })
+            if (nombre.trim() == "") {
+                alert("No puede quedar el campo vacio!", 'danger', 2);
+            } else{
+                quitarModificar();
+                $.ajax({
+                    type : "POST",
+                    "serverSide" : true,
+                    url : "./modificar",
+                    data: {"_token": "{{ csrf_token() }}", "id": id, "nombre": nombre},
+                    success : function(r) {
+                        a = 0;
+                        $('#tablaCapitulo').empty();
+                        r.forEach(element => {
+                            seccion(element["nombre_capitulo"], element["id"]);
+                        });
+                    },
+                    error : function(data) {
+                        console.log(data);
+                    }
+                })
+                alert("Se modificó el capitulo con exito!", 'success', 1);
+            }
         }
     }
 
@@ -141,21 +150,18 @@
         }
 
         $.ajax({
-                type : "POST",
-                "serverSide" : true,
-                url : "./modificar",
-                data: {"_token": "{{ csrf_token() }}", "idList": JSON.stringify(arrayText)},
-                success : function(r) {
-                    guardarOrdenCapitulo();
-                },
-                error : function(data) {
-                    console.log(data);
-                }
-            })
-            var toastLiveExample = document.getElementById('liveToast');
-            var toast = new bootstrap.Toast(toastLiveExample);
-            toast.show();
-        }
+            type : "POST",
+            "serverSide" : true,
+            url : "./modificar",
+            data: {"_token": "{{ csrf_token() }}", "idList": JSON.stringify(arrayText)},
+            success : function(r) {
+                guardarOrdenCapitulo();
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
+    }
 
         function eliminarCapituloBD(id){
             $.ajax({
@@ -165,6 +171,7 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id},
                 success : function(r) {
                     guardarOrdenCapitulo();
+                    alert("Se eliminó el capitulo con exito!", 'success', 1);
                 },
                 error : function(data) {
                     console.log(data);
@@ -206,17 +213,26 @@
     }
 </style>
 <div class="container capitulos" >
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+    </svg>
     <div class="col seccion_" id="titulosApp">
         <h2>CAPÍTULOS</h2>
     </div>
     <div class="row justify-content-center" style="margin-top: 20px;">
         <div class="col-md-9">
+            <div id="liveAlertPlaceholder"></div>
             <label for="basic-url" style="display: none;" class="form-label">Nombre del capitulo</label>
             <div class="input-group mb-3 mt-3">
                 <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
                 <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="font-style: italic;">
                 <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
-                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success" style="background-color: #003C71;" id="btnTitulo">Agregar Capitulo</button>
+                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success"><i class="bi bi-save"></i> <span id="btnTitulo">Agregar Capitulo</span></button>
             </div>
         </div>
     </div>
@@ -265,16 +281,28 @@
         </div>
     </div>
 </div>
+<script>
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 
-
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                Se guardo de manera exitosa!
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
-</div>
+const alert = (message, type, icon) => {
+    const wrapper = document.createElement('div')
+        var icon_f;
+        if (icon == 2) {
+            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
+        } else if(icon == 1){
+            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
+        }
+        wrapper.innerHTML = 
+            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
+            icon_f+
+            `   <div>${message}</div>`+
+            '</div>';
+            alertPlaceholder.append(wrapper)
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 2500);
+    }
+</script>
 @endsection

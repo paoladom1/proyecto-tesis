@@ -1,6 +1,3 @@
-body{
-    background: #F4F4F4;
-}
 /*---------------------Estilos de la pantalla de Login------------------------*/
 .navbar{
     background-color: #E87B2A;
@@ -301,6 +298,7 @@ a[aria-expanded="true"] {
 #listadoSecciones li{
     display: none;
 }
+
 
 /*----------------------------------Menu principal-------------------------------------------*/
 

@@ -27,7 +27,7 @@
                         <div class="accordion-item">
                             <div class="contenedorBotones">
                                 <div class="btn-group btnEliminarAgregar" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="guardarDA('${tipo}', '${numIntegrante}')"><i class="bi bi-plus-circle"></i> Guardar</button>
+                                    <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="guardarDA('${tipo}', '${numIntegrante}')"><i class="bi bi-save"></i> Guardar</button>
                                 </div>
                             </div>
                             <h2 class="accordion-header" id="headingTwo">
