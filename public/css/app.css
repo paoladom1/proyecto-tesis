@@ -425,8 +425,8 @@ a[aria-expanded="true"] {
 .agradecimientosContainer{
     background-color: #e3eef5;
     border: 1px #003C71 solid;
-    border-top: 7px #003C71 solid;
     box-shadow: 5px 7px 7px gray;
+    padding: 0;
 }
 
 
@@ -436,6 +436,22 @@ a[aria-expanded="true"] {
     color: white;
 }
 
+#formAgradecimientos{
+    margin: 30px;
+}
+
+/*---------------------------contenido de capitulos------------------------*/
+.contenidoContainer{
+    background-color: #e3eef5;
+    border: 1px #003C71 solid;
+    width: 85%;
+    padding: 0;
+    box-shadow: 5px 7px 7px gray;
+}
+
+.contenidoContainer > *{
+    padding: 0px 20px 0px 20px;
+}
 
 /*-------------------------Boton Flotante--------------------------*/
 .float-button{

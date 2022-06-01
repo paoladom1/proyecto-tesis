@@ -1,12 +1,8 @@
 @extends('plantillas.nav')
 @section('content')
-<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 
 <script>
-
 function agregarEditor() {
-        // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
-        // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto', {
             height: 350,

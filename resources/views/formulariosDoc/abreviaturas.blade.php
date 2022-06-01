@@ -1,9 +1,7 @@
 @extends('plantillas.nav')
 @section('content')
-<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 <script>
-
-function agregarEditor(n) {
+    function agregarEditor(n) {
         // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
         // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
@@ -19,9 +17,11 @@ function agregarEditor(n) {
 
 </script>
     <div class='container agradecimientosContainer'>
-        <h1 class="mt-3">Abreviatura, Nomenclatura y Sigla</h1>
-        <div id="liveAlertPlaceholder"></div>
-        <hr class="mb-3">
+        <div class="col seccion_" id="titulosApp">
+            <h2>ABREVIATURAS, NOMENCLATURAS Y SIGLAS</h2>
+        </div>
+        <div id="formAgradecimientos">
+            <div id="liveAlertPlaceholder"></div>
             <div class="wrapper">
                 <div class="buttonWrapper2">
                     <button class="tab-button active" style="border-top-left-radius: 10px;" data-id="abreviatura" type="button">Abreviaturas</button>
@@ -100,7 +100,7 @@ function agregarEditor(n) {
                             </div>
                         </div>
                     </div>
-                    <div class="content" id="sigla"  >
+                    <div class="content" id="sigla">
                         <div class="dedicatoriaContainer">
                             <div class="row">
                                     <input hidden type="text" name="idS" value="{{$idS}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -121,7 +121,9 @@ function agregarEditor(n) {
                     </div>
                 </div>
             </div>
+        </div>
     </div>
+        
 
     <script>    
         const tabs = document.querySelector(".wrapper");

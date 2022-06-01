@@ -1,11 +1,8 @@
 @extends('plantillas.nav')
 @section('content')
-<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-<script>
 
-function agregarEditor() {
-        // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
-        // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
+<script>
+    function agregarEditor() {
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto', {
             height: 250,
@@ -50,16 +47,16 @@ function agregarEditor() {
                         ?>
                         <input hidden type="text" name="id"  value="{{$idR}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
+                    <div id="liveAlertPlaceholder"></div>
                     <div class="row">
                         <div class="col">
                             <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input" value="1" name="opcional" type="checkbox" id="opcional" {{$opcional}}>
+                                <input class="form-check-input" value="1" name="opcional" type="checkbox" id="opcional" {{$opcional}} {{$desabilitar}} onclick="cambioEstado()">
                                 <label class="form-check-label" for="flexSwitchCheckReverse">Opcional</label>
                             </div>
                         </div>
                     </div>
                     <br>
-                    <div id="liveAlertPlaceholder"></div>
                     <div class="row">
                         <div class="col">
                             <textarea class="form-control" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
@@ -107,7 +104,7 @@ function agregarEditor() {
         }
 
         function registrarGlosario() {
-            var id = document.getElementsByName('id')[0].value ;
+            var id = document.getElementsByName('id')[0].value;
             var contenidoG = CKEDITOR.instances['seccionTexto'].getData();
             var opcional = 0;
             if ($('#opcional').is(':checked') ) {
@@ -122,6 +119,33 @@ function agregarEditor() {
                     if (r['code'] == 200) {
                         alert(r['mensaje'], 'success', 1);   
                         document.getElementsByName('id')[0].setAttribute("value", r['id']); 
+                        document.getElementById('opcional').disabled = false;
+                    } else{
+                        alert(r['mensaje'], 'danger', 2);
+                    }
+                },
+                error : function(data) {
+                    console.log(data);
+                }
+            })
+        }
+
+        function cambioEstado() {
+            var opcional = 0;
+            var id = document.getElementsByName('id')[0].value;
+
+            if ($('#opcional').is(':checked') ) {
+                opcional = 1;
+            }
+
+            $.ajax({
+                type : "POST",
+                "serverSide" : true,
+                url : "./cambiarEstadoGlosario",
+                data: {"_token": "{{ csrf_token() }}", "opcional": opcional, "id": id},
+                success : function(r) {
+                    if (r['code'] == 200) {
+                        alert(r['mensaje'], 'success', 1);   
                     } else{
                         alert(r['mensaje'], 'danger', 2);
                     }

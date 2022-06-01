@@ -1,6 +1,5 @@
 @extends('plantillas.nav')
 @section('content')
-
     <div class="container" style="background-color: white">
         <div class="row">
             <div class="container mPrincipal">
