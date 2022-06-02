@@ -22,7 +22,7 @@ class EstudianteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('estudiante');
     }
 
     public function obtenerGrupo(){
@@ -86,7 +86,13 @@ class EstudianteController extends Controller
 
     public function formularioDinamico($id){ 
         // Validar que el contenido que se pueda ver corresponda al equipo
-        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->findOrFail($id);
+        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('id', '=', $id)->first();
+        
+        if ($capitulo == null) {
+            return redirect('capitulos')->with('statusError', 'Error, el capitulo seleccionado es incorrecto!');
+        }else if($capitulo->grupo_trabajo_id != $this->obtenerGrupo()){
+            return redirect('capitulos')->with('statusError', 'Error, el capitulo seleccionado es incorrecto!');
+        } 
 
         $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '>',0)->get();
         $contenido_introduccion = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '=',0)->get();
@@ -99,6 +105,7 @@ class EstudianteController extends Controller
 
     public function crearDinamico(Request $request){
         $id = $request->input('idCapitulo');
+        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->findOrFail($id);
         $i = 0;
         $i2 = 0;
         foreach ($request->input('seccion1') as $seccion) {
@@ -152,7 +159,7 @@ class EstudianteController extends Controller
             }
             ++$i;
         }
-        return redirect('fdinamico/'.$id)->with('status', 'Se guardo exitosamente!');
+        return redirect('capitulos')->with('status', 'Se guardaron los datos del Capitulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo.'!');
     }
 
     public function eliminarContenido(Request $request)

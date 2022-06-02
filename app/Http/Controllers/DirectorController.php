@@ -13,6 +13,15 @@ use App\Models\SubcontenidoSeccionCapitulo;
 
 class DirectorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('director');
+    }
+
+    public function menuDirector()
+    {
+        return view('plantillas.plantillaMenuDirector');
+    }
     //-------------------------------Filtros de asesores y directores de trabajo de graduación----------------------------
 
     public function formularioFiltro()

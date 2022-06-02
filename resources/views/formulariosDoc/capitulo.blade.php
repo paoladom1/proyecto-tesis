@@ -266,9 +266,9 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-header" style="background-color: #003C71;">
+            <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Confirmación</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
         </div>
         <div class="modal-body">
             <p id="tituloCap"></p>
@@ -305,4 +305,14 @@ const alert = (message, type, icon) => {
             }, 2500);
     }
 </script>
+    @if (session('status'))
+        <script>
+            alert('<?php echo session('status'); ?>', 'success', 1);
+        </script>
+    @endif
+    @if (session('statusError'))
+        <script>
+            alert('<?php echo session('statusError'); ?>', 'danger', 2);
+        </script>
+    @endif
 @endsection

@@ -77,12 +77,11 @@ Route::post('/guardarAgradecimiento', 'App\Http\Controllers\EstudianteController
 Route::post('/guardarDedicatoria', 'App\Http\Controllers\EstudianteController@saveDedicatoria');
 Route::post('/cambiarEstado', 'App\Http\Controllers\EstudianteController@cambioEstado');
 
+// Director de carrera
+Route::get('/menudirector', "App\Http\Controllers\DirectorController@menuDirector");
+
 Route::get('/perfil', function () {
     return view('usuarios.usuariovergon');
-});
-
-Route::get('/menudirector', function () {
-    return view('plantillas.plantillaMenuDirector');
 });
 
 Route::get('/lector', function () {
