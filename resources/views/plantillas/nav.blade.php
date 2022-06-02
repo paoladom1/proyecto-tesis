@@ -29,7 +29,7 @@
         </a>
         <div class="dropdown" id="user-settings">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="user-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="img/profile.png" id="profile" style="width: 2.5em; border-radius: 100%;"/>
+                <img src="/{{auth()->guard('admin')->user()->foto}}" id="profile" style="width: 2.5em; border-radius: 100%;"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="user-btn">
                 <a class="dropdown-item user-btn-name" href="#" style="width: 100%;">{{auth()->guard('admin')->user()->email}}</a>
