@@ -62,6 +62,16 @@
         max-height: 200px;
         overflow-x: hidden;
     }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+        color: white;
+        background-color:#E87B2A;
+    }
+
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link{
+        color: white;
+        background-color: #003C71;
+    }
+
 </style>
    
     <br>
@@ -118,9 +128,9 @@
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #003C71;">
+                <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                     <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Crear asesor o lector externo</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white; width: 1em;"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -176,44 +186,92 @@
 
     <!-- Pantalla de grupos de tesis CRUD -->
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="thead-dark" style="background-color: #003C71; color: white;">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombres</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Correo Electronico</th>
-                <th scope="col">Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Joshua Steven</td>
-                <td>Sharp Reyes</td>
-                <td>josh@gmail.com</td>
-                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Eduardo Alberto</td>
-                <td>Lopez Torres</td>
-                <td>edu@gmail.com</td>
-                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td >Ruben Alexander</td>
-                <td>Siguenza Argueta</td>
-                <td>ralex@gmail.com</td>
-                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; ">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Correo Electronico</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Joshua Steven</td>
+                        <td>Sharp Reyes</td>
+                        <td>josh@gmail.com</td>
+                        <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Eduardo Alberto</td>
+                        <td>Lopez Torres</td>
+                        <td>edu@gmail.com</td>
+                        <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td >Ruben Alexander</td>
+                        <td>Siguenza Argueta</td>
+                        <td>ralex@gmail.com</td>
+                        <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; ">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Correo Electronico</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Joshua Steven</td>
+                        <td>Sharp Reyes</td>
+                        <td>josh@gmail.com</td>
+                        <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Eduardo Alberto</td>
+                        <td>Lopez Torres</td>
+                        <td>edu@gmail.com</td>
+                        <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td >Ruben Alexander</td>
+                        <td>Siguenza Argueta</td>
+                        <td>ralex@gmail.com</td>
+                        <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
     <div class="row d-flex flex-row-reverse mt-3">
-        <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: 0px;" ><!--<i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i>--><i class="fa-solid fa-user-plus float-icon"></i></a>
+        <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: 0px;" ><!--<i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i>--><i class="bi bi-person-plus-fill float-icon"></i></a>
     </div>
     <br>
 </div>

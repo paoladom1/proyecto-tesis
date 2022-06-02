@@ -77,7 +77,7 @@ Route::post('/guardarDedicatoria', 'App\Http\Controllers\EstudianteController@sa
 Route::post('/cambiarEstado', 'App\Http\Controllers\EstudianteController@cambioEstado');
 
 Route::get('/perfil', function () {
-    return view('usuarios.usuario');
+    return view('usuarios.usuariovergon');
 });
 
 Route::get('/menudirector', function () {

@@ -43,9 +43,9 @@
                 <img src="img/profile.png" id="profile" style="width: 2.5em; border-radius: 100%;"/>
             </button>
             <div class="dropdown-menu" aria-labelledby="user-btn">
-                <a class="dropdown-item user-btn-name" href="#">Joshua Steven Sharp Reyes</a>
+                <a class="dropdown-item user-btn-name" href="#" style="width: 100%">Joshua Steven Sharp Reyes</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="#" style="width: 100%">Editar perfil</a>
+                <a class="dropdown-item" href="{{ url('/perfil') }}" style="width: 100%">Editar perfil</a>
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" href="#" style="width: 100%">Cerrar sesion</a>
             </div>
@@ -96,7 +96,7 @@
                         <li> <a href="#">Primer Portada</a> </li>
                         <li> <a href="#">Segunda Portada</a> </li>
                     </ul>--}}
-                    <a href="{{ url('/menudirector') }}">Menu Principal</a>
+                    <a href="{{ url('/menudirector') }}"><i class="bi bi-house-door me-2"></i>Menu Principal</a>
                 </li>
             </ul>
               <hr>
@@ -106,9 +106,9 @@
                         <li> <a href="#">Primer Portada</a> </li>
                         <li> <a href="#">Segunda Portada</a> </li>
                     </ul>--}}
-                    <a href="{{ url('/filtro') }}">Grupos de tesis</a>
+                    <a href="{{ url('/filtro') }}"><i class="bi bi-people me-2"></i>Grupos de tesis</a>
                 </li>
-                <li> <a href="{{ url('/lector') }}">Asesores y lectores</a> </li>
+                <li> <a href="{{ url('/lector') }}" style="font-size: 1.35em"><i class="fa-solid fa-address-card me-2"></i>Asesores y lectores</a> </li>
                 {{--<li> <a href="{{ url('/resumen') }}">Resumen</a> </li>--}}
             </ul>
             <!--<div class="logOut">

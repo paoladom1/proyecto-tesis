@@ -116,9 +116,9 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header" style="background-color: #003C71;">
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="tituloModal" style="color: white;"></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
             </div>
             <div class="modal-body">
             <div class='container'>
@@ -198,9 +198,9 @@
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header" style="background-color: #003C71;">
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="tituloModal2" style="color: white;"></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -247,9 +247,9 @@
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #003C71;">
+                <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                     <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Crear Grupo</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white"></button>
+                    <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" style="color: white"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -335,7 +335,7 @@
 
     <div class="table-responsive">
         <table class="table table-hover">
-            <thead class="thead-dark" style="background-color: #003C71; color: white;">
+            <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px;">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tema de Tesis</th>
@@ -378,9 +378,9 @@
     <div class="modal fade" id="exampleModal45" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header" style="background-color: #003C71;">
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="exampleModalLabel" style="color: white">Estudiantes</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="input-group input-group-sm">

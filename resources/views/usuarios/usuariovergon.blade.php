@@ -37,10 +37,9 @@
     <div class="modal fade" id="modal-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Realizando cambios</h5> <!-- cambiar esta parte-->
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: #003C71; color: white;">
-                <span aria-hidden="true">&times;</span>
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid orange 8px;">
+              <h5 class="modal-title" style="color: white; font-size: 1.75em;" id="exampleModalLongTitle">Realizando cambios</h5> <!-- cambiar esta parte-->
+              <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-dismiss="modal" aria-label="Close">
               </button>
             </div>
             <div class="modal-body">
