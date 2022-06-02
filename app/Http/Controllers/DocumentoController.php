@@ -27,13 +27,21 @@ class DocumentoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('estudiante');
     }
 
     public function obtenerGrupo(){
         $grupo = auth()->guard('admin')->user()->id;
         $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
         return $estudiante->grupo_trabajo_id;
+    }
+
+    public function obtenerGrupoTema(){
+        $grupo = auth()->guard('admin')->user()->id;
+        $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
+        $grupoTema = GrupoTrabajo::where('id', '=', $this->obtenerGrupo())->first();
+        $nombre = $grupoTema->anio_inicio.'-'.$grupoTema->ciclo_inicio.'-'.$grupoTema->id;
+        return $nombre;
     }
 
     public function formularioModal(){
@@ -45,12 +53,12 @@ class DocumentoController extends Controller
             numeros naturales => Significa que es un capitulo y se le pasa el respectivo ID.
         */ 
 
-        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', 1)->get();
-        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', 1)->get();
-        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 1)->get();
-        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 3)->get();
-        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 2)->get();
-        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', 1)->get();
+        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 1)->get();
+        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 3)->get();
+        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 2)->get();
+        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $estudiantes = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->orderBy("apellido", 'asc')->get();
         $dedicatoriaEstado =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
         $agradecimientoEstado =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
@@ -191,15 +199,13 @@ class DocumentoController extends Controller
         $phpWord->getCompatibility()->setOoxmlVersion(15);
         $phpWord->getSettings()->setMirrorMargins(true);
         $phpWord->getSettings()->setThemeFontLang(new Language("ES-SV"));
-
-
         return $phpWord;
     }
 
     private function portada($documento){
         $grupo_trabajo = GrupoTrabajo::where('id', '=', 1)->get();
-        $estudiantes = Estudiante::where('grupo_trabajo_id', '=', 1)->orderBy("apellido", 'asc')->get();
-        $carrera_id = Estudiante::where('grupo_trabajo_id', '=', 1)->groupBy("carrera_id")->get("carrera_id");
+        $estudiantes = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->orderBy("apellido", 'asc')->get();
+        $carrera_id = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("carrera_id")->get("carrera_id");
         $carrera = Carrera::where('id', '=', $carrera_id[0]->carrera_id)->with("facultad")->get();
         $configuracion_sistema = ConfiguracionSistema::get();
         $numeroIntegrantes = $configuracion_sistema[0]->numero_integrantes;
@@ -251,7 +257,7 @@ class DocumentoController extends Controller
     private function segundo($documento){
         $section = $documento->addSection(DocumentoController::margenes());
         $secretaria = Empleado::where('cargo_id', '=', 2)->first();
-        $carrera_id = Estudiante::where('grupo_trabajo_id', '=', 1)->groupBy("carrera_id")->first("carrera_id");
+        $carrera_id = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("carrera_id")->first("carrera_id");
         $DirectorCarrera = DirectorCarrera::where('carrera_id', '=', $carrera_id->carrera_id)->with("empleado")->first();
         $grupo_trabajo = GrupoTrabajo::where('id', '=', 1)->with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->first();
         $carrera = Carrera::where('id', '=', $carrera_id->carrera_id)->with("facultad")->first();
@@ -370,7 +376,7 @@ class DocumentoController extends Controller
     }
 
     private function seccionResumen($documento, $documentoTodo){
-        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', 1)->get();
+        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         if($documentoTodo == null){
             $section = $documento->addSection(DocumentoController::margenes());
         } else{
@@ -384,7 +390,7 @@ class DocumentoController extends Controller
     }
 
     private function seccionSiglas($documento){
-        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 2)->get();
+        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 2)->get();
         $section = $documento->addSection(DocumentoController::margenes());
         $section->addTitle(mb_strtoupper('Siglas'), 1);
         $section->addTextBreak(1);
@@ -392,7 +398,7 @@ class DocumentoController extends Controller
     }
 
     private function seccionAbreviaturas($documento){
-        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 1)->get();
+        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 1)->get();
         $section = $documento->addSection(DocumentoController::margenes());
         $section->addTitle(mb_strtoupper('Abreviaciones'), 1);
         $section->addTextBreak(1);
@@ -400,7 +406,7 @@ class DocumentoController extends Controller
     }
 
     private function seccionNomenclaturas($documento){
-        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 3)->get();
+        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 3)->get();
         $section = $documento->addSection(DocumentoController::margenes());
         $section->addTitle(mb_strtoupper('Nomenclaturas'), 1);
         $section->addTextBreak(1);
@@ -408,7 +414,7 @@ class DocumentoController extends Controller
     }
 
     private function seccionGlosario($documento){
-        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', 1)->get();
+        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $section = $documento->addSection(DocumentoController::margenes());
         $section->addTitle(mb_strtoupper('Glosario'), 1);
         $section->addTextBreak(1);
@@ -416,7 +422,7 @@ class DocumentoController extends Controller
     }
 
     private function seccionReferencia($documento){
-        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', 1)->get();
+        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $section = $documento->addSection(DocumentoController::margenes());
         $section->addTitle(mb_strtoupper('Referencias'), 1);
         $section->addTextBreak(1);
@@ -424,12 +430,12 @@ class DocumentoController extends Controller
     }
 
     public function seccionesDocumento(Request $request){
-        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', 1)->get();
-        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 1)->get();
-        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 3)->get();
-        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 2)->get();
-        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', 1)->get();
-        $capitulo = SeccionCapitulo::where('grupo_trabajo_id', '=', 1)->get();
+        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 1)->get();
+        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 3)->get();
+        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 2)->get();
+        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $capitulo = SeccionCapitulo::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
 
         $i = 0;
         $documento = DocumentoController::crearDocumento();
@@ -478,8 +484,9 @@ class DocumentoController extends Controller
             } 
             ++$i;
         }
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment;filename="'.$this->obtenerGrupoTema().'.docx"');
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
-        $filename = "documentoPrueba.docx";
-        $objWriter->save($filename);
+        $objWriter->save('php://output');
     }
 }

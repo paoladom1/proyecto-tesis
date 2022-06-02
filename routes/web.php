@@ -81,9 +81,7 @@ Route::get('/perfil', function () {
     return view('usuarios.usuario');
 });
 
-Route::get('/menudirector', function () {
-    return view('plantillas.plantillaMenuDirector');
-});
+Route::get('/menudirector', "App\Http\Controllers\DirectorController@menuDirector");
 
 Route::get('/lector', function () {
     return view('director.lector');
