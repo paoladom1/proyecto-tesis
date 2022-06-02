@@ -20,7 +20,7 @@
         <div class="col seccion_" id="titulosApp">
             <h2>ABREVIATURAS, NOMENCLATURAS Y SIGLAS</h2>
         </div>
-        <div id="formAgradecimientos">
+        <div id="formAgradecimientos" class="mt-3">
             <div id="liveAlertPlaceholder"></div>
             <div class="wrapper">
                 <div class="buttonWrapper2">
