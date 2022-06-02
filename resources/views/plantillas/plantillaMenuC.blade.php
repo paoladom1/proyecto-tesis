@@ -1,6 +1,5 @@
 @extends('plantillas.nav')
 @section('content')
-
     <div class="container" style="background-color: white">
         <div class="row">
             <div class="container mPrincipal">
@@ -91,7 +90,7 @@
                     <input type="text" class="list-group-item" placeholder="Seccion" readonly/>
                     <input type="text" class="list-group-item" placeholder="Autor" readonly/>
                     <input type="text" class="list-group-item" placeholder="Fecha" readonly/>
-                    <button class="list-group-item" style="color: white; background-color: #003C71">Ver</button>
+                    <button class="btn btn-success" style="color: white;"><i class="bi bi-eye"></i> Ver</button>
                 </div>
             </div>
         </div>

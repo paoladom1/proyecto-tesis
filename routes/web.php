@@ -65,6 +65,7 @@ Route::post('/guardarReferencia', 'App\Http\Controllers\EstudianteController@sav
 // Glosario
 Route::get('/glosario', 'App\Http\Controllers\EstudianteController@frmGlosario');
 Route::post('/guardarGlosario', 'App\Http\Controllers\EstudianteController@saveGlosario');
+Route::post('/cambiarEstadoGlosario', 'App\Http\Controllers\EstudianteController@cambioEstadoGlosario');
 
 // Abreviatura, nomenclaturas y siglas
 Route::get('/abreviaturas', 'App\Http\Controllers\EstudianteController@frmAbreviatura');

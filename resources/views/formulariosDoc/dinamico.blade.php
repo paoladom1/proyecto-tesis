@@ -1,34 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@extends('plantillas.nav')
+@section('content')
+    
 <style>
     .contenedorBotones button:focus{
         outline: none;
         box-shadow: none;
     }
-
-    /*#headingTwo > .accordion-button:not(.collapsed){
-        background: #44A7FF;
-        color: black;
-        border: 1px solid black;
-    }
-
-    #headingTwo > .accordion-button{
-        background: #44A7FF;
-        border: 1px solid black;
-    }*/
 
     #headingTwo > .accordion-button{
         border: 1px dotted black;
@@ -67,7 +44,7 @@
     }
 
     .btnEliminarAgregar{
-        margin-left: -250px;
+        margin-left: -330px;
         margin-top: 10px;
     }
 
@@ -84,8 +61,6 @@
     var tipo;
 
     function agregarEditor(id) {
-        // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
-        // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto'+id, {
             height: 250,
@@ -350,13 +325,13 @@
             }
         });
 </script>
-    
-</head>
 
-<body>
-<div class="container">
-    <br>
-    <h3>Capitulo {{$capitulo->orden_capitulo}}. {{$capitulo->nombre_capitulo}}</h3>
+
+
+<div class="container contenidoContainer">
+    <div class="col seccion_" id="titulosApp">
+        <h2>Capitulo {{$capitulo->orden_capitulo}}. {{$capitulo->nombre_capitulo}}</h2>
+    </div>
     <br>
     @if (session('status'))
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -420,11 +395,9 @@
         </script>
         <div class="row justify-content-start">
             <div class="">
-                <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
+                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
             </div>
         </div>
-        
-        <!-- El id="canciones" indica que la función de JavaScript dejará aquí el resultado -->
 
         <div class="accordion" id="accordionExample">
             
@@ -449,7 +422,7 @@
             @endforeach
         @endforeach
         <br>
-        <input type="submit" class="btn btn-warning" value="Guardar" onclick="bandera2 = 0">
+        <input type="submit" class="btn btn-success" value="Guardar" onclick="bandera2 = 0">
     </form>
 
     <!-- Modal -->
@@ -486,5 +459,4 @@
   </div>
 </div>
 
-</body>
-</html>
+@endsection

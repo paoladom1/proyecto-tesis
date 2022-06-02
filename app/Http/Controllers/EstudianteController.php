@@ -248,8 +248,15 @@ class EstudianteController extends Controller
     //---------------------------------------Sección de glosario---------------------------------------------
     public function frmGlosario(){ 
         $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        if (count($glosario) == 0) {
+            $desabilitar = "disabled";
+        } else {
+            $desabilitar = "";
+        }
+        
         return view('formulariosDoc.glosario', array(
-            "glosario" => $glosario
+            "glosario" => $glosario,
+            "desabilitar" => $desabilitar
         ));
     }
 
@@ -283,6 +290,29 @@ class EstudianteController extends Controller
                 'id' => $id
             );
         }
+        return $mensaje;
+    }
+
+    public function cambioEstadoGlosario(Request $request)
+    {
+        $id = $request->input('id');
+        $opcional = $request->input('opcional');
+        $glosario = SeccionGlosario::findOrFail($id);
+        $glosario -> opcional  = $opcional;
+        $glosario->update();  
+
+        if($opcional == 1){
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: Es opcional"
+            );
+        } else{
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: No es opcional"
+            );
+        }
+
         return $mensaje;
     }
 

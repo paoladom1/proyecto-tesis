@@ -25,8 +25,12 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-between m-5">
-                <button class="me-3 btn btn-danger" style="width: auto;">Descartar cambios</button>
-                <button type="button" data-toggle="modal" data-target="#modal-profile" class="ms-3 btn btn-success" style="width: auto">Guardar cambios</button>
+                <div class="col">
+                  <button class="ms-3 btn btn-danger" style="width: auto;">Descartar</button>
+                </div>
+                <div class="col">
+                  <button type="button" data-toggle="modal" data-target="#modal-profile" class="me-3 btn btn-success" style="width: auto">Guardar</button>
+                </div>
             </div>
 
         </div>

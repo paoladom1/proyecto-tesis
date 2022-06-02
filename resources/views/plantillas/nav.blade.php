@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!--<script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href = "{{URL::asset('css/app.css')}}" rel="stylesheet">
     <script
     src="https://code.jquery.com/jquery-3.6.0.js"
     integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -21,12 +17,8 @@
     crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-    <link href = "{{URL::asset('css/app.css')}}" rel="stylesheet">
-
+    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
     <title>Proceso de graduación</title>
 </head>
 
@@ -85,11 +77,6 @@
                 <li> <a href="{{ url('/glosario') }}"><i class="bi bi-journal-bookmark-fill"></i> Glosario</a> </li>
                 <li> <a href="{{ url('/referencias') }}"><i class="bi bi-list-columns-reverse"></i> Referencias</a> </li>
             </ul>
-
-          
-            <!--<div class="logOut">
-                <a data-bs-toggle="modal" href="#exampleModalToggle" role="button">Crear documento</a>
-            </div>-->
         </div>
     </div>
 
@@ -100,95 +87,6 @@
     </div>
 
     <main class="main-content" id="content" style="background-color: white">
-        <!-- Modal para crear documento -->
-      {{--  <!--<div>
-              <form action="{{ url('/crearDocumento') }}" method="post">
-                {{ csrf_field() }}
-                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalToggleLabel">Creación del documento</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
-                        </div>
-                        <div class="modal-body checkSeccion">
-                            <div class="form-check">
-                                <input class="form-check-input" onclick="cambio2()" type="checkbox"  name='seccionToda' id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Todo el documento
-                                </label>
-                            </div>
-                            @php
-                                $cont = 0;
-                                $estaticas = 0;
-                            @endphp
-                            @foreach ($secciones as $seccion)
-                                @php
-                                    ++$cont;
-                                @endphp
-                                @if ($seccion[1] != -1 && $seccion[1] != -2)
-                                    <div class="form-check offset-md-1">
-                                        <input class="form-check-input" onclick="cambio(<?=$cont?>)" type="checkbox" value="{{$seccion[1]}}" name='seccion2[]' id="flexCheckDefault{{$cont}}">
-                                        <label class="form-check-label" for="flexCheckDefault{{$cont}}">
-                                            {{$seccion[0]}}
-                                        </label>
-                                    </div>
-                                @elseif ($seccion[1] == -1)
-                                    @php
-                                        ++$estaticas;
-                                    @endphp
-                                    <div class="form-check offset-md-1">
-                                        <input class="form-check-input" onclick="cambio(<?=$cont?>)" type="checkbox" value="{{$estaticas}}" name='seccion[]' id="flexCheckDefault{{$cont}}">
-                                        <label class="form-check-label" for="flexCheckDefault{{$cont}}">
-                                            {{$seccion[0]}}
-                                        </label>
-                                    </div>
-                                @elseif ($seccion[1] == -2)
-                                    @php
-                                        ++$estaticas;
-                                    @endphp
-                                    <div class="form-check offset-md-1">
-                                        <input class="form-check-input" disabled type="checkbox" value="{{$estaticas}}" name='seccion[]' id="flexCheckDefault{{$cont}}">
-                                        <label class="form-check-label" for="flexCheckDefault{{$cont}}">
-                                            {{$seccion[0]}}
-                                        </label>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Siguiente</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalToggleLabel2">Confirmar</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Estas partes del documento serán descargados en formato Word</p>
-                            <ul id='listadoSecciones'>
-                                @foreach ($secciones as $seccion)
-                                    @php
-                                        ++$cont;
-                                    @endphp
-                                    <li>{{$seccion[0]}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Atras</button>
-                            <button class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">Crear</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>-->--}}
         @yield('content')
     </main>
 
