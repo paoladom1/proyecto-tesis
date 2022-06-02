@@ -46,7 +46,7 @@
                     <div class="col">
                         <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                <img src="img/fondoCard4.jpeg" class="card-img-top img-card" alt="Card image cap">
                                 <div class="card-body body-card mt-2">
                                     <h5 class="card-title">CAPÍTULOS</h5>
                                 </div>
@@ -57,7 +57,7 @@
                     <div class="col">
                         <a href="{{ url('/glosario') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                <img src="img/fondoCard5.jpeg" class="card-img-top img-card" alt="Card image cap">
                                 <div class="card-body body-card mt-2">
                                     <h5 class="card-title">GLOSARIO</h5>
                                 </div>
@@ -68,7 +68,7 @@
                     <div class="col">
                         <a href="{{ url('/referencias') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard3.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                <img src="img/fondoCard6.jpeg" class="card-img-top img-card" alt="Card image cap">
                                 <div class="card-body body-card mt-2">
                                     <h5 class="card-title">REFERENCIAS</h5>
                                 </div>
