@@ -59,39 +59,28 @@ class DocumentoController extends Controller
         $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 3)->get();
         $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 2)->get();
         $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
-        $estudiantes = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->orderBy("apellido", 'asc')->get();
         $dedicatoriaEstado =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
         $agradecimientoEstado =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
-        $dedicatoriaContador =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
-        $agradecimientoContador =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
         $tema_graduacion = GrupoTrabajo::where('id', '=', $this->obtenerGrupo())->first();
 
         $cont = 0;
         $array[$cont][0] = 'Portada y Segunda Portada (Autogenerado)'; $array[$cont++][1] = '-1'; 
 
         if ($dedicatoriaEstado != null) {
-            if (count($dedicatoriaContador) != count($estudiantes)) {
-                $array[$cont][0] = 'Dedicatoria (No todos los integrantes han escrito dedicatoria)'; $array[$cont++][1] = '-3';
-            } else{
-                if ($dedicatoriaEstado->opcional == 0) {
-                    $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-1';
-                } else if ($dedicatoriaEstado->opcional == 1) {
-                    $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-3';
-                }
+            if ($dedicatoriaEstado->opcional == 0) {
+                $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-1';
+            } else if ($dedicatoriaEstado->opcional == 1) {
+                $array[$cont][0] = 'Dedicatoria (seccion opcional)'; $array[$cont++][1] = '-3';
             }
         } else{
             $array[$cont][0] = 'Dedicatoria (No tiene datos)'; $array[$cont++][1] = '-3'; 
         }
 
         if ($agradecimientoEstado != null) {
-            if (count($agradecimientoContador) != count($estudiantes)) {
-                $array[$cont][0] = 'Agradecimiento (No todos los integrantes han escrito agradecimientos)'; $array[$cont++][1] = '-3';
-            } else{
-                if ($agradecimientoEstado->opcional == 0) {
-                    $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-1';
-                } else if ($agradecimientoEstado->opcional == 1) {
-                    $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-3';
-                }
+            if ($agradecimientoEstado->opcional == 0) {
+                $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-1';
+            } else if ($agradecimientoEstado->opcional == 1) {
+                $array[$cont][0] = 'Agradecimiento (seccion opcional)'; $array[$cont++][1] = '-3';
             }
         } else{
             $array[$cont][0] = 'Agradecimiento (No tiene datos)'; $array[$cont++][1] = '-3';

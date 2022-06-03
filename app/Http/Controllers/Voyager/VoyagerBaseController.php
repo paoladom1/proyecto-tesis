@@ -16,7 +16,7 @@ use TCG\Voyager\Events\BreadImagesDeleted;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 
-class UsuarioController extends VoyagerBaseController 
+class VoyagerBaseController extends Controller
 {
     use BreadRelationshipParser;
 
@@ -446,7 +446,7 @@ class UsuarioController extends VoyagerBaseController
         // Validate fields with ajax
         $val = $this->validateBread($request->all(), $dataType->addRows)->validate();
         $data = $this->insertUpdateData($request, $slug, $dataType->addRows, new $dataType->model_name());
-        
+
         event(new BreadDataAdded($dataType, $data));
 
         if (!$request->has('_tagging')) {

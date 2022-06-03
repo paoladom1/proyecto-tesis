@@ -79,11 +79,6 @@ Route::post('/cambiarEstado', 'App\Http\Controllers\EstudianteController@cambioE
 
 // Director de carrera
 Route::get('/menudirector', "App\Http\Controllers\DirectorController@menuDirector");
-
-Route::get('/perfil', function () {
-    return view('usuarios.usuariovergon');
-});
-
 Route::get('/lector', function () {
     return view('director.lector');
 });
@@ -91,3 +86,7 @@ Route::get('/lector', function () {
 Route::get('/lectorv', function () {
     return view('director.lectorvergon');
 });
+
+// Perfil de usuario
+Route::get('/perfil', 'App\Http\Controllers\GeneralController@mostrarPerfil');
+Route::post('/cambiarDatos', 'App\Http\Controllers\GeneralController@cambiarDatos');

@@ -39,17 +39,6 @@
                 <a class="dropdown-item" href="{{route('logout')}}" style="width: 100%">Cerrar sesion</a>
             </div>
           </div>
-        <!--<div id="user-settings">
-            <button id="user-btn" onclick="dropdown()">
-                <img src="img/profile.png" id="profile" style="width: 2.5em; border-radius: 100%;"/>
-                <div id="triangulo" class="ms-2">
-                </div>
-            </button>
-            <div id="user-dropdown" class="user-content">
-                <a style="width: 100%;" href="#">Editar perfil</a>
-                <a style="width: 100%;" class="ucontent" href="#">Cerrar sesion</a>
-              </div>
-        </div>-->
     </nav>
 
      <!-- Menu desplegable lateral -->
@@ -71,7 +60,7 @@
                     <hr>
                 </li>
                 <li> <a href="{{ url('/resumen') }}"><i class="bi bi-clipboard2-data"></i> Resumen</a> </li>
-                <li> <a href="{{ url('/agradecimientos') }}"><i class="bi bi-heart"></i> Agradecimientos</a> </li>
+                <li> <a href="{{ url('/agradecimientos') }}"><i class="bi bi-people"></i> Agradecimientos</a> </li>
                 <li> <a href="{{ url('/abreviaturas') }}"><i class="bi bi-explicit"></i> Abreviaturas</a> </li>
                 <li> <a href="{{ url('/capitulos') }}"><i class="bi bi-pen"></i> Capitulos</a> </li>
                 <li> <a href="{{ url('/glosario') }}"><i class="bi bi-journal-bookmark-fill"></i> Glosario</a> </li>
