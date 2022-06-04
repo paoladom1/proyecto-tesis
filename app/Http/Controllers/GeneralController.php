@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Estudiante;
 use App\Models\DirectorCarrera;
 use App\Models\Usuario;
+use Illuminate\Support\Str;
 
 class GeneralController extends Controller
 {
@@ -18,7 +19,7 @@ class GeneralController extends Controller
     {
         $tipo = auth()->guard('admin')->user()->tipo_usuario_id;
         $id_usuario = auth()->guard('admin')->user()->id;
-        $usuario = Usuario::findOrFail(auth()->guard('admin')->user()->id);
+        $usuario = Usuario::findOrFail($id_usuario);
         if ($tipo == 1) { // Estudiante
             $datos_usuario = Estudiante::where("usuario_id", "=", $id_usuario)->first();
         } else if ($tipo == 2) { // Director de carrera
@@ -35,17 +36,35 @@ class GeneralController extends Controller
         $usuario = Usuario::findOrFail(auth()->guard('admin')->user()->id);
         $nuevaPass = $request->input('password');
         $file = $request->input('file');
-        if ($nuevaPass != "") {
+        $mensaje[0] = "";
+        $mensaje[1] = "";
+        if ($nuevaPass != null) {
             $usuario->password = bcrypt($nuevaPass);    
+            $mensaje[0] = "Se ha cambiado la contraseña con exito!";
         } 
-        if ($file != "") {
-            $usuario->foto = $file;
+        if($request->hasFile('pic')){
+            $imagen = $request->file('pic');
+            $nombre_unico = auth()->guard('admin')->user()->id.auth()->guard('admin')->user()->email;
+            $nombreImagen = $nombre_unico.'.'.$imagen->guessExtension();
+            $ruta = public_path("img/usuarios/");
+            copy($imagen->getRealPath(), $ruta.$nombreImagen);
+            $usuario->foto = 'img/usuarios/'.$nombreImagen;
+            $mensaje[1] = "Se ha cambiado la imagen de perfil con exito!";
+        }
+        if ($mensaje[0] == "" && $mensaje[1] == "") {
+            $mensaje[0] = "No se realizó ningun cambio";
         }
         $usuario->update();
-        $mensaje = array(
-            'code'=> 200,
-            'mensaje' => "Se guardo exitosamente!"
-        );
-        return $mensaje;
+        return redirect('perfil')->with(array(
+            "mensaje" => $mensaje
+        ));
+    }
+
+    public function descartandoCambios(Type $var = null)
+    {
+        $mensaje[0] = "Se han descartado todos los cambios!";
+        return redirect('perfil')->with(array(
+            "mensaje" => $mensaje
+        ));
     }
 }

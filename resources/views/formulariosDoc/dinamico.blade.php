@@ -446,10 +446,10 @@ const alert = (message, type, icon) => {
             '</div>';
             alertPlaceholder.append(wrapper)
             window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-        }, 2500);
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+            }, 2500);
     }
 </script>
 

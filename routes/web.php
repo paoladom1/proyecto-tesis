@@ -90,3 +90,4 @@ Route::get('/lectorv', function () {
 // Perfil de usuario
 Route::get('/perfil', 'App\Http\Controllers\GeneralController@mostrarPerfil');
 Route::post('/cambiarDatos', 'App\Http\Controllers\GeneralController@cambiarDatos');
+Route::post('/descartar', 'App\Http\Controllers\GeneralController@descartandoCambios');
