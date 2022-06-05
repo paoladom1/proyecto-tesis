@@ -64,7 +64,7 @@
                         <td class="align-middle" name="titulacion"><span name="numCapitulo">Capitulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" onclick="window.location.href='/fdinamico/${idC}'" class="btn btn-warning" style="color: white; background-color: #003C71;">Modificar contenido</button>
+                            <button type="button" onclick="window.location.href='/contenidoCapitulo/${idC}'" class="btn btn-warning" style="color: white; background-color: #003C71;">Modificar contenido</button>
                             <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar titulo</button>
                             <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capitulo</button>
                         </div>
@@ -266,8 +266,8 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-        <div class="modal-header" style="background-color: #003C71;">
-            <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Confirmación</h5>
+        <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
+            <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Eliminar capítulo</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
         </div>
         <div class="modal-body">

@@ -96,7 +96,7 @@ class EstudianteController extends Controller
 
         $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '>',0)->get();
         $contenido_introduccion = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '=',0)->get();
-        return view('formulariosDoc.dinamico', array(
+        return view('formulariosDoc.contenidoCapitulo', array(
             "capitulo" => $capitulo,
             "contenido" => $contenido,
             "introduccion" => $contenido_introduccion
@@ -311,12 +311,12 @@ class EstudianteController extends Controller
         if($opcional == 1){
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: Es opcional"
+                'mensaje' => "Cambio a estado: Es opcional (La sección del glosario no se incluirá en el documento)"
             );
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: No es opcional"
+                'mensaje' => "Cambio a estado: No es opcional (La sección del glosario se podrá incluir en el documento)"
             );
         }
 
@@ -506,18 +506,51 @@ class EstudianteController extends Controller
             }
         }
 
+        if ($tipo == 1) {
+            $mensajeTipo = "agradecimientos";
+        } else{
+            $mensajeTipo = "dedicatorias";
+        }
+
         if($opcional == 1){
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: Es opcional"
+                'mensaje' => "Cambio a estado: Es opcional (La sección de ".$mensajeTipo." no se incluirá en el documento)"
             );
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: No es opcional"
+                'mensaje' => "Cambio a estado: No es opcional (La sección de ".$mensajeTipo." se podrá incluir en el documento)"
             );
         }
 
+        return $mensaje;
+    }
+
+    public function deleteDedicatoriaAgradecimiento(Request $request)
+    {
+        $tipo = $request->input('tipo');
+        $id = $request->input('id');
+        $nombre = $request->input('nombre');
+        if ($tipo == 1) {
+            $agradecimiento = SeccionAgradecimiento::findOrFail($id);
+            $agradecimiento->delete();
+            $agradecimientoContador =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se eliminó con exito el agradecimiento de ".$nombre,
+                'total' => count($agradecimientoContador)
+            );
+        } else if($tipo == 2){
+            $dedicatoria = SeccionDedicatoria::findOrFail($id);
+            $dedicatoria->delete();
+            $dedicatoriaContador =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se eliminó con exito la dedicatoria de ".$nombre,
+                'total' => count($dedicatoriaContador)
+            );
+        }
         return $mensaje;
     }
 }

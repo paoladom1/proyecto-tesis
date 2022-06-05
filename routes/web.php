@@ -43,10 +43,10 @@ Route::get('/secciones', 'App\Http\Controllers\DocumentoController@formularioMod
 Route::post('/crearDocumento', 'App\Http\Controllers\DocumentoController@seccionesDocumento');
 
 // Temas y subtemas de cada capitulo
-Route::get('/fdinamico/{id}', 'App\Http\Controllers\EstudianteController@formularioDinamico');
-Route::post('/fdinamico/guardarTemas', 'App\Http\Controllers\EstudianteController@crearDinamico');
-Route::post('/fdinamico/eliminarTema', 'App\Http\Controllers\EstudianteController@eliminarContenido');
-Route::post('/fdinamico/eliminarSubTema', 'App\Http\Controllers\EstudianteController@eliminarContenido2');
+Route::get('/contenidoCapitulo/{id}', 'App\Http\Controllers\EstudianteController@formularioDinamico');
+Route::post('/contenidoCapitulo/guardarTemas', 'App\Http\Controllers\EstudianteController@crearDinamico');
+Route::post('/contenidoCapitulo/eliminarTema', 'App\Http\Controllers\EstudianteController@eliminarContenido');
+Route::post('/contenidoCapitulo/eliminarSubTema', 'App\Http\Controllers\EstudianteController@eliminarContenido2');
 
 // Capitulos
 Route::get('/capitulos', 'App\Http\Controllers\EstudianteController@formCapitulos');
@@ -75,6 +75,7 @@ Route::post('/guardarAbreviatura', 'App\Http\Controllers\EstudianteController@sa
 Route::get('/agradecimientos', 'App\Http\Controllers\EstudianteController@frmAgradecimientoDedicatoria');
 Route::post('/guardarAgradecimiento', 'App\Http\Controllers\EstudianteController@saveAgradecimiento');
 Route::post('/guardarDedicatoria', 'App\Http\Controllers\EstudianteController@saveDedicatoria');
+Route::post('/eliminarDedicatoriaAgradecimiento', 'App\Http\Controllers\EstudianteController@deleteDedicatoriaAgradecimiento');
 Route::post('/cambiarEstado', 'App\Http\Controllers\EstudianteController@cambioEstado');
 
 // Director de carrera

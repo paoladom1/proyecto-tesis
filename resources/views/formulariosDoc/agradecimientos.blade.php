@@ -23,16 +23,21 @@
             } else if(tipo == 2){
                 etiqueta = 'Dedicatoria de';
             }
+            var desabilitar = "";
+            if (id == "") {
+                desabilitar = "disabled";
+            }
             fragmento = `<br>
                         <div class="accordion-item">
                             <div class="contenedorBotones">
                                 <div class="btn-group btnEliminarAgregar" role="group" aria-label="Basic mixed styles example">
                                     <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="guardarDA('${tipo}', '${numIntegrante}')"><i class="bi bi-save"></i> Guardar</button>
+                                    <button ${desabilitar} type="button" class="btn btn-danger btn-sm" id="btnEliminarDA${numIntegrante}" onClick="abrirModal('${tipo}', '${numIntegrante}')"><i class="bi bi-x-circle"></i> Eliminar</button>
                                 </div>
                             </div>
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo${numIntegrante}" aria-expanded="false" aria-controls="collapseTwo${numIntegrante}">
-                                    <span>${etiqueta} ${nombreIntegrante}</span>
+                                    <span>${etiqueta} <span id="spanNombreI${numIntegrante}">${nombreIntegrante}</span></span>
                                 </button>
                             </h2>
                             <div id="collapseTwo${numIntegrante}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
@@ -108,7 +113,7 @@
     }
 
     .btnEliminarAgregar{
-        margin-left: -130px;
+        margin-left: -235px;
         margin-top: 10px;
     }
 
@@ -201,6 +206,28 @@
     </form>
 </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modal-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
+                    <h5 class="modal-title" style="color: white; font-size: 1.75em;" id="exampleModalLongTitle">Eliminar <span id="tipoEliTi"></span></h5> <!-- cambiar esta parte-->
+                    <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input hidden type="text" id="idModal">
+                    <input hidden type="text" id="idEtiquetaModal">
+                    <p>¿Desea eliminar <span id="tipoEli"></span> de <span id="nombreIE"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="eliminarDA()" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script>    
     const tabs = document.querySelector(".wrapper");
     const tabButton = document.querySelectorAll(".tab-button");
@@ -274,10 +301,72 @@
                 if (r['code'] == 200) {
                     alert(r['mensaje'], 'success', 1);   
                     document.getElementById('idDA'+idEtiqueta).setAttribute("value", r['id']);
+                    document.getElementById('btnEliminarDA'+idEtiqueta).disabled = false;
                     if (tipo == 1) {
                         document.getElementById('opcional1').disabled = false;
                     } else if (tipo == 2) {
                         document.getElementById('opcional2').disabled = false;
+                    }
+                } else{
+                    alert(r['mensaje'], 'danger', 2);
+                }
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
+    }
+    var myModal = new bootstrap.Modal(document.getElementById('modal-profile'), {
+        keyboard: false
+    });
+    
+    function abrirModal(tipo, idEtiqueta) {
+        var tipoNombre = "";
+        var tipoNombreTi = "";
+        if (tipo == 1) {
+            tipoNombre = "el agradecimiento";
+            tipoNombreTi = "agradecimiento";
+        } else{
+            tipoNombre = "la dedicatroria";
+            tipoNombreTi = "dedicatoria";
+        }
+        var nombreIntegrante = document.getElementById('spanNombreI'+idEtiqueta).innerText;
+        document.getElementById("nombreIE").innerText = nombreIntegrante;
+        document.getElementById("tipoEli").innerText = tipoNombre;
+        document.getElementById("tipoEliTi").innerText = tipoNombreTi;
+        document.getElementById("idModal").value = tipo;
+        document.getElementById("idEtiquetaModal").value = idEtiqueta;
+        myModal.show();
+    }
+
+    // Agregar la ventana modal para eliminación.
+    function eliminarDA() {
+        tipo = document.getElementById('idModal').value;
+        idEtiqueta = document.getElementById('idEtiquetaModal').value;
+        var id = document.getElementById('idDA'+idEtiqueta).value; 
+        var nombreIntegrante = document.getElementById('spanNombreI'+idEtiqueta).innerText;
+        $.ajax({
+            type : "POST",
+            "serverSide" : true,
+            url : './eliminarDedicatoriaAgradecimiento',
+            data: {"_token": "{{ csrf_token() }}", "id": id, "tipo": tipo, "nombre": nombreIntegrante},
+            success : function(r) {
+                if (r['code'] == 200) {
+                    alert(r['mensaje'], 'success', 1);   
+                    document.getElementById('idDA'+idEtiqueta).setAttribute("value", '');
+                    document.getElementById('btnEliminarDA'+idEtiqueta).disabled = true;
+                    CKEDITOR.instances['contenido'+idEtiqueta].setData("");
+                    document.getElementById('firma'+idEtiqueta).value = nombreIntegrante;
+                    if (tipo == 1) {
+                        if (r['total'] == 0)  {
+                            document.getElementById('opcional1').disabled = true; 
+                            document.getElementById('opcional1').checked = false;   
+                        }
+                    } else if (tipo == 2) {
+                        if (r['total'] == 0)  {
+                            document.getElementById('opcional2').disabled = true;
+                            document.getElementById('opcional2').checked = false;
+                        }
                     }
                 } else{
                     alert(r['mensaje'], 'danger', 2);

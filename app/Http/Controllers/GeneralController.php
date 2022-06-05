@@ -25,7 +25,7 @@ class GeneralController extends Controller
         } else if ($tipo == 2) { // Director de carrera
             $datos_usuario = DirectorCarrera::where("usuario_id", "=", $id_usuario)->first();
         }
-        return view('usuarios.usuariovergon', array(
+        return view('usuarios.perfilUsuario', array(
             "usuario" => $datos_usuario, 
             "foto_usuario" => $usuario->foto
         ));

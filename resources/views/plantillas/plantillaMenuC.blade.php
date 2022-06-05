@@ -105,8 +105,8 @@
         <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                <div class="modal-header" style="background-color: #003C71;">
-                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Creación del documento</h5>
+                <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
+                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;"><i class="bi bi-filetype-doc"></i> Creación del documento</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
                 </div>
                 <div class="modal-body checkSeccion">
