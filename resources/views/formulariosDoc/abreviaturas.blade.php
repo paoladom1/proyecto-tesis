@@ -18,13 +18,13 @@
 </script>
     <div class='container agradecimientosContainer'>
         <div class="col seccion_" id="titulosApp">
-            <h2>ABREVIATURAS, NOMENCLATURAS Y SIGLAS</h2>
+            <h2>ABREVIACIONES, NOMENCLATURAS Y SIGLAS</h2>
         </div>
         <div id="formAgradecimientos" class="mt-3">
             <div id="liveAlertPlaceholder"></div>
             <div class="wrapper">
                 <div class="buttonWrapper2">
-                    <button class="tab-button active" style="border-top-left-radius: 10px;" data-id="abreviatura" type="button">Abreviaturas</button>
+                    <button class="tab-button active" style="border-top-left-radius: 10px;" data-id="abreviatura" type="button">Abreviaciones</button>
                     <button class="tab-button" data-id="nomenclatura" type="button">Nomenclaturas</button>
                     <button class="tab-button" style="border-top-right-radius: 10px;" data-id="sigla" type="button">Siglas</button>
                 </div>
@@ -76,7 +76,7 @@
                                         </script>
                                     </div>
                                     <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                    <button type="button" onclick="registrarAbreviatura(1);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Abreviaturas</button>
+                                    <button type="button" onclick="registrarAbreviatura(1);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Abreviaciones</button>
                                 </div>
                             </div>
                         </div>

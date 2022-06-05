@@ -32,8 +32,8 @@ CREATE TABLE `CARRERA` (
 CREATE TABLE `USUARIO` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `foto` varchar(200),
-  `correo` varchar(100) NOT NULL,
-  `contrasena` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `tipo_usuario_id` int NOT NULL,
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP
@@ -132,7 +132,7 @@ CREATE TABLE `SECCION_CAPITULO` (
 CREATE TABLE `CONTENIDO_SECCION_CAPITULO` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `tema` varchar(255),
-  `contenido` text NOT NULL,
+  `contenido` text,
   `orden_contenido` int NOT NULL,
   `seccion_capitulo_id` int NOT NULL,
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -219,7 +219,7 @@ CREATE TABLE `BITACORA_MODIFICACION` (
 CREATE TABLE `BITACORA` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `descripcion` text NOT NULL,
-  `fecha_modificacion` datetime NOT NULL,
+  `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `estudiante_id` int NOT NULL,
   `bitacora_seccion_id` int NOT NULL,
   `bitacora_modificacion_id` int NOT NULL,

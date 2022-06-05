@@ -17,6 +17,7 @@ use App\Models\SeccionReferencia;
 use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
 use App\Models\Estudiante;
+use App\Models\Bitacora;
 
 class EstudianteController extends Controller
 {
@@ -25,10 +26,44 @@ class EstudianteController extends Controller
         $this->middleware('estudiante');
     }
 
+    //-------------------------------------Funciones generales-----------------------------------
+
     public function obtenerGrupo(){
         $grupo = auth()->guard('admin')->user()->id;
         $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
         return $estudiante->grupo_trabajo_id;
+    }
+
+    public function bitacora($descripcion, $bitacora_seccion, $bitacora_modificacion)
+    {
+        /*
+            - BITACORA_MODIFICACION -
+            1 -> Agregó
+            2 -> Modificó
+            3 -> Eliminó
+
+            - BITACORA_SECCIÓN -
+            1 -> Agradecimiento
+            2 -> Dedicatoria
+            3 -> Resumen
+            4 -> Siglas
+            5 -> Abreviaciones
+            6 -> Nomenclaturas
+            7 -> Capítulo
+            8 -> Glosario
+            9 -> Referencia
+            10 -> Creación de documento
+        */
+        $grupo = auth()->guard('admin')->user()->id;
+        $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
+
+        $bitacora = New Bitacora();
+        $bitacora->descripcion = $descripcion;
+        $bitacora->estudiante_id = $estudiante->id;
+        $bitacora->bitacora_seccion_id = $bitacora_seccion;
+        $bitacora->bitacora_modificacion_id = $bitacora_modificacion;
+        $bitacora->save();
+        // $this->bitacora('Prueba de bitacora', 3, 1);
     }
 
     //-------------------------------------Creación de capitulos-----------------------------------
@@ -49,7 +84,7 @@ class EstudianteController extends Controller
         //$capitulo->grupo_trabajo_id = $request->input('orden_capitulo');
         $capitulo->grupo_trabajo_id = $this->obtenerGrupo();
         $capitulo->save();
-
+        $this->bitacora('Se ha creado el capitulo: '.$capitulo->nombre_capitulo, 7, 1);
         $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
         return $capitulos;
     }
@@ -63,11 +98,12 @@ class EstudianteController extends Controller
                 $capitulo = SeccionCapitulo::findOrFail($id);
                 $capitulo->orden_capitulo = $cont++;
                 $capitulo->update();
-            }   
+            }  
         } else if($request->input('id')){
             $id = $request->input('id');
             $nombre = $request->input('nombre');
             $capitulo = SeccionCapitulo::findOrFail($id);
+            $this->bitacora('Se ha modificado el capítulo: '.$capitulo->nombre_capitulo.'. El nuevo nombre del capítulo es: '.$nombre, 7, 2);
             $capitulo->nombre_capitulo = $nombre;
             $capitulo->update();   
             $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
@@ -79,6 +115,7 @@ class EstudianteController extends Controller
     {
         $id = $request->input('id');
         $capitulo = SeccionCapitulo::findOrFail($id);
+        $this->bitacora('Se ha eliminado el capitulo: '.$capitulo->nombre_capitulo, 7, 3);
         $capitulo->delete();
     }
 
@@ -159,20 +196,25 @@ class EstudianteController extends Controller
             }
             ++$i;
         }
+        $this->bitacora('Se ha modificado el contenido del capitulo: '.$capitulo->nombre_capitulo, 7, 2);
         return redirect('capitulos')->with('status', 'Se guardaron los datos del Capitulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo.'!');
     }
 
     public function eliminarContenido(Request $request)
     {
         $id = $request->input('id');
+        $capitulo = $request->input('capitulo');
         $contenido = ContenidoSeccionCapitulo::findOrFail($id);
+        $this->bitacora('Se ha eliminado el tema: '.$contenido->tema.' del capitulo: '.$capitulo, 7, 3);
         $contenido->delete();
     }
 
     public function eliminarContenido2(Request $request)
     {
         $id = $request->input('id');
+        $capitulo = $request->input('capitulo');
         $contenido = SubcontenidoSeccionCapitulo::findOrFail($id);
+        $this->bitacora('Se ha eliminado el subtema: '.$contenido->tema.' del capitulo: '.$capitulo, 7, 3);
         $contenido->delete();
     }
 
@@ -199,11 +241,13 @@ class EstudianteController extends Controller
                 $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->save();
                 $id = $resumen->id;
+                $this->bitacora('Se creó la sección de resumen', 3, 1);
             } else{
                 $resumen = SeccionResumen::findOrFail($id);
                 $resumen -> contenido = $contenido;
                 $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->update();
+                $this->bitacora('Se Modificó la sección de resumen', 3, 2);
             }
             $mensaje = array(
                 'code'=> 200,
@@ -237,11 +281,13 @@ class EstudianteController extends Controller
                 $referencia -> grupo_trabajo_id = $this->obtenerGrupo();
                 $referencia->save();
                 $id = $referencia->id;
+                $this->bitacora('Se creó la sección de referencias', 9, 1);
             } else{
                 $referencia = SeccionReferencia::findOrFail($id);
                 $referencia -> contenido = $contenido;
                 $referencia -> grupo_trabajo_id = $this->obtenerGrupo();
                 $referencia->update();
+                $this->bitacora('Se Modificó la sección de referencias', 9, 2);
             }
             $mensaje = array(
                 'code'=> 200,
@@ -284,12 +330,14 @@ class EstudianteController extends Controller
                 $glosario -> opcional = $opcional;
                 $glosario->save();
                 $id = $glosario->id;
+                $this->bitacora('Se creó la sección de glosario', 8, 1);
             } else{
                 $glosario = SeccionGlosario::findOrFail($id);
                 $glosario -> contenido = $contenido;
                 $glosario -> grupo_trabajo_id = $this->obtenerGrupo();
                 $glosario -> opcional = $opcional;
                 $glosario->update();
+                $this->bitacora('Se modificó la sección de glosario', 8, 2);
             }
             $mensaje = array(
                 'code'=> 200,
@@ -313,11 +361,13 @@ class EstudianteController extends Controller
                 'code'=> 200,
                 'mensaje' => "Cambio a estado: Es opcional (La sección del glosario no se incluirá en el documento)"
             );
+            $this->bitacora('Se cambió a estado: Es opcional', 8, 2);
         } else{
             $mensaje = array(
                 'code'=> 200,
                 'mensaje' => "Cambio a estado: No es opcional (La sección del glosario se podrá incluir en el documento)"
             );
+            $this->bitacora('Se cambió a estado: No es opcional', 8, 2);
         }
 
         return $mensaje;
@@ -352,12 +402,26 @@ class EstudianteController extends Controller
                 $abreviatura -> tipo_abreviatura_id  = $tipo;
                 $abreviatura->save();
                 $id = $abreviatura->id;
+                if ($tipo == 1) {
+                    $this->bitacora('Se creó la sección de abreviaciones', 5, 1);
+                } else if($tipo == 2){
+                    $this->bitacora('Se creó la sección de siglas', 4, 1);
+                } else if ($tipo == 3) {
+                    $this->bitacora('Se creó la sección de nomenclaturas', 6, 1);
+                }
             } else{
                 $abreviatura = SeccionAbreviaturaNomenclaturaSigla::findOrFail($id);
                 $abreviatura -> contenido = $contenido;
                 $abreviatura -> grupo_trabajo_id = $this->obtenerGrupo();
                 $abreviatura -> tipo_abreviatura_id  = $tipo;
                 $abreviatura->update();
+                if ($tipo == 1) {
+                    $this->bitacora('Se modificó la sección de abreviaciones', 5, 2);
+                } else if($tipo == 2){
+                    $this->bitacora('Se modificó la sección de siglas', 4, 2);
+                } else if ($tipo == 3) {
+                    $this->bitacora('Se modificó la sección de nomenclaturas', 6, 2);
+                }
             }
             $mensaje = array(
                 'code'=> 200,
@@ -418,6 +482,7 @@ class EstudianteController extends Controller
         $contenido = $request->input('contenido');
         $autor = $request->input('autor');
         $opcional = $request->input('opcional');
+        $estudiante = Estudiante::where('id', '=', $idEstudiante)->first();
         if($contenido == "" || $autor == ""){
             $mensaje = array(
                 'code'=> 400,
@@ -432,6 +497,7 @@ class EstudianteController extends Controller
                 $agradecimiento -> opcional  = $opcional;
                 $agradecimiento->save();
                 $id = $agradecimiento->id;
+                $this->bitacora('Se ha creado el agradecimiento de '.$estudiante->nombre.' '.$estudiante->apellido, 1, 1);
             } else{ 
                 $agradecimiento = SeccionAgradecimiento::findOrFail($id);
                 $agradecimiento -> contenido = $contenido;
@@ -439,6 +505,7 @@ class EstudianteController extends Controller
                 $agradecimiento -> estudiante_id  = $idEstudiante;
                 $agradecimiento -> opcional  = $opcional;
                 $agradecimiento->update();
+                $this->bitacora('Se ha modificado el agradecimiento de '.$estudiante->nombre.' '.$estudiante->apellido, 1, 2);
             }
             $mensaje = array(
                 'code'=> 200,
@@ -455,6 +522,7 @@ class EstudianteController extends Controller
         $contenido = $request->input('contenido');
         $autor = $request->input('autor');
         $opcional = $request->input('opcional');
+        $estudiante = Estudiante::where('id', '=', $idEstudiante)->first();
         if($contenido == "" || $autor == ""){
             $mensaje = array(
                 'code'=> 400,
@@ -469,6 +537,7 @@ class EstudianteController extends Controller
                 $dedicatoria -> opcional  = $opcional;
                 $dedicatoria->save();
                 $id = $dedicatoria->id;
+                $this->bitacora('Se ha creado la dedicatoria de '.$estudiante->nombre.' '.$estudiante->apellido, 2, 1);
             } else{ 
                 $dedicatoria = SeccionDedicatoria::findOrFail($id);
                 $dedicatoria -> contenido = $contenido;
@@ -476,6 +545,7 @@ class EstudianteController extends Controller
                 $dedicatoria -> estudiante_id  = $idEstudiante;
                 $dedicatoria -> opcional  = $opcional;
                 $dedicatoria->update();
+                $this->bitacora('Se ha modificado la dedicatoria de '.$estudiante->nombre.' '.$estudiante->apellido, 2, 2);
             }
             $mensaje = array(
                 'code'=> 200,
@@ -517,11 +587,13 @@ class EstudianteController extends Controller
                 'code'=> 200,
                 'mensaje' => "Cambio a estado: Es opcional (La sección de ".$mensajeTipo." no se incluirá en el documento)"
             );
+            $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: Es opcional', 1, 2);
         } else{
             $mensaje = array(
                 'code'=> 200,
                 'mensaje' => "Cambio a estado: No es opcional (La sección de ".$mensajeTipo." se podrá incluir en el documento)"
             );
+            $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: No es opcional', 2, 2);
         }
 
         return $mensaje;
@@ -532,6 +604,7 @@ class EstudianteController extends Controller
         $tipo = $request->input('tipo');
         $id = $request->input('id');
         $nombre = $request->input('nombre');
+        
         if ($tipo == 1) {
             $agradecimiento = SeccionAgradecimiento::findOrFail($id);
             $agradecimiento->delete();
@@ -541,6 +614,7 @@ class EstudianteController extends Controller
                 'mensaje' => "Se eliminó con exito el agradecimiento de ".$nombre,
                 'total' => count($agradecimientoContador)
             );
+            $this->bitacora('Se ha eliminado el agradecimiento de '.$nombre, 1, 3);
         } else if($tipo == 2){
             $dedicatoria = SeccionDedicatoria::findOrFail($id);
             $dedicatoria->delete();
@@ -550,6 +624,7 @@ class EstudianteController extends Controller
                 'mensaje' => "Se eliminó con exito la dedicatoria de ".$nombre,
                 'total' => count($dedicatoriaContador)
             );
+            $this->bitacora('Se ha eliminado la dedicatoria de '.$nombre, 1, 3);
         }
         return $mensaje;
     }

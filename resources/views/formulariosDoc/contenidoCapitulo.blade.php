@@ -252,7 +252,7 @@
             type : "POST",
             "serverSide" : true,
             url : "./eliminarTema",
-            data: {"_token": "{{ csrf_token() }}", "id": id},
+            data: {"_token": "{{ csrf_token() }}", "id": id, "capitulo": document.getElementById('tituloCapitulo').innerText},
             success : function(r) {
                 
             },
@@ -267,7 +267,7 @@
             type : "POST",
             "serverSide" : true,
             url : "./eliminarSubTema",
-            data: {"_token": "{{ csrf_token() }}", "id": id},
+            data: {"_token": "{{ csrf_token() }}", "id": id, "capitulo": document.getElementById('tituloCapitulo').innerText},
             success : function(r) {
 
             },
@@ -321,7 +321,7 @@
 
 <div class="container contenidoContainer">
     <div class="col seccion_" id="titulosApp">
-        <h2>Capitulo {{$capitulo->orden_capitulo}}. {{$capitulo->nombre_capitulo}}</h2>
+        <h2>Capitulo {{$capitulo->orden_capitulo}}.<span id="tituloCapitulo"> {{$capitulo->nombre_capitulo}}</span></h2>
     </div>
     <br>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
