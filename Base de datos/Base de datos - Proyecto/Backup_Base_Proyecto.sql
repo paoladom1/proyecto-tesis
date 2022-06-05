@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2022 a las 06:23:45
+-- Tiempo de generación: 05-06-2022 a las 08:34:32
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `bitacora` (
   `id` int(11) NOT NULL,
   `descripcion` text NOT NULL,
-  `fecha_modificacion` datetime NOT NULL,
+  `fecha_modificacion` datetime NOT NULL DEFAULT current_timestamp(),
   `estudiante_id` int(11) NOT NULL,
   `bitacora_seccion_id` int(11) NOT NULL,
   `bitacora_modificacion_id` int(11) NOT NULL,
@@ -193,7 +193,7 @@ INSERT INTO `configuracion_sistema` (`id`, `fecha_entrega`, `fecha_prorroga`, `n
 CREATE TABLE `contenido_seccion_capitulo` (
   `id` int(11) NOT NULL,
   `tema` varchar(255) DEFAULT NULL,
-  `contenido` text NOT NULL,
+  `contenido` text DEFAULT NULL,
   `orden_contenido` int(11) NOT NULL,
   `seccion_capitulo_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -205,7 +205,12 @@ CREATE TABLE `contenido_seccion_capitulo` (
 --
 
 INSERT INTO `contenido_seccion_capitulo` (`id`, `tema`, `contenido`, `orden_contenido`, `seccion_capitulo_id`, `created_at`, `updated_at`) VALUES
-(12, 'Introducción del capitulo', '<p>null</p>', 0, 4, '2022-05-28 06:34:11', '2022-05-28 06:34:11');
+(13, 'Introducción del capitulo', '<p>null</p>', 0, 5, '2022-05-30 05:10:08', '2022-05-30 05:10:08'),
+(14, 'Introducción del capitulo', '<p>null</p>', 0, 5, '2022-05-30 05:10:58', '2022-05-30 05:10:58'),
+(15, '(Sin tema)', NULL, 1, 5, '2022-05-30 05:10:58', '2022-05-30 05:10:58'),
+(16, 'Introducción del capitulo', '<p>null</p>', 0, 7, '2022-06-02 06:54:28', '2022-06-02 06:54:28'),
+(19, 'dgdfsgdfg', NULL, 1, 7, '2022-06-02 07:54:34', '2022-06-02 07:54:45'),
+(22, '(Sin tema)', NULL, 2, 5, '2022-06-03 06:25:19', '2022-06-05 12:15:22');
 
 -- --------------------------------------------------------
 
@@ -477,7 +482,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (28, 'tipo_abreviatura', 'tipo-abreviatura', 'Tipo Abreviatura', 'Tipo Abreviaturas', NULL, 'App\\Models\\TipoAbreviatura', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:55:48', '2022-05-14 12:55:48'),
 (29, 'tipo_empleado', 'tipo-empleado', 'Tipo Empleado', 'Tipo Empleados', NULL, 'App\\Models\\TipoEmpleado', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:56:42', '2022-05-14 12:56:42'),
 (30, 'tipo_usuario', 'tipo-usuario', 'Tipo Usuario', 'Tipo Usuarios', NULL, 'App\\Models\\TipoUsuario', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:57:38', '2022-05-14 12:57:38'),
-(31, 'usuario', 'usuario', 'Usuario', 'Usuarios', NULL, 'App\\Models\\Usuario', NULL, 'App\\Http\\Controllers\\Voyager\\UsuarioController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 12:58:49', '2022-05-27 03:32:51'),
+(31, 'usuario', 'usuario', 'Usuario', 'Usuarios', NULL, 'App\\Models\\Usuario', NULL, 'App\\Http\\Controllers\\Voyager\\UsuarioController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 12:58:49', '2022-06-03 12:06:43'),
 (32, 'configuracion_sistema', 'configuracion-sistema', 'Configuracion Sistema', 'Configuracion Sistemas', NULL, 'App\\Models\\ConfiguracionSistema', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-17 05:13:41', '2022-05-17 05:13:41'),
 (33, 'departamento_unidad', 'departamento-unidad', 'Departamento Unidad', 'Departamento Unidads', NULL, 'App\\Models\\DepartamentoU', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-21 01:55:11', '2022-05-21 01:57:27');
 
@@ -1197,9 +1202,9 @@ CREATE TABLE `seccion_abreviatura_nomenclatura_sigla` (
 --
 
 INSERT INTO `seccion_abreviatura_nomenclatura_sigla` (`id`, `contenido`, `tipo_abreviatura_id`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
-(8, '<p>Prueba de abreviatura</p>', 1, 1, '2022-05-28 10:17:30', '2022-05-28 10:17:30'),
-(9, '<p>Prueba de nomenclatura 2</p>', 3, 1, '2022-05-28 10:17:49', '2022-05-28 10:17:56'),
-(10, '<p>Prueba de siglas 2</p>', 2, 1, '2022-05-28 10:18:13', '2022-05-28 10:18:21');
+(8, '<p>Prueba de abreviatura 4</p>', 1, 1, '2022-05-28 10:17:30', '2022-06-05 11:06:59'),
+(9, '<p>Prueba de nomenclatura 5</p>', 3, 1, '2022-05-28 10:17:49', '2022-06-05 11:07:08'),
+(10, '<p>Prueba de siglas 12412</p>', 2, 1, '2022-05-28 10:18:13', '2022-06-05 11:07:18');
 
 -- --------------------------------------------------------
 
@@ -1216,6 +1221,13 @@ CREATE TABLE `seccion_agradecimiento` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `seccion_agradecimiento`
+--
+
+INSERT INTO `seccion_agradecimiento` (`id`, `opcional`, `autor`, `contenido`, `estudiante_id`, `created_at`, `updated_at`) VALUES
+(22, 1, 'Eduardo Alberto López Torres', '<p>asdfadsfsdafsdf</p>', 7, '2022-06-05 02:25:49', '2022-06-05 11:34:49');
 
 -- --------------------------------------------------------
 
@@ -1237,7 +1249,8 @@ CREATE TABLE `seccion_capitulo` (
 --
 
 INSERT INTO `seccion_capitulo` (`id`, `nombre_capitulo`, `orden_capitulo`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
-(4, 'Introducción', 1, 1, '2022-05-26 01:35:15', '2022-05-26 01:35:15');
+(5, 'Introducción', 1, 1, '2022-05-30 05:09:29', '2022-06-03 07:21:58'),
+(7, 'Marco Teorico', 2, 1, '2022-06-01 07:54:07', '2022-06-05 11:47:45');
 
 -- --------------------------------------------------------
 
@@ -1275,7 +1288,7 @@ CREATE TABLE `seccion_glosario` (
 --
 
 INSERT INTO `seccion_glosario` (`id`, `opcional`, `contenido`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
-(5, 0, '<p>Prueba de glosario</p>', 1, '2022-05-28 10:13:30', '2022-05-28 10:13:30');
+(7, 1, '<p>Prueba de glosario 2</p>', 1, '2022-06-01 23:33:07', '2022-06-05 10:11:37');
 
 -- --------------------------------------------------------
 
@@ -1296,7 +1309,7 @@ CREATE TABLE `seccion_referencia` (
 --
 
 INSERT INTO `seccion_referencia` (`id`, `contenido`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
-(3, '<ol>\n	<li>Referencia 1</li>\n</ol>', 1, '2022-05-28 10:11:21', '2022-05-28 10:11:21');
+(3, '<ol>\n	<li>Referencia 1</li>\n	<li>Referencia 2</li>\n	<li>Referencia 3</li>\n</ol>', 1, '2022-05-28 10:11:21', '2022-06-05 10:04:50');
 
 -- --------------------------------------------------------
 
@@ -1317,7 +1330,7 @@ CREATE TABLE `seccion_resumen` (
 --
 
 INSERT INTO `seccion_resumen` (`id`, `contenido`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
-(15, '<p>sdfgsdfgsdfg</p>', 1, '2022-05-28 10:06:49', '2022-05-28 10:07:32');
+(16, '<p>Prueba de resumen 4</p>', 1, '2022-05-30 05:11:40', '2022-06-05 10:00:08');
 
 -- --------------------------------------------------------
 
@@ -1361,12 +1374,19 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 CREATE TABLE `subcontenido_seccion_capitulo` (
   `id` int(11) NOT NULL,
   `subtema` text NOT NULL,
-  `contenido` text NOT NULL,
+  `contenido` text DEFAULT NULL,
   `orden_subcontenido` int(11) NOT NULL,
   `contenido_seccion_capitulo_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `subcontenido_seccion_capitulo`
+--
+
+INSERT INTO `subcontenido_seccion_capitulo` (`id`, `subtema`, `contenido`, `orden_subcontenido`, `contenido_seccion_capitulo_id`, `created_at`, `updated_at`) VALUES
+(3, '(Sin sub-tema)', NULL, 3, 22, '2022-06-03 06:25:19', '2022-06-05 12:15:22');
 
 -- --------------------------------------------------------
 
@@ -1475,7 +1495,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@admin.com', 'users\\May2022\\p7eg6fSpi2Eds2NE6JPD.jpg', NULL, '$2y$10$dcXLyqxc2L5yI9SRDea2p.PplO6JBXG/btVMT1yRUZVS1T8pYIuKK', NULL, '{\"locale\":\"en\"}', '2022-04-15 04:09:47', '2022-05-27 10:37:11'),
+(1, 1, 'admin', 'admin@admin.com', 'users\\May2022\\p7eg6fSpi2Eds2NE6JPD.jpg', NULL, '$2y$10$0K.xhMg/W1ssYrJR/8Kjve7xuDnP.UwFxWVdkz4wCp78C5YRu8BrG', NULL, '{\"locale\":\"en\"}', '2022-04-15 04:09:47', '2022-05-27 10:37:11'),
 (3, 2, 'eduardo', 'eduardo@gmail.com', 'users/default.png', NULL, '$2y$10$0K.xhMg/W1ssYrJR/8Kjve7xuDnP.UwFxWVdkz4wCp78C5YRu8BrG', NULL, '{\"locale\":\"en\"}', '2022-05-26 22:28:33', '2022-05-27 03:58:40');
 
 -- --------------------------------------------------------
@@ -1497,7 +1517,7 @@ CREATE TABLE `user_roles` (
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `foto` varchar(200) DEFAULT NULL,
+  `foto` varchar(200) DEFAULT 'img/profile.png',
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `tipo_usuario_id` int(11) NOT NULL,
@@ -1510,8 +1530,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `foto`, `email`, `password`, `tipo_usuario_id`, `created_at`, `updated_at`) VALUES
-(3, NULL, 'earaujo@uca.edu.sv', 'earaujo@uca.edu.sv', 2, '2022-05-26 00:39:26', '2022-05-26 00:39:26'),
-(5, NULL, 'eduardo@gmail.com', '$2y$10$TkQUm8YNTqEj/dJ16HmnpuFR3IxS6m9J79LRcNx3MaxVjiowwrFVu', 1, '2022-05-27 03:33:00', '2022-05-27 04:13:41');
+(3, 'img/profile.png', 'earaujo@uca.edu.sv', 'earaujo@uca.edu.sv', 2, '2022-05-26 00:39:26', '2022-05-26 00:39:26'),
+(5, 'img/usuarios/5eduardo@gmail.com.jpg', 'eduardo@gmail.com', '$2y$10$0fxsSa88qzHuaBOXUGqIPOQIh83QhdJeW5XPITguyrJufIviGoDJ.', 1, '2022-05-27 03:33:00', '2022-06-04 12:58:47');
 
 --
 -- Índices para tablas volcadas
@@ -1805,7 +1825,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora_modificacion`
@@ -1841,7 +1861,7 @@ ALTER TABLE `configuracion_sistema`
 -- AUTO_INCREMENT de la tabla `contenido_seccion_capitulo`
 --
 ALTER TABLE `contenido_seccion_capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `data_rows`
@@ -1937,25 +1957,25 @@ ALTER TABLE `seccion_abreviatura_nomenclatura_sigla`
 -- AUTO_INCREMENT de la tabla `seccion_agradecimiento`
 --
 ALTER TABLE `seccion_agradecimiento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_capitulo`
 --
 ALTER TABLE `seccion_capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_dedicatoria`
 --
 ALTER TABLE `seccion_dedicatoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_glosario`
 --
 ALTER TABLE `seccion_glosario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_referencia`
@@ -1967,7 +1987,7 @@ ALTER TABLE `seccion_referencia`
 -- AUTO_INCREMENT de la tabla `seccion_resumen`
 --
 ALTER TABLE `seccion_resumen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `settings`
@@ -1979,7 +1999,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT de la tabla `subcontenido_seccion_capitulo`
 --
 ALTER TABLE `subcontenido_seccion_capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_abreviatura`
@@ -2015,7 +2035,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
