@@ -145,30 +145,8 @@
         }
     </script>
 
-    <script>
-        const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
-        const alert = (message, type, icon) => {
-            const wrapper = document.createElement('div')
-            var icon_f;
-            if (icon == 2) {
-                icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
-            } else if(icon == 1){
-                icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
-            }
-            wrapper.innerHTML = 
-                `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
-                icon_f+
-                `   <div>${message}</div>`+
-                '</div>';
-                alertPlaceholder.append(wrapper)
-                window.setTimeout(function() {
-                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                        $(this).remove(); 
-                    });
-                }, 2500);
-        }
-        
+    <script>        
+        var contAlert = 0; 
         function registrarAbreviatura(tipo) {
             var id;
             var contenido;
@@ -189,10 +167,10 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id.value, "contenido": contenido, "tipo": tipo},
                 success : function(r) {
                     if (r['code'] == 200) {
-                        alert(r['mensaje'], 'success', 1);   
+                        alert(r['mensaje'], 'success', 1, ++contAlert);   
                         id.setAttribute("value", r['id']);
                     } else{
-                        alert(r['mensaje'], 'danger', 2);
+                        alert(r['mensaje'], 'danger', 2, ++contAlert);
                     }
                 },
                 error : function(data) {

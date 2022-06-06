@@ -86,11 +86,36 @@
                 <div class="row" id="titulosApp" style="padding: 0;">
                     <h3 class="mt-3">ULTIMOS CAMBIOS</h3>
                 </div>
-                <div class="list-group list-group-horizontal justify-content-center m-3">
-                    <input type="text" class="list-group-item" placeholder="Seccion" readonly/>
-                    <input type="text" class="list-group-item" placeholder="Autor" readonly/>
-                    <input type="text" class="list-group-item" placeholder="Fecha" readonly/>
-                    <button class="btn btn-success" style="color: white;"><i class="bi bi-eye"></i> Ver</button>
+                <!--<div class="list-group list-group-horizontal justify-content-center m-3" style="width: 95%;">
+                    <input style="width: 80%;" type="text" class="list-group-item" placeholder="Seccion" readonly/>
+                    <input style="width: 80%;" type="text" class="list-group-item" placeholder="Acción" readonly/>
+                    <input style="width: 80%;" type="text" class="list-group-item" placeholder="Autor" readonly value="Eduardo Alberto López Torres"/>
+                    <input style="width: 80%;" type="text" class="list-group-item" placeholder="Fecha" readonly/>
+                    <button style="width: 25%;" class="btn btn-success" style="color: white;"><i class="bi bi-eye"></i> Ver</button>
+                </div>-->
+                <div style="padding: 20px 30px 10px 30px; width: 95%;margin-left: 2.5%;">
+                    <table class="table table-bordered border-primary">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 22%">Sección</th>
+                                <th scope="col" style="width: 22%">Acción</th>
+                                <th scope="col" style="width: 22%">Autor</th>
+                                <th scope="col" style="width: 22%">Fecha</th>
+                                <th scope="col" style="width: 12%">Información</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="width: 22%">1</th>
+                                <td style="width: 22%">Sección</td>
+                                <td style="width: 22%">Eduardo Alberto López Torres</td>
+                                <td style="width: 22%">@Autor</td>
+                                <td style="width: 12%">
+                                    <button class="btn btn-success" style="color: white;"><i class="bi bi-eye"></i> Ver</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -277,5 +302,6 @@
 </script>
 
 @endsection
+
 
 

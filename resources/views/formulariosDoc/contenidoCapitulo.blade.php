@@ -53,6 +53,7 @@
     }    
 </style>
 <script>
+    var contAlert = 0;
     var contadorGlobal = 0;   
     var contadorTema = 0; 
     var numeracionTres;
@@ -120,7 +121,7 @@
             ordenarSubTemas(numeracionTres);
         } 
         ordenarTemas();
-        alert('Se eliminó con exito!', 'success', 1);
+        alert('Se eliminó con exito!', 'success', 1, ++contAlert);
     }
 
     function temasSubTemas(a) {
@@ -427,30 +428,5 @@
     
     <br>
 </div>
-
-<script>
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
-const alert = (message, type, icon) => {
-    const wrapper = document.createElement('div')
-        var icon_f;
-        if (icon == 2) {
-            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
-        } else if(icon == 1){
-            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
-        }
-        wrapper.innerHTML = 
-            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
-            icon_f+
-            `   <div>${message}</div>`+
-            '</div>';
-            alertPlaceholder.append(wrapper)
-            window.setTimeout(function() {
-                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                        $(this).remove(); 
-                    });
-            }, 2500);
-    }
-</script>
 
 @endsection

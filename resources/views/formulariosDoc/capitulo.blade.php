@@ -2,6 +2,7 @@
 @section('content')
 
 <script>
+    var contAlert = 0;
     function modificarCapitulo(i) {
         let elements = document.getElementsByName("tituloN");
         let elements2 = document.getElementsByName("idCapitulos");
@@ -84,7 +85,7 @@
                 {
                     ordenarCapitulos();
                     modificarOrden();
-                    alert("Se cambió el orden con exito!", 'success', 1);
+                    alert("Se cambió el orden con exito!", 'success', 1, ++contAlert);
                 }
             }
         );
@@ -94,7 +95,7 @@
         let nombre = $('#nombreCap').val();
         if(id == ""){
             if (nombre.trim() == "") {
-                alert("No puede quedar el campo vacio!", 'danger', 2);
+                alert("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
             } else{
                 $.ajax({
                     type : "POST",
@@ -112,11 +113,11 @@
                         console.log(data);
                     }
                 })
-                alert("Se guardó el capitulo con exito!", 'success', 1);
+                alert("Se guardó el capitulo con exito!", 'success', 1, ++contAlert);
             }
         } else{
             if (nombre.trim() == "") {
-                alert("No puede quedar el campo vacio!", 'danger', 2);
+                alert("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
             } else{
                 quitarModificar();
                 $.ajax({
@@ -135,7 +136,7 @@
                         console.log(data);
                     }
                 })
-                alert("Se modificó el capitulo con exito!", 'success', 1);
+                alert("Se modificó el capitulo con exito!", 'success', 1, ++contAlert);
             }
         }
     }
@@ -171,7 +172,7 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id},
                 success : function(r) {
                     guardarOrdenCapitulo();
-                    alert("Se eliminó el capitulo con exito!", 'success', 1);
+                    alert("Se eliminó el capitulo con exito!", 'success', 1, ++contAlert);
                 },
                 error : function(data) {
                     console.log(data);
@@ -281,38 +282,15 @@
         </div>
     </div>
 </div>
-<script>
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
-const alert = (message, type, icon) => {
-    const wrapper = document.createElement('div')
-        var icon_f;
-        if (icon == 2) {
-            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
-        } else if(icon == 1){
-            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
-        }
-        wrapper.innerHTML = 
-            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
-            icon_f+
-            `   <div>${message}</div>`+
-            '</div>';
-            alertPlaceholder.append(wrapper)
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-            }, 2500);
-    }
-</script>
-    @if (session('status'))
+    
+@if (session('status'))
         <script>
-            alert('<?php echo session('status'); ?>', 'success', 1);
+            alert('<?php echo session('status'); ?>', 'success', 1, ++contAlert);
         </script>
     @endif
     @if (session('statusError'))
         <script>
-            alert('<?php echo session('statusError'); ?>', 'danger', 2);
+            alert('<?php echo session('statusError'); ?>', 'danger', 2, ++contAlert);
         </script>
     @endif
 @endsection
