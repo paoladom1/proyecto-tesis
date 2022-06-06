@@ -66,7 +66,7 @@
                 <li> <a href="{{ url('/capitulos') }}"><i class="bi bi-pen"></i> Capitulos</a> </li>
                 <li> <a href="{{ url('/glosario') }}"><i class="bi bi-journal-bookmark-fill"></i> Glosario</a> </li>
                 <li> <a href="{{ url('/referencias') }}"><i class="bi bi-list-columns-reverse"></i> Referencias</a> </li>
-                <li> <a href="{{ url('/bitacora') }}"><i class="bi bi-list-columns-reverse"></i> Bitacora</a> </li>
+                <li> <a href="{{ url('/bitacora') }}"><i class="bi bi-journals"></i> Bitacora</a> </li>
             </ul>
         </div>
     </div>

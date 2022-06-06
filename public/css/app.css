@@ -505,6 +505,16 @@ a[aria-expanded="true"] {
     text-align: center;
 }
 
+#botonBitacora > button{
+    color: white;
+    background:#E87B2A;
+    border: solid 1px #E87B2A
+}
+
+#botonBitacora > button:hover{
+    background: #c06824;
+}
+
 .paginacionBitacora{
     display: flex;
     justify-content: space-between;
@@ -519,8 +529,8 @@ a[aria-expanded="true"] {
 }
 
 .page-item.active .page-link{
-    background-color: #E87B2A;
-    border-color: #E87B2A;
+    background-color: #003C71;
+    border-color: #003C71;
 }
 
 .page-link{

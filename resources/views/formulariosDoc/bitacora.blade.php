@@ -70,7 +70,7 @@
                             <td>{{$datos->estudiante->nombre}} {{$datos->estudiante->apellido}}</td>
                             <td>{{$datos->fecha_modificacion}}</td>
                             <td id="botonBitacora">
-                                <button class="btn btn-secondary" style="color: white;" onclick="abrirModal('<?php echo $datos->idBitacora; ?>')"><i class="bi bi-eye"></i> Ver</button>
+                                <button class="btn btn-warning" onclick="abrirModal('<?php echo $datos->idBitacora; ?>')"><i class="bi bi-eye"></i> Ver</button>
                             </td>
                         </tr>
                     @endforeach
