@@ -240,8 +240,8 @@
     
     <div class="row justify-content-center">
         <div class="col-md-9">
-            <table class="table" style="background-color: white; border-radius: 5px;">
-                <thead>
+            <table class="table table-hover" style="background-color: white; border-radius: 5px;">
+                <thead class="encabezadoBitacora">
                     <tr>
                         <td></td>
                         <th scope="col">Nombre del capitulo</th>
@@ -251,12 +251,18 @@
                 <tbody id="tablaCapitulo">
                     @php
                         $cont = 0;
+                        $contCapitulos = 0;
                     @endphp
                     @foreach ($capitulos as $capitulo)
                         <script>
-                            seccion("<?php echo $capitulo->nombre_capitulo ?>", <?php echo $capitulo->id ?>);
+                            seccion("<?php ++$contCapitulos; echo $capitulo->nombre_capitulo ?>", <?php echo $capitulo->id ?>);
                         </script>
                     @endforeach
+                    @if ($contCapitulos == 0)
+                        <tr style="text-align: center">
+                            <td colspan="3">No hay datos disponibles</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
