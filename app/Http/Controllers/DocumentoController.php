@@ -22,6 +22,7 @@ use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
 use App\Models\SeccionAgradecimiento;
 use App\Models\SeccionDedicatoria;
+use App\Models\Bitacora;
 
 class DocumentoController extends Controller
 {
@@ -45,6 +46,8 @@ class DocumentoController extends Controller
     }
 
     public function formularioModal(){
+        // -----------------------------------------Creación de documento-----------------------------------------
+
         /*
             -1 => Significa que es una sección obligatoria parte 1.
             -2 => Significa que es una sección obligatoria parte 2.
@@ -139,9 +142,14 @@ class DocumentoController extends Controller
             $array[$cont][0] = 'Referencias'; $array[$cont++][1] = '-2'; 
         }
 
+        // -----------------------------------------Bitacora-----------------------------------------
+
+        $bitacora = Bitacora::with('estudiante')->with("bitacora_seccion")->with("bitacora_modificacion")->paginate(10);
+
         return view('plantillas.plantillaMenuC', array(
             'secciones' => $array, 
-            'tema' => mb_strtoupper($tema_graduacion->tema)
+            'tema' => mb_strtoupper($tema_graduacion->tema),
+            'bitacora' => $bitacora
         ));
     }
 

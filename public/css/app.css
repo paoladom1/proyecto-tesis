@@ -480,3 +480,27 @@ a[aria-expanded="true"] {
     width: 80px;
     height: 80px;
 }   
+
+/*--------Bitacora de cambios--------*/
+.containerBitacora{
+    background-color: #e3eef5; 
+    border:1px #003C71 solid; 
+    box-shadow: 5px 7px 7px gray; 
+    width:100%;
+}
+
+.containerBitacora > div:nth-child(2){
+    padding: 20px 30px 10px 30px;
+}
+
+#bitacoraEncabezado > th{
+    text-align: center;
+}
+
+#bitacoraEncabezado > th, #contenidoTablaBi > tr > th{
+    width: 22%;
+}
+
+#botonBitacora{
+    text-align: center;
+}

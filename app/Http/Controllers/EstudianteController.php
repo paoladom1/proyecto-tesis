@@ -628,4 +628,22 @@ class EstudianteController extends Controller
         }
         return $mensaje;
     }
+
+    //-------------------------------------Bitacora de cambios-----------------------------------
+
+    public function frmBitacora()
+    {
+        $bitacora = Bitacora::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->with('estudiante')->with("bitacora_seccion")->with("bitacora_modificacion")->paginate(10);
+
+        return view('formulariosDoc.bitacora', array(
+            'bitacora' => $bitacora
+        ));
+    }
+
+    public function buscarInformacion(Request $request)
+    {
+        $id = $request->input('id');
+        $bitacora = Bitacora::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->with('estudiante')->with("bitacora_seccion")->with("bitacora_modificacion")->where('id', '=', $id)->first();
+        return $bitacora;
+    }
 }
