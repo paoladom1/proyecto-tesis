@@ -19,6 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+    <script src="https://kit.fontawesome.com/455beed8e3.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('js/alertMessage.js')}}"></script>
     <title>Proceso de graduación</title>
 </head>
@@ -34,14 +35,13 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="user-btn">
                 <a class="dropdown-item user-btn-name" href="#" style="width: 100%;">{{auth()->guard('admin')->user()->email}}</a>
-                <hr class="dropdown-divider" style="margin: 0;">
+                <hr class="dropdown-divider">
                 <a class="dropdown-item" href="{{ url('/perfil') }}" style="width: 100%">Editar perfil</a>
-                <hr class="dropdown-divider" style="margin: 0;">
+                <hr class="dropdown-divider">
                 <a class="dropdown-item" href="{{route('logout')}}" style="width: 100%">Cerrar sesion</a>
             </div>
           </div>
     </nav>
-
      <!-- Menu desplegable lateral -->
      <div id="SideNav" class="sidenav">
         <div id="navMenu">
@@ -50,24 +50,30 @@
             </div>
 
             <hr>
-            
-            <ul class="list-unstyled components">
-                <li> {{--  <a href="#portadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Portada</a>
-                    <ul class="collapse list-unstyled" id="portadas">
-                        <li> <a href="#">Primer Portada</a> </li>
-                        <li> <a href="#">Segunda Portada</a> </li>
-                    </ul>--}}
-                    <a href="{{ url('/menu') }}"><i class="bi bi-house-door"></i> Menu Principal</a>
-                    <hr>
-                </li>
-                <li> <a href="{{ url('/resumen') }}"><i class="bi bi-clipboard2-data"></i> Resumen</a> </li>
-                <li> <a href="{{ url('/agradecimientos') }}"><i class="bi bi-people"></i> Agradecimientos</a> </li>
-                <li> <a href="{{ url('/abreviaturas') }}"><i class="bi bi-explicit"></i> Abreviaturas</a> </li>
-                <li> <a href="{{ url('/capitulos') }}"><i class="bi bi-pen"></i> Capitulos</a> </li>
-                <li> <a href="{{ url('/glosario') }}"><i class="bi bi-journal-bookmark-fill"></i> Glosario</a> </li>
-                <li> <a href="{{ url('/referencias') }}"><i class="bi bi-list-columns-reverse"></i> Referencias</a> </li>
-                <li> <a href="{{ url('/bitacora') }}"><i class="bi bi-journals"></i> Bitacora</a> </li>
-            </ul>
+            @if (auth()->guard('admin')->user()->tipo_usuario_id == 1)
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href="{{ url('/menu') }}"><i class="bi bi-house-door"></i> Menu Principal</a>
+                        <hr>
+                    </li>
+                    <li> <a href="{{ url('/resumen') }}"><i class="bi bi-clipboard2-data"></i> Resumen</a> </li>
+                    <li> <a href="{{ url('/agradecimientos') }}"><i class="bi bi-people"></i> Agradecimientos</a> </li>
+                    <li> <a href="{{ url('/abreviaturas') }}"><i class="bi bi-explicit"></i> Abreviaturas</a> </li>
+                    <li> <a href="{{ url('/capitulos') }}"><i class="bi bi-pen"></i> Capitulos</a> </li>
+                    <li> <a href="{{ url('/glosario') }}"><i class="bi bi-journal-bookmark-fill"></i> Glosario</a> </li>
+                    <li> <a href="{{ url('/referencias') }}"><i class="bi bi-list-columns-reverse"></i> Referencias</a> </li>
+                    <li> <a href="{{ url('/bitacora') }}"><i class="bi bi-journals"></i> Bitacora</a> </li>
+                </ul>
+            @elseif (auth()->guard('admin')->user()->tipo_usuario_id == 2)
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href="{{ url('/menudirector') }}"><i class="bi bi-house-door me-2"></i>Menu Principal</a>
+                        <hr>
+                    </li>
+                    <li><a href="{{ url('/filtro') }}" style="font-size: 1.35em"><i class="bi bi-people me-2"></i> Grupos de trabajo</a></li>
+                    <li> <a href="{{ url('/lectorv') }}" style="font-size: 1.35em"><i class="fa-solid fa-address-card me-2"></i> Asesores y lectores</a> </li>
+                </ul>
+            @endif
         </div>
     </div>
 

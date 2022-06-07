@@ -8,7 +8,6 @@
 }
 
 .navbar-main{
-    /*background-color: #003C71;*/
     justify-content: center;
     position: fixed;
     width: 100%;
@@ -17,6 +16,10 @@
 
 #user-settings .dropdown-menu{
     padding: 0;
+}
+
+#user-settings .dropdown-divider{
+    margin: 0;
 }
 
 #user-settings .dropdown-item{

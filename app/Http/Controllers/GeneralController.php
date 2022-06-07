@@ -23,8 +23,9 @@ class GeneralController extends Controller
         if ($tipo == 1) { // Estudiante
             $datos_usuario = Estudiante::where("usuario_id", "=", $id_usuario)->first();
         } else if ($tipo == 2) { // Director de carrera
-            $datos_usuario = DirectorCarrera::where("usuario_id", "=", $id_usuario)->first();
+            $datos_usuario = DirectorCarrera::join('empleado','empleado_id', '=', 'empleado.id')->where("director_carrera.usuario_id", "=", $id_usuario)->first();
         }
+        
         return view('usuarios.perfilUsuario', array(
             "usuario" => $datos_usuario, 
             "foto_usuario" => $usuario->foto
