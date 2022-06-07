@@ -1,13 +1,5 @@
 @extends('plantillas.nav')
 @section('content')
-{{--<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title>Filtros</title>
-</head>  --}}
 
 <style>
     .dropbtn {
@@ -20,7 +12,7 @@
     }
 
     .dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
+        background-color: #3e8e41;
     }
 
     #myInput {
@@ -64,64 +56,55 @@
     }
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
         color: white;
-        background-color:#E87B2A;
+        background-color:#003C71;
+        border-color: #003C71;
     }
 
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link{
         color: white;
-        background-color: #003C71;
+        background-color: #E87B2A;
+        border-color: #dee2e6 #dee2e6 #fff;
     }
+
+    .form-floating > .form-control:not(:-moz-placeholder-shown) ~ label {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+    height: auto;
+    padding: 0px;
+    padding: 0px 0px 0px 10px;
+    width: 100%;
+    transform: scale(0.982) translateY(0.045rem) translateX(0.1rem);
+    border-radius: 5px 0 0 0;
+}
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+    height: auto;
+    padding: 0px 0px 0px 10px;
+    width: 100%;
+    transform: scale(0.982) translateY(0.045rem) translateX(0.1rem);
+    border-radius: 5px 0 0 0;
+}
+.form-floating > .form-control:-webkit-autofill ~ label {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+    height: auto;
+    padding: 0px;
+    padding: 0px 0px 0px 10px;
+    width: 100%;
+    transform: scale(0.982) translateY(0.045rem) translateX(0.1rem);
+    border-radius: 5px 0 0 0;
+}
 
 </style>
    
     <br>
     <div class="container">
-        <!--<form action="{{ url('/asignarDocente') }}" method="post">
-            {{ csrf_field() }}
-            <label class="form-label">Asesor</label>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="dropdown">
-                        <button onclick="myFunction(1)" type="button" id="seleccionar1" class="btn btn-warning dropdown-toggle" style="width: 100%;">Seleccionar</button>
-                        <div id="myDropdown1" class="dropdown-content">
-                            <div class="scrollable-menu">
-                                <a href="#" onclick="eliminarLector(1); myFunction(1)">Quitar Elección</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#" onclick="cambiarBoton(1, 1)">UCA</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal2" href="#" onclick="cambiarBoton(2, 1)">Externo</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <input type="text" readonly class="form-control" id="nombresD" name="nombresD" aria-label="Username" aria-describedby="basic-addon1">
-                    <input type="text" readonly style='display: none' class="form-control" id="idD" name="idD" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <br>
-            <label class="form-label">Lector</label>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="dropdown">
-                        <button onclick="myFunction(2)" type="button" id="seleccionar2" class="btn btn-warning dropdown-toggle" style="width: 100%;">Seleccionar</button>
-                        <div id="myDropdown2" class="dropdown-content">
-                            <div class="scrollable-menu"> 
-                                <a href="#" onclick="eliminarLector(2); myFunction(2)">Quitar Elección</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#" onclick="cambiarBoton(3, 2)">UCA</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal2" href="#" onclick="cambiarBoton(4, 2)">Externo</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <input type="text" readonly class="form-control" id="nombresL" name="nombresL" aria-label="Username" aria-describedby="basic-addon1">
-                    <input type="text" readonly style='display: none' class="form-control" id="idL" name="idL" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <br>
-            <input type="submit" value="Guardar" class="btn btn-success">
-        </form>-->
-    
-
 
     <!--------------------------------------------------Modal para crear lector o asesor----------------------------------------->
 
@@ -129,21 +112,25 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
-                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Crear asesor o lector externo</h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Registrar asesor o lector externo</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white; width: 1em;"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <form>
-                            <h3 class="mt-3">Ingrese un agente externo UCA</h3>
-                            <hr>
-                            <div class="form-group form-floating mb-3 mt-3">
-                              <input type="email" class="form-control" id="inputName" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
-                              <label for="inputName">Nombres</label>
-                            </div>
-                            <div class="form-group form-floating mb-3 mt-3">
-                              <input type="email" class="form-control" id="inputLastName" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
-                              <label for="inputLastName">Apellidos</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-floating mb-2 mt-2">
+                                        <input type="email" class="form-control" id="inputName" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                                        <label for="inputName">Nombres</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-floating mb-2 mt-2">
+                                        <input type="email" class="form-control" id="inputLastName" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                                        <label for="inputLastName">Apellidos</label>
+                                    </div>  
+                                </div>
                             </div>
                             <div class="form-group form-floating mb-3 mt-3">
                               <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
@@ -172,13 +159,15 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group form-floating mb-3">
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                              <label for="exampleFormControlTextarea1">Descripcion</label>
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 160px; resize:none;"></textarea>
+                                <label for="floatingTextarea">Descripción</label>
                             </div>
-                            <button class="mb-3" type="submit" class="btn btn-primary" >Crear Lector</button>
                           </form>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="mb-3" type="submit" class="btn btn-primary" >Crear Lector</button>
                 </div>
             </div>
         </div>
