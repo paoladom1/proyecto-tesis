@@ -171,7 +171,7 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="background-color: #003C71">Siguiente</button>
+                    <button type="button" class="btn btn-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="background-color: #003C71">Siguiente <i class="bi bi-arrow-right-circle"></i></button>
                 </div>
                 </div>
             </div>
@@ -195,8 +195,8 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Atras</button>
-                    <button class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">Crear</button>
+                    <button type="button" class="btn btn-danger" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i class="bi bi-arrow-left-circle"></i> Atras</button>
+                    <button class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">Crear <i class="bi bi-folder2"></i></button>
                 </div>
                 </div>
             </div>

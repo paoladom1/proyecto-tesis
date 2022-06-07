@@ -461,6 +461,56 @@ class DocumentoController extends Controller
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $referencia[0]->contenido, false, false);
     }
 
+    private function seccionAgradecimiento($documento){
+        $agradecimiento = SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $section = $documento->addSection(DocumentoController::margenes());
+        $estiloTextoTitulo = $section->addTextRun([
+            "name" => "Times New Roman",
+            "size" => 11,
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+            "bold" => true,
+        ]);
+        $estiloTextoTitulo->addText(mb_strtoupper('Agradecimientos'), ["bold" => true]);
+        $section->addTextBreak(1);
+
+        foreach ($agradecimiento as $dato) {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($section, $dato->contenido, false, false);
+            $section->addTextBreak(1);
+            $estiloTexto = $section->addTextRun([
+                "name" => "Times New Roman",
+                "size" => 11,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT
+            ]);
+            $estiloTexto->addText($dato->autor);
+            $section->addPageBreak(1);
+        }
+    }
+
+    private function seccionDedicatoria($documento){
+        $dedicatoria = SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $section = $documento->addSection(DocumentoController::margenes());
+        $estiloTextoTitulo = $section->addTextRun([
+            "name" => "Times New Roman",
+            "size" => 11,
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+            "bold" => true,
+        ]);
+        $estiloTextoTitulo->addText(mb_strtoupper('Dedicatorias'), ["bold" => true]);
+        $section->addTextBreak(1);
+
+        foreach ($dedicatoria as $dato) {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($section, $dato->contenido, false, false);
+            $section->addTextBreak(1);
+            $estiloTexto = $section->addTextRun([
+                "name" => "Times New Roman",
+                "size" => 11,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT
+            ]);
+            $estiloTexto->addText($dato->autor);
+            $section->addPageBreak(1);
+        }
+    }
+
     public function seccionesDocumento(Request $request){
         $resumen = SeccionResumen::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 1)->get();
@@ -486,10 +536,10 @@ class DocumentoController extends Controller
                 DocumentoController::segundo($documento);
                 $seccionesCrear = $seccionesCrear.'- Portada y Segunda Portada\\n';
             } else if($dato == -2){ 
-                // Agradecimiento
+                DocumentoController::seccionAgradecimiento($documento);
                 $seccionesCrear = $seccionesCrear.'- Agradecimiento\\n';
             } else if($dato == -3){ 
-                // Dedicatoria
+                DocumentoController::seccionDedicatoria($documento);
                 $seccionesCrear = $seccionesCrear.'- Dedicatoria\\n';
             } else if($dato == -4){ 
                 DocumentoController::seccionResumen($documento, $documentoTodo);
