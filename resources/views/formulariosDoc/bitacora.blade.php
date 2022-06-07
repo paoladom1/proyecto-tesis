@@ -167,7 +167,7 @@
                 seccion.value = r['bitacora_seccion']['nombre_seccion'];
                 accion.value = r['bitacora_modificacion']['nombre_modificacion'];
                 fecha.value = r['fecha_modificacion'];
-                descripcion.value = r['descripcion'];
+                descripcion.value = r['descripcion'].replaceAll("\\n", "\n");
                 myModal.show();
             },
             error : function(data) {

@@ -43,6 +43,7 @@ class EstudianteController extends Controller
             1 -> Agregó
             2 -> Modificó
             3 -> Eliminó
+            4 -> Creación
 
             - BITACORA_SECCIÓN -
             1 -> Agradecimiento
@@ -65,7 +66,6 @@ class EstudianteController extends Controller
         $bitacora->bitacora_seccion_id = $bitacora_seccion;
         $bitacora->bitacora_modificacion_id = $bitacora_modificacion;
         $bitacora->save();
-        // $this->bitacora('Prueba de bitacora', 3, 1);
     }
 
     //-------------------------------------Creación de capitulos-----------------------------------

@@ -508,7 +508,7 @@ a[aria-expanded="true"] {
 #botonBitacora > button{
     color: white;
     background:#E87B2A;
-    border: solid 1px #E87B2A
+    border: solid 1px #E87B2A;
 }
 
 #botonBitacora > button:hover{

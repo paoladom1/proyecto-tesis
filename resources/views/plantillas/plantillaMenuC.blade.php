@@ -81,7 +81,7 @@
                     <div class="col">
                         <a href="{{ url('/bitacora') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard6.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                <img src="img/fondoCard7.jpeg" class="card-img-top img-card" alt="Card image cap">
                                 <div class="card-body body-card mt-2">
                                     <h5 class="card-title">BITACORA</h5>
                                 </div>
@@ -102,7 +102,7 @@
     <form action="{{ url('/crearDocumento') }}" method="post">
         {{ csrf_field() }}
         <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                     <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;"><i class="bi bi-filetype-doc"></i> Creación del documento</h5>
@@ -177,7 +177,7 @@
             </div>
         </div>
         <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71">
                     <h5 class="modal-title" id="exampleModalToggleLabel2" style="color: white;">Confirmar</h5>

@@ -1,6 +1,7 @@
 INSERT INTO BITACORA_MODIFICACION(nombre_modificacion) VALUES ('Agregó');
 INSERT INTO BITACORA_MODIFICACION(nombre_modificacion) VALUES ('Modificó');
 INSERT INTO BITACORA_MODIFICACION(nombre_modificacion) VALUES ('Eliminó');
+INSERT INTO BITACORA_MODIFICACION(nombre_modificacion) VALUES ('Creación');
 
 INSERT INTO BITACORA_SECCION(nombre_seccion) VALUES ('Agradecimiento');
 INSERT INTO BITACORA_SECCION(nombre_seccion) VALUES ('Dedicatoria');

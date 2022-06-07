@@ -376,7 +376,7 @@
         </script>
         <div class="row justify-content-start">
             <div class="">
-                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
+                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1" style="background-color: #E87B2A; border:1px solid #E87B2A; color:white;"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
             </div>
         </div>
 
