@@ -1,4 +1,4 @@
-@extends('plantillas.navdirector')
+@extends('plantillas.nav')
 @section('content')
 {{--<head>
     <meta charset="UTF-8">
