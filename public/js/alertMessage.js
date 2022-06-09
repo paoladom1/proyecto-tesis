@@ -1,4 +1,4 @@
-const alert = (message, type, icon, cont=0) => {
+const alertPersonalizado = (message, type, icon, cont=0) => {
     const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
     const wrapper = document.createElement('div')
     var icon_f;

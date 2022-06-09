@@ -121,7 +121,7 @@
             ordenarSubTemas(numeracionTres);
         } 
         ordenarTemas();
-        alert('Se eliminó con exito!', 'success', 1, ++contAlert);
+        alertPersonalizado('Se eliminó con exito!', 'success', 1, ++contAlert);
     }
 
     function temasSubTemas(a) {

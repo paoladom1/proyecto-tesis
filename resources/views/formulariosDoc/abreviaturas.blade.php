@@ -167,10 +167,10 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id.value, "contenido": contenido, "tipo": tipo},
                 success : function(r) {
                     if (r['code'] == 200) {
-                        alert(r['mensaje'], 'success', 1, ++contAlert);   
+                        alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                         id.setAttribute("value", r['id']);
                     } else{
-                        alert(r['mensaje'], 'danger', 2, ++contAlert);
+                        alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                     }
                 },
                 error : function(data) {

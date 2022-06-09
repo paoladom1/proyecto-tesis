@@ -67,11 +67,11 @@
             @elseif (auth()->guard('admin')->user()->tipo_usuario_id == 2)
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="{{ url('/menudirector') }}"><i class="bi bi-house-door me-2"></i>Menu Principal</a>
+                        <a href="{{ url('/menudirector') }}" style="font-size: 1.35em"><i class="bi bi-house-door me-2"></i>Menu Principal</a>
                         <hr>
                     </li>
+                    <li> <a href="{{ url('/externo') }}" style="font-size: 1.35em"><i class="fa-solid fa-address-card me-2"></i> Asesores y lectores</a> </li>
                     <li><a href="{{ url('/filtro') }}" style="font-size: 1.35em"><i class="bi bi-people me-2"></i> Grupos de trabajo</a></li>
-                    <li> <a href="{{ url('/lectorv') }}" style="font-size: 1.35em"><i class="fa-solid fa-address-card me-2"></i> Asesores y lectores</a> </li>
                 </ul>
             @endif
         </div>

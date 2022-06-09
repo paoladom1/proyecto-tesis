@@ -277,7 +277,7 @@
             data: {"_token": "{{ csrf_token() }}", "id": id, "idEstudiante": idE, "contenido": contenido, "autor": autor, "opcional": opcional},
             success : function(r) {
                 if (r['code'] == 200) {
-                    alert(r['mensaje'], 'success', 1, ++contAlert);   
+                    alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                     document.getElementById('idDA'+idEtiqueta).setAttribute("value", r['id']);
                     document.getElementById('btnEliminarDA'+idEtiqueta).disabled = false;
                     if (tipo == 1) {
@@ -286,7 +286,7 @@
                         document.getElementById('opcional2').disabled = false;
                     }
                 } else{
-                    alert(r['mensaje'], 'danger', 2, ++contAlert);
+                    alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                 }
             },
             error : function(data) {
@@ -330,7 +330,7 @@
             data: {"_token": "{{ csrf_token() }}", "id": id, "tipo": tipo, "nombre": nombreIntegrante},
             success : function(r) {
                 if (r['code'] == 200) {
-                    alert(r['mensaje'], 'success', 1, ++contAlert);   
+                    alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                     document.getElementById('idDA'+idEtiqueta).setAttribute("value", '');
                     document.getElementById('btnEliminarDA'+idEtiqueta).disabled = true;
                     CKEDITOR.instances['contenido'+idEtiqueta].setData("");
@@ -347,7 +347,7 @@
                         }
                     }
                 } else{
-                    alert(r['mensaje'], 'danger', 2, ++contAlert);
+                    alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                 }
             },
             error : function(data) {
@@ -376,9 +376,9 @@
             data: {"_token": "{{ csrf_token() }}", "opcional": opcional, "tipo": tipo},
             success : function(r) {
                 if (r['code'] == 200) {
-                    alert(r['mensaje'], 'success', 1, ++contAlert);   
+                    alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                 } else{
-                    alert(r['mensaje'], 'danger', 2, ++contAlert);
+                    alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                 }
             },
             error : function(data) {

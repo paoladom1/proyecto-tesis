@@ -578,3 +578,9 @@ legend{
     font-weight: bold;
     font-size: 1.5em;
 }
+
+/*-----------------Lector y Asesor--------------------*/
+
+#tablaAsesor, #tablaLector{
+    text-align: center;
+}

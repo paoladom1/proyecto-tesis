@@ -78,10 +78,10 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id, "contenido": contenidoR},
                 success : function(r) {
                     if (r['code'] == 200) {
-                        alert(r['mensaje'], 'success', 1, ++contAlert);  
+                        alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);  
                         document.getElementsByName('id')[0].setAttribute("value", r['id']); 
                     } else{
-                        alert(r['mensaje'], 'danger', 2, ++contAlert);
+                        alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                     }
                 },
                 error : function(data) {

@@ -95,11 +95,11 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id, "contenido": contenidoG, "opcional": opcional},
                 success : function(r) {
                     if (r['code'] == 200) {
-                        alert(r['mensaje'], 'success', 1, ++contAlert);   
+                        alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                         document.getElementsByName('id')[0].setAttribute("value", r['id']); 
                         document.getElementById('opcional').disabled = false;
                     } else{
-                        alert(r['mensaje'], 'danger', 2, ++contAlert);
+                        alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                     }
                 },
                 error : function(data) {
@@ -123,9 +123,9 @@
                 data: {"_token": "{{ csrf_token() }}", "opcional": opcional, "id": id},
                 success : function(r) {
                     if (r['code'] == 200) {
-                        alert(r['mensaje'], 'success', 1, ++contAlert);   
+                        alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                     } else{
-                        alert(r['mensaje'], 'danger', 2, ++contAlert);
+                        alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                     }
                 },
                 error : function(data) {

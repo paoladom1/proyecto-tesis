@@ -85,7 +85,7 @@
                 {
                     ordenarCapitulos();
                     modificarOrden();
-                    alert("Se cambió el orden con exito!", 'success', 1, ++contAlert);
+                    alertPersonalizado("Se cambió el orden con exito!", 'success', 1, ++contAlert);
                 }
             }
         );
@@ -95,7 +95,7 @@
         let nombre = $('#nombreCap').val();
         if(id == ""){
             if (nombre.trim() == "") {
-                alert("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
+                alertPersonalizado("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
             } else{
                 $.ajax({
                     type : "POST",
@@ -113,11 +113,11 @@
                         console.log(data);
                     }
                 })
-                alert("Se guardó el capitulo con exito!", 'success', 1, ++contAlert);
+                alertPersonalizado("Se guardó el capitulo con exito!", 'success', 1, ++contAlert);
             }
         } else{
             if (nombre.trim() == "") {
-                alert("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
+                alertPersonalizado("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
             } else{
                 quitarModificar();
                 $.ajax({
@@ -136,7 +136,7 @@
                         console.log(data);
                     }
                 })
-                alert("Se modificó el capitulo con exito!", 'success', 1, ++contAlert);
+                alertPersonalizado("Se modificó el capitulo con exito!", 'success', 1, ++contAlert);
             }
         }
     }
@@ -172,7 +172,7 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id},
                 success : function(r) {
                     guardarOrdenCapitulo();
-                    alert("Se eliminó el capitulo con exito!", 'success', 1, ++contAlert);
+                    alertPersonalizado("Se eliminó el capitulo con exito!", 'success', 1, ++contAlert);
                 },
                 error : function(data) {
                     console.log(data);
@@ -291,12 +291,12 @@
     
 @if (session('status'))
         <script>
-            alert('<?php echo session('status'); ?>', 'success', 1, ++contAlert);
+            alertPersonalizado('<?php echo session('status'); ?>', 'success', 1, ++contAlert);
         </script>
     @endif
     @if (session('statusError'))
         <script>
-            alert('<?php echo session('statusError'); ?>', 'danger', 2, ++contAlert);
+            alertPersonalizado('<?php echo session('statusError'); ?>', 'danger', 2, ++contAlert);
         </script>
     @endif
 @endsection
