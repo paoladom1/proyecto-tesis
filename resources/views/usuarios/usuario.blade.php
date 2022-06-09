@@ -1,7 +1,7 @@
 @extends('plantillas.nav')
 @section('content')
     <div class="user">
-        <div class="container-fluid" style=" background-color: #e3eef5; padding: 2em; width: 35%; border: 1px #003C71 solid; border-top: 10px #003C71 solid;">
+        <div class="container-fluid" style=" background-color: #e3eef5; padding: 2em; border: 1px #003C71 solid; border-top: 10px #003C71 solid;">
             <div class="row d-flex align-items-center mt-5">
                 <div class="col d-flex flex-row justify-content-center">
                     <img src="img/LogoUCAnegro.png" height="200px" width="200px" style="border-radius: 100%">
@@ -25,8 +25,12 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-between m-5">
-                <button class="ms-3 btn btn-danger" style="width: auto;">Descartar cambios</button>
-                <button type="button" data-toggle="modal" data-target="#modal-profile" class="me-3 btn btn-success" style="width: auto">Guardar cambios</button>
+                <div class="col">
+                  <button class="ms-3 btn btn-danger" style="width: auto;">Descartar</button>
+                </div>
+                <div class="col">
+                  <button type="button" data-toggle="modal" data-target="#modal-profile" class="me-3 btn btn-success" style="width: auto">Guardar</button>
+                </div>
             </div>
 
         </div>

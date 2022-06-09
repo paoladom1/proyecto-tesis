@@ -13,10 +13,6 @@
     transition: all 0.5s;
 }
 
-.img-card{
-    width: 7em; align-self: center;
-    transition: all 0.5s;
-}
 
 .body-card {
     transition: all 0.5s;
@@ -37,17 +33,17 @@
 
 </style>
 
-    <div class="container-fluid" style="background-color: white">
+    <div class="container" style="background-color: white">
         <div class="row">
             <div class="container mPrincipal">
-                <div class="row " style="margin-top: 2em;">
-                    <center><h1>Menu principal</h1></center>
+                <div class="row " style="background-color:#003C71; border-bottom:solid #E87B2A 8px;">
+                    <center><h1 class="mt-3 mb-3" style="color: #e3eef5; font-size: 2em">Menu principal</h1></center>
                 </div>
                 <center>
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
                     <div class="col">
                         <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                            <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
+                            <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
                                 <a href="{{ url('/filtro') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Grupos de tesis</h5></a>
                             </div>
@@ -55,7 +51,7 @@
                     </div>
                     <div class="col">
                         <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
+                            <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
                             <div class="card-body body-card mt-2">
                                 <a href="{{ url('/lector') }}" style="text-decoration: none; color: black;"><h6 class="card-title">Asesores y Lectores Externos</h6></a>
                             </div>

@@ -1,0 +1,93 @@
+.voyager .side-menu.sidebar-inverse .navbar li>a:hover {
+    background-color: #E87B2A;
+    background: linear-gradient(275deg,#92470e,#E87B2A 34%);
+    color: white;
+}
+
+.voyager .side-menu.sidebar-inverse{
+    background-color: #003C71;
+    background: linear-gradient(45deg,#021729,#003C71);
+}
+
+.expanded .side-menu .panel.widget .dimmer, .side-menu:hover .panel.widget .dimmer{
+    background: linear-gradient(275deg,#92470e,#e87c2a28 34%);
+    background-color: #E87B2A;
+}
+
+.panel.widget .dimmer{
+    background: linear-gradient(275deg,#92470e,#e87c2a28 34%);
+    background-color: #E87B2A;
+}
+
+.voyager .navbar, .voyager .navbar.navbar-default{
+    border-bottom: 0;
+    box-shadow: 0 0 0;
+    background: hsl(208deg 100% 22%);
+}
+
+.hamburger-inner {
+    width: 15px;
+    height: 2px;
+    background: #ffffff;
+    display: block;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -1px;
+    position: absolute;
+    transition: all .3s cubic-bezier(.19,1,.22,1);
+}
+
+.hamburger-inner:after, .hamburger-inner:before {
+    height: 2px;
+    background: #ffffff;
+    display: block;
+    border-radius: 10px;
+    position: absolute;
+    content: "";
+    transition: all .5s cubic-bezier(.19,1,.22,1);
+}
+
+.voyager .navbar.navbar-default .navbar-nav>li>a, .voyager .navbar .navbar-nav>li>a {
+    color: #ffffff;
+}
+
+
+
+.voyager .navbar.navbar-default>.container-fluid:after, .voyager .navbar>.container-fluid {
+    border-bottom: 1px solid #eee;
+    width: 99.5%;
+    height: 1px;
+    border-top: #003C71 solid 1px;
+}
+
+.welcomeMessage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.welcomeMessage .card{
+    width: 75%;
+    text-align: center;
+    border-radius: 5px;
+    background-color: rgb(235, 235, 235);
+}
+
+.welcomeMessage .card img{
+   height: 25%;
+   width: 25%;
+   margin: 2%;
+}
+
+.welcomeMessage .card hr{
+    width: 85%;
+    border: #E87B2A solid 1px;
+    margin-bottom: 5px;
+ }
+
+ .welcomeMessage .card .card-body .card-title{
+    margin-top: 10px;
+ }

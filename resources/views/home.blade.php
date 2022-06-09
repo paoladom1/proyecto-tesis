@@ -35,15 +35,18 @@
         <div class = "sector2">
             <h1 style="align-self: center; margin-bottom: 1em; color: #E87B2A;">Inicio de sesión</h1>
             <div class="formulario">
-                <form class="container-sm">
+                <form class='container-sm'  action="{{ route('login') }}" method='POST'>
+                    {{ csrf_field() }}
                     <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Usuario">
+                        <input type="text" name="email" class="form-control" placeholder="Usuario">
+                        {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="mb-1">
-                        <input type="password" class="form-control" placeholder="Contraseña">
+                        <input type="password" name="password" class="form-control" placeholder="Contraseña">
+                        {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="row mb-3">
-                        <div class="">
+                        <div class="olvidasteC">
                             <a href="#" style="font-size: .75rem; font-weight: bold; text-decoration: none"  onMouseOver="this.style.color='#f00'"
                             onMouseOut="this.style.color='blue'">¿Olvidaste la contraseña?</a>
                         </div>

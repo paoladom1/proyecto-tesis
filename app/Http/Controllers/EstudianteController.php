@@ -8,20 +8,69 @@ use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 use App\Models\SeccionResumen;
+use App\Models\SeccionAgradecimiento;
+use App\Models\SeccionDedicatoria;
 use App\Models\SeccionAbreviaturaNomenclaturaSigla;
 use App\Models\SeccionCapitulo;
 use App\Models\SeccionGlosario;
 use App\Models\SeccionReferencia;
 use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
+use App\Models\Estudiante;
+use App\Models\Bitacora;
 
 class EstudianteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('estudiante');
+    }
+
+    //-------------------------------------Funciones generales-----------------------------------
+
+    public function obtenerGrupo(){
+        $grupo = auth()->guard('admin')->user()->id;
+        $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
+        return $estudiante->grupo_trabajo_id;
+    }
+
+    public function bitacora($descripcion, $bitacora_seccion, $bitacora_modificacion)
+    {
+        /*
+            - BITACORA_MODIFICACION -
+            1 -> Agregó
+            2 -> Modificó
+            3 -> Eliminó
+
+            - BITACORA_SECCIÓN -
+            1 -> Agradecimiento
+            2 -> Dedicatoria
+            3 -> Resumen
+            4 -> Siglas
+            5 -> Abreviaciones
+            6 -> Nomenclaturas
+            7 -> Capítulo
+            8 -> Glosario
+            9 -> Referencia
+            10 -> Creación de documento
+        */
+        $grupo = auth()->guard('admin')->user()->id;
+        $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
+
+        $bitacora = New Bitacora();
+        $bitacora->descripcion = $descripcion;
+        $bitacora->estudiante_id = $estudiante->id;
+        $bitacora->bitacora_seccion_id = $bitacora_seccion;
+        $bitacora->bitacora_modificacion_id = $bitacora_modificacion;
+        $bitacora->save();
+        // $this->bitacora('Prueba de bitacora', 3, 1);
+    }
+
     //-------------------------------------Creación de capitulos-----------------------------------
         
     public function formCapitulos()
     {
-        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->where('grupo_trabajo_id', '=', 1)->get();
+        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return view("formulariosDoc.capitulo", array(
             "capitulos" => $capitulo
         ));
@@ -33,9 +82,9 @@ class EstudianteController extends Controller
         $capitulo->nombre_capitulo = $request->input('nombreTitulo');
         $capitulo->orden_capitulo = $request->input('orden_capitulo');
         //$capitulo->grupo_trabajo_id = $request->input('orden_capitulo');
-        $capitulo->grupo_trabajo_id = 1;
+        $capitulo->grupo_trabajo_id = $this->obtenerGrupo();
         $capitulo->save();
-
+        $this->bitacora('Se ha creado el capitulo: '.$capitulo->nombre_capitulo, 7, 1);
         $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
         return $capitulos;
     }
@@ -49,11 +98,12 @@ class EstudianteController extends Controller
                 $capitulo = SeccionCapitulo::findOrFail($id);
                 $capitulo->orden_capitulo = $cont++;
                 $capitulo->update();
-            }   
+            }  
         } else if($request->input('id')){
             $id = $request->input('id');
             $nombre = $request->input('nombre');
             $capitulo = SeccionCapitulo::findOrFail($id);
+            $this->bitacora('Se ha modificado el capítulo: '.$capitulo->nombre_capitulo.'. El nuevo nombre del capítulo es: '.$nombre, 7, 2);
             $capitulo->nombre_capitulo = $nombre;
             $capitulo->update();   
             $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
@@ -65,6 +115,7 @@ class EstudianteController extends Controller
     {
         $id = $request->input('id');
         $capitulo = SeccionCapitulo::findOrFail($id);
+        $this->bitacora('Se ha eliminado el capitulo: '.$capitulo->nombre_capitulo, 7, 3);
         $capitulo->delete();
     }
 
@@ -72,11 +123,17 @@ class EstudianteController extends Controller
 
     public function formularioDinamico($id){ 
         // Validar que el contenido que se pueda ver corresponda al equipo
-        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->where('grupo_trabajo_id', '=', 1)->findOrFail($id);
+        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('id', '=', $id)->first();
+        
+        if ($capitulo == null) {
+            return redirect('capitulos')->with('statusError', 'Error, el capitulo seleccionado es incorrecto!');
+        }else if($capitulo->grupo_trabajo_id != $this->obtenerGrupo()){
+            return redirect('capitulos')->with('statusError', 'Error, el capitulo seleccionado es incorrecto!');
+        } 
 
         $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '>',0)->get();
         $contenido_introduccion = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '=',0)->get();
-        return view('formulariosDoc.dinamico', array(
+        return view('formulariosDoc.contenidoCapitulo', array(
             "capitulo" => $capitulo,
             "contenido" => $contenido,
             "introduccion" => $contenido_introduccion
@@ -85,6 +142,7 @@ class EstudianteController extends Controller
 
     public function crearDinamico(Request $request){
         $id = $request->input('idCapitulo');
+        $capitulo = SeccionCapitulo::with('contenidoSeccionCapitulo')->findOrFail($id);
         $i = 0;
         $i2 = 0;
         foreach ($request->input('seccion1') as $seccion) {
@@ -138,26 +196,31 @@ class EstudianteController extends Controller
             }
             ++$i;
         }
-        return redirect('fdinamico/'.$id)->with('status', 'Se guardo exitosamente!');
+        $this->bitacora('Se ha modificado el contenido del capitulo: '.$capitulo->nombre_capitulo, 7, 2);
+        return redirect('capitulos')->with('status', 'Se guardaron los datos del Capitulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo.'!');
     }
 
     public function eliminarContenido(Request $request)
     {
         $id = $request->input('id');
+        $capitulo = $request->input('capitulo');
         $contenido = ContenidoSeccionCapitulo::findOrFail($id);
+        $this->bitacora('Se ha eliminado el tema: '.$contenido->tema.' del capitulo: '.$capitulo, 7, 3);
         $contenido->delete();
     }
 
     public function eliminarContenido2(Request $request)
     {
         $id = $request->input('id');
+        $capitulo = $request->input('capitulo');
         $contenido = SubcontenidoSeccionCapitulo::findOrFail($id);
+        $this->bitacora('Se ha eliminado el subtema: '.$contenido->tema.' del capitulo: '.$capitulo, 7, 3);
         $contenido->delete();
     }
 
     //---------------------------------------Sección de resumen---------------------------------------------
     public function frmResumen(){ 
-        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', 1)->get();
+        $resumen = SeccionResumen::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return view('formulariosDoc.resumen', array(
             "resumen" => $resumen
         ));
@@ -175,17 +238,21 @@ class EstudianteController extends Controller
             if($id == null){
                 $resumen = new SeccionResumen();
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->save();
+                $id = $resumen->id;
+                $this->bitacora('Se creó la sección de resumen', 3, 1);
             } else{
                 $resumen = SeccionResumen::findOrFail($id);
                 $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
+                $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->update();
+                $this->bitacora('Se Modificó la sección de resumen', 3, 2);
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
         }
         return $mensaje;
@@ -193,7 +260,7 @@ class EstudianteController extends Controller
 
     //---------------------------------------Sección de referencias---------------------------------------------
     public function frmReferencia(){ 
-        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', 1)->get();
+        $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return view('formulariosDoc.referencias', array(
             "referencia" => $referencia
         ));
@@ -209,19 +276,23 @@ class EstudianteController extends Controller
             );
         } else{
             if($id == null){
-                $resumen = new SeccionReferencia();
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
-                $resumen->save();
+                $referencia = new SeccionReferencia();
+                $referencia -> contenido = $contenido;
+                $referencia -> grupo_trabajo_id = $this->obtenerGrupo();
+                $referencia->save();
+                $id = $referencia->id;
+                $this->bitacora('Se creó la sección de referencias', 9, 1);
             } else{
-                $resumen = SeccionReferencia::findOrFail($id);
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
-                $resumen->update();
+                $referencia = SeccionReferencia::findOrFail($id);
+                $referencia -> contenido = $contenido;
+                $referencia -> grupo_trabajo_id = $this->obtenerGrupo();
+                $referencia->update();
+                $this->bitacora('Se Modificó la sección de referencias', 9, 2);
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
         }
         return $mensaje;
@@ -229,9 +300,16 @@ class EstudianteController extends Controller
 
     //---------------------------------------Sección de glosario---------------------------------------------
     public function frmGlosario(){ 
-        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', 1)->get();
+        $glosario = SeccionGlosario::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        if (count($glosario) == 0) {
+            $desabilitar = "disabled";
+        } else {
+            $desabilitar = "";
+        }
+        
         return view('formulariosDoc.glosario', array(
-            "glosario" => $glosario
+            "glosario" => $glosario,
+            "desabilitar" => $desabilitar
         ));
     }
 
@@ -246,31 +324,60 @@ class EstudianteController extends Controller
             );
         } else{
             if($id == null){
-                $resumen = new SeccionGlosario();
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
-                $resumen -> opcional = $opcional;
-                $resumen->save();
+                $glosario = new SeccionGlosario();
+                $glosario -> contenido = $contenido;
+                $glosario -> grupo_trabajo_id = $this->obtenerGrupo();
+                $glosario -> opcional = $opcional;
+                $glosario->save();
+                $id = $glosario->id;
+                $this->bitacora('Se creó la sección de glosario', 8, 1);
             } else{
-                $resumen = SeccionGlosario::findOrFail($id);
-                $resumen -> contenido = $contenido;
-                $resumen -> grupo_trabajo_id = 1;
-                $resumen -> opcional = $opcional;
-                $resumen->update();
+                $glosario = SeccionGlosario::findOrFail($id);
+                $glosario -> contenido = $contenido;
+                $glosario -> grupo_trabajo_id = $this->obtenerGrupo();
+                $glosario -> opcional = $opcional;
+                $glosario->update();
+                $this->bitacora('Se modificó la sección de glosario', 8, 2);
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
         }
         return $mensaje;
     }
 
+    public function cambioEstadoGlosario(Request $request)
+    {
+        $id = $request->input('id');
+        $opcional = $request->input('opcional');
+        $glosario = SeccionGlosario::findOrFail($id);
+        $glosario -> opcional  = $opcional;
+        $glosario->update();  
+
+        if($opcional == 1){
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: Es opcional (La sección del glosario no se incluirá en el documento)"
+            );
+            $this->bitacora('Se cambió a estado: Es opcional', 8, 2);
+        } else{
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: No es opcional (La sección del glosario se podrá incluir en el documento)"
+            );
+            $this->bitacora('Se cambió a estado: No es opcional', 8, 2);
+        }
+
+        return $mensaje;
+    }
+
     //--------------------------------Sección de abreviatura, nomenclatura y glosario-----------------------------------------
     public function frmAbreviatura(){ 
-        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 1)->get();
-        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 3)->get();
-        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', 1)->where('tipo_abreviatura_id', '=', 2)->get();
+        $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 1)->get();
+        $nomenclatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 3)->get();
+        $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 2)->get();
         return view('formulariosDoc.abreviaturas', array(
             "abreviatura" => $abreviatura,
             "nomenclatura" => $nomenclatura,
@@ -291,20 +398,233 @@ class EstudianteController extends Controller
             if($id == null){
                 $abreviatura = new SeccionAbreviaturaNomenclaturaSigla();
                 $abreviatura -> contenido = $contenido;
-                $abreviatura -> grupo_trabajo_id = 1;
+                $abreviatura -> grupo_trabajo_id = $this->obtenerGrupo();
                 $abreviatura -> tipo_abreviatura_id  = $tipo;
                 $abreviatura->save();
+                $id = $abreviatura->id;
+                if ($tipo == 1) {
+                    $this->bitacora('Se creó la sección de abreviaciones', 5, 1);
+                } else if($tipo == 2){
+                    $this->bitacora('Se creó la sección de siglas', 4, 1);
+                } else if ($tipo == 3) {
+                    $this->bitacora('Se creó la sección de nomenclaturas', 6, 1);
+                }
             } else{
                 $abreviatura = SeccionAbreviaturaNomenclaturaSigla::findOrFail($id);
                 $abreviatura -> contenido = $contenido;
-                $abreviatura -> grupo_trabajo_id = 1;
+                $abreviatura -> grupo_trabajo_id = $this->obtenerGrupo();
                 $abreviatura -> tipo_abreviatura_id  = $tipo;
                 $abreviatura->update();
+                if ($tipo == 1) {
+                    $this->bitacora('Se modificó la sección de abreviaciones', 5, 2);
+                } else if($tipo == 2){
+                    $this->bitacora('Se modificó la sección de siglas', 4, 2);
+                } else if ($tipo == 3) {
+                    $this->bitacora('Se modificó la sección de nomenclaturas', 6, 2);
+                }
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!"
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
             );
+        }
+        return $mensaje;
+    }
+
+     //-------------------------------------Creación de agradecimientos y dedicatoria-----------------------------------
+
+    public function frmAgradecimientoDedicatoria(){ 
+        $dedicatoria = SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id', 'right outer')->selectRaw('*, seccion_dedicatoria.id as idDedicatoria, estudiante.id as idEstudiante')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $agradecimiento = SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id', 'right outer')->selectRaw('*, seccion_agradecimiento.id as idAgradecimiento, estudiante.id as idEstudiante')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $dedicatoriaEstado =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
+        $agradecimientoEstado =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("opcional")->first("opcional");
+        $dedicatoriaContador =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
+        $agradecimientoContador =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get("opcional");
+        $opcionDedicatoria = "";
+        $opcionAgradecimiento = "";
+        $desabilitarDedicatoria = "";
+        $desabilitarAgradecimiento = "";
+
+        if ($dedicatoriaEstado != null) {
+            if ($dedicatoriaEstado->opcional == 1) {
+                $opcionDedicatoria = "checked";
+            }
+        } 
+
+        if ($agradecimientoEstado != null) {
+            if ($agradecimientoEstado->opcional == 1) {
+                $opcionAgradecimiento = "checked";
+            }
+        }
+
+        if(count($dedicatoriaContador) == 0){
+            $desabilitarDedicatoria = "disabled";
+        }
+
+        if(count($agradecimientoContador) == 0){
+            $desabilitarAgradecimiento = "disabled";
+        }
+
+        return view('formulariosDoc.agradecimientos', array(
+            "dedicatoria" => $dedicatoria,
+            "agradecimiento" => $agradecimiento,
+            "dedicatoriaEstado" => $opcionDedicatoria,
+            "agradecimientoEstado" => $opcionAgradecimiento,
+            "desabilitarDedicatoria" => $desabilitarDedicatoria,
+            "desabilitarAgradecimiento" => $desabilitarAgradecimiento,
+        ));
+    }
+
+    public function saveAgradecimiento(Request $request){
+        $id = $request->input('id');
+        $idEstudiante = $request->input('idEstudiante');
+        $contenido = $request->input('contenido');
+        $autor = $request->input('autor');
+        $opcional = $request->input('opcional');
+        $estudiante = Estudiante::where('id', '=', $idEstudiante)->first();
+        if($contenido == "" || $autor == ""){
+            $mensaje = array(
+                'code'=> 400,
+                'mensaje' => "No pueden quedar campos vacios!"
+            );
+        } else{
+            if($id == null){
+                $agradecimiento = new SeccionAgradecimiento();
+                $agradecimiento -> contenido = $contenido;
+                $agradecimiento -> autor = $autor;
+                $agradecimiento -> estudiante_id  = $idEstudiante;
+                $agradecimiento -> opcional  = $opcional;
+                $agradecimiento->save();
+                $id = $agradecimiento->id;
+                $this->bitacora('Se ha creado el agradecimiento de '.$estudiante->nombre.' '.$estudiante->apellido, 1, 1);
+            } else{ 
+                $agradecimiento = SeccionAgradecimiento::findOrFail($id);
+                $agradecimiento -> contenido = $contenido;
+                $agradecimiento -> autor = $autor;
+                $agradecimiento -> estudiante_id  = $idEstudiante;
+                $agradecimiento -> opcional  = $opcional;
+                $agradecimiento->update();
+                $this->bitacora('Se ha modificado el agradecimiento de '.$estudiante->nombre.' '.$estudiante->apellido, 1, 2);
+            }
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
+            );
+        }
+        return $mensaje;
+    }
+
+    public function saveDedicatoria(Request $request){
+        $id = $request->input('id');
+        $idEstudiante = $request->input('idEstudiante');
+        $contenido = $request->input('contenido');
+        $autor = $request->input('autor');
+        $opcional = $request->input('opcional');
+        $estudiante = Estudiante::where('id', '=', $idEstudiante)->first();
+        if($contenido == "" || $autor == ""){
+            $mensaje = array(
+                'code'=> 400,
+                'mensaje' => "No pueden quedar campos vacios!"
+            );
+        } else{
+            if($id == null){
+                $dedicatoria = new SeccionDedicatoria();
+                $dedicatoria -> contenido = $contenido;
+                $dedicatoria -> autor = $autor;
+                $dedicatoria -> estudiante_id  = $idEstudiante;
+                $dedicatoria -> opcional  = $opcional;
+                $dedicatoria->save();
+                $id = $dedicatoria->id;
+                $this->bitacora('Se ha creado la dedicatoria de '.$estudiante->nombre.' '.$estudiante->apellido, 2, 1);
+            } else{ 
+                $dedicatoria = SeccionDedicatoria::findOrFail($id);
+                $dedicatoria -> contenido = $contenido;
+                $dedicatoria -> autor = $autor;
+                $dedicatoria -> estudiante_id  = $idEstudiante;
+                $dedicatoria -> opcional  = $opcional;
+                $dedicatoria->update();
+                $this->bitacora('Se ha modificado la dedicatoria de '.$estudiante->nombre.' '.$estudiante->apellido, 2, 2);
+            }
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se guardo exitosamente!",
+                'id' => $id
+            );
+        }
+        return $mensaje;
+    }
+
+    public function cambioEstado(Request $request)
+    {
+        $opcional = $request->input('opcional');
+        $tipo = $request->input('tipo');
+        if ($tipo == 1) {
+            $agradecimiento = SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->selectRaw('*, seccion_agradecimiento.id as idAgradecimiento')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get('idAgradecimiento');
+            foreach ($agradecimiento as $dato) {
+                $agradecimiento = SeccionAgradecimiento::findOrFail($dato->idAgradecimiento);
+                $agradecimiento -> opcional  = $opcional;
+                $agradecimiento->update();   
+            }
+        } else if ($tipo == 2) {
+            $dedicatoria = SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->selectRaw('*, seccion_dedicatoria.id as idDedicatoria')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get('idDedicatoria');
+            foreach ($dedicatoria as $dato) {
+                $dedicatoria = SeccionDedicatoria::findOrFail($dato->idDedicatoria);
+                $dedicatoria -> opcional  = $opcional;
+                $dedicatoria->update();   
+            }
+        }
+
+        if ($tipo == 1) {
+            $mensajeTipo = "agradecimientos";
+        } else{
+            $mensajeTipo = "dedicatorias";
+        }
+
+        if($opcional == 1){
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: Es opcional (La sección de ".$mensajeTipo." no se incluirá en el documento)"
+            );
+            $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: Es opcional', 1, 2);
+        } else{
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Cambio a estado: No es opcional (La sección de ".$mensajeTipo." se podrá incluir en el documento)"
+            );
+            $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: No es opcional', 2, 2);
+        }
+
+        return $mensaje;
+    }
+
+    public function deleteDedicatoriaAgradecimiento(Request $request)
+    {
+        $tipo = $request->input('tipo');
+        $id = $request->input('id');
+        $nombre = $request->input('nombre');
+        
+        if ($tipo == 1) {
+            $agradecimiento = SeccionAgradecimiento::findOrFail($id);
+            $agradecimiento->delete();
+            $agradecimientoContador =  SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se eliminó con exito el agradecimiento de ".$nombre,
+                'total' => count($agradecimientoContador)
+            );
+            $this->bitacora('Se ha eliminado el agradecimiento de '.$nombre, 1, 3);
+        } else if($tipo == 2){
+            $dedicatoria = SeccionDedicatoria::findOrFail($id);
+            $dedicatoria->delete();
+            $dedicatoriaContador =  SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+            $mensaje = array(
+                'code'=> 200,
+                'mensaje' => "Se eliminó con exito la dedicatoria de ".$nombre,
+                'total' => count($dedicatoriaContador)
+            );
+            $this->bitacora('Se ha eliminado la dedicatoria de '.$nombre, 1, 3);
         }
         return $mensaje;
     }

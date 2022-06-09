@@ -1,13 +1,13 @@
 @extends('plantillas.navdirector')
 @section('content')
-<head>
+{{--<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    {{--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Filtros</title>
-</head>
+</head>  --}}
 
 <style>
     .dropbtn {
@@ -116,9 +116,9 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header" style="background-color: #003C71;">
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="tituloModal" style="color: white;"></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
             </div>
             <div class="modal-body">
             <div class='container'>
@@ -198,9 +198,9 @@
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header" style="background-color: #003C71;">
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="tituloModal2" style="color: white;"></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar()"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -247,9 +247,9 @@
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #003C71;">
+                <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                     <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Crear Grupo</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="color: white"></button>
+                    <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" style="color: white"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -335,7 +335,7 @@
 
     <div class="table-responsive">
         <table class="table table-hover">
-            <thead class="thead-dark" style="background-color: #003C71; color: white;">
+            <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px;">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tema de Tesis</th>
@@ -349,7 +349,7 @@
                 <th scope="row">1</th>
                 <td>Proyecto para el desarrollo de plantillas para documentos de tesis</td>
                 <td>4</td>
-                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button><button class="btn btn-danger ms-1" onclick="">Eliminar</button></td>
+                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button>{{--  <button class="btn btn-danger ms-1" onclick="">Eliminar</button>--}}</td>
                 <td></td>
             </tr>
             <tr>
@@ -378,9 +378,9 @@
     <div class="modal fade" id="exampleModal45" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header" style="background-color: #003C71;">
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="exampleModalLabel" style="color: white">Estudiantes</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="input-group input-group-sm">

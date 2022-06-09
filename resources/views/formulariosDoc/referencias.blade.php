@@ -1,11 +1,8 @@
 @extends('plantillas.nav')
 @section('content')
-<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-<script>
 
-function agregarEditor() {
-        // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
-        // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
+<script>
+    function agregarEditor() {
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto', {
             height: 250,
@@ -15,16 +12,15 @@ function agregarEditor() {
 
         editor.config.contentsCss = "/css/content.css";
     }
-
 </script>
+
     <div class="resumenContainer">
+        <div class="col seccion_" id="titulosApp">
+            <h2>REFERENCIAS</h2>
+        </div>
         <div id="collapseTwo" aria-labelledby="headingTwo">
             <div class="accordion-body">
                 <div class="row">
-                        <div class="col seccion_">
-                            <h1>Referencias</h1>
-                        </div>
-                        <hr>
 
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -56,7 +52,7 @@ function agregarEditor() {
                                 agregarEditor();
                             </script>
                         </div>
-                        <button type="button" onclick="registrarReferencia()" class="btn btn-success saveResumen">Guardar</button>
+                        <button type="button" onclick="registrarReferencia()" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Referencias</button>
                     </div>
                 </div>
             </div>
@@ -105,7 +101,8 @@ function agregarEditor() {
                 data: {"_token": "{{ csrf_token() }}", "id": id, "contenido": contenidoR},
                 success : function(r) {
                     if (r['code'] == 200) {
-                        alert(r['mensaje'], 'success', 1);   
+                        alert(r['mensaje'], 'success', 1);  
+                        document.getElementsByName('id')[0].setAttribute("value", r['id']); 
                     } else{
                         alert(r['mensaje'], 'danger', 2);
                     }

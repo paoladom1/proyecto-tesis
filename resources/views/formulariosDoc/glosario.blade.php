@@ -1,11 +1,8 @@
 @extends('plantillas.nav')
 @section('content')
-<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-<script>
 
-function agregarEditor() {
-        // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
-        // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
+<script>
+    function agregarEditor() {
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto', {
             height: 250,
@@ -18,13 +15,12 @@ function agregarEditor() {
 
 </script>
     <div class="resumenContainer">
+        <div class="col seccion_" id="titulosApp">
+            <h2>GLOSARIO</h2>
+        </div>
         <div id="collapseTwo" aria-labelledby="headingTwo">
             <div class="accordion-body">
                 <div class="row">
-                        <div class="col seccion_">
-                            <h1>Glosario</h1>
-                        </div>
-                        <hr>
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
@@ -51,17 +47,16 @@ function agregarEditor() {
                         ?>
                         <input hidden type="text" name="id"  value="{{$idR}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
-                    <br>
+                    <div id="liveAlertPlaceholder"></div>
                     <div class="row">
                         <div class="col">
                             <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input" value="1" name="opcional" type="checkbox" id="opcional" {{$opcional}}>
+                                <input class="form-check-input" value="1" name="opcional" type="checkbox" id="opcional" {{$opcional}} {{$desabilitar}} onclick="cambioEstado()">
                                 <label class="form-check-label" for="flexSwitchCheckReverse">Opcional</label>
                             </div>
                         </div>
                     </div>
                     <br>
-                    <div id="liveAlertPlaceholder"></div>
                     <div class="row">
                         <div class="col">
                             <textarea class="form-control" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
@@ -69,7 +64,7 @@ function agregarEditor() {
                                 agregarEditor();
                             </script>
                         </div>
-                        <button type="button" onclick="registrarGlosario();" class="btn btn-success saveResumen">Guardar</button>
+                        <button type="button" onclick="registrarGlosario();" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Glosario</button>
                     </div>
                 </div>
             </div>
@@ -109,7 +104,7 @@ function agregarEditor() {
         }
 
         function registrarGlosario() {
-            var id = document.getElementsByName('id')[0].value ;
+            var id = document.getElementsByName('id')[0].value;
             var contenidoG = CKEDITOR.instances['seccionTexto'].getData();
             var opcional = 0;
             if ($('#opcional').is(':checked') ) {
@@ -120,6 +115,34 @@ function agregarEditor() {
                 "serverSide" : true,
                 url : "./guardarGlosario",
                 data: {"_token": "{{ csrf_token() }}", "id": id, "contenido": contenidoG, "opcional": opcional},
+                success : function(r) {
+                    if (r['code'] == 200) {
+                        alert(r['mensaje'], 'success', 1);   
+                        document.getElementsByName('id')[0].setAttribute("value", r['id']); 
+                        document.getElementById('opcional').disabled = false;
+                    } else{
+                        alert(r['mensaje'], 'danger', 2);
+                    }
+                },
+                error : function(data) {
+                    console.log(data);
+                }
+            })
+        }
+
+        function cambioEstado() {
+            var opcional = 0;
+            var id = document.getElementsByName('id')[0].value;
+
+            if ($('#opcional').is(':checked') ) {
+                opcional = 1;
+            }
+
+            $.ajax({
+                type : "POST",
+                "serverSide" : true,
+                url : "./cambiarEstadoGlosario",
+                data: {"_token": "{{ csrf_token() }}", "opcional": opcional, "id": id},
                 success : function(r) {
                     if (r['code'] == 200) {
                         alert(r['mensaje'], 'success', 1);   

@@ -1,9 +1,7 @@
 @extends('plantillas.nav')
 @section('content')
-<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 <script>
-
-function agregarEditor(n) {
+    function agregarEditor(n) {
         // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
         // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
@@ -19,12 +17,14 @@ function agregarEditor(n) {
 
 </script>
     <div class='container agradecimientosContainer'>
-        <h1 class="mt-3">Abreviatura, Nomenclatura y Sigla</h1>
-        <div id="liveAlertPlaceholder"></div>
-        <hr class="mb-3">
+        <div class="col seccion_" id="titulosApp">
+            <h2>ABREVIACIONES, NOMENCLATURAS Y SIGLAS</h2>
+        </div>
+        <div id="formAgradecimientos" class="mt-3">
+            <div id="liveAlertPlaceholder"></div>
             <div class="wrapper">
                 <div class="buttonWrapper2">
-                    <button class="tab-button active" style="border-top-left-radius: 10px;" data-id="abreviatura" type="button">Abreviaturas</button>
+                    <button class="tab-button active" style="border-top-left-radius: 10px;" data-id="abreviatura" type="button">Abreviaciones</button>
                     <button class="tab-button" data-id="nomenclatura" type="button">Nomenclaturas</button>
                     <button class="tab-button" style="border-top-right-radius: 10px;" data-id="sigla" type="button">Siglas</button>
                 </div>
@@ -76,7 +76,7 @@ function agregarEditor(n) {
                                         </script>
                                     </div>
                                     <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                    <input type="button" onclick="registrarAbreviatura(1)" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar abreviaturas" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                    <button type="button" onclick="registrarAbreviatura(1);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Abreviaciones</button>
                                 </div>
                             </div>
                         </div>
@@ -94,13 +94,12 @@ function agregarEditor(n) {
                                             agregarEditor(2);
                                         </script>
                                     </div>
-                                    <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                    <input type="button" onclick="registrarAbreviatura(3)" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar nomenclaturas" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                    <button type="button" onclick="registrarAbreviatura(3);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Nomenclaturas</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="content" id="sigla"  >
+                    <div class="content" id="sigla">
                         <div class="dedicatoriaContainer">
                             <div class="row">
                                     <input hidden type="text" name="idS" value="{{$idS}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -113,15 +112,16 @@ function agregarEditor(n) {
                                             agregarEditor(3);
                                         </script>
                                     </div>
-                                    <!--<button type="button" class="btn btn-success saveAgradecimientos">Guardar</button>-->
-                                    <input type="button" onclick="registrarAbreviatura(2)" class="btn btn-success mt-3 saveAgradecimientos" value="Guardar siglas" style="background-color: #003C71;" formaction="{{ url('/user') }}" />
+                                    <button type="button" onclick="registrarAbreviatura(2);" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Siglas</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
+        
 
     <script>    
         const tabs = document.querySelector(".wrapper");
@@ -173,23 +173,24 @@ function agregarEditor(n) {
             var id;
             var contenido;
             if(tipo == 1){
-                id = document.getElementsByName('idA')[0].value;
+                id = document.getElementsByName('idA')[0];
                 contenido = CKEDITOR.instances['seccionTexto1'].getData();
             } else if(tipo == 2){
-                id = document.getElementsByName('idS')[0].value;
+                id = document.getElementsByName('idS')[0];
                 contenido = CKEDITOR.instances['seccionTexto3'].getData();
             } else if(tipo == 3){
-                id = document.getElementsByName('idN')[0].value;
+                id = document.getElementsByName('idN')[0];
                 contenido = CKEDITOR.instances['seccionTexto2'].getData();
             }
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
                 url : "./guardarAbreviatura",
-                data: {"_token": "{{ csrf_token() }}", "id": id, "contenido": contenido, "tipo": tipo},
+                data: {"_token": "{{ csrf_token() }}", "id": id.value, "contenido": contenido, "tipo": tipo},
                 success : function(r) {
                     if (r['code'] == 200) {
                         alert(r['mensaje'], 'success', 1);   
+                        id.setAttribute("value", r['id']);
                     } else{
                         alert(r['mensaje'], 'danger', 2);
                     }

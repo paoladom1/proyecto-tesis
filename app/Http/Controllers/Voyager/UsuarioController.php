@@ -16,7 +16,7 @@ use TCG\Voyager\Events\BreadImagesDeleted;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 
-class UsuarioController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController 
+class UsuarioController extends VoyagerBaseController 
 {
     use BreadRelationshipParser;
 

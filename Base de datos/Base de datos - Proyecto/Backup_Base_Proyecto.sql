@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2022 a las 08:17:55
+-- Tiempo de generación: 05-06-2022 a las 08:34:32
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `bitacora` (
   `id` int(11) NOT NULL,
   `descripcion` text NOT NULL,
-  `fecha_modificacion` datetime NOT NULL,
+  `fecha_modificacion` datetime NOT NULL DEFAULT current_timestamp(),
   `estudiante_id` int(11) NOT NULL,
   `bitacora_seccion_id` int(11) NOT NULL,
   `bitacora_modificacion_id` int(11) NOT NULL,
@@ -193,12 +193,24 @@ INSERT INTO `configuracion_sistema` (`id`, `fecha_entrega`, `fecha_prorroga`, `n
 CREATE TABLE `contenido_seccion_capitulo` (
   `id` int(11) NOT NULL,
   `tema` varchar(255) DEFAULT NULL,
-  `contenido` text NOT NULL,
+  `contenido` text DEFAULT NULL,
   `orden_contenido` int(11) NOT NULL,
-  `seccion_capitulos_id` int(11) NOT NULL,
+  `seccion_capitulo_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `contenido_seccion_capitulo`
+--
+
+INSERT INTO `contenido_seccion_capitulo` (`id`, `tema`, `contenido`, `orden_contenido`, `seccion_capitulo_id`, `created_at`, `updated_at`) VALUES
+(13, 'Introducción del capitulo', '<p>null</p>', 0, 5, '2022-05-30 05:10:08', '2022-05-30 05:10:08'),
+(14, 'Introducción del capitulo', '<p>null</p>', 0, 5, '2022-05-30 05:10:58', '2022-05-30 05:10:58'),
+(15, '(Sin tema)', NULL, 1, 5, '2022-05-30 05:10:58', '2022-05-30 05:10:58'),
+(16, 'Introducción del capitulo', '<p>null</p>', 0, 7, '2022-06-02 06:54:28', '2022-06-02 06:54:28'),
+(19, 'dgdfsgdfg', NULL, 1, 7, '2022-06-02 07:54:34', '2022-06-02 07:54:45'),
+(22, '(Sin tema)', NULL, 2, 5, '2022-06-03 06:25:19', '2022-06-05 12:15:22');
 
 -- --------------------------------------------------------
 
@@ -395,9 +407,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (176, 30, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '{}', 4),
 (177, 31, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
 (178, 31, 'foto', 'text', 'Foto', 0, 1, 1, 1, 1, 1, '{}', 3),
-(179, 31, 'correo', 'text', 'Correo', 0, 1, 1, 1, 1, 1, '{}', 4),
-(180, 31, 'contrasena', 'text', 'Contrasena', 0, 0, 0, 1, 1, 0, '{}', 5),
-(181, 31, 'tipo_usuario_id', 'text', 'Tipo Usuario Id', 0, 1, 1, 1, 1, 1, '{}', 2),
+(181, 31, 'tipo_usuario_id', 'text', 'Tipo Usuario Id', 1, 1, 1, 1, 1, 1, '{}', 2),
 (182, 31, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 1, 0, 1, '{}', 6),
 (183, 31, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '{}', 7),
 (184, 32, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
@@ -412,7 +422,9 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (193, 33, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 1, 0, 1, '{}', 4),
 (194, 33, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '{}', 5),
 (195, 19, 'departamento_unidad_id', 'text', 'Departamento Unidad Id', 1, 1, 1, 1, 1, 1, '{}', 2),
-(196, 17, 'departamento_unidad_id', 'text', 'Departamento Unidad Id', 1, 1, 1, 1, 1, 1, '{}', 4);
+(196, 17, 'departamento_unidad_id', 'text', 'Departamento Unidad Id', 1, 1, 1, 1, 1, 1, '{}', 4),
+(197, 31, 'email', 'text', 'Email', 1, 1, 1, 1, 1, 1, '{}', 4),
+(198, 31, 'password', 'text', 'Password', 1, 1, 1, 1, 1, 1, '{}', 5);
 
 -- --------------------------------------------------------
 
@@ -470,7 +482,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (28, 'tipo_abreviatura', 'tipo-abreviatura', 'Tipo Abreviatura', 'Tipo Abreviaturas', NULL, 'App\\Models\\TipoAbreviatura', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:55:48', '2022-05-14 12:55:48'),
 (29, 'tipo_empleado', 'tipo-empleado', 'Tipo Empleado', 'Tipo Empleados', NULL, 'App\\Models\\TipoEmpleado', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:56:42', '2022-05-14 12:56:42'),
 (30, 'tipo_usuario', 'tipo-usuario', 'Tipo Usuario', 'Tipo Usuarios', NULL, 'App\\Models\\TipoUsuario', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:57:38', '2022-05-14 12:57:38'),
-(31, 'usuario', 'usuario', 'Usuario', 'Usuarios', NULL, 'App\\Models\\Usuario', NULL, 'App\\Http\\Controllers\\Voyager\\UsuarioController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 12:58:49', '2022-05-17 03:32:08'),
+(31, 'usuario', 'usuario', 'Usuario', 'Usuarios', NULL, 'App\\Models\\Usuario', NULL, 'App\\Http\\Controllers\\Voyager\\UsuarioController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 12:58:49', '2022-06-03 12:06:43'),
 (32, 'configuracion_sistema', 'configuracion-sistema', 'Configuracion Sistema', 'Configuracion Sistemas', NULL, 'App\\Models\\ConfiguracionSistema', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-17 05:13:41', '2022-05-17 05:13:41'),
 (33, 'departamento_unidad', 'departamento-unidad', 'Departamento Unidad', 'Departamento Unidads', NULL, 'App\\Models\\DepartamentoU', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-21 01:55:11', '2022-05-21 01:57:27');
 
@@ -513,7 +525,9 @@ INSERT INTO `departamento_unidad` (`id`, `nombre_departamento`, `facultad_id`, `
 (18, 'Decanato de Ciencias Económicas y Empresariales', 2, '2022-05-20 06:19:17', '2022-05-20 06:19:17'),
 (19, 'Decanato de Ciencias Sociales y Humanidades', 3, '2022-05-20 06:19:17', '2022-05-20 06:19:17'),
 (20, 'Decanato de Ingeniería y Arquitectura', 1, '2022-05-20 06:19:17', '2022-05-20 06:19:17'),
-(21, 'Decanato de Postgrados', 4, '2022-05-20 06:19:17', '2022-05-20 06:19:17');
+(21, 'Decanato de Postgrados', 4, '2022-05-20 06:19:17', '2022-05-20 06:19:17'),
+(22, 'Rectoría', NULL, '2022-05-25 23:55:22', '2022-05-25 23:55:22'),
+(23, 'Secretaría General', NULL, '2022-05-26 00:21:05', '2022-05-26 00:21:05');
 
 -- --------------------------------------------------------
 
@@ -529,6 +543,13 @@ CREATE TABLE `director_carrera` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `director_carrera`
+--
+
+INSERT INTO `director_carrera` (`id`, `usuario_id`, `carrera_id`, `empleado_id`, `created_at`, `updated_at`) VALUES
+(1, 3, 7, 5, '2022-05-26 00:40:57', '2022-05-26 00:40:57');
 
 -- --------------------------------------------------------
 
@@ -548,6 +569,17 @@ CREATE TABLE `empleado` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`id`, `codigo_empleado`, `nombre`, `apellido`, `tipo_empleado_id`, `cargo_id`, `departamento_unidad_id`, `created_at`, `updated_at`) VALUES
+(2, '', 'Silvia Eleonor', 'Azucena de Fernández', 2, 2, 23, '2022-05-26 00:25:59', '2022-05-26 00:25:59'),
+(3, 'CER009', 'Carlos Ernesto', 'Rivas', 2, 1, 20, '2022-05-26 00:33:16', '2022-05-26 00:33:16'),
+(4, '', 'Elisa Cristina', 'Aldana Calderon', 1, 4, 8, '2022-05-26 00:34:44', '2022-05-26 00:34:44'),
+(5, '', 'Jose Enmanuel', 'Amaya Araujo', 1, 3, 8, '2022-05-26 00:37:07', '2022-05-26 00:37:07'),
+(6, '', 'Andreu', 'Oliva de la Esperanza, S.J.', 2, 5, 22, '2022-05-26 06:10:32', '2022-05-26 06:10:32');
+
 -- --------------------------------------------------------
 
 --
@@ -566,6 +598,15 @@ CREATE TABLE `estudiante` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `estudiante`
+--
+
+INSERT INTO `estudiante` (`id`, `nombre`, `apellido`, `carnet`, `carrera_id`, `usuario_id`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
+(7, 'Eduardo Alberto', 'López Torres', '00092117', 7, 5, 1, '2022-05-27 07:14:17', '2022-05-27 07:14:17'),
+(8, 'Joshua Steven', 'Sharp Reyes', '00092117', 7, 3, 1, '2022-05-27 07:14:17', '2022-05-27 07:14:17'),
+(9, 'Ruben Alexander', 'Sigüenza Argueta', '00092117', 7, 3, 1, '2022-05-27 07:14:17', '2022-05-27 07:14:17');
+
 -- --------------------------------------------------------
 
 --
@@ -583,6 +624,14 @@ CREATE TABLE `externo` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `externo`
+--
+
+INSERT INTO `externo` (`id`, `nombre`, `apellido`, `correo`, `descripcion`, `rol_externo`, `departamento_unidad_id`, `created_at`, `updated_at`) VALUES
+(2, 'Eduardo', 'López', 'lopezeduardo220@gmail.com', 'Es Ingeniero informático ', 0, 8, '2022-05-26 01:52:43', '2022-05-26 01:52:43'),
+(3, 'Ruben', 'Sigüenza ', 'rubensiguenza@gmail.com', 'Es Ingeniero en Sistema', 1, 8, '2022-05-26 01:52:43', '2022-05-26 01:52:43');
 
 -- --------------------------------------------------------
 
@@ -626,6 +675,13 @@ CREATE TABLE `grupo_trabajo` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `grupo_trabajo`
+--
+
+INSERT INTO `grupo_trabajo` (`id`, `anio_inicio`, `ciclo_inicio`, `tema`, `prorroga`, `asesor_interno_id`, `lector_interno_id`, `asesor_externo_id`, `lector_externo_id`, `created_at`, `updated_at`) VALUES
+(1, 2022, 1, 'DESARROLLO DE APLICACIÓN PARA FACILITAR LA ESCRITURA DE LOS TRABAJOS DE GRADUACIÓN PARA LOS ESTUDIANTES EGRESADOS DE LA FACULTAD DE INGENIERÍA Y ARQUITECTURA DE LA UNIVERSIDAD CENTROAMERICANA JOSÉ SIMEÓN CAÑAS', 0, 4, 5, NULL, NULL, '2022-05-22 05:16:05', '2022-05-22 05:16:05');
 
 -- --------------------------------------------------------
 
@@ -1141,6 +1197,15 @@ CREATE TABLE `seccion_abreviatura_nomenclatura_sigla` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `seccion_abreviatura_nomenclatura_sigla`
+--
+
+INSERT INTO `seccion_abreviatura_nomenclatura_sigla` (`id`, `contenido`, `tipo_abreviatura_id`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
+(8, '<p>Prueba de abreviatura 4</p>', 1, 1, '2022-05-28 10:17:30', '2022-06-05 11:06:59'),
+(9, '<p>Prueba de nomenclatura 5</p>', 3, 1, '2022-05-28 10:17:49', '2022-06-05 11:07:08'),
+(10, '<p>Prueba de siglas 12412</p>', 2, 1, '2022-05-28 10:18:13', '2022-06-05 11:07:18');
+
 -- --------------------------------------------------------
 
 --
@@ -1157,6 +1222,13 @@ CREATE TABLE `seccion_agradecimiento` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `seccion_agradecimiento`
+--
+
+INSERT INTO `seccion_agradecimiento` (`id`, `opcional`, `autor`, `contenido`, `estudiante_id`, `created_at`, `updated_at`) VALUES
+(22, 1, 'Eduardo Alberto López Torres', '<p>asdfadsfsdafsdf</p>', 7, '2022-06-05 02:25:49', '2022-06-05 11:34:49');
+
 -- --------------------------------------------------------
 
 --
@@ -1171,6 +1243,14 @@ CREATE TABLE `seccion_capitulo` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `seccion_capitulo`
+--
+
+INSERT INTO `seccion_capitulo` (`id`, `nombre_capitulo`, `orden_capitulo`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
+(5, 'Introducción', 1, 1, '2022-05-30 05:09:29', '2022-06-03 07:21:58'),
+(7, 'Marco Teorico', 2, 1, '2022-06-01 07:54:07', '2022-06-05 11:47:45');
 
 -- --------------------------------------------------------
 
@@ -1203,6 +1283,13 @@ CREATE TABLE `seccion_glosario` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `seccion_glosario`
+--
+
+INSERT INTO `seccion_glosario` (`id`, `opcional`, `contenido`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
+(7, 1, '<p>Prueba de glosario 2</p>', 1, '2022-06-01 23:33:07', '2022-06-05 10:11:37');
+
 -- --------------------------------------------------------
 
 --
@@ -1217,6 +1304,13 @@ CREATE TABLE `seccion_referencia` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `seccion_referencia`
+--
+
+INSERT INTO `seccion_referencia` (`id`, `contenido`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
+(3, '<ol>\n	<li>Referencia 1</li>\n	<li>Referencia 2</li>\n	<li>Referencia 3</li>\n</ol>', 1, '2022-05-28 10:11:21', '2022-06-05 10:04:50');
+
 -- --------------------------------------------------------
 
 --
@@ -1230,6 +1324,13 @@ CREATE TABLE `seccion_resumen` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `seccion_resumen`
+--
+
+INSERT INTO `seccion_resumen` (`id`, `contenido`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
+(16, '<p>Prueba de resumen 4</p>', 1, '2022-05-30 05:11:40', '2022-06-05 10:00:08');
 
 -- --------------------------------------------------------
 
@@ -1273,12 +1374,19 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 CREATE TABLE `subcontenido_seccion_capitulo` (
   `id` int(11) NOT NULL,
   `subtema` text NOT NULL,
-  `contenido` text NOT NULL,
+  `contenido` text DEFAULT NULL,
   `orden_subcontenido` int(11) NOT NULL,
   `contenido_seccion_capitulo_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `subcontenido_seccion_capitulo`
+--
+
+INSERT INTO `subcontenido_seccion_capitulo` (`id`, `subtema`, `contenido`, `orden_subcontenido`, `contenido_seccion_capitulo_id`, `created_at`, `updated_at`) VALUES
+(3, '(Sin sub-tema)', NULL, 3, 22, '2022-06-03 06:25:19', '2022-06-05 12:15:22');
 
 -- --------------------------------------------------------
 
@@ -1387,7 +1495,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@admin.com', 'users\\April2022\\4i27Z4SzTf9g3qq9otYF.jpg', NULL, '$2y$10$cns6EmzYBb0VIe5VSvwyguMhY1frszpHztzMeFVgMMeskk.xObT.C', NULL, '{\"locale\":\"en\"}', '2022-04-15 04:09:47', '2022-05-21 06:05:02');
+(1, 1, 'admin', 'admin@admin.com', 'users\\May2022\\p7eg6fSpi2Eds2NE6JPD.jpg', NULL, '$2y$10$0K.xhMg/W1ssYrJR/8Kjve7xuDnP.UwFxWVdkz4wCp78C5YRu8BrG', NULL, '{\"locale\":\"en\"}', '2022-04-15 04:09:47', '2022-05-27 10:37:11'),
+(3, 2, 'eduardo', 'eduardo@gmail.com', 'users/default.png', NULL, '$2y$10$0K.xhMg/W1ssYrJR/8Kjve7xuDnP.UwFxWVdkz4wCp78C5YRu8BrG', NULL, '{\"locale\":\"en\"}', '2022-05-26 22:28:33', '2022-05-27 03:58:40');
 
 -- --------------------------------------------------------
 
@@ -1408,13 +1517,21 @@ CREATE TABLE `user_roles` (
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `foto` varchar(200) DEFAULT NULL,
-  `correo` varchar(100) NOT NULL,
-  `contrasena` varchar(255) NOT NULL,
+  `foto` varchar(200) DEFAULT 'img/profile.png',
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `tipo_usuario_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `foto`, `email`, `password`, `tipo_usuario_id`, `created_at`, `updated_at`) VALUES
+(3, 'img/profile.png', 'earaujo@uca.edu.sv', 'earaujo@uca.edu.sv', 2, '2022-05-26 00:39:26', '2022-05-26 00:39:26'),
+(5, 'img/usuarios/5eduardo@gmail.com.jpg', 'eduardo@gmail.com', '$2y$10$0fxsSa88qzHuaBOXUGqIPOQIh83QhdJeW5XPITguyrJufIviGoDJ.', 1, '2022-05-27 03:33:00', '2022-06-04 12:58:47');
 
 --
 -- Índices para tablas volcadas
@@ -1465,7 +1582,7 @@ ALTER TABLE `configuracion_sistema`
 --
 ALTER TABLE `contenido_seccion_capitulo`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `seccion_capitulos_id` (`seccion_capitulos_id`);
+  ADD KEY `seccion_capitulos_id` (`seccion_capitulo_id`);
 
 --
 -- Indices de la tabla `data_rows`
@@ -1697,6 +1814,7 @@ ALTER TABLE `user_roles`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `tipo_usuario_id` (`tipo_usuario_id`);
 
 --
@@ -1707,7 +1825,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora_modificacion`
@@ -1743,13 +1861,13 @@ ALTER TABLE `configuracion_sistema`
 -- AUTO_INCREMENT de la tabla `contenido_seccion_capitulo`
 --
 ALTER TABLE `contenido_seccion_capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
 
 --
 -- AUTO_INCREMENT de la tabla `data_types`
@@ -1761,31 +1879,31 @@ ALTER TABLE `data_types`
 -- AUTO_INCREMENT de la tabla `departamento_unidad`
 --
 ALTER TABLE `departamento_unidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `director_carrera`
 --
 ALTER TABLE `director_carrera`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `externo`
 --
 ALTER TABLE `externo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `facultad`
@@ -1797,7 +1915,7 @@ ALTER TABLE `facultad`
 -- AUTO_INCREMENT de la tabla `grupo_trabajo`
 --
 ALTER TABLE `grupo_trabajo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `menus`
@@ -1833,43 +1951,43 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `seccion_abreviatura_nomenclatura_sigla`
 --
 ALTER TABLE `seccion_abreviatura_nomenclatura_sigla`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_agradecimiento`
 --
 ALTER TABLE `seccion_agradecimiento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_capitulo`
 --
 ALTER TABLE `seccion_capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_dedicatoria`
 --
 ALTER TABLE `seccion_dedicatoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_glosario`
 --
 ALTER TABLE `seccion_glosario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_referencia`
 --
 ALTER TABLE `seccion_referencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_resumen`
 --
 ALTER TABLE `seccion_resumen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `settings`
@@ -1881,7 +1999,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT de la tabla `subcontenido_seccion_capitulo`
 --
 ALTER TABLE `subcontenido_seccion_capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_abreviatura`
@@ -1911,13 +2029,13 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
@@ -1941,7 +2059,7 @@ ALTER TABLE `carrera`
 -- Filtros para la tabla `contenido_seccion_capitulo`
 --
 ALTER TABLE `contenido_seccion_capitulo`
-  ADD CONSTRAINT `contenido_seccion_capitulo_ibfk_1` FOREIGN KEY (`seccion_capitulos_id`) REFERENCES `seccion_capitulo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `contenido_seccion_capitulo_ibfk_1` FOREIGN KEY (`seccion_capitulo_id`) REFERENCES `seccion_capitulo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `data_rows`

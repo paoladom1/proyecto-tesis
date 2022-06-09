@@ -1,34 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@extends('plantillas.nav')
+@section('content')
+    
 <style>
     .contenedorBotones button:focus{
         outline: none;
         box-shadow: none;
     }
-
-    /*#headingTwo > .accordion-button:not(.collapsed){
-        background: #44A7FF;
-        color: black;
-        border: 1px solid black;
-    }
-
-    #headingTwo > .accordion-button{
-        background: #44A7FF;
-        border: 1px solid black;
-    }*/
 
     #headingTwo > .accordion-button{
         border: 1px dotted black;
@@ -62,12 +39,12 @@
     }
 
     .btnEliminarSub{
-        margin-left: -100px;
+        margin-left: -125px;
         margin-top: 10px;
     }
 
     .btnEliminarAgregar{
-        margin-left: -250px;
+        margin-left: -330px;
         margin-top: 10px;
     }
 
@@ -84,8 +61,6 @@
     var tipo;
 
     function agregarEditor(id) {
-        // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
-        // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto'+id, {
             height: 250,
@@ -145,6 +120,7 @@
             ordenarSubTemas(numeracionTres);
         } 
         ordenarTemas();
+        alert('Se eliminó con exito!', 'success', 1);
     }
 
     function temasSubTemas(a) {
@@ -161,9 +137,9 @@
         tipo = $("#seccion4"+id).val();
         numeracionTres = numSub;
         if (tipo == 1) {
-            $("#tituloCap").text('¿Esta seguro de eliminar el titulo "'+$('#tituloH'+id).text()+'"?');   
+            $("#tituloCap").text('¿Esta seguro de eliminar el tema "'+$('#tituloH'+id).text()+'"?');   
         } else{
-            $("#tituloCap").text('¿Esta seguro de eliminar el subtitulo "'+$('#tituloH'+id).text()+'"?');
+            $("#tituloCap").text('¿Esta seguro de eliminar el subtema "'+$('#tituloH'+id).text()+'"?');
         }
     }  
     
@@ -276,7 +252,7 @@
             type : "POST",
             "serverSide" : true,
             url : "./eliminarTema",
-            data: {"_token": "{{ csrf_token() }}", "id": id},
+            data: {"_token": "{{ csrf_token() }}", "id": id, "capitulo": document.getElementById('tituloCapitulo').innerText},
             success : function(r) {
                 
             },
@@ -291,7 +267,7 @@
             type : "POST",
             "serverSide" : true,
             url : "./eliminarSubTema",
-            data: {"_token": "{{ csrf_token() }}", "id": id},
+            data: {"_token": "{{ csrf_token() }}", "id": id, "capitulo": document.getElementById('tituloCapitulo').innerText},
             success : function(r) {
 
             },
@@ -333,16 +309,6 @@
             })
         });
 
-        window.onload = function () {
-            var toastTrigger = document.getElementById('btnBorrar')
-            var toastLiveExample = document.getElementById('liveToast')
-            if (toastTrigger) {
-            toastTrigger.addEventListener('click', function () {
-                var toast = new bootstrap.Toast(toastLiveExample)
-                    toast.show()
-                })
-            }
-        }
         window.addEventListener('beforeunload', function (e) {
             if(bandera2 == 1){
                 e.preventDefault();
@@ -350,36 +316,25 @@
             }
         });
 </script>
-    
-</head>
 
-<body>
-<div class="container">
+
+
+<div class="container contenidoContainer">
+    <div class="col seccion_" id="titulosApp">
+        <h2>Capitulo {{$capitulo->orden_capitulo}}.<span id="tituloCapitulo"> {{$capitulo->nombre_capitulo}}</span></h2>
+    </div>
     <br>
-    <h3>Capitulo {{$capitulo->orden_capitulo}}. {{$capitulo->nombre_capitulo}}</h3>
-    <br>
-    @if (session('status'))
-        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-            </symbol>
-        </svg>
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-            <div>
-                {{ session('status') }}
-            </div>
-        </div>
-        <script>
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-            }, 2500);
-        </script>
-    @endif
-    <form action="{{ url('/fdinamico/guardarTemas') }}" id="formulario" method="POST">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+    </svg>
+    <form action="{{ url('/contenidoCapitulo/guardarTemas') }}" id="formulario" method="POST">
         {{ csrf_field() }}
+        <div id="liveAlertPlaceholder"></div>
         <div class="accordion3" id="accordionExample34">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
@@ -420,11 +375,9 @@
         </script>
         <div class="row justify-content-start">
             <div class="">
-                <button type="button" class="btn btn-success btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
+                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
             </div>
         </div>
-        
-        <!-- El id="canciones" indica que la función de JavaScript dejará aquí el resultado -->
 
         <div class="accordion" id="accordionExample">
             
@@ -449,16 +402,16 @@
             @endforeach
         @endforeach
         <br>
-        <input type="submit" class="btn btn-warning" value="Guardar" onclick="bandera2 = 0">
+        <button type="submit" onclick="bandera2 = 0" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Capitulo</button>
     </form>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
+                <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Eliminar tema/subtema</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
             </div>
             <div class="modal-body">
                 <p id="tituloCap"></p>
@@ -475,16 +428,29 @@
     <br>
 </div>
 
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-  <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-        <div class="toast-body">
-            Se elimino de forma exitosa!
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-  </div>
-</div>
+<script>
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 
-</body>
-</html>
+const alert = (message, type, icon) => {
+    const wrapper = document.createElement('div')
+        var icon_f;
+        if (icon == 2) {
+            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
+        } else if(icon == 1){
+            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
+        }
+        wrapper.innerHTML = 
+            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
+            icon_f+
+            `   <div>${message}</div>`+
+            '</div>';
+            alertPlaceholder.append(wrapper)
+            window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+            }, 2500);
+    }
+</script>
+
+@endsection
