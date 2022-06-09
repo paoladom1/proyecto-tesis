@@ -1,11 +1,10 @@
-@extends('plantillas.navdirector')
+@extends('plantillas.nav')
 @section('content')
 <style>
 
 .mPrincipal{
     border: #003C71 1px solid;
     background-color: #e3eef5;
-    border-top: #003C71 7px solid;
 }
 
 .card-menu{
@@ -37,27 +36,31 @@
         <div class="row">
             <div class="container mPrincipal">
                 <div class="row " style="background-color:#003C71; border-bottom:solid #E87B2A 8px;">
-                    <center><h1 class="mt-3 mb-3" style="color: #e3eef5; font-size: 2em">Menu principal</h1></center>
+                    <center><h1 class="mt-3 mb-3" style="color: #e3eef5; font-size: 2em">MENU PRINCIPAL</h1></center>
                 </div>
                 <center>
-                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
-                    <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                            <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/filtro') }}" style="text-decoration: none; color: black;"><h5 class="card-title">Grupos de tesis</h5></a>
-                            </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
+                        <div class="col">
+                            <a href="{{ url('/externo') }}" style="text-decoration: none; color: black;">
+                                <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                                    <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">ASESORES Y LECTORES EXTERNOS</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url('/filtro') }}" style="text-decoration: none; color: black;">
+                                <div class="card m-3 position-static card-menu" style="width: 18rem;" >
+                                    <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">GRUPOS DE TRABAJO DE GRADUACIÓN</h5>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                            <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
-                            <div class="card-body body-card mt-2">
-                                <a href="{{ url('/lector') }}" style="text-decoration: none; color: black;"><h6 class="card-title">Asesores y Lectores Externos</h6></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 </center>
             </div>
         </div>

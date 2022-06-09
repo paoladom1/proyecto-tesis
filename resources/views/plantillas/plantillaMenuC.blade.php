@@ -76,22 +76,21 @@
                         </a>
                     </div>
 
+                    <!------------------------------------------------------------------------------------------------------>
+
+                    <div class="col">
+                        <a href="{{ url('/bitacora') }}" style="text-decoration: none; color: black;">
+                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                                <img src="img/fondoCard7.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                <div class="card-body body-card mt-2">
+                                    <h5 class="card-title">BITACORA</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
                 </center>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="container" style="background-color: #e3eef5; border:1px #003C71 solid; box-shadow: 5px 7px 7px gray;margin-top: 30px;">
-                <div class="row" id="titulosApp" style="padding: 0;">
-                    <h3 class="mt-3">ULTIMOS CAMBIOS</h3>
-                </div>
-                <div class="list-group list-group-horizontal justify-content-center m-3">
-                    <input type="text" class="list-group-item" placeholder="Seccion" readonly/>
-                    <input type="text" class="list-group-item" placeholder="Autor" readonly/>
-                    <input type="text" class="list-group-item" placeholder="Fecha" readonly/>
-                    <button class="btn btn-success" style="color: white;"><i class="bi bi-eye"></i> Ver</button>
-                </div>
             </div>
         </div>
 
@@ -103,7 +102,7 @@
     <form action="{{ url('/crearDocumento') }}" method="post">
         {{ csrf_field() }}
         <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                     <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;"><i class="bi bi-filetype-doc"></i> Creación del documento</h5>
@@ -172,13 +171,13 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="background-color: #003C71">Siguiente</button>
+                    <button type="button" class="btn btn-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="background-color: #003C71">Siguiente <i class="bi bi-arrow-right-circle"></i></button>
                 </div>
                 </div>
             </div>
         </div>
         <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71">
                     <h5 class="modal-title" id="exampleModalToggleLabel2" style="color: white;">Confirmar</h5>
@@ -196,8 +195,8 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Atras</button>
-                    <button class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">Crear</button>
+                    <button type="button" class="btn btn-danger" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i class="bi bi-arrow-left-circle"></i> Atras</button>
+                    <button class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">Crear <i class="bi bi-folder2"></i></button>
                 </div>
                 </div>
             </div>
@@ -277,5 +276,6 @@
 </script>
 
 @endsection
+
 
 

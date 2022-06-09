@@ -53,6 +53,7 @@
     }    
 </style>
 <script>
+    var contAlert = 0;
     var contadorGlobal = 0;   
     var contadorTema = 0; 
     var numeracionTres;
@@ -120,7 +121,7 @@
             ordenarSubTemas(numeracionTres);
         } 
         ordenarTemas();
-        alert('Se eliminó con exito!', 'success', 1);
+        alertPersonalizado('Se eliminó con exito!', 'success', 1, ++contAlert);
     }
 
     function temasSubTemas(a) {
@@ -375,7 +376,7 @@
         </script>
         <div class="row justify-content-start">
             <div class="">
-                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
+                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1" style="background-color: #E87B2A; border:1px solid #E87B2A; color:white;"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
             </div>
         </div>
 
@@ -427,30 +428,5 @@
     
     <br>
 </div>
-
-<script>
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
-const alert = (message, type, icon) => {
-    const wrapper = document.createElement('div')
-        var icon_f;
-        if (icon == 2) {
-            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
-        } else if(icon == 1){
-            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
-        }
-        wrapper.innerHTML = 
-            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
-            icon_f+
-            `   <div>${message}</div>`+
-            '</div>';
-            alertPlaceholder.append(wrapper)
-            window.setTimeout(function() {
-                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                        $(this).remove(); 
-                    });
-            }, 2500);
-    }
-</script>
 
 @endsection

@@ -18,6 +18,8 @@ use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
 use App\Models\Estudiante;
 use App\Models\Bitacora;
+use App\Models\BitacoraSeccion;
+use App\Models\BitacoraModificacion;
 
 class EstudianteController extends Controller
 {
@@ -41,6 +43,7 @@ class EstudianteController extends Controller
             1 -> Agregó
             2 -> Modificó
             3 -> Eliminó
+            4 -> Creación
 
             - BITACORA_SECCIÓN -
             1 -> Agradecimiento
@@ -63,7 +66,6 @@ class EstudianteController extends Controller
         $bitacora->bitacora_seccion_id = $bitacora_seccion;
         $bitacora->bitacora_modificacion_id = $bitacora_modificacion;
         $bitacora->save();
-        // $this->bitacora('Prueba de bitacora', 3, 1);
     }
 
     //-------------------------------------Creación de capitulos-----------------------------------
@@ -627,5 +629,32 @@ class EstudianteController extends Controller
             $this->bitacora('Se ha eliminado la dedicatoria de '.$nombre, 1, 3);
         }
         return $mensaje;
+    }
+
+    //-------------------------------------Bitacora de cambios-----------------------------------
+
+    public function frmBitacora(Request $request)
+    {
+        $bitacora = Bitacora::orderBy("fecha_modificacion", 'desc')->join('estudiante','estudiante_id', '=', 'estudiante.id')->selectRaw('*, bitacora.id as idBitacora, estudiante.id as idEstudiante')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->Where('bitacora_modificacion_id', 'like', '%'.$request->get('accion').'%')->Where('bitacora_seccion_id', 'like', '%'.$request->get('seccion').'%')->Where('estudiante_id', 'like', '%'.$request->get('miembro').'%')->with('estudiante')->with("bitacora_seccion")->with("bitacora_modificacion")->paginate(10);
+        
+        $bitacoraM = BitacoraModificacion::get();
+        $bitacoraS = BitacoraSeccion::get();
+        $integrantes = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        return view('formulariosDoc.bitacora', array(
+            'bitacora' => $bitacora,
+            'acciones' => $bitacoraM,
+            'secciones' => $bitacoraS,
+            'miembros' => $integrantes,
+            'accion_id' => $request->get('accion'),
+            'seccion_id' => $request->get('seccion'),
+            'miembro_id' => $request->get('miembro')
+        ));
+    }
+
+    public function buscarInformacion(Request $request)
+    {
+        $id = $request->input('id');
+        $bitacora = Bitacora::with('estudiante')->with("bitacora_seccion")->with("bitacora_modificacion")->where('id', '=', $id)->first();
+        return $bitacora;
     }
 }

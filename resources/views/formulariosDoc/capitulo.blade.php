@@ -2,6 +2,7 @@
 @section('content')
 
 <script>
+    var contAlert = 0;
     function modificarCapitulo(i) {
         let elements = document.getElementsByName("tituloN");
         let elements2 = document.getElementsByName("idCapitulos");
@@ -64,7 +65,7 @@
                         <td class="align-middle" name="titulacion"><span name="numCapitulo">Capitulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" onclick="window.location.href='/contenidoCapitulo/${idC}'" class="btn btn-warning" style="color: white; background-color: #003C71;">Modificar contenido</button>
+                            <button type="button" onclick="window.location.href='/contenidoCapitulo/${idC}'" class="btn btn-primary">Modificar contenido</button>
                             <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar titulo</button>
                             <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capitulo</button>
                         </div>
@@ -84,7 +85,7 @@
                 {
                     ordenarCapitulos();
                     modificarOrden();
-                    alert("Se cambió el orden con exito!", 'success', 1);
+                    alertPersonalizado("Se cambió el orden con exito!", 'success', 1, ++contAlert);
                 }
             }
         );
@@ -94,7 +95,7 @@
         let nombre = $('#nombreCap').val();
         if(id == ""){
             if (nombre.trim() == "") {
-                alert("No puede quedar el campo vacio!", 'danger', 2);
+                alertPersonalizado("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
             } else{
                 $.ajax({
                     type : "POST",
@@ -112,11 +113,11 @@
                         console.log(data);
                     }
                 })
-                alert("Se guardó el capitulo con exito!", 'success', 1);
+                alertPersonalizado("Se guardó el capitulo con exito!", 'success', 1, ++contAlert);
             }
         } else{
             if (nombre.trim() == "") {
-                alert("No puede quedar el campo vacio!", 'danger', 2);
+                alertPersonalizado("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
             } else{
                 quitarModificar();
                 $.ajax({
@@ -135,7 +136,7 @@
                         console.log(data);
                     }
                 })
-                alert("Se modificó el capitulo con exito!", 'success', 1);
+                alertPersonalizado("Se modificó el capitulo con exito!", 'success', 1, ++contAlert);
             }
         }
     }
@@ -171,7 +172,7 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id},
                 success : function(r) {
                     guardarOrdenCapitulo();
-                    alert("Se eliminó el capitulo con exito!", 'success', 1);
+                    alertPersonalizado("Se eliminó el capitulo con exito!", 'success', 1, ++contAlert);
                 },
                 error : function(data) {
                     console.log(data);
@@ -239,8 +240,8 @@
     
     <div class="row justify-content-center">
         <div class="col-md-9">
-            <table class="table" style="background-color: white; border-radius: 5px;">
-                <thead>
+            <table class="table table-hover" style="background-color: white; border-radius: 5px;">
+                <thead class="encabezadoBitacora">
                     <tr>
                         <td></td>
                         <th scope="col">Nombre del capitulo</th>
@@ -250,12 +251,18 @@
                 <tbody id="tablaCapitulo">
                     @php
                         $cont = 0;
+                        $contCapitulos = 0;
                     @endphp
                     @foreach ($capitulos as $capitulo)
                         <script>
-                            seccion("<?php echo $capitulo->nombre_capitulo ?>", <?php echo $capitulo->id ?>);
+                            seccion("<?php ++$contCapitulos; echo $capitulo->nombre_capitulo ?>", <?php echo $capitulo->id ?>);
                         </script>
                     @endforeach
+                    @if ($contCapitulos == 0)
+                        <tr style="text-align: center">
+                            <td colspan="3">No hay datos disponibles</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -281,38 +288,15 @@
         </div>
     </div>
 </div>
-<script>
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
-const alert = (message, type, icon) => {
-    const wrapper = document.createElement('div')
-        var icon_f;
-        if (icon == 2) {
-            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
-        } else if(icon == 1){
-            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
-        }
-        wrapper.innerHTML = 
-            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
-            icon_f+
-            `   <div>${message}</div>`+
-            '</div>';
-            alertPlaceholder.append(wrapper)
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-            }, 2500);
-    }
-</script>
-    @if (session('status'))
+    
+@if (session('status'))
         <script>
-            alert('<?php echo session('status'); ?>', 'success', 1);
+            alertPersonalizado('<?php echo session('status'); ?>', 'success', 1, ++contAlert);
         </script>
     @endif
     @if (session('statusError'))
         <script>
-            alert('<?php echo session('statusError'); ?>', 'danger', 2);
+            alertPersonalizado('<?php echo session('statusError'); ?>', 'danger', 2, ++contAlert);
         </script>
     @endif
 @endsection

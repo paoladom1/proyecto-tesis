@@ -78,15 +78,15 @@ Route::post('/guardarDedicatoria', 'App\Http\Controllers\EstudianteController@sa
 Route::post('/eliminarDedicatoriaAgradecimiento', 'App\Http\Controllers\EstudianteController@deleteDedicatoriaAgradecimiento');
 Route::post('/cambiarEstado', 'App\Http\Controllers\EstudianteController@cambioEstado');
 
+// Bitacora de cambios
+Route::get('/bitacora', 'App\Http\Controllers\EstudianteController@frmBitacora');
+Route::post('/obtenerInfo', 'App\Http\Controllers\EstudianteController@buscarInformacion');
+
 // Director de carrera
 Route::get('/menudirector', "App\Http\Controllers\DirectorController@menuDirector");
-Route::get('/lector', function () {
-    return view('director.lector');
-});
-
-Route::get('/lectorv', function () {
-    return view('director.lectorvergon');
-});
+Route::get('/externo', "App\Http\Controllers\DirectorController@frmLectorAsesor");
+Route::post('/registrarLA', 'App\Http\Controllers\DirectorController@registrarLA');
+Route::post('/mostrarDato', 'App\Http\Controllers\DirectorController@mostrarDato');
 
 // Perfil de usuario
 Route::get('/perfil', 'App\Http\Controllers\GeneralController@mostrarPerfil');

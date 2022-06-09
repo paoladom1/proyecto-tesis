@@ -229,6 +229,7 @@
     </div>
 
 <script>    
+    var contAlert = 0; 
     const tabs = document.querySelector(".wrapper");
     const tabButton = document.querySelectorAll(".tab-button");
     const contents = document.querySelectorAll(".content");
@@ -247,29 +248,6 @@
             const element = document.getElementById(id);
             element.classList.add("active");
         }
-    }
-
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
-    const alert = (message, type, icon) => {
-        const wrapper = document.createElement('div')
-        var icon_f;
-        if (icon == 2) {
-            icon_f = `   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`  
-        } else if(icon == 1){
-            icon_f = '   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>'
-        }
-        wrapper.innerHTML = 
-            `<div class="alert alert-${type} d-flex align-items-center" role="alert">`+
-            icon_f+
-            `   <div>${message}</div>`+
-            '</div>';
-            alertPlaceholder.append(wrapper)
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-            }, 2500);
     }
 
     function guardarDA(tipo, idEtiqueta) {
@@ -299,7 +277,7 @@
             data: {"_token": "{{ csrf_token() }}", "id": id, "idEstudiante": idE, "contenido": contenido, "autor": autor, "opcional": opcional},
             success : function(r) {
                 if (r['code'] == 200) {
-                    alert(r['mensaje'], 'success', 1);   
+                    alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                     document.getElementById('idDA'+idEtiqueta).setAttribute("value", r['id']);
                     document.getElementById('btnEliminarDA'+idEtiqueta).disabled = false;
                     if (tipo == 1) {
@@ -308,7 +286,7 @@
                         document.getElementById('opcional2').disabled = false;
                     }
                 } else{
-                    alert(r['mensaje'], 'danger', 2);
+                    alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                 }
             },
             error : function(data) {
@@ -352,7 +330,7 @@
             data: {"_token": "{{ csrf_token() }}", "id": id, "tipo": tipo, "nombre": nombreIntegrante},
             success : function(r) {
                 if (r['code'] == 200) {
-                    alert(r['mensaje'], 'success', 1);   
+                    alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                     document.getElementById('idDA'+idEtiqueta).setAttribute("value", '');
                     document.getElementById('btnEliminarDA'+idEtiqueta).disabled = true;
                     CKEDITOR.instances['contenido'+idEtiqueta].setData("");
@@ -369,7 +347,7 @@
                         }
                     }
                 } else{
-                    alert(r['mensaje'], 'danger', 2);
+                    alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                 }
             },
             error : function(data) {
@@ -398,9 +376,9 @@
             data: {"_token": "{{ csrf_token() }}", "opcional": opcional, "tipo": tipo},
             success : function(r) {
                 if (r['code'] == 200) {
-                    alert(r['mensaje'], 'success', 1);   
+                    alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                 } else{
-                    alert(r['mensaje'], 'danger', 2);
+                    alertPersonalizado(r['mensaje'], 'danger', 2, ++contAlert);
                 }
             },
             error : function(data) {

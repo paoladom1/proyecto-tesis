@@ -7,9 +7,7 @@ use PhpOffice\PhpWord\Style\Language;
 use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
 
-use App\Models\SeccionCapitulo;
-use App\Models\ContenidoSeccionCapitulo;
-use App\Models\SubcontenidoSeccionCapitulo;
+use App\Models\Externo;
 
 class DirectorController extends Controller
 {
@@ -22,6 +20,64 @@ class DirectorController extends Controller
     {
         return view('plantillas.plantillaMenuDirector');
     }
+
+    //-------------------------------Asesores y lectores externos----------------------------
+
+    public function frmLectorAsesor(Request $request)
+    {
+        /*
+            0 -> asesores
+            1 -> lectores
+        */
+
+        $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->orderBy('id', 'desc')->paginate(6);
+        $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->orderBy('id', 'desc')->paginate(6);
+
+        if ($request->ajax()) {
+            return response()->json(view($request->get('vista'), array(
+                "asesores" => $asesores,
+                "lectores" => $lectores
+            ))->render());
+        }
+
+        return view('director.externo', array(
+            "asesores" => $asesores,
+            "lectores" => $lectores, 
+            "pagAsesores" => $asesores->links('pagination::bootstrap-4'),
+            "pagLectores" => $lectores->links('pagination::bootstrap-4')
+        ));
+    }
+
+    public function registrarLA(Request $request)
+    {
+        $id = $request->input('id');
+        if ($id != "") {
+            $externo = Externo::findOrFail($id);
+            $externo->nombre = $request->input('nombre');
+            $externo->apellido = $request->input('apellido');
+            $externo->correo = $request->input('correo');
+            $externo->descripcion = $request->input('descripcion');
+            $externo->rol_externo = $request->input('rol');
+            $externo->departamento_unidad_id = 8;
+            $externo->update();
+        } else{
+            $externo = new Externo();
+            $externo->nombre = $request->input('nombre');
+            $externo->apellido = $request->input('apellido');
+            $externo->correo = $request->input('correo');
+            $externo->descripcion = $request->input('descripcion');
+            $externo->rol_externo = $request->input('rol');
+            $externo->departamento_unidad_id = 8;
+            $externo->save();
+        }
+    }
+
+    public function mostrarDato(Request $request)
+    {
+        $externo = Externo::with('departamento')->where('id', "=", $request->id)->first();
+        return $externo;
+    }
+
     //-------------------------------Filtros de asesores y directores de trabajo de graduación----------------------------
 
     public function formularioFiltro()

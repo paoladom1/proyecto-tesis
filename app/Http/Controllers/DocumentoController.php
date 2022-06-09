@@ -22,6 +22,9 @@ use App\Models\ContenidoSeccionCapitulo;
 use App\Models\SubcontenidoSeccionCapitulo;
 use App\Models\SeccionAgradecimiento;
 use App\Models\SeccionDedicatoria;
+use App\Models\Bitacora;
+use App\Models\BitacoraSeccion;
+use App\Models\BitacoraModificacion;
 
 class DocumentoController extends Controller
 {
@@ -44,7 +47,41 @@ class DocumentoController extends Controller
         return $nombre;
     }
 
+    public function bitacora($descripcion, $bitacora_seccion, $bitacora_modificacion)
+    {
+        /*
+            - BITACORA_MODIFICACION -
+            1 -> Agregó
+            2 -> Modificó
+            3 -> Eliminó
+            4 -> Creación
+
+            - BITACORA_SECCIÓN -
+            1 -> Agradecimiento
+            2 -> Dedicatoria
+            3 -> Resumen
+            4 -> Siglas
+            5 -> Abreviaciones
+            6 -> Nomenclaturas
+            7 -> Capítulo
+            8 -> Glosario
+            9 -> Referencia
+            10 -> Creación de documento
+        */
+        $grupo = auth()->guard('admin')->user()->id;
+        $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
+
+        $bitacora = New Bitacora();
+        $bitacora->descripcion = $descripcion;
+        $bitacora->estudiante_id = $estudiante->id;
+        $bitacora->bitacora_seccion_id = $bitacora_seccion;
+        $bitacora->bitacora_modificacion_id = $bitacora_modificacion;
+        $bitacora->save();
+    }
+
     public function formularioModal(){
+        // -----------------------------------------Creación de documento-----------------------------------------
+
         /*
             -1 => Significa que es una sección obligatoria parte 1.
             -2 => Significa que es una sección obligatoria parte 2.
@@ -139,9 +176,14 @@ class DocumentoController extends Controller
             $array[$cont][0] = 'Referencias'; $array[$cont++][1] = '-2'; 
         }
 
+        // -----------------------------------------Bitacora-----------------------------------------
+
+        $bitacora = Bitacora::with('estudiante')->with("bitacora_seccion")->with("bitacora_modificacion")->paginate(10);
+
         return view('plantillas.plantillaMenuC', array(
             'secciones' => $array, 
-            'tema' => mb_strtoupper($tema_graduacion->tema)
+            'tema' => mb_strtoupper($tema_graduacion->tema),
+            'bitacora' => $bitacora
         ));
     }
 
@@ -362,6 +404,7 @@ class DocumentoController extends Controller
                 }
             }
         }
+        return 'Capitulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo;
     }
 
     private function seccionResumen($documento, $documentoTodo){
@@ -418,6 +461,56 @@ class DocumentoController extends Controller
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $referencia[0]->contenido, false, false);
     }
 
+    private function seccionAgradecimiento($documento){
+        $agradecimiento = SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $section = $documento->addSection(DocumentoController::margenes());
+        $estiloTextoTitulo = $section->addTextRun([
+            "name" => "Times New Roman",
+            "size" => 11,
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+            "bold" => true,
+        ]);
+        $estiloTextoTitulo->addText(mb_strtoupper('Agradecimientos'), ["bold" => true]);
+        $section->addTextBreak(1);
+
+        foreach ($agradecimiento as $dato) {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($section, $dato->contenido, false, false);
+            $section->addTextBreak(1);
+            $estiloTexto = $section->addTextRun([
+                "name" => "Times New Roman",
+                "size" => 11,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT
+            ]);
+            $estiloTexto->addText($dato->autor);
+            $section->addPageBreak(1);
+        }
+    }
+
+    private function seccionDedicatoria($documento){
+        $dedicatoria = SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
+        $section = $documento->addSection(DocumentoController::margenes());
+        $estiloTextoTitulo = $section->addTextRun([
+            "name" => "Times New Roman",
+            "size" => 11,
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+            "bold" => true,
+        ]);
+        $estiloTextoTitulo->addText(mb_strtoupper('Dedicatorias'), ["bold" => true]);
+        $section->addTextBreak(1);
+
+        foreach ($dedicatoria as $dato) {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($section, $dato->contenido, false, false);
+            $section->addTextBreak(1);
+            $estiloTexto = $section->addTextRun([
+                "name" => "Times New Roman",
+                "size" => 11,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT
+            ]);
+            $estiloTexto->addText($dato->autor);
+            $section->addPageBreak(1);
+        }
+    }
+
     public function seccionesDocumento(Request $request){
         $resumen = SeccionResumen::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $abreviatura = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 1)->get();
@@ -425,7 +518,8 @@ class DocumentoController extends Controller
         $sigla = SeccionAbreviaturaNomenclaturaSigla::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->where('tipo_abreviatura_id', '=', 2)->get();
         $referencia = SeccionReferencia::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $capitulo = SeccionCapitulo::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
-
+        $seccionesCrear = "";
+        $banderaSeccion = 0;
         $i = 0;
         $documento = DocumentoController::crearDocumento();
 
@@ -440,27 +534,35 @@ class DocumentoController extends Controller
             if ($dato == -1) {
                 DocumentoController::portada($documento);
                 DocumentoController::segundo($documento);
+                $seccionesCrear = $seccionesCrear.'- Portada y Segunda Portada\\n';
             } else if($dato == -2){ 
-                // Agradecimiento
+                DocumentoController::seccionAgradecimiento($documento);
+                $seccionesCrear = $seccionesCrear.'- Agradecimiento\\n';
             } else if($dato == -3){ 
-                // Dedicatoria
+                DocumentoController::seccionDedicatoria($documento);
+                $seccionesCrear = $seccionesCrear.'- Dedicatoria\\n';
             } else if($dato == -4){ 
                 DocumentoController::seccionResumen($documento, $documentoTodo);
+                $seccionesCrear = $seccionesCrear.'- Resumen\\n';
             } else if($dato == -5){ 
                 DocumentoController::indice($documento);
+                $seccionesCrear = $seccionesCrear.'- Indice\\n';
             } else if($dato == -6){ 
                 DocumentoController::seccionSiglas($documento);
+                $seccionesCrear = $seccionesCrear.'- Siglas\\n';
             } else if($dato == -7){ 
                 DocumentoController::seccionAbreviaturas($documento);
+                $seccionesCrear = $seccionesCrear.'- Abreviaciones\\n';
             } else if($dato == -8){ 
                 DocumentoController::seccionNomenclaturas($documento);
+                $seccionesCrear = $seccionesCrear.'- Nomenclaturas\\n';
             }
             ++$i;
         }
         $i = 0;
         while (isset($_REQUEST['seccion2'][$i])) {
             $dato = $request->input('seccion2')[$i];
-            DocumentoController::seccion($documento, $dato, $i+1, $documentoTodo);
+            $seccionesCrear = $seccionesCrear.'- '.DocumentoController::seccion($documento, $dato, $i+1, $documentoTodo).'\\n';
             ++$i;
         }
         $i = 0;
@@ -468,11 +570,19 @@ class DocumentoController extends Controller
             $dato = $request->input('seccion3')[$i];
             if ($dato == -9) {
                 DocumentoController::seccionGlosario($documento);
+                $seccionesCrear = $seccionesCrear.'- Glosario\\n';
             } else if($dato == -10){ 
                 DocumentoController::seccionReferencia($documento);
+                $seccionesCrear = $seccionesCrear.'- Referencias';
+                $banderaSeccion = 1;
             } 
             ++$i;
         }
+        if ($banderaSeccion == 0) {
+            $seccionesCrear = rtrim($seccionesCrear, "\\n");
+        }
+        $seccionesCrear = 'Las secciones creadas fueron:\\n\\n'.$seccionesCrear;
+        $this->bitacora($seccionesCrear, 10, 4);
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment;filename="'.$this->obtenerGrupoTema().'.docx"');
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');
