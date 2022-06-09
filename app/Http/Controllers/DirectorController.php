@@ -8,6 +8,9 @@ use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 use App\Models\Externo;
+use App\Models\ConfiguracionSistema;
+use App\Models\GrupoTrabajo;
+use App\Models\Estudiante;
 
 class DirectorController extends Controller
 {
@@ -42,9 +45,7 @@ class DirectorController extends Controller
 
         return view('director.externo', array(
             "asesores" => $asesores,
-            "lectores" => $lectores, 
-            "pagAsesores" => $asesores->links('pagination::bootstrap-4'),
-            "pagLectores" => $lectores->links('pagination::bootstrap-4')
+            "lectores" => $lectores
         ));
     }
 
@@ -80,7 +81,7 @@ class DirectorController extends Controller
 
     //-------------------------------Filtros de asesores y directores de trabajo de graduación----------------------------
 
-    public function formularioFiltro()
+    public function formularioGruposTrabajo(Request $request)
     {
         $cont = 0;
         $carreras[$cont][0] = "Ingenieria Informática"; $carreras[$cont++][1] = '1'; 
@@ -89,8 +90,22 @@ class DirectorController extends Controller
         $carreras[$cont][0] = "Licenciatura en Mercadeo"; $carreras[$cont++][1] = '2'; 
         $carreras[$cont][0] = "Licentiatura en Comunicación Social"; $carreras[$cont++][1] = '2';
         $carreras[$cont][0] = "Técnico en Mercadeo"; $carreras[$cont++][1] = '2';
-        return view('director.filtro', array(
-            'docentes' => $carreras
+        
+        $grupos = GrupoTrabajo::with('estudiante')->paginate(1);
+        $configuraciones = ConfiguracionSistema::first();
+
+        if ($request->ajax()) {
+            return response()->json(view('director.tableGrupos', array(
+                'docentes' => $carreras,
+                'grupos' => $grupos,
+                'configuraciones' => $configuraciones
+            ))->render());
+        }
+        
+        return view('director.gruposTrabajo', array(
+            'docentes' => $carreras,
+            'grupos' => $grupos,
+            'configuraciones' => $configuraciones
         ));
     }
 

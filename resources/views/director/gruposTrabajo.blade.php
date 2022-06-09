@@ -1,13 +1,5 @@
 @extends('plantillas.nav')
 @section('content')
-{{--<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title>Filtros</title>
-</head>  --}}
 
 <style>
     .dropbtn {
@@ -66,50 +58,6 @@
    
     <br>
     <div class="container">
-        <!--<form action="{{ url('/asignarDocente') }}" method="post">
-            {{ csrf_field() }}
-            <label class="form-label">Asesor</label>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="dropdown">
-                        <button onclick="myFunction(1)" type="button" id="seleccionar1" class="btn btn-warning dropdown-toggle" style="width: 100%;">Seleccionar</button>
-                        <div id="myDropdown1" class="dropdown-content">
-                            <div class="scrollable-menu">
-                                <a href="#" onclick="eliminarLector(1); myFunction(1)">Quitar Elección</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#" onclick="cambiarBoton(1, 1)">UCA</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal2" href="#" onclick="cambiarBoton(2, 1)">Externo</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <input type="text" readonly class="form-control" id="nombresD" name="nombresD" aria-label="Username" aria-describedby="basic-addon1">
-                    <input type="text" readonly style='display: none' class="form-control" id="idD" name="idD" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <br>
-            <label class="form-label">Lector</label>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="dropdown">
-                        <button onclick="myFunction(2)" type="button" id="seleccionar2" class="btn btn-warning dropdown-toggle" style="width: 100%;">Seleccionar</button>
-                        <div id="myDropdown2" class="dropdown-content">
-                            <div class="scrollable-menu"> 
-                                <a href="#" onclick="eliminarLector(2); myFunction(2)">Quitar Elección</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#" onclick="cambiarBoton(3, 2)">UCA</a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal2" href="#" onclick="cambiarBoton(4, 2)">Externo</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <input type="text" readonly class="form-control" id="nombresL" name="nombresL" aria-label="Username" aria-describedby="basic-addon1">
-                    <input type="text" readonly style='display: none' class="form-control" id="idL" name="idL" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <br>
-            <input type="submit" value="Guardar" class="btn btn-success">
-        </form>-->
 
     <!--------------------------------------------------Modal para Asesor o Lector UCA----------------------------------------->
 
@@ -248,16 +196,24 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
-                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Crear Grupo</h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Grupo de trabajo de graduación</h5>
                     <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" style="color: white"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col">
+                            <div class="form-check form-switch form-check-reverse">
+                                <input class="form-check-input" value="1" name="opcional" type="checkbox" id="opcional">
+                                <label class="form-check-label" for="flexSwitchCheckReverse">Prorroga</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
                         <div class="col-md-6">
-                             
                             <div class="form-group form-floating">
                                 <input type="text" id="tema" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Ingrese el tema de trabajo de graduacion">
-                                <label for="tema">Tema de trabajo de graduacion</label>
+                                <label for="tema">Tema de trabajo de graduación</label>
                             </div>
                             <br>
                             <label>Asesor</label> 
@@ -307,7 +263,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <a href="" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal45">Asignar estudiantes</a>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal45">Asignar estudiantes</button>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -334,39 +290,35 @@
     <!-- Pantalla de grupos de tesis CRUD -->
 
     <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px;">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Tema de Tesis</th>
-                <th scope="col">Numero de integrantes</th>
-                <th scope="col">Acciones</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Proyecto para el desarrollo de plantillas para documentos de tesis</td>
-                <td>4</td>
-                <td><button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="asignarEstudiante()" style="color: white">Editar</button>{{--  <button class="btn btn-danger ms-1" onclick="">Eliminar</button>--}}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
+        <div id="tablaGruposContainer">
+            <table class="table table-hover align-middle" id="tablaGrupos">
+                <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px;">
+                    <tr>
+                        <th scope="col">Tema del trabajo de graduación</th>
+                        <th scope="col">Numero de integrantes</th>
+                        <th scope="col">Acciones</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($grupos as $dato)
+                        <tr>
+                            <td style="width: 60%">{{$dato->tema}}</td>
+                            @if ($configuraciones->numero_integrantes == count($dato->estudiante))
+                                <td style="width: 30%">{{count($dato->estudiante)}} (Lleno)</td>
+                            @else
+                                <td style="width: 30%">{{count($dato->estudiante)}}</td>
+                            @endif
+                            <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="registrarGrupo(<?php echo $dato->id ?>)" style="color: white">Editar</button>{{--  <button class="btn btn-danger ms-1" onclick="">Eliminar</button>--}}</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div id="paginacionGrupos">
+                {{ $grupos->links('pagination::bootstrap-4') }}
+            </div>
+        </div>
     </div>
     <div class="row d-flex flex-row-reverse mt-3">
         <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: 0px;" ><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
@@ -470,9 +422,32 @@
         </div>
     </div>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
+    var paginacionActual = 1;
+    const grupos = (page) => {
+        $.ajax({
+            type : "GET",
+            "serverSide" : true,
+            url : "./grupoTrabajo",
+            data: { "page": page},
+            dataType: 'json',
+            success : function(r) {
+                $("#tablaGruposContainer").html(r);
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
+    }
+
+    $(document).on('click', '#paginacionGrupos .pagination a', function(e){
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        paginacionActual = page;
+        grupos(page);
+    })
+
     function filterTable() {
         var input, filter, ul, li, a, i;
         input = document.getElementById("buscadorTabla");

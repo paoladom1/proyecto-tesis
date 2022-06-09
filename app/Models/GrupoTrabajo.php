@@ -24,4 +24,9 @@ class GrupoTrabajo extends Model
     public function asesor_externo(){
         return $this -> belongsTo('App\Models\Externo', 'asesor_externo_id');
     }
+
+    public function estudiante()
+    {
+        return $this -> hasMany('App\Models\Estudiante');        
+    }
 }

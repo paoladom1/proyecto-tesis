@@ -584,3 +584,8 @@ legend{
 #tablaAsesor, #tablaLector{
     text-align: center;
 }
+
+/*---------------------Grupos de trabajo------------------*/
+#tablaGrupos{
+    text-align: center;
+}

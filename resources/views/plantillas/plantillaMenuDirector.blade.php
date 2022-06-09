@@ -51,7 +51,7 @@
                             </a>
                         </div>
                         <div class="col">
-                            <a href="{{ url('/filtro') }}" style="text-decoration: none; color: black;">
+                            <a href="{{ url('/grupoTrabajo') }}" style="text-decoration: none; color: black;">
                                 <div class="card m-3 position-static card-menu" style="width: 18rem;" >
                                     <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">

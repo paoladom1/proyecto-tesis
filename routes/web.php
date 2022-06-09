@@ -13,30 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Inicio
 Route::get('/', "App\Http\Controllers\Auth\LoginController@showLogin");
 Route::post('login', 'App\Http\Controllers\Auth\LoginController@login')->name('login');
 Route::get('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
-/*Route::get('/menu', function () {
-    return view('plantillas.plantillaMenuC');
-});*/
+// Perfil de usuario
+Route::get('/perfil', 'App\Http\Controllers\GeneralController@mostrarPerfil');
+Route::post('/cambiarDatos', 'App\Http\Controllers\GeneralController@cambiarDatos');
+Route::post('/descartar', 'App\Http\Controllers\GeneralController@descartandoCambios');
 
+// ----------------------------------- Estudiantes o grupos de trabajo -----------------------------------
 Route::get('/menu', 'App\Http\Controllers\DocumentoController@formularioModal');
-
-Route::get('/navChino', function(){
-    return view('plantillas.maintemplate');
-});
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
-
-// Filtros de asesores y directores de trabajo de graduación.
-Route::get('/filtro', 'App\Http\Controllers\DirectorController@formularioFiltro');
-Route::post('/filtroPost', 'App\Http\Controllers\DirectorController@filtro');
-Route::post('/filtroPost2', 'App\Http\Controllers\DirectorController@filtro2');
-Route::post('/asignarDocente', 'App\Http\Controllers\DirectorController@asignarD');
-Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 
 // Ventana donde se muestra la modal para crear documento
 Route::get('/secciones', 'App\Http\Controllers\DocumentoController@formularioModal');
@@ -82,13 +74,17 @@ Route::post('/cambiarEstado', 'App\Http\Controllers\EstudianteController@cambioE
 Route::get('/bitacora', 'App\Http\Controllers\EstudianteController@frmBitacora');
 Route::post('/obtenerInfo', 'App\Http\Controllers\EstudianteController@buscarInformacion');
 
-// Director de carrera
+// ----------------------------------- Director de carrera -----------------------------------
 Route::get('/menudirector', "App\Http\Controllers\DirectorController@menuDirector");
+
+// Seccion de lector o asesor externo
 Route::get('/externo', "App\Http\Controllers\DirectorController@frmLectorAsesor");
 Route::post('/registrarLA', 'App\Http\Controllers\DirectorController@registrarLA');
 Route::post('/mostrarDato', 'App\Http\Controllers\DirectorController@mostrarDato');
 
-// Perfil de usuario
-Route::get('/perfil', 'App\Http\Controllers\GeneralController@mostrarPerfil');
-Route::post('/cambiarDatos', 'App\Http\Controllers\GeneralController@cambiarDatos');
-Route::post('/descartar', 'App\Http\Controllers\GeneralController@descartandoCambios');
+// Grupos de trabajo de graduación
+Route::get('/grupoTrabajo', 'App\Http\Controllers\DirectorController@formularioGruposTrabajo');
+Route::post('/filtroPost', 'App\Http\Controllers\DirectorController@filtro');
+Route::post('/filtroPost2', 'App\Http\Controllers\DirectorController@filtro2');
+Route::post('/asignarDocente', 'App\Http\Controllers\DirectorController@asignarD');
+Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');

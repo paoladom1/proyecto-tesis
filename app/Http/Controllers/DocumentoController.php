@@ -281,7 +281,11 @@ class DocumentoController extends Controller
         }
 
         $section->addTextBreak(1);
-        $section->addText(mb_strtoupper($configuracion_sistema[0]->fecha_entrega), $estilo, 'portadaStyle');
+        if ($grupo_trabajo[0]->prorroga == 0) {
+            $section->addText(mb_strtoupper($configuracion_sistema[0]->fecha_entrega), $estilo, 'portadaStyle');   
+        } else if($grupo_trabajo[0]->prorroga == 1){
+            $section->addText(mb_strtoupper($configuracion_sistema[0]->fecha_prorroga), $estilo, 'portadaStyle');
+        }
         $section->addText("ANTIGUO CUSCATLÁN, EL SALVADOR, C.A.", $estilo, 'portadaStyle');
     }
 

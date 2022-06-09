@@ -71,7 +71,7 @@
                         <hr>
                     </li>
                     <li> <a href="{{ url('/externo') }}" style="font-size: 1.35em"><i class="fa-solid fa-address-card me-2"></i> Asesores y lectores</a> </li>
-                    <li><a href="{{ url('/filtro') }}" style="font-size: 1.35em"><i class="bi bi-people me-2"></i> Grupos de trabajo</a></li>
+                    <li><a href="{{ url('/grupoTrabajo') }}" style="font-size: 1.35em"><i class="bi bi-people me-2"></i> Grupos de trabajo</a></li>
                 </ul>
             @endif
         </div>
