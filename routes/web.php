@@ -84,7 +84,11 @@ Route::post('/mostrarDato', 'App\Http\Controllers\DirectorController@mostrarDato
 
 // Grupos de trabajo de graduación
 Route::get('/grupoTrabajo', 'App\Http\Controllers\DirectorController@formularioGruposTrabajo');
-Route::post('/filtroPost', 'App\Http\Controllers\DirectorController@filtro');
-Route::post('/filtroPost2', 'App\Http\Controllers\DirectorController@filtro2');
+Route::post('/filtroFacultad', 'App\Http\Controllers\DirectorController@filtroF');
+Route::post('/filtroDepartamento', 'App\Http\Controllers\DirectorController@filtroD');
+Route::post('/datosExterno', 'App\Http\Controllers\DirectorController@datosExterno');
+Route::post('/registrarGrupo', 'App\Http\Controllers\DirectorController@registrarGrupo');
+Route::post('/mostrarDatoGrupo', 'App\Http\Controllers\DirectorController@mostrarDatosGrupo');
+
 Route::post('/asignarDocente', 'App\Http\Controllers\DirectorController@asignarD');
 Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');

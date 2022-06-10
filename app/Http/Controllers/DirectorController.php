@@ -11,6 +11,9 @@ use App\Models\Externo;
 use App\Models\ConfiguracionSistema;
 use App\Models\GrupoTrabajo;
 use App\Models\Estudiante;
+use App\Models\Facultad;
+use App\Models\DepartamentoU;
+use App\Models\Empleado;
 
 class DirectorController extends Controller
 {
@@ -83,94 +86,150 @@ class DirectorController extends Controller
 
     public function formularioGruposTrabajo(Request $request)
     {
-        $cont = 0;
-        $carreras[$cont][0] = "Ingenieria Informática"; $carreras[$cont++][1] = '1'; 
-        $carreras[$cont][0] = "Ingenieria Civil"; $carreras[$cont++][1] = '1';
-        $carreras[$cont][0] = "Ingenieria Eléctrica"; $carreras[$cont++][1] = '1';
-        $carreras[$cont][0] = "Licenciatura en Mercadeo"; $carreras[$cont++][1] = '2'; 
-        $carreras[$cont][0] = "Licentiatura en Comunicación Social"; $carreras[$cont++][1] = '2';
-        $carreras[$cont][0] = "Técnico en Mercadeo"; $carreras[$cont++][1] = '2';
+        /*
+            0 -> asesores
+            1 -> lectores
+        */
         
         $grupos = GrupoTrabajo::with('estudiante')->paginate(1);
         $configuraciones = ConfiguracionSistema::first();
 
         if ($request->ajax()) {
             return response()->json(view('director.tableGrupos', array(
-                'docentes' => $carreras,
                 'grupos' => $grupos,
                 'configuraciones' => $configuraciones
             ))->render());
         }
+
+        $facultad = Facultad::get();
+        $departamento = DepartamentoU::where("facultad_id", "=", 1)->get();
+        $empleado = Empleado::where("departamento_unidad_id", "=", 8)->get();
+        $externo = Externo::where("departamento_unidad_id", "=", 8)->get();
         
         return view('director.gruposTrabajo', array(
-            'docentes' => $carreras,
+            'departamentos' => $departamento,
+            'facultades' => $facultad,
+            'idFacultad' => 1,
+            'idDepartamento' => 8,
+            'empleados' => $empleado,
+            'externos' => $externo,
             'grupos' => $grupos,
             'configuraciones' => $configuraciones
         ));
     }
 
-    public function filtro(Request $request)
+    public function filtroF(Request $request)
     {
-        $cont = 0;
-        $carreras[$cont][0] = "Ingenieria Informática"; $carreras[$cont++][1] = '1'; 
-        $carreras[$cont][0] = "Ingenieria Civil"; $carreras[$cont++][1] = '1';
-        $carreras[$cont][0] = "Ingenieria Eléctrica"; $carreras[$cont++][1] = '1';
-        $carreras[$cont][0] = "Licenciatura en Mercadeo"; $carreras[$cont++][1] = '2'; 
-        $carreras[$cont][0] = "Licentiatura en Comunicación Social"; $carreras[$cont++][1] = '2';
-        $carreras[$cont][0] = "Técnico en Mercadeo"; $carreras[$cont++][1] = '2';
-
-        $contFiltro = 0;
-        foreach ($carreras as $carrera) {
-            if ($carrera[1] == $request->input('id')) {
-                $filtro[$contFiltro][0] = $carrera[0]; $filtro[$contFiltro++][1] = $carrera[1];
-            } else if ($request->input('id') == 0) {
-                $filtro[$contFiltro][0] = $carrera[0]; $filtro[$contFiltro++][1] = $carrera[1];
-            }
+        $id = $request->input('id');
+        if ($id == -1) {
+            $departamento = DepartamentoU::where("facultad_id", "=", null)->get();
+        } else{
+            $departamento = DepartamentoU::where("facultad_id", "=", $id)->get();
         }
-        if (!isset($filtro)) {
-            $filtro = "";
-        } 
-        return $filtro;
+        return $departamento;
     }
 
-    public function filtro2(Request $request)
+    public function filtroD(Request $request)
     {
-        $cont = 0;
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Eduardo Alberto López Torres"; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Marielos Alejandra Najarro Alvarez"; $docentes[$cont++][1] = '2';
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '3';
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '4'; 
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '5';
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '6';
-        
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '1'; 
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '2';
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '3';
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '4'; 
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '5';
-        $docentes[$cont][0] = "Nombre ".$cont.", Apellido ".$cont; $docentes[$cont++][1] = '6';
-
-        $contFiltro = 0;
-        foreach ($docentes as $docente) {
-            if ($docente[1] == $request->input('id')) {
-                $filtro[$contFiltro][0] = $docente[0]; $filtro[$contFiltro++][1] = $docente[1];
-            } else if ($request->input('id') == 0) {
-                $filtro[$contFiltro][0] = $docente[0]; $filtro[$contFiltro++][1] = $docente[1];
-            }
-        }
-        if (!isset($filtro)) {
-            $filtro = "";
-        } 
-        return $filtro;
+        $id = $request->input('id');
+        $empleados = Empleado::where("departamento_unidad_id", "=", $id)->get();
+        return $empleados;
     }
+
+    public function datosExterno(Request $request)
+    {
+        $tipoExterno = $request->input('id');
+        $asesores = Externo::where('rol_externo', "=", $tipoExterno)->where("departamento_unidad_id", "=", 8)->orderBy('id', 'desc')->get();
+        return $asesores;
+    }
+
+    public function registrarGrupo(Request $request)
+    {
+        /*
+            0 -> UCA
+            1 -> Externo
+        */
+
+        $id = $request->input('id');
+        $tema = $request->input('tema');
+        $idAsesor = $request->input('idAsesor');
+        $tipoAsesor = $request->input('tipoAsesor');
+        $idLector = $request->input('idLector');
+        $tipoLector = $request->input('tipoLector');
+        $prorroga = $request->input('prorroga');
+
+        if ($id == "") {
+            $grupoTrabajo = new GrupoTrabajo();
+            $grupoTrabajo->tema = $tema;
+            if ($idAsesor != "") {
+                if ($tipoAsesor == 0) {
+                    $grupoTrabajo->asesor_interno_id = $idAsesor;
+                } else if ($tipoAsesor == 1) {
+                    $grupoTrabajo->asesor_externo_id = $idAsesor;
+                }
+            } 
+
+            if ($idLector != "") {
+                if ($tipoLector == 0) {
+                    $grupoTrabajo->lector_interno_id = $idLector;
+                } else if ($tipoLector == 1) {
+                    $grupoTrabajo->lector_externo_id = $idLector;
+                }
+            } 
+            
+            $grupoTrabajo->anio_inicio = "2022";
+            $grupoTrabajo->ciclo_inicio = "1";
+            $grupoTrabajo->prorroga = $prorroga;
+            $grupoTrabajo->save();
+
+            // Falta seccion de estudiantes, falta validacion de campos vacios de tema y asignacion de estudiantes
+            // Validacion cuando el lector o asesor externo cambia su rol, verificarlo en la tabla de grupo.
+        } else{
+            $grupoTrabajo = GrupoTrabajo::findOrFail($id);
+            $grupoTrabajo->tema = $tema;
+            if ($idAsesor != "") {
+                if ($tipoAsesor == 0) {
+                    $grupoTrabajo->asesor_interno_id = $idAsesor;
+                    $grupoTrabajo->asesor_externo_id = null;
+                } else if ($tipoAsesor == 1) {
+                    $grupoTrabajo->asesor_externo_id = $idAsesor;
+                    $grupoTrabajo->asesor_interno_id = null;
+                }
+            } else{
+                $grupoTrabajo->asesor_interno_id = null;
+                $grupoTrabajo->asesor_externo_id = null;
+            }
+
+            if ($idLector != "") {
+                if ($tipoLector == 0) {
+                    $grupoTrabajo->lector_interno_id = $idLector;
+                    $grupoTrabajo->lector_externo_id = null;
+                } else if ($tipoLector == 1) {
+                    $grupoTrabajo->lector_externo_id = $idLector;
+                    $grupoTrabajo->lector_interno_id = null;
+                }
+            } else{
+                $grupoTrabajo->lector_interno_id = null;
+                $grupoTrabajo->lector_externo_id = null;
+            }
+            
+            $grupoTrabajo->anio_inicio = "2022";
+            $grupoTrabajo->ciclo_inicio = "1";
+            $grupoTrabajo->prorroga = $prorroga;
+            $grupoTrabajo->update();
+        }
+    }
+
+    public function mostrarDatosGrupo(Request $request)
+    {
+        $id = $request->input("id");
+        $gruposTrabajo = GrupoTrabajo::with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();   	
+        return $gruposTrabajo;
+    }
+
+
+
+
 
     public function asignarD(Request $request)
     {

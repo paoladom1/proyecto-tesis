@@ -16,7 +16,7 @@
             @else
                 <td style="width: 30%">{{count($dato->estudiante)}}</td>
             @endif
-            <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="registrarGrupo(<?php echo $dato->id ?>)" style="color: white">Editar</button>{{--  <button class="btn btn-danger ms-1" onclick="">Eliminar</button>--}}</td>
+            <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="mostrarDatosModalPrincipal(<?php echo $dato->id ?>)" style="color: white">Editar</button>{{--  <button class="btn btn-danger ms-1" onclick="">Eliminar</button>--}}</td>
             <td></td>
         </tr>
     @endforeach
