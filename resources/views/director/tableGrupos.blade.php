@@ -23,5 +23,5 @@
 </tbody>
 </table>
 <div id="paginacionGrupos">
-{{ $grupos->links('pagination::bootstrap-4') }}
+    {{ $grupos->links('pagination::bootstrap-4') }}
 </div>

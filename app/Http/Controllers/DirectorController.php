@@ -92,12 +92,27 @@ class DirectorController extends Controller
         */
         
         $grupos = GrupoTrabajo::with('estudiante')->paginate(1);
+        $busqueda = $request->get('buscadorE');
+        $tipo = $request->get('tipoBusqueda');
+        $nombreE = "";
+        $apellidoE = "";
+        $carnetE = "";
+        if ($tipo == 1) {
+            $nombreE = $busqueda;
+        } elseif ($tipo == 2) {
+            $apellidoE = $busqueda;
+        } elseif ($tipo == 3) {
+            $carnetE = $busqueda;
+        }
+        $idGrupo = $request->get('idGrupo');
+        $estudiantes = Estudiante::where("carrera_id", "=", 7)->where('nombre', 'like', $nombreE.'%')->where('apellido', 'like', $apellidoE.'%')->where('carnet', 'like', $carnetE.'%')->where("grupo_trabajo_id", "=", $idGrupo)->orWhere("grupo_trabajo_id", "=", null)->paginate(6);
         $configuraciones = ConfiguracionSistema::first();
-
+        
         if ($request->ajax()) {
-            return response()->json(view('director.tableGrupos', array(
+            return response()->json(view($request->get('vista'), array(
                 'grupos' => $grupos,
-                'configuraciones' => $configuraciones
+                'configuraciones' => $configuraciones,
+                'estudiantes' => $estudiantes
             ))->render());
         }
 
@@ -114,7 +129,8 @@ class DirectorController extends Controller
             'empleados' => $empleado,
             'externos' => $externo,
             'grupos' => $grupos,
-            'configuraciones' => $configuraciones
+            'configuraciones' => $configuraciones,
+            'estudiantes' => $estudiantes
         ));
     }
 
@@ -218,25 +234,52 @@ class DirectorController extends Controller
             $grupoTrabajo->prorroga = $prorroga;
             $grupoTrabajo->update();
         }
+        $integrantesGrupo = $request->input('integrantes');
+        if ($id == "") {
+            foreach ($integrantesGrupo as $integrante) {
+                $estudiante = Estudiante::findOrFail($integrante);
+                $estudiante->grupo_trabajo_id = $grupoTrabajo->id;
+                $estudiante->update(); 
+            }
+        } else{
+            $estudiante = Estudiante::where("grupo_trabajo_id", "=", $grupoTrabajo->id)->get();
+            foreach ($estudiante as $dato) {
+                if (!in_array($dato->id, $integrantesGrupo)) {
+                    $estudiante = Estudiante::findOrFail($dato->id);
+                    $estudiante->grupo_trabajo_id = null;
+                    $estudiante->update();
+                } else if(in_array($dato->id, $integrantesGrupo)){
+                    unset($integrantesGrupo[array_search($dato->id, $integrantesGrupo)]);
+                }
+            }
+            foreach ($integrantesGrupo as $integrante) {
+                $estudiante = Estudiante::findOrFail($integrante);
+                $estudiante->grupo_trabajo_id = $grupoTrabajo->id;
+                $estudiante->update(); 
+            }
+        }
+        /*
+            if (!in_array(10, $integrantesGrupo)) {
+                $estudiante = Estudiante::findOrFail(10);
+                $estudiante->grupo_trabajo_id = $grupoTrabajo->id;
+            }  
+        */
     }
 
     public function mostrarDatosGrupo(Request $request)
     {
         $id = $request->input("id");
-        $gruposTrabajo = GrupoTrabajo::with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();   	
+        $gruposTrabajo = GrupoTrabajo::with("estudiante")->with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();   	
         return $gruposTrabajo;
     }
 
+    //----------------------------------Asignar estudiantes a los trabajos de graduacion-------------------------------------
 
-
-
-
-    public function asignarD(Request $request)
+    public function mostrarDatoEstudiante(Request $request)
     {
-        echo $request->input('nombresD') . '</br>';
-        echo $request->input('idD') . '</br>';
-        echo $request->input('nombresL') . '</br>';
-        echo $request->input('idL') . '</br>';
+        $id = $request->input("id");
+        $gruposTrabajo = GrupoTrabajo::with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();   	
+        return $gruposTrabajo;
     }
 
     public function buscador(Request $request)

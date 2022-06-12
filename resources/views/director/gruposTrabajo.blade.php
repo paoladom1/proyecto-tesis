@@ -79,6 +79,17 @@
         outline: none;
         box-shadow: none;
     }
+    .dropEstudiante .dropdown-divider{
+        margin: 0;
+    }
+    .dropEstudiante .dropdown-item{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .dropEstudiante .dropdown-menu{
+        padding: 0;
+    }
 </style>
    
     <br>
@@ -95,12 +106,12 @@
 
     <!--------------------------------------------------Modal para Asesor o Lector UCA----------------------------------------->
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="tituloModal" style="color: white;"></h5>
-                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar(); limpiarModalPrincipal();"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar(); limpiarModalPrincipal(); restablecerDatosTablaEstudiante() "></button>
             </div>
             <div class="modal-body">
             <div id="liveAlertPlaceholder2"></div>
@@ -108,7 +119,7 @@
             <div class='row'>
                 <div class="col">
                     <div class="form-group">
-                        <label for="cmb1">Facultad</label> 
+                        <label for="cmb1" class="form-label">Facultad</label> 
                         <select class="form-control" id="cmb1">
                             <option value="0">Seleccione una Facultad</option>
                             @foreach ($facultades as $facultad)
@@ -123,7 +134,7 @@
             <div class='row'>
                 <div class="col">
                     <div class="form-group">
-                        <label for="cmb2">Departamento</label> 
+                        <label for="cmb2" class="form-label">Departamento</label> 
                         <select class="form-control" id="cmb2">
                             <option value="0">Seleccione una opción</option>
                             @php
@@ -142,32 +153,29 @@
             <br>
 
             <div class="row">
-                <form action="{{ url('/asignarDocente') }}" method="post">
-                    {{ csrf_field() }}
-                    <label>Empleado</label> 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="dropdown">
-                                <button onclick="myFunction(3)" type="button" class="btn btn-warning dropdown-toggle">Seleccionar</button>
-                                <div id="myDropdown3" class="dropdown-content">
-                                    <input type="text" placeholder="Buscar.." id="myInput" onkeyup="filterFunction('myDropdown3', 'myInput')">
-                                    <div id="Tdocentes" class="scrollable-menu">
-                                        @foreach ($empleados as $empleado)
-                                            <a href="#about" onclick="seleccionarEmpleado('<?php echo $empleado->nombre.' '.$empleado->apellido ?>', <?php echo $empleado->id ?>, 3)">{{$empleado->nombre}} {{$empleado->apellido}}</a>
-                                        @endforeach
-                                    </div>
+                <label class="form-label">Empleado</label> 
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="dropdown">
+                            <button onclick="myFunction(3)" type="button" class="btn btn-warning dropdown-toggle">Seleccionar</button>
+                            <div id="myDropdown3" class="dropdown-content">
+                                <input type="text" placeholder="Buscar.." id="myInput" onkeyup="filterFunction('myDropdown3', 'myInput')">
+                                <div id="Tdocentes" class="scrollable-menu">
+                                    @foreach ($empleados as $empleado)
+                                        <a href="#about" onclick="seleccionarEmpleado('<?php echo $empleado->nombre.' '.$empleado->apellido ?>', <?php echo $empleado->id ?>, 3)">{{$empleado->nombre}} {{$empleado->apellido}}</a>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="input-group">                                    
-                                <input type="text" disabled class="form-control ms-3" id="nombres" aria-label="Username" aria-describedby="basic-addon1">
-                                <input type="text" hidden disabled class="form-control" id="id" aria-label="Username" aria-describedby="basic-addon1">
-                            </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group">                                    
+                            <input type="text" disabled class="form-control ms-3" id="nombres" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" hidden disabled class="form-control" id="id" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
-                    <br>
-                </form>
+                </div>
+                <br>
             </div>
         </div>
         </div>
@@ -182,17 +190,20 @@
     
     <!------------------------------------------------Modal para Asesores o Lector externo-------------------------------------->
     
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
-        <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="exampleModal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
             <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                 <h5 class="modal-title" id="tituloModal2" style="color: white;"></h5>
-                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar(); limpiarModalPrincipal()"></button>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="cancelar(); limpiarModalPrincipal(); restablecerDatosTablaEstudiante();"></button>
             </div>
             <div class="modal-body">
                 <div id="liveAlertPlaceholder3"></div>
                 <div class="row">
                     <div class="col">
+                        <div>
+                            <label for="" class="form-label">Externo</label>
+                        </div>
                         <div class="dropdown">
                             <button onclick="myFunction(4)" type="button" class="btn btn-warning dropdown-toggle">Seleccionar</button>
                             <div id="myDropdown4" class="dropdown-content">
@@ -241,14 +252,15 @@
 
     <!--------------------------------------------------Modal para crear grupo----------------------------------------->
 
-    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" data-backdrop="false">
+    <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                     <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Grupo de trabajo de graduación</h5>
-                    <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" style="color: white" onclick="limpiarModalPrincipal()"></button>
+                    <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" style="color: white" onclick="limpiarModalPrincipal(); restablecerDatosTablaEstudiante() "></button>
                 </div>
                 <div class="modal-body">
+                    <div id="liveAlertPlaceholder4"></div>
                     <div class="row">
                         <div class="col">
                             <div class="form-check form-switch form-check-reverse">
@@ -266,7 +278,7 @@
                                 <label for="tema">Tema de trabajo de graduación</label>
                             </div>
                             <br>
-                            <label>Asesor</label> 
+                            <label class="form-label">Director del trabajo de graduación</label> 
                             <div class="containerToogle">
                                 <div>
                                     <div class="dropdown">
@@ -289,7 +301,7 @@
                                 </div>
                             </div>
                             <br>
-                            <label>Lector</label> 
+                            <label class="form-label">Lector</label> 
                             <div class="containerToogle">
                                 <div>
                                     <div class="dropdown">
@@ -313,26 +325,27 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal45"><i class="bi bi-people"></i> Asignar estudiantes</button>
-                            <table class="table">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal45"><i class="bi bi-people"></i> Seleccionar estudiantes</button>
+                            <table class="table table-hover align-middle" style="text-align: center;">
                                 <thead>
                                     <tr>
-                                        <th scope="col"></th>
                                         <th scope="col">Carnet</th>
                                         <th scope="col">Nombres</th>
                                         <th scope="col">Apellido</th>
                                     </tr>
                                 </thead>
                                 <tbody id="asignados">
-                                    
+                                    <tr id="noDatos1">
+                                        <td colspan="3">No hay estudiantes seleccionados</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="cancelar(); limpiarModalPrincipal()"><i class="bi bi-x-circle"></i> Cancelar</button>
-                    <button class="btn btn-success" data-bs-dismiss="modal" onclick="registrarDatosGrupos()"><i class="bi bi-save"></i> <span id="btnCrearGrupo">Crear grupo</span></button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="cancelar(); limpiarModalPrincipal(); restablecerDatosTablaEstudiante() "><i class="bi bi-x-circle"></i> Cancelar</button>
+                    <button class="btn btn-success" onclick="registrarDatosGrupos();"><i class="bi bi-save"></i> <span id="btnCrearGrupo">Crear grupo</span></button>
                 </div>
             </div>
         </div>
@@ -373,102 +386,99 @@
         </div>
     </div>
     <div class="row d-flex flex-row-reverse mt-3">
-        <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: 0px;" onclick="$('#btnCrearGrupo').text('Crear Grupo')"><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
+        <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: 0px;" onclick="$('#btnCrearGrupo').text('Crear Grupo');  mostrarEleccionEstudiante();"><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
     </div>
     <br>
 
     <!--------------------------------------------------Modal para estudiantes----------------------------------------->
-
-    <div class="modal fade" id="exampleModal45" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog modal-dialog-centered">
+    
+    <div class="modal fade" id="exampleModal45" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
             <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: white">Estudiantes</h5>
-                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="limpiarModalPrincipal()"></button>
+                <h5 class="modal-title" id="exampleModalLabel" style="color: white">Asignar estudiantes</h5>
+                <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-bs-dismiss="modal" aria-label="Close" onclick="limpiarModalPrincipal(); $('#buscadorEstuiante').text('Nombre'); banderaBusqueda = 1;cancelar();restablecerTablaEstudiante();restablecerDatosTablaEstudiante(); restablecerDatosTablaEstudiante();"></button>
             </div>
             <div class="modal-body">
-                <div class="input-group input-group-sm">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
-                    <input type="text" class="form-control" id="buscadorTabla" onkeyup="filterTable()" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Puede seleccionar a <span id="numEstudiante">{{$configuraciones->numero_integrantes}}</span> estudiantes</p>
+                        <fieldset style="height: 90%;">
+                            <legend>Grupo formado</legend>
+                            <table class="table table-hover align-middle" style="text-align: center;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Carnet</th>
+                                        <th scope="col">Nombres</th>
+                                        <th scope="col">Apellido</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="grupoFormado">
+                                    <tr id="noDatos2">
+                                        <td colspan="4">No hay estudiantes seleccionados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3 dropEstudiante">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="buscadorEstuiante" data-bs-toggle="dropdown" aria-expanded="false">Nombre</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="$('#buscadorEstuiante').text('Nombre'); banderaBusqueda=1;">Nombre</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="$('#buscadorEstuiante').text('Apellido'); banderaBusqueda=2">Apellido</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="$('#buscadorEstuiante').text('Carnet'); banderaBusqueda=3;">Carnet</a></li>
+                            </ul>
+                            <input type="text" class="form-control" id="buscadorTablaE" placeholder="Digite su criterio de busqueda">
+                            <button class="btn btn-secondary" type="button" id="button-addon2" onclick="buscadorEstudiante()"><i class="bi bi-search"></i></button>
+                        </div>
+
+                        <div class="tablaEstudiantes">
+                            <table class="table tableE table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Carnet</th>
+                                        <th scope="col">Nombres</th>
+                                        <th scope="col">Apellido</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="estudiantes">
+                                    <?php $contEstudiantes = 0; ?>
+                                    @foreach ($estudiantes as $estudiante)
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input checkEstudiantes" type="checkbox" onclick="reservarEstudiante(<?php echo $contEstudiantes ?>, <?php echo $estudiante->id ?>)" value="{{$estudiante->id}}" id="checkEstudiante{{$estudiante->id}}">
+                                                </div>
+                                            </td>
+                                            <td id = "carnetEstudiante{{$contEstudiantes}}">{{$estudiante->carnet}}</td>
+                                            <td id = "nombreEstudiante{{$contEstudiantes}}">{{$estudiante->nombre}}</td>
+                                            <td id = "apellidoEstudiante{{$contEstudiantes++}}">{{$estudiante->apellido}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div class="paginacionBitacora paginacionEstudiantes">
+                                @if ($estudiantes->total() != 0)
+                                    <div>
+                                        <p>Resultados del {{$estudiantes->firstItem() }} al {{$estudiantes->lastItem() }} de {{$estudiantes->total() }}</p>
+                                    </div>
+                                @endif
+                                <div>
+                                    {{ $estudiantes->links('pagination::bootstrap-4') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <br>
-                <p>Puede seleccionar a <span id="numEstudiante">4</span> estudiantes</p>
-                <table class="table tableE">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Carnet</th>
-                            <th scope="col">Nombres</th>
-                            <th scope="col">Apellido</th>
-                        </tr>
-                    </thead>
-                    <tbody id="estudiantes">
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input checkEstudiantes" type="checkbox" value="1" id="flexCheckDefault">
-                                </div>
-                            </td>
-                            <th scope="row">00092117</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input checkEstudiantes" type="checkbox" value="2" id="flexCheckDefault">
-                                </div>
-                            </td>
-                            <th scope="row">00092117</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input checkEstudiantes" type="checkbox" value="3" id="flexCheckDefault">
-                                </div>
-                            </td>
-                            <th scope="row">00092117</th>
-                            <td>Jacob</td>
-                            <td >Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input checkEstudiantes" type="checkbox" value="4" id="flexCheckDefault">
-                                </div>
-                            </td>
-                            <th scope="row">00092117</th>
-                            <td>Jacob</td>
-                            <td>Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input checkEstudiantes" type="checkbox" value="4" id="flexCheckDefault">
-                                </div>
-                            </td>
-                            <th scope="row">00092117</th>
-                            <td>Jacob</td>
-                            <td>Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input checkEstudiantes" type="checkbox" value="4" id="flexCheckDefault">
-                                </div>
-                            </td>
-                            <th scope="row">00092117</th>
-                            <td>Jacob</td>
-                            <td>Larry the Bird</td>
-                        </tr>
-                    </tbody>
-                </table>
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Atras</button>
-                <button type="button" class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onclick="asignarEstudiante()"><i class="bi bi-person-plus-fill"></i> Asignar</button>
+                <button type="button" class="btn btn-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onclick="$('#buscadorEstuiante').text('Nombre'); banderaBusqueda = 1;cancelar();restablecerTablaEstudiante();"><i class="bi bi-person-plus-fill"></i> Aceptar</button>
             </div>
             </div>
         </div>
@@ -476,11 +486,25 @@
     </div>
 
 <script type="text/javascript">
-    restablecerCmb();
-    $("#exampleModalToggle").on("hidden.bs.modal", function () { 
-        limpiarModalPrincipal();
-    });
+
+    // -------------------------------------------------Variables Globales-----------------------------------------
+
+    var banderaBusqueda = 1;
+    var banderaConstante = 1;
+    var Busqueda = "";
+    var bandera;
+    var nombreBoton1 = "";
+    var nombreBoton2 = "";
+    var tablaEstu = 0;
+    var integrantes = [];
+    var check = document.querySelectorAll('.checkEstudiantes');
+    var limite = <?php echo $configuraciones->numero_integrantes; ?>;
+    var numCont = <?php echo $configuraciones->numero_integrantes; ?>;
     var contadorAlerta = 0;
+    var paginacionActual = 1;
+
+    restablecerCmb();
+
     const alertError = (message, type, icon, idElementoAlerta, cont=0) => {
         const alertPlaceholder = document.getElementById(idElementoAlerta);
         const wrapper = document.createElement('div')
@@ -506,13 +530,12 @@
 
     // ------------------------------ Funciones de paginación-------------------------------
 
-    var paginacionActual = 1;
     const grupos = (page) => {
         $.ajax({
             type : "GET",
             "serverSide" : true,
             url : "./grupoTrabajo",
-            data: { "page": page},
+            data: { "page": page, "vista": "director.tableGrupos"},
             dataType: 'json',
             success : function(r) {
                 $("#tablaGruposContainer").html(r);
@@ -528,6 +551,30 @@
         var page = $(this).attr('href').split('page=')[1];
         paginacionActual = page;
         grupos(page);
+    })
+
+    const estudiantesPag = (page) => {
+        $.ajax({
+            type : "GET",
+            "serverSide" : true,
+            url : "./grupoTrabajo",
+            data: { "page": page, "vista": "director.tablaEstudiante", "buscadorE": Busqueda, "tipoBusqueda": banderaConstante, "idGrupo": $("#idGrupo").val()},
+            dataType: 'json',
+            success : function(r) {
+                $(".tablaEstudiantes").html(r);
+                checkearEstudiantes();
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
+    }
+
+    $(document).on('click', '.paginacionEstudiantes .pagination a', function(e){
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        //paginacionActual = page;
+        estudiantesPag(page);
     })
 
     // ------------------------------------------------ Funciones de limpieza de campos-----------------------------
@@ -553,6 +600,8 @@
         $("#correo").val("");
         $("#idExterno").val("");
         $("#descripcion").val("");
+
+        $("#buscadorTablaE").val("");
 
         filtroDepartamento(<?php echo $idDepartamento; ?>);
         filtroFacultad(<?php echo $idFacultad; ?>);
@@ -760,20 +809,13 @@
         }
     }
 
-    var bandera;
-    /**var banderaNombre1 = 0;
-    var banderaNombre2 = 0; */
-
-    var nombreBoton1 = "";
-    var nombreBoton2 = "";
-
     function cancelar() {
-        limpiarModal();
         if (bandera == 1 && $("#nombresD").val() != "") {
             $("#seleccionar1").text(nombreBoton1);
         } else if (bandera == 2 && $("#nombresL").val() != "") {
             $("#seleccionar2").text(nombreBoton2);
         }
+        limpiarModal();
     }
 
     function asignarDirector() {
@@ -781,7 +823,7 @@
             if (bandera == 1) {
                 $("#nombresD").val($("#nombres").val());
                 $("#idD").val($("#id").val());   
-                nombreBoton1 = $("#seleccionar1").text()
+                nombreBoton1 = $("#seleccionar1").text();
                 $("#tipoAsesor").val("0");
             } else{
                 $("#nombresL").val($("#nombres").val());
@@ -869,27 +911,34 @@
         if ($('#prorroga').is(':checked') ) {
             prorroga = 1;
         }
-        
-        $.ajax({
-            type : "POST",
-            "serverSide" : true,
-            url : "./registrarGrupo",
-            data: {"_token": "{{ csrf_token() }}", "id": idGrupo, "tema": tema, "idAsesor": idAsesor, "tipoAsesor": tipoAsesor,
-                                                    "idLector": idLector, "tipoLector": tipoLector, "prorroga": prorroga},
-            success : function(r) {
-                grupos(1);
-                if (idGrupo == "") {
-                    alertPersonalizado("Grupo de trabajo de graduación registrado con exito!", 'success', 1, ++contadorAlerta);   
-                } else{
-                    alertPersonalizado("Grupo de trabajo de graduación modificado con exito!", 'success', 1, ++contadorAlerta);   
+        if (tema.trim() != "" && integrantes.length != 0) {
+            $.ajax({
+                type : "POST",
+                "serverSide" : true,
+                url : "./registrarGrupo",
+                data: {"_token": "{{ csrf_token() }}", "id": idGrupo, "tema": tema, "idAsesor": idAsesor, "tipoAsesor": tipoAsesor,
+                                                        "idLector": idLector, "tipoLector": tipoLector, "prorroga": prorroga, "integrantes": integrantes},
+                success : function(r) {
+                    grupos(paginacionActual);
+                    if (idGrupo == "") {
+                        alertPersonalizado("Grupo de trabajo de graduación registrado con exito!", 'success', 1, ++contadorAlerta);   
+                    } else{
+                        alertPersonalizado("Grupo de trabajo de graduación modificado con exito!", 'success', 1, ++contadorAlerta);   
+                    }
+                },
+                error : function(data) {
+                    console.log(data);
                 }
-            },
-            error : function(data) {
-                console.log(data);
-            }
-        })
+            })
 
-        limpiarModalPrincipal();
+            limpiarModalPrincipal();
+            $('#exampleModalToggle').modal('hide');
+            restablecerDatosTablaEstudiante();
+        } else if(tema.trim() == ""){
+            alertError("Debe de llenar el campo, Tema de trabajo de graduación!", 'danger', 2, 'liveAlertPlaceholder4', 1);
+        } else if (integrantes.length == 0) {
+            alertError("Debe de seleccionar al menos a un estudiante para el grupo de trabajo!", 'danger', 2, 'liveAlertPlaceholder4', 1);
+        }
     }
 
     function mostrarDatosModalPrincipal(idGrupoTrabajo) {
@@ -911,25 +960,33 @@
             success : function(r) {
                 $("#idGrupo").val(r['id']);
                 $("#tema").val(r['tema']);
+                
+                if (r['prorroga'] == 1) {
+                    $('#prorroga').prop('checked', true);
+                } 
 
                 if (r['asesor_interno'] != null) {
                     cambiarBoton(1, 1, 1);
                     $("#idD").val(r['asesor_interno']['id']);
                     $("#nombresD").val(r['asesor_interno']['nombre']+" "+r['asesor_interno']['apellido']);
+                    $('#tipoAsesor').val(0);
                 } else if(r['asesor_externo'] != null){
                     cambiarBoton(2, 1, 1);
                     $("#idD").val(r['asesor_externo']['id']);
                     $("#nombresD").val(r['asesor_externo']['nombre']+" "+r['asesor_externo']['apellido']);
+                    $('#tipoAsesor').val(1);
                 }
 
                 if (r['lector_interno'] != null) {
                     cambiarBoton(3, 2, 1);
                     $("#idL").val(r['lector_interno']['id']);
                     $("#nombresL").val(r['lector_interno']['nombre']+" "+r['lector_interno']['apellido']);
+                    $('#tipoLector').val(0);
                 } else if(r['lector_externo'] != null){
                     cambiarBoton(4, 2, 1);
                     $("#idL").val(r['lector_externo']['id']);
                     $("#nombresL").val(r['lector_externo']['nombre']+" "+r['lector_externo']['apellido']);
+                    $('#tipoLector').val(1);
                 }
                 if (r['asesor_interno'] != null || r['asesor_externo'] != null) {
                     nombreBoton1 = $("#seleccionar1").text();
@@ -937,6 +994,7 @@
                 if (r['lector_interno'] != null || r['lector_externo'] != null) {
                     nombreBoton2 = $("#seleccionar2").text();   
                 }
+                mostrarEleccionEstudiante(1, r);
             },
             error : function(data) {
                 console.log(data);
@@ -946,69 +1004,130 @@
 
     // ---------------------------------- Asignar estudiantes al grupo -------------------------------------
 
-    function filterTable() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("buscadorTabla");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("estudiantes");
-        a = div.getElementsByTagName("tr");
-        for (i = 0; i < a.length; i++) {
-            txtValue = a[i].getElementsByTagName("td")[1].textContent || a[i].getElementsByTagName("td")[1].innerText;
-            txtValue2 = a[i].getElementsByTagName("td")[2].textContent || a[i].getElementsByTagName("td")[2].innerText;
-            txtValue3 = a[i].getElementsByTagName("th")[0].textContent || a[i].getElementsByTagName("th")[0].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1 
-            || txtValue3.toUpperCase().indexOf(filter) > -1 || (txtValue + " " +txtValue2).toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
+    function restablecerTablaEstudiante() {
+        Busqueda = "";
+        banderaConstante = 1;
+        estudiantesPag(1);
     }
 
-    var limite = 4;
-    var numCont = 4;
-    $('.checkEstudiantes').change(function() {
-        if($("input:checked").length > limite) {
-            this.checked = false;
-        } else{
-            if (this.checked == true) {
-                $("#numEstudiante").text(--numCont);
+    function restablecerDatosTablaEstudiante() {
+        numCont = <?php echo $configuraciones->numero_integrantes; ?>;
+        $("#numEstudiante").text(numCont);  
+        $('#grupoFormado tr:not(:first)').remove();
+        $('#asignados tr:not(:first)').remove();
+        document.getElementById("noDatos1").style.display = "table-row";
+        document.getElementById("noDatos2").style.display = "table-row";
+        integrantes = [];
+    }
+
+    document.querySelector('#buscadorTablaE').addEventListener ('keypress',function(e){
+        validar(e);
+    })
+
+    //funcion para validar se  haya pulsado enter incluyendo dispositivos moviles
+
+    function validar(e) {
+        let tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==13) buscadorEstudiante();
+    }
+
+    function buscadorEstudiante() {
+        Busqueda = $("#buscadorTablaE").val();
+        banderaConstante = banderaBusqueda;
+        $.ajax({
+            type : "GET",
+            "serverSide" : true,
+            url : "./grupoTrabajo",
+            data: { "page": 1, "vista": "director.tablaEstudiante", "buscadorE": Busqueda, "tipoBusqueda": banderaConstante, "idGrupo": $("#idGrupo").val()},
+            dataType: 'json',
+            success : function(r) {
+                $(".tablaEstudiantes").html(r);
+                checkearEstudiantes();
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
+    }
+
+    var cantidadIntegrantes = 0;
+
+    function crearTablaEstudiantesElegidos(nombre, apellido, carnet, idEstudiante) {
+        ++tablaEstu;
+            var parte1 = `<td>
+                            <button type="button" class="btn btn-close" onclick="borrarIntegrante(${tablaEstu}, ${idEstudiante})"></button>
+                        </td>`;
+            var parte2 = `<td>${carnet}</td>
+                        <td>${nombre}</td>
+                        <td>${apellido}</td>`;
+        var tr1 = document.createElement('tr');
+        tr1.innerHTML = parte1+parte2;
+        tr1.setAttribute('id', 'grupoF'+tablaEstu);
+        document.getElementById('grupoFormado').appendChild(tr1); 
+
+        var tr2 = document.createElement('tr');
+        tr2.innerHTML = parte2;
+        tr2.setAttribute('id', 'grupoPrincipal'+tablaEstu);
+        document.getElementById('asignados').appendChild(tr2); 
+    }
+
+    function reservarEstudiante(contEstudiante, idEstudiante) {
+        if (document.getElementById("checkEstudiante"+idEstudiante).checked == true) {
+            if (numCont == 0) {
+                document.getElementById("checkEstudiante"+idEstudiante).checked = false;
             } else{
-                $("#numEstudiante").text(++numCont);
+                $("#numEstudiante").text(--numCont);   
+                document.getElementById("checkEstudiante"+idEstudiante).disabled = true;
+                integrantes.push(idEstudiante)
+                var carnet = $("#carnetEstudiante"+contEstudiante).text();
+                var nombre = $("#nombreEstudiante"+contEstudiante).text();
+                var apellido = $("#apellidoEstudiante"+contEstudiante).text();
+                crearTablaEstudiantesElegidos(nombre, apellido, carnet, idEstudiante);
+            }
+            if (integrantes.length > 0) { 
+                document.getElementById("noDatos1").style.display = "none";
+                document.getElementById("noDatos2").style.display = "none";
             }
         }
-    });
-
-    function desasignar(cont, cont2) {
-        document.getElementById("part-"+cont).remove();
-        document.querySelectorAll('#estudiantes tr')[cont2].style.display = 'table-row';
-        $("#numEstudiante").text(++numCont);
-        ++limite;
     }
 
-    var a = 0;
-    function asignarEstudiante() {
-        var filas = document.querySelectorAll('#estudiantes tr');
-        //var filaAsignar = document.getElementById('asignados');
-        var check = document.querySelectorAll('.checkEstudiantes');
-        for (let index = 0; index < check.length; index++) {
-            if(check[index].checked){
-                ++a;
-                let est = document.querySelectorAll('#estudiantes tr')[index].querySelectorAll('td');
-                let carnet = document.querySelectorAll('#estudiantes tr')[index].querySelectorAll('th');
-                fragmento = `
-                        <td><button class="btn btn-close" onclick="desasignar(${a}, ${index})"></button></td>
-                        <th scope="row">${carnet[0].textContent}</th>
-                        <td>${est[1].textContent}</td>
-                        <td>${est[2].textContent}</td>
-                    `;
-                var div = document.createElement('tr');
-                div.innerHTML = fragmento;
-                --limite;
-                div.setAttribute('id', 'part-'+a);
-                document.getElementById('asignados').appendChild(div);
-                filas[index].style.display = 'none';
-                check[index].checked = false;
+    function borrarIntegrante(idElementoGrupo, idIntegrante) {
+        $("#grupoF"+idElementoGrupo).remove();
+        $("#grupoPrincipal"+idElementoGrupo).remove();
+        var indice = integrantes.indexOf(idIntegrante);
+        integrantes.splice(indice, 1);
+        if (document.getElementById("checkEstudiante"+idIntegrante)) {
+            document.getElementById("checkEstudiante"+idIntegrante).checked = false;
+            document.getElementById("checkEstudiante"+idIntegrante).disabled = false;
+        }
+        $("#numEstudiante").text(++numCont);
+        if (integrantes.length == 0) { 
+            document.getElementById("noDatos1").style.display = "table-row";
+            document.getElementById("noDatos2").style.display = "table-row";
+        }
+    }
+
+    function checkearEstudiantes() {
+            integrantes.forEach(element => {
+                if (document.getElementById("checkEstudiante"+element)) {
+                    document.getElementById("checkEstudiante"+element).checked = true;  
+                    document.getElementById("checkEstudiante"+element).disabled = true; 
+                }
+            });
+    }
+
+    function mostrarEleccionEstudiante(tipoConsulta = 0, datos = '') {
+        estudiantesPag(1);
+        if (tipoConsulta != 0) {
+            numCont = numCont - datos['estudiante'].length;
+            $("#numEstudiante").text(numCont);
+            datos['estudiante'].forEach(element => {
+                crearTablaEstudiantesElegidos(element['nombre'], element['apellido'], element['carnet'], element['id']);
+                integrantes.push(element['id']);
+            });
+            if (integrantes.length != 0) { 
+                document.getElementById("noDatos1").style.display = "none";
+                document.getElementById("noDatos2").style.display = "none";
             }
         }
     }
