@@ -121,7 +121,7 @@
         float: right;
     }    
 </style>
-<div class='container agradecimientosContainer'>
+<div class='agradecimientosContainer fuente-general'>
     <div class="col seccion_" id="titulosApp">
         <h2>AGRADECIMIENTOS Y DEDICATORIA</h2>
     </div>

@@ -1,13 +1,13 @@
 @extends('plantillas.nav')
 @section('content')
 
-    <div class="container containerBitacora">
-        <div class="row" id="titulosApp" style="padding: 0;">
-            <h3 class="mt-3">BITACORA DE CAMBIOS</h3>
+    <div class="containerBitacora fuente-general">
+        <div class="col seccion_" id="titulosApp">
+            <h2>BITACORA DE CAMBIOS</h2>
         </div>
         <br>
             
-    <fieldset>
+    <fieldset style="margin: 0px 15px 0px 15px">
         <legend>Filtros</legend>
         <form action="{{ url('/bitacora') }}" method="get" id="frmFiltroBitacora">
             <div class="row">
@@ -55,11 +55,11 @@
             <table class="table table-hover align-middle" style="background: white;">
                 <thead class="encabezadoBitacora">
                     <tr id="bitacoraEncabezado">
-                        <th scope="col">Sección</th>
-                        <th scope="col">Acción</th>
-                        <th scope="col">Autor</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Información</th>
+                        <th scope="col">SECCIÓN</th>
+                        <th scope="col">ACCIÓN</th>
+                        <th scope="col">AUTOR</th>
+                        <th scope="col">FECHA</th>
+                        <th scope="col">INFORMACIÓN</th>
                     </tr>
                 </thead>
                 <tbody id="contenidoTablaBi">

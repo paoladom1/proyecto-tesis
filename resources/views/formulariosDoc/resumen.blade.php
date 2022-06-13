@@ -5,7 +5,7 @@
 function agregarEditor() {
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto', {
-            height: 400,
+            height: 350,
             removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
             extraPlugins: 'liststyle'
         });
@@ -15,7 +15,7 @@ function agregarEditor() {
 
 </script>
 
-    <div class="resumenContainer">
+    <div class="resumenContainer fuente-general">
         <div class="col seccion_" id="titulosApp">
             <h2>RESUMEN</h2>
         </div>

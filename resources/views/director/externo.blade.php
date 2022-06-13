@@ -103,7 +103,7 @@
 </style>
    
     <br>
-    <div class="container">
+    <div class="container-fluid container-general">
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -187,13 +187,13 @@
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="table-responsive">
                 <div class="tableDinamicoLector">
-                    <table class="table table-hover align-middle" id="tablaLector">
+                    <table class="table table-hover align-middle fuente-general" id="tablaLector">
                         <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; ">
                         <tr>
-                            <th scope="col">Nombres</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">Correo Electronico</th>
-                            <th scope="col">Acciones</th>
+                            <th scope="col">NOMBRES</th>
+                            <th scope="col">APELLIDOS</th>
+                            <th scope="col">CORREO ELECTRÓNICO</th>
+                            <th scope="col">ACCIONES</th>
                         </tr>
                         </thead>
                         <tbody id="contenidoLector">
@@ -216,13 +216,13 @@
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="table-responsive">
                 <div class="tableDinamicoAsesor">
-                    <table class="table table-hover align-middle" id="tablaAsesor">
+                    <table class="table table-hover align-middle fuente-general" id="tablaAsesor">
                         <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; ">
                         <tr>
-                            <th scope="col">Nombres</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">Correo Electronico</th>
-                            <th scope="col">Acciones</th>
+                            <th scope="col">NOMBRES</th>
+                            <th scope="col">APELLIDOS</th>
+                            <th scope="col">CORREO ELECTRÓNICO</th>
+                            <th scope="col">ACCIONES</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -244,7 +244,7 @@
         </div>
       </div>
     <div class="row d-flex flex-row-reverse mt-3">
-        <a class="float-button" onclick="myModal.show()" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: 0px;" ><i class="bi bi-person-plus-fill float-icon"></i></a>
+        <a class="float-button" onclick="myModal.show()" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: -7%;" ><i class="bi bi-person-plus-fill float-icon"></i></a>
     </div>
     <br>
 </div>

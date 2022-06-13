@@ -16,7 +16,7 @@
     }
 
 </script>
-    <div class='container agradecimientosContainer'>
+    <div class='agradecimientosContainer fuente-general'>
         <div class="col seccion_" id="titulosApp">
             <h2>ABREVIACIONES, NOMENCLATURAS Y SIGLAS</h2>
         </div>

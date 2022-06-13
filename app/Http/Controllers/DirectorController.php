@@ -91,7 +91,7 @@ class DirectorController extends Controller
             1 -> lectores
         */
         
-        $grupos = GrupoTrabajo::with('estudiante')->paginate(1);
+        $grupos = GrupoTrabajo::with('estudiante')->paginate(10);
         $busqueda = $request->get('buscadorE');
         $tipo = $request->get('tipoBusqueda');
         $nombreE = "";
@@ -105,7 +105,7 @@ class DirectorController extends Controller
             $carnetE = $busqueda;
         }
         $idGrupo = $request->get('idGrupo');
-        $estudiantes = Estudiante::where("carrera_id", "=", 7)->where('nombre', 'like', $nombreE.'%')->where('apellido', 'like', $apellidoE.'%')->where('carnet', 'like', $carnetE.'%')->where("grupo_trabajo_id", "=", $idGrupo)->orWhere("grupo_trabajo_id", "=", null)->paginate(6);
+        $estudiantes = Estudiante::where("carrera_id", "=", 7)->where('nombre', 'like', $nombreE.'%')->where('apellido', 'like', $apellidoE.'%')->where('carnet', 'like', $carnetE.'%')->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->paginate(6);
         $configuraciones = ConfiguracionSistema::first();
         
         if ($request->ajax()) {
@@ -258,12 +258,6 @@ class DirectorController extends Controller
                 $estudiante->update(); 
             }
         }
-        /*
-            if (!in_array(10, $integrantesGrupo)) {
-                $estudiante = Estudiante::findOrFail(10);
-                $estudiante->grupo_trabajo_id = $grupoTrabajo->id;
-            }  
-        */
     }
 
     public function mostrarDatosGrupo(Request $request)
