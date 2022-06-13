@@ -25,9 +25,20 @@ class LoginController extends Controller
     }
 
     public function login(){
+        if (request('email') == null) {
+            return back()
+            ->withErrors(array(
+                'email' => "El campo usuario es requerido!"
+            ));
+        } else if (request('password') == null) {
+            return back()
+            ->withErrors(array(
+                'email' => "El campo contraseña es requerido!"
+            ));
+        }
         $credentials = $this->validate(request(), [
-            'email' => 'required|email|string',
-            'password' => 'required|string'
+            'email' => 'string',
+            'password' => 'string'
         ]);
         
         if (Auth::guard('admin')->attempt($credentials)) {
@@ -41,7 +52,9 @@ class LoginController extends Controller
         }
 
         return back()
-        ->withErrors(['email' => "Estas credenciales no coinciden con nuestros registros"])
+        ->withErrors(array(
+            'email' => "Contraseña o usuario incorrectos!"
+        ))
         ->withInput(request(['email']));
     }
 

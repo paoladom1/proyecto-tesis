@@ -156,7 +156,7 @@
 }
 
 .navImg{
-    width: 100%;
+    width: 15rem;
     margin: 5%;
     float: left;
 }
@@ -176,8 +176,8 @@
 .menuButton i{
     float: left;
     position: fixed;
-    margin-top: 6.5%;
-    margin-left: 1%;
+    margin-top: 6.9rem;
+    margin-left: 1rem;
     color: white;
     background-color: #003C71;
     border-radius: 5px;
@@ -198,8 +198,8 @@
     float: right;
     color: white;
     opacity: 100;
-    margin-top: 6%;
-    margin-bottom: 6%;
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
 }
 
 .btn-close:focus{

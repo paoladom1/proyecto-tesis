@@ -14,7 +14,29 @@
 
     <title>Proceso de graduación</title>
 </head>
-<body>
+<script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+<script>
+
+    const alert2 = (message, type) => {
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '</div>'
+        ].join('')
+        window.setTimeout(function() {
+            $(`.alert`).fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 2000);
+        alertPlaceholder.append(wrapper)
+    }
+</script>
+<body class="fuente-general">
 
     <nav class="navbar">
         <h4>
@@ -35,19 +57,21 @@
         <div class = "sector2">
             <h1 style="align-self: center; margin-bottom: 1em; color: #E87B2A;">Inicio de sesión</h1>
             <div class="formulario">
+                <div id="liveAlertPlaceholder"></div>
                 <form class='container-sm'  action="{{ route('login') }}" method='POST'>
                     {{ csrf_field() }}
+                    @if ($errors->has('email'))
+                        <script>alert2('<?php echo $errors->first('email'); ?>', 'danger');</script>
+                    @endif
                     <div class="mb-3">
                         <input type="text" name="email" class="form-control" placeholder="Usuario">
-                        {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="mb-1">
                         <input type="password" name="password" class="form-control" placeholder="Contraseña">
-                        {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="row mb-3">
                         <div class="olvidasteC">
-                            <a href="#" style="font-size: .75rem; font-weight: bold; text-decoration: none"  onMouseOver="this.style.color='#f00'"
+                            <a href="#" style="font-size: 1rem; font-weight: bold; text-decoration: none"  onMouseOver="this.style.color='#f00'"
                             onMouseOut="this.style.color='blue'">¿Olvidaste la contraseña?</a>
                         </div>
                     </div>
@@ -59,9 +83,9 @@
                     <hr>
                     <div class="row">
                         <div class="col d-flex justify-content-center">
-                            <a><i class="bi bi-facebook ms-2 me-2 licon fb" ></i></a>
-                            <a><i class="bi bi-instagram ms-2 me-2 licon in"></i></a>
-                            <a><i class="bi bi-twitter ms-2 me-2 licon tw"></i></a>
+                            <a href="https://www.facebook.com/UCA.ElSalvador/" target="_blank"><i class="bi bi-facebook ms-2 me-2 licon fb" ></i></a>
+                            <a href="https://www.instagram.com/uca_elsalvador" target="_blank"><i class="bi bi-instagram ms-2 me-2 licon in"></i></a>
+                            <a href="https://twitter.com/UCA_ES" target="_blank"><i class="bi bi-twitter ms-2 me-2 licon tw"></i></a>
                         </div>
                     </div>
                 </form>
