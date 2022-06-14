@@ -41,24 +41,24 @@
                 <center>
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
                         <div class="col">
-                            <a href="{{ url('/externo') }}" style="text-decoration: none; color: black;">
                                 <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                    <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                    <div class="card-body body-card mt-2">
-                                        <h5 class="card-title">ASESORES Y LECTORES EXTERNOS</h5>
-                                    </div>
+                                    <a href="{{ url('/externo') }}" style="text-decoration: none; color: black;">
+                                        <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                        <div class="card-body body-card mt-2">
+                                            <h5 class="card-title">ASESORES Y LECTORES EXTERNOS</h5>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
                         </div>
                         <div class="col">
-                            <a href="{{ url('/grupoTrabajo') }}" style="text-decoration: none; color: black;">
                                 <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                                    <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                    <div class="card-body body-card mt-2">
-                                        <h5 class="card-title">GRUPOS DE TRABAJO DE GRADUACIÓN</h5>
-                                    </div>
+                                    <a href="{{ url('/grupoTrabajo') }}" style="text-decoration: none; color: black;">
+                                        <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                        <div class="card-body body-card mt-2">
+                                            <h5 class="card-title">GRUPOS DE TRABAJO DE GRADUACIÓN</h5>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
                         </div>
                     </div>
                 </center>

@@ -9,84 +9,84 @@
                 <center>
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-1 mb-3">
                     <div class="col">
-                        <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">RESUMEN</h5>
-                                </div>
+                                <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
+                                    <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">RESUMEN</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                     </div>
 
                     <div class="col">
-                        <a href="{{ url('/agradecimientos') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">AGRADECIMIENTOS</h5>
-                                </div>
+                                <a href="{{ url('/agradecimientos') }}" style="text-decoration: none; color: black;">
+                                    <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">AGRADECIMIENTOS</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                     </div>
 
                     <div class="col">
-                        <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;" >
-                                <img src="img/fondoCard3.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">ABREVIATURAS</h5>
-                                </div>
+                                <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;">
+                                    <img src="img/fondoCard3.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">ABREVIATURAS</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                     </div>
 
                     <!------------------------------------------------------------------------------------------------------>
 
                     <div class="col">
-                        <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard4.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">CAPÍTULOS</h5>
-                                </div>
+                                <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;">
+                                    <img src="img/fondoCard4.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">CAPÍTULOS</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                     </div>
 
                     <div class="col">
-                        <a href="{{ url('/glosario') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard5.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">GLOSARIO</h5>
-                                </div>
+                                <a href="{{ url('/glosario') }}" style="text-decoration: none; color: black;">
+                                    <img src="img/fondoCard5.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">GLOSARIO</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                     </div>
 
                     <div class="col">
-                        <a href="{{ url('/referencias') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard6.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">REFERENCIAS</h5>
-                                </div>
+                                <a href="{{ url('/referencias') }}" style="text-decoration: none; color: black;">
+                                    <img src="img/fondoCard6.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">REFERENCIAS</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                     </div>
 
                     <!------------------------------------------------------------------------------------------------------>
 
                     <div class="col">
-                        <a href="{{ url('/bitacora') }}" style="text-decoration: none; color: black;">
                             <div class="card m-3 position-static card-menu" style="width: 18rem;">
-                                <img src="img/fondoCard7.jpeg" class="card-img-top img-card" alt="Card image cap">
-                                <div class="card-body body-card mt-2">
-                                    <h5 class="card-title">BITACORA</h5>
-                                </div>
+                                <a href="{{ url('/bitacora') }}" style="text-decoration: none; color: black;">
+                                    <img src="img/fondoCard7.jpeg" class="card-img-top img-card" alt="Card image cap">
+                                    <div class="card-body body-card mt-2">
+                                        <h5 class="card-title">BITACORA</h5>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                     </div>
                 </div>
 
