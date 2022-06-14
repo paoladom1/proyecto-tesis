@@ -301,7 +301,7 @@
                                 </div>
                             </div>
                             <br>
-                            <label class="form-label">Lector</label> 
+                            <label class="form-label">Segundo lector</label> 
                             <div class="containerToogle">
                                 <div>
                                     <div class="dropdown">
@@ -908,7 +908,7 @@
         if ($('#prorroga').is(':checked') ) {
             prorroga = 1;
         }
-        if (tema.trim() != "" && integrantes.length != 0) {
+        if (tema.trim() != "" && integrantes.length != 0 && idAsesor.trim() != "") {
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
@@ -933,7 +933,9 @@
             restablecerDatosTablaEstudiante();
         } else if(tema.trim() == ""){
             alertError("Debe de llenar el campo, Tema de trabajo de graduación!", 'danger', 2, 'liveAlertPlaceholder4', 1);
-        } else if (integrantes.length == 0) {
+        } else if (idAsesor.trim() == "") {
+            alertError("Debe de seleccionar a un Director del trabajo de graduación!", 'danger', 2, 'liveAlertPlaceholder4', 1);
+        } else if(integrantes.length == 0) {
             alertError("Debe de seleccionar al menos a un estudiante para el grupo de trabajo!", 'danger', 2, 'liveAlertPlaceholder4', 1);
         }
     }
