@@ -46,7 +46,7 @@
      <div id="SideNav" class="sidenav">
         <div id="navMenu">
             <div class="closeBtn">
-                <a href="javascript:void(0)" class="btn-close btn-close-white" onclick="closeNav()"></a>
+                <a href="javascript:void(0)" class="btn-close btn-close-white btn-close2" onclick="closeNav()"></a>
             </div>
 
             <hr>

@@ -14,6 +14,8 @@ use App\Models\Estudiante;
 use App\Models\Facultad;
 use App\Models\DepartamentoU;
 use App\Models\Empleado;
+use App\Models\DirectorCarrera;
+use App\Models\Carrera;
 
 class DirectorController extends Controller
 {
@@ -27,6 +29,13 @@ class DirectorController extends Controller
         return view('plantillas.plantillaMenuDirector');
     }
 
+    private function obtenerDatosDirector()
+    {
+        $id = auth()->guard('admin')->user()->id;
+        $director_carrera = DirectorCarrera::with("empleado")->where("usuario_id", "=", $id)->first();
+        return $director_carrera;
+    }
+
     //-------------------------------Asesores y lectores externos----------------------------
 
     public function frmLectorAsesor(Request $request)
@@ -35,9 +44,11 @@ class DirectorController extends Controller
             0 -> asesores
             1 -> lectores
         */
+        
+        $departamentoBusqueda = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
 
-        $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->orderBy('id', 'desc')->paginate(6);
-        $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->orderBy('id', 'desc')->paginate(6);
+        $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(6);
+        $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(6);
 
         if ($request->ajax()) {
             return response()->json(view($request->get('vista'), array(
@@ -55,6 +66,7 @@ class DirectorController extends Controller
     public function registrarLA(Request $request)
     {
         $id = $request->input('id');
+        $departamento = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
         if ($id != "") {
             $externo = Externo::findOrFail($id);
             $externo->nombre = $request->input('nombre');
@@ -62,7 +74,7 @@ class DirectorController extends Controller
             $externo->correo = $request->input('correo');
             $externo->descripcion = $request->input('descripcion');
             $externo->rol_externo = $request->input('rol');
-            $externo->departamento_unidad_id = 8;
+            $externo->departamento_unidad_id = $departamento;
             $externo->update();
         } else{
             $externo = new Externo();
@@ -71,7 +83,7 @@ class DirectorController extends Controller
             $externo->correo = $request->input('correo');
             $externo->descripcion = $request->input('descripcion');
             $externo->rol_externo = $request->input('rol');
-            $externo->departamento_unidad_id = 8;
+            $externo->departamento_unidad_id = $departamento;
             $externo->save();
         }
     }
@@ -90,13 +102,16 @@ class DirectorController extends Controller
             0 -> asesores
             1 -> lectores
         */
-        
+
+        $carrera = $this->obtenerDatosDirector()->carrera_id;
+        $departamentoBusqueda = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
         $grupos = GrupoTrabajo::with('estudiante')->paginate(10);
         $busqueda = $request->get('buscadorE');
         $tipo = $request->get('tipoBusqueda');
         $nombreE = "";
         $apellidoE = "";
         $carnetE = "";
+
         if ($tipo == 1) {
             $nombreE = $busqueda;
         } elseif ($tipo == 2) {
@@ -104,8 +119,9 @@ class DirectorController extends Controller
         } elseif ($tipo == 3) {
             $carnetE = $busqueda;
         }
+
         $idGrupo = $request->get('idGrupo');
-        $estudiantes = Estudiante::where("carrera_id", "=", 7)->where('nombre', 'like', $nombreE.'%')->where('apellido', 'like', $apellidoE.'%')->where('carnet', 'like', $carnetE.'%')->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->paginate(6);
+        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', $nombreE.'%')->having('apellido', 'like', $apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->paginate(6);
         $configuraciones = ConfiguracionSistema::first();
         
         if ($request->ajax()) {
@@ -117,15 +133,16 @@ class DirectorController extends Controller
         }
 
         $facultad = Facultad::get();
-        $departamento = DepartamentoU::where("facultad_id", "=", 1)->get();
-        $empleado = Empleado::where("departamento_unidad_id", "=", 8)->get();
-        $externo = Externo::where("departamento_unidad_id", "=", 8)->get();
+        $facultadBusqueda = Carrera::where("id", "=", $carrera)->first();
+        $departamento = DepartamentoU::where("facultad_id", "=", $facultadBusqueda->facultad_id)->get();
+        $empleado = Empleado::where("departamento_unidad_id", "=", $departamentoBusqueda)->get();
+        $externo = Externo::where("departamento_unidad_id", "=", $departamentoBusqueda)->get();
         
         return view('director.gruposTrabajo', array(
             'departamentos' => $departamento,
             'facultades' => $facultad,
-            'idFacultad' => 1,
-            'idDepartamento' => 8,
+            'idFacultad' => $facultadBusqueda->facultad_id,
+            'idDepartamento' => $departamentoBusqueda,
             'empleados' => $empleado,
             'externos' => $externo,
             'grupos' => $grupos,
@@ -154,8 +171,9 @@ class DirectorController extends Controller
 
     public function datosExterno(Request $request)
     {
+        $departamento = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
         $tipoExterno = $request->input('id');
-        $asesores = Externo::where('rol_externo', "=", $tipoExterno)->where("departamento_unidad_id", "=", 8)->orderBy('id', 'desc')->get();
+        $asesores = Externo::where('rol_externo', "=", $tipoExterno)->where("departamento_unidad_id", "=", $departamento)->orderBy('id', 'desc')->get();
         return $asesores;
     }
 

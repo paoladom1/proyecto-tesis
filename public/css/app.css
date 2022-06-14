@@ -177,7 +177,7 @@
     float: left;
     position: fixed;
     margin-top: 6.9rem;
-    margin-left: 1rem;
+    margin-left: 1.2rem;
     color: white;
     background-color: #003C71;
     border-radius: 5px;
@@ -198,8 +198,13 @@
     float: right;
     color: white;
     opacity: 100;
-    margin-top: 0.8em;
-    margin-bottom: 0.8em;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn-close2 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .btn-close:focus{

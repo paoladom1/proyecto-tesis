@@ -144,7 +144,7 @@
                                 @php
                                     ++$cont;
                                 @endphp
-                                <option value="{{$cont}}">{{$departamento->nombre_departamento}}</option>
+                                <option value="{{$departamento->id}}">{{$departamento->nombre_departamento}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -939,7 +939,7 @@
     }
 
     function mostrarDatosModalPrincipal(idGrupoTrabajo) {
-        $('#btnCrearGrupo').text('Modificar Grupo')
+        $('#btnCrearGrupo').text('Modificar Grupo');
         /* 
             1 -> UCA - DIRECTOR
             2 -> EXTERNO - DIRECTOR
@@ -1045,7 +1045,6 @@
                 console.log(data);
             }
         })
-        alert("Si funciona");
     }
 
     var cantidadIntegrantes = 0;

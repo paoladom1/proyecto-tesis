@@ -84,7 +84,7 @@
                 </div>
                 <div class="row d-flex flex-column align-items-center justify-content-center mt-4">
                     @if (session('mensaje'))
-                fuente-general      @if (session('mensaje')[0] != "" || session('mensaje')[1] != "")
+                      @if (session('mensaje')[0] != "" || session('mensaje')[1] != "")
                         <div class="container">
                           <div class="alert alert-success" role="alert">
                               <ul>

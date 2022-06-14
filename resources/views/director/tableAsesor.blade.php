@@ -1,10 +1,10 @@
-<table class="table table-hover align-middle" id="tablaAsesor">
+<table class="table table-hover align-middle fuente-general" id="tablaAsesor">
     <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; ">
         <tr>
-            <th scope="col">Nombres</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Correo Electronico</th>
-            <th scope="col">Acciones</th>
+            <th scope="col">NOMBRES</th>
+            <th scope="col">APELLIDOS</th>
+            <th scope="col">CORREO ELECTRÓNICO</th>
+            <th scope="col">ACCIONES</th>
         </tr>
     </thead>
     <tbody>
