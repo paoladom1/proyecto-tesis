@@ -38,7 +38,7 @@
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" href="{{ url('/perfil') }}" style="width: 100%">Editar perfil</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="{{route('logout')}}" style="width: 100%">Cerrar sesion</a>
+                <a class="dropdown-item" href="{{route('logout')}}" style="width: 100%">Cerrar sesión</a>
             </div>
           </div>
     </nav>
@@ -53,16 +53,16 @@
             @if (auth()->guard('admin')->user()->tipo_usuario_id == 1)
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="{{ url('/menu') }}"><i class="bi bi-house-door"></i> Menu Principal</a>
+                        <a href="{{ url('/menu') }}"><i class="bi bi-house-door"></i> Menú Principal</a>
                         <hr>
                     </li>
                     <li> <a href="{{ url('/resumen') }}"><i class="bi bi-clipboard2-data"></i> Resumen</a> </li>
                     <li> <a href="{{ url('/agradecimientos') }}"><i class="bi bi-people"></i> Agradecimientos</a> </li>
                     <li> <a href="{{ url('/abreviaturas') }}"><i class="bi bi-explicit"></i> Abreviaturas</a> </li>
-                    <li> <a href="{{ url('/capitulos') }}"><i class="bi bi-pen"></i> Capitulos</a> </li>
+                    <li> <a href="{{ url('/capitulos') }}"><i class="bi bi-pen"></i> Capítulos</a> </li>
                     <li> <a href="{{ url('/glosario') }}"><i class="bi bi-journal-bookmark-fill"></i> Glosario</a> </li>
                     <li> <a href="{{ url('/referencias') }}"><i class="bi bi-list-columns-reverse"></i> Referencias</a> </li>
-                    <li> <a href="{{ url('/bitacora') }}"><i class="bi bi-journals"></i> Bitacora</a> </li>
+                    <li> <a href="{{ url('/bitacora') }}"><i class="bi bi-journals"></i> Bitácora</a> </li>
                 </ul>
             @elseif (auth()->guard('admin')->user()->tipo_usuario_id == 2)
                 <ul class="list-unstyled components">

@@ -129,7 +129,7 @@ class DocumentoController extends Controller
             $array[$cont][0] = 'Resumen'; $array[$cont++][1] = '-1'; 
         }
 
-        $array[$cont][0] = 'Indice (Autogenerado)'; $array[$cont++][1] = '-1'; 
+        $array[$cont][0] = 'Índice (Autogenerado)'; $array[$cont++][1] = '-1'; 
 
         if ($sigla == "[]") {
             $array[$cont][0] = 'Siglas (No tiene datos)'; $array[$cont++][1] = '-3'; 
@@ -153,11 +153,11 @@ class DocumentoController extends Controller
         $numCap = 1;
 
         if (count($capitulo) == 0) {
-            $array[$cont][0] = 'No hay capitulos ingresados'; $array[$cont++][1] = -4;
+            $array[$cont][0] = 'No hay capítulos ingresados'; $array[$cont++][1] = -4;
         }
 
         foreach($capitulo as $cap){
-            $array[$cont][0] = 'Capitulo '.$numCap++.'. '.$cap->nombre_capitulo; $array[$cont++][1] = $cap->id; 
+            $array[$cont][0] = 'Capítulo '.$numCap++.'. '.$cap->nombre_capitulo; $array[$cont++][1] = $cap->id; 
         }
 
         if ($glosario == "[]") {
@@ -550,7 +550,7 @@ class DocumentoController extends Controller
                 $seccionesCrear = $seccionesCrear.'- Resumen\\n';
             } else if($dato == -5){ 
                 DocumentoController::indice($documento);
-                $seccionesCrear = $seccionesCrear.'- Indice\\n';
+                $seccionesCrear = $seccionesCrear.'- Índice\\n';
             } else if($dato == -6){ 
                 DocumentoController::seccionSiglas($documento);
                 $seccionesCrear = $seccionesCrear.'- Siglas\\n';

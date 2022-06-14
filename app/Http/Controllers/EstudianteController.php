@@ -86,7 +86,7 @@ class EstudianteController extends Controller
         //$capitulo->grupo_trabajo_id = $request->input('orden_capitulo');
         $capitulo->grupo_trabajo_id = $this->obtenerGrupo();
         $capitulo->save();
-        $this->bitacora('Se ha creado el capitulo: '.$capitulo->nombre_capitulo, 7, 1);
+        $this->bitacora('Se ha creado el capítulo: '.$capitulo->nombre_capitulo, 7, 1);
         $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
         return $capitulos;
     }
@@ -117,7 +117,7 @@ class EstudianteController extends Controller
     {
         $id = $request->input('id');
         $capitulo = SeccionCapitulo::findOrFail($id);
-        $this->bitacora('Se ha eliminado el capitulo: '.$capitulo->nombre_capitulo, 7, 3);
+        $this->bitacora('Se ha eliminado el capítulo: '.$capitulo->nombre_capitulo, 7, 3);
         $capitulo->delete();
     }
 
@@ -198,8 +198,8 @@ class EstudianteController extends Controller
             }
             ++$i;
         }
-        $this->bitacora('Se ha modificado el contenido del capitulo: '.$capitulo->nombre_capitulo, 7, 2);
-        return redirect('capitulos')->with('status', 'Se guardaron los datos del Capitulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo.'!');
+        $this->bitacora('Se ha modificado el contenido del capítulo: '.$capitulo->nombre_capitulo, 7, 2);
+        return redirect('capitulos')->with('status', '¡Se guardaron los datos del Capítulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo.'!');
     }
 
     public function eliminarContenido(Request $request)
@@ -207,7 +207,7 @@ class EstudianteController extends Controller
         $id = $request->input('id');
         $capitulo = $request->input('capitulo');
         $contenido = ContenidoSeccionCapitulo::findOrFail($id);
-        $this->bitacora('Se ha eliminado el tema: '.$contenido->tema.' del capitulo: '.$capitulo, 7, 3);
+        $this->bitacora('Se ha eliminado el tema: '.$contenido->tema.' del capítulo: '.$capitulo, 7, 3);
         $contenido->delete();
     }
 
@@ -234,7 +234,7 @@ class EstudianteController extends Controller
         if($contenido == ""){
             $mensaje = array(
                 'code'=> 400,
-                'mensaje' => "No pueden quedar campos vacios!"
+                'mensaje' => "¡No pueden quedar campos vacíos!"
             );
         } else{
             if($id == null){
@@ -249,11 +249,11 @@ class EstudianteController extends Controller
                 $resumen -> contenido = $contenido;
                 $resumen -> grupo_trabajo_id = $this->obtenerGrupo();
                 $resumen->update();
-                $this->bitacora('Se Modificó la sección de resumen', 3, 2);
+                $this->bitacora('Se modificó la sección de resumen', 3, 2);
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!",
+                'mensaje' => "¡Se guardó el resumen exitosamente!",
                 'id' => $id
             );
         }
@@ -274,7 +274,7 @@ class EstudianteController extends Controller
         if($contenido == ""){
             $mensaje = array(
                 'code'=> 400,
-                'mensaje' => "No pueden quedar campos vacios!"
+                'mensaje' => "¡No pueden quedar campos vacíos!"
             );
         } else{
             if($id == null){
@@ -289,11 +289,11 @@ class EstudianteController extends Controller
                 $referencia -> contenido = $contenido;
                 $referencia -> grupo_trabajo_id = $this->obtenerGrupo();
                 $referencia->update();
-                $this->bitacora('Se Modificó la sección de referencias', 9, 2);
+                $this->bitacora('Se modificó la sección de referencias', 9, 2);
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!",
+                'mensaje' => "¡Se guardaron las referencias exitosamente!",
                 'id' => $id
             );
         }
@@ -322,7 +322,7 @@ class EstudianteController extends Controller
         if($contenido == ""){
             $mensaje = array(
                 'code'=> 400,
-                'mensaje' => "No pueden quedar campos vacios!"
+                'mensaje' => "¡No pueden quedar campos vacíos!"
             );
         } else{
             if($id == null){
@@ -343,7 +343,7 @@ class EstudianteController extends Controller
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!",
+                'mensaje' => "¡Se guardó el glosario exitosamente!",
                 'id' => $id
             );
         }
@@ -361,13 +361,13 @@ class EstudianteController extends Controller
         if($opcional == 1){
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: Es opcional (La sección del glosario no se incluirá en el documento)"
+                'mensaje' => "¡Cambió a estado: Es opcional! (La sección del glosario no se incluirá en el documento)"
             );
             $this->bitacora('Se cambió a estado: Es opcional', 8, 2);
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: No es opcional (La sección del glosario se podrá incluir en el documento)"
+                'mensaje' => "¡Cambió a estado: No es opcional! (La sección del glosario se podrá incluir en el documento)"
             );
             $this->bitacora('Se cambió a estado: No es opcional', 8, 2);
         }
@@ -394,7 +394,7 @@ class EstudianteController extends Controller
         if($contenido == ""){
             $mensaje = array(
                 'code'=> 400,
-                'mensaje' => "No pueden quedar campos vacios!"
+                'mensaje' => "¡No pueden quedar campos vacíos!"
             );
         } else{
             if($id == null){
@@ -425,9 +425,18 @@ class EstudianteController extends Controller
                     $this->bitacora('Se modificó la sección de nomenclaturas', 6, 2);
                 }
             }
+
+            if ($tipo == 1) {
+                $tipoMensaje = "las abreviaciones";
+            } else if($tipo == 2){
+                $tipoMensaje = "las siglas";
+            } else if ($tipo == 3) {
+                $tipoMensaje = "las nomenclaturas";
+            }
+
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!",
+                'mensaje' => "¡Se guardó ".$tipoMensaje." exitosamente!",
                 'id' => $id
             );
         }
@@ -488,7 +497,7 @@ class EstudianteController extends Controller
         if($contenido == "" || $autor == ""){
             $mensaje = array(
                 'code'=> 400,
-                'mensaje' => "No pueden quedar campos vacios!"
+                'mensaje' => "¡No pueden quedar campos vacíos!"
             );
         } else{
             if($id == null){
@@ -511,7 +520,7 @@ class EstudianteController extends Controller
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!",
+                'mensaje' => "¡El agradecimiento de ".$estudiante->nombre." ".$estudiante->apellido." se guardó exitosamente!",
                 'id' => $id
             );
         }
@@ -528,7 +537,7 @@ class EstudianteController extends Controller
         if($contenido == "" || $autor == ""){
             $mensaje = array(
                 'code'=> 400,
-                'mensaje' => "No pueden quedar campos vacios!"
+                'mensaje' => "¡No pueden quedar campos vacíos!"
             );
         } else{
             if($id == null){
@@ -551,7 +560,7 @@ class EstudianteController extends Controller
             }
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Se guardo exitosamente!",
+                'mensaje' => "¡La dedicatoria de ".$estudiante->nombre.' '.$estudiante->apellido." se guardó exitosamente!",
                 'id' => $id
             );
         }
@@ -587,13 +596,13 @@ class EstudianteController extends Controller
         if($opcional == 1){
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: Es opcional (La sección de ".$mensajeTipo." no se incluirá en el documento)"
+                'mensaje' => "¡Cambió a estado: Es opcional! (La sección de ".$mensajeTipo." no se incluirá en el documento)"
             );
             $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: Es opcional', 1, 2);
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "Cambio a estado: No es opcional (La sección de ".$mensajeTipo." se podrá incluir en el documento)"
+                'mensaje' => "¡Cambió a estado: No es opcional! (La sección de ".$mensajeTipo." se podrá incluir en el documento)"
             );
             $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: No es opcional', 2, 2);
         }

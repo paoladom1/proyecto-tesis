@@ -83,7 +83,7 @@
                                 <a href="{{ url('/bitacora') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard7.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
-                                        <h5 class="card-title">BITACORA</h5>
+                                        <h5 class="card-title">BITÁCORA</h5>
                                     </div>
                                 </a>
                             </div>

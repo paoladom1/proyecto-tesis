@@ -52,7 +52,7 @@
     function obtenerNombreCapitulo(id, titulo, id2) {
         idT = id;  
         idC = id2;
-        $("#tituloCap").text('¿Esta seguro de eliminar el capitulo "'+titulo+'"?');
+        $("#tituloCap").text('¿Está seguro de eliminar el capítulo "'+titulo+'"?');
     }
 
     function seccion(nombreC, idC) {
@@ -62,12 +62,12 @@
         fragmento = `
                         <th class="align-middle" style="cursor: grab;"><i class="bi bi-list"></i></td>
                         <th scope="row" style="display:none" class="align-middle" name="numeracion" id="num${a}">${a} </th><span name="idCapitulos" style="display:none">${idC}</span>
-                        <td class="align-middle" name="titulacion"><span name="numCapitulo">Capitulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
+                        <td class="align-middle" name="titulacion"><span name="numCapitulo">Capítulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" onclick="window.location.href='/contenidoCapitulo/${idC}'" class="btn btn-primary">Modificar contenido</button>
-                            <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar titulo</button>
-                            <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capitulo</button>
+                            <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar título</button>
+                            <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capítulo</button>
                         </div>
                         </td>
                     `;
@@ -85,7 +85,7 @@
                 {
                     ordenarCapitulos();
                     modificarOrden();
-                    alertPersonalizado("Se cambió el orden con exito!", 'success', 1, ++contAlert);
+                    alertPersonalizado("¡Se cambió el orden con éxito!", 'success', 1, ++contAlert);
                 }
             }
         );
@@ -95,7 +95,7 @@
         let nombre = $('#nombreCap').val();
         if(id == ""){
             if (nombre.trim() == "") {
-                alertPersonalizado("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
+                alertPersonalizado("¡No puede quedar el campo vacío!", 'danger', 2, ++contAlert);
             } else{
                 $.ajax({
                     type : "POST",
@@ -113,11 +113,11 @@
                         console.log(data);
                     }
                 })
-                alertPersonalizado("Se guardó el capitulo con exito!", 'success', 1, ++contAlert);
+                alertPersonalizado("¡Se guardó el capítulo con exito!", 'success', 1, ++contAlert);
             }
         } else{
             if (nombre.trim() == "") {
-                alertPersonalizado("No puede quedar el campo vacio!", 'danger', 2, ++contAlert);
+                alertPersonalizado("¡No puede quedar el campo vacío!", 'danger', 2, ++contAlert);
             } else{
                 quitarModificar();
                 $.ajax({
@@ -136,7 +136,7 @@
                         console.log(data);
                     }
                 })
-                alertPersonalizado("Se modificó el capitulo con exito!", 'success', 1, ++contAlert);
+                alertPersonalizado("¡Se modificó el capítulo con exito!", 'success', 1, ++contAlert);
             }
         }
     }
@@ -172,7 +172,7 @@
                 data: {"_token": "{{ csrf_token() }}", "id": id},
                 success : function(r) {
                     guardarOrdenCapitulo();
-                    alertPersonalizado("Se eliminó el capitulo con exito!", 'success', 1, ++contAlert);
+                    alertPersonalizado("¡Se eliminó el capitulo con exito!", 'success', 1, ++contAlert);
                 },
                 error : function(data) {
                     console.log(data);
@@ -234,7 +234,7 @@
                 <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
                 <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="font-style: italic;">
                 <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
-                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success"><i class="bi bi-save"></i> <span id="btnTitulo">Agregar Capitulo</span></button>
+                <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success"><i class="bi bi-save"></i> <span id="btnTitulo">Agregar Capítulo</span></button>
             </div>
         </div>
     </div>
@@ -278,9 +278,9 @@
             <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Eliminar capítulo</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="text-align: center;">
             <p id="tituloCap"></p>
-            <p>TODO EL CONTENIDO DE DICHO CAPITULO SE BORRARÁ PERMANENTEMENTE!</p>
+            <h5 style="font-weight: bold;">¡Todo el contenido de dicho capítulo se borrará permanentemente!</h5>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

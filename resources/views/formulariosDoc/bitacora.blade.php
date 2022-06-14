@@ -3,7 +3,7 @@
 
     <div class="containerBitacora fuente-general">
         <div class="col seccion_" id="titulosApp">
-            <h2>BITACORA DE CAMBIOS</h2>
+            <h2>BITÁCORA DE CAMBIOS</h2>
         </div>
         <br>
             
@@ -99,7 +99,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
-                    <h5 class="modal-title" style="color: white; font-size: 1.75em;" id="exampleModalLongTitle">Información de bitacora</h5> <!-- cambiar esta parte-->
+                    <h5 class="modal-title" style="color: white; font-size: 1.75em;" id="exampleModalLongTitle">Información de bitácora</h5> <!-- cambiar esta parte-->
                     <button type="button" class="btn-close btn-close-white" style="width: 1em;" data-dismiss="modal" aria-label="Close" onclick="borrarCampos()">
                     </button>
                 </div>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="accion" class="form-label">Accion</label>
+                        <label for="accion" class="form-label">Acción</label>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" id="accion" aria-describedby="basic-addon3" readonly>
                         </div>
@@ -140,7 +140,7 @@
                 </div>
             </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="borrarCampos()">Cerrar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="borrarCampos()"><i class="bi bi-x-circle"></i> Cerrar</button>
                 </div>
             </div>
         </div>

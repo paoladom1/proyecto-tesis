@@ -121,7 +121,7 @@
             ordenarSubTemas(numeracionTres);
         } 
         ordenarTemas();
-        alertPersonalizado('Se eliminó con exito!', 'success', 1, ++contAlert);
+        alertPersonalizado('¡Se eliminó con exito!', 'success', 1, ++contAlert);
     }
 
     function temasSubTemas(a) {
@@ -165,7 +165,7 @@
                                     
                                     <div class="row">
                                             <div class="col seccion_${contadorGlobal}">
-                                                <span class="input-group-text" id="basic-addon3">Titulo</span>
+                                                <span class="input-group-text" id="basic-addon3">Título</span>
                                                 <input type="text" name="seccion1[]" id="tituloB${contadorGlobal}" value="${titulo}" onkeyup="temasSubTemas(${contadorGlobal}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                             </div>
                                             <input hidden type="text" name="seccion3[]" id="seccion3${contadorGlobal}" value="${id}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -176,7 +176,7 @@
                                         <br>
                                         <div class="row">
                                             <div class="col seccion_${contadorGlobal}">
-                                                <span class="input-group-text">Parrafo</span>
+                                                <span class="input-group-text">Párrafo</span>
                                                 <textarea class="form-control" id="seccionTexto${contadorGlobal}" name="seccion2[]" aria-label="With textarea" rows=15>${descripcion}</textarea>
                                             </div>
                                         </div>
@@ -214,7 +214,7 @@
                                 <div class="accordion-body">
                                     <div class="row">
                                             <div class="col seccion_${contadorGlobal}">
-                                                <span class="input-group-text" id="basic-addon3">Titulo</span>
+                                                <span class="input-group-text" id="basic-addon3">Título</span>
                                                 <input type="text" name="seccion1[]" id="tituloB${contadorGlobal}" value="${titulo}" onkeyup="temasSubTemas(${contadorGlobal}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                             </div>
                                             <input hidden type="text" name="seccion3[]" id="seccion3${contadorGlobal}" value="${id}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -224,7 +224,7 @@
                                         <br>
                                         <div class="row">
                                             <div class="col seccion_${contadorGlobal}">
-                                                <span class="input-group-text">Parrafo</span>
+                                                <span class="input-group-text">Párrafo</span>
                                                 <textarea class="form-control" id="seccionTexto${contadorGlobal}" name="seccion2[]" aria-label="With textarea" rows=15>${descripcion}</textarea>
                                             </div>
                                         </div>
@@ -322,7 +322,7 @@
 
 <div class="container contenidoContainer">
     <div class="col seccion_" id="titulosApp">
-        <h2>Capitulo {{$capitulo->orden_capitulo}}.<span id="tituloCapitulo"> {{$capitulo->nombre_capitulo}}</span></h2>
+        <h2>Capítulo {{$capitulo->orden_capitulo}}.<span id="tituloCapitulo"> {{$capitulo->nombre_capitulo}}</span></h2>
     </div>
     <br>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -340,7 +340,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Introducción del capitulo "{{$capitulo->nombre_capitulo}}"
+                    Introducción del capÍtulo "{{$capitulo->nombre_capitulo}}"
                 </button>
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
@@ -403,7 +403,7 @@
             @endforeach
         @endforeach
         <br>
-        <button type="submit" onclick="bandera2 = 0" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Capitulo</button>
+        <button type="submit" onclick="bandera2 = 0" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Capítulo</button>
     </form>
 
     <!-- Modal -->
@@ -414,9 +414,9 @@
                 <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Eliminar tema/subtema</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="desmarcar()"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="text-align: center;">
                 <p id="tituloCap"></p>
-                <p>La información referente a este será borrado</p>
+                <h5 style="font-weight: bold;">¡Toda la información se borrará permanentemente!</h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
