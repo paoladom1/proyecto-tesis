@@ -1,7 +1,7 @@
 <table class="table table-hover align-middle fuente-general" id="tablaGrupos">
 <thead class="thead-dark" style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px;">
     <tr>
-        <th scope="col">NUMERO DE INTEGRANTES</th>
+        <th scope="col">NÚMERO DE INTEGRANTES</th>
         <th scope="col">TEMA DEL TRABAJO DE GRADUACIÓN</th>
         <th scope="col">ACCIONES</th>
     </tr>

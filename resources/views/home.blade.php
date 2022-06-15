@@ -70,10 +70,7 @@
                         <input type="password" name="password" class="form-control" placeholder="Contraseña">
                     </div>
                     <div class="row mb-3">
-                        <div class="olvidasteC">
-                            <a href="#" style="font-size: 1rem; font-weight: bold; text-decoration: none"  onMouseOver="this.style.color='#f00'"
-                            onMouseOut="this.style.color='blue'">¿Olvidaste la contraseña?</a>
-                        </div>
+                        
                     </div>
                     <div class="row mb-3">
                         <div class="col-8 justify-content-start" style="align-self: center;">

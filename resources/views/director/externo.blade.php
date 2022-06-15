@@ -357,7 +357,7 @@
         var verificar = patronEmail.exec(correo);
 
         if (nombre.trim() == "" || apellido.trim() == "" || correo.trim() == "" || rol.trim() == "") {
-            alertPersonalizado2("Necesita llenar todos los campos!", 'danger', 2, 1)   
+            alertPersonalizado2("¡Necesita llenar todos los campos!", 'danger', 2, 1)   
         } else {
             if (verificar != null) {
                 $.ajax({
@@ -369,10 +369,10 @@
                         if(idExterno == ""){
                             if (rol == 0) { //asesor
                                 asesor(1);
-                                alertPersonalizado("Asesor registrado con exito!", 'success', 1, ++contadorMensajes);   
+                                alertPersonalizado("¡Asesor registrado con exito!", 'success', 1, ++contadorMensajes);   
                             } else if(rol == 1){ //lector
                                 lector(1);
-                                alertPersonalizado("Lector registrado con exito!", 'success', 1, ++contadorMensajes);
+                                alertPersonalizado("¡Lector registrado con exito!", 'success', 1, ++contadorMensajes);
                             }
                         } else{
                             if (rolActual == rol) {
@@ -387,7 +387,7 @@
                                     lector(1);   
                                 }
                             }
-                            alertPersonalizado("Datos modificados con exito!", 'success', 1, ++contadorMensajes);
+                            alertPersonalizado("¡Datos modificados con exito!", 'success', 1, ++contadorMensajes);
                         }
                         limpiarCampos();
                         $('#exampleModalToggle').modal('hide');
@@ -397,7 +397,7 @@
                     }
                 })
             } else{
-                alertPersonalizado2("El correo no tiene el formato adecuado!", 'danger', 2, 1)   
+                alertPersonalizado2("¡El correo no tiene el formato adecuado!", 'danger', 2, 1)   
             }
         }
     }

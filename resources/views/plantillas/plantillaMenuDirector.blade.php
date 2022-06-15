@@ -36,7 +36,7 @@
         <div class="row">
             <div class="container mPrincipal">
                 <div class="row " style="background-color:#003C71; border-bottom:solid #E87B2A 8px;">
-                    <center><h1 class="mt-3 mb-3" style="color: #e3eef5; font-size: 2em">MENU PRINCIPAL</h1></center>
+                    <center><h1 class="mt-3 mb-3" style="color: #e3eef5; font-size: 2em">MENÚ PRINCIPAL</h1></center>
                 </div>
                 <center>
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
@@ -45,7 +45,7 @@
                                     <a href="{{ url('/externo') }}" style="text-decoration: none; color: black;">
                                         <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
                                         <div class="card-body body-card mt-2">
-                                            <h5 class="card-title">ASESORES Y LECTORES EXTERNOS</h5>
+                                            <h5 class="card-title">DIRECTORES Y LECTORES EXTERNOS</h5>
                                         </div>
                                     </a>
                                 </div>
