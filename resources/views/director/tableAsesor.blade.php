@@ -18,6 +18,13 @@
         @endforeach
     </tbody>
 </table>
-<div id="paginacionAsesor">
-    {{ $asesores->links('pagination::bootstrap-4') }}
+<div class="paginacionAD">
+    @if ($asesores->total() != 0)
+        <div>
+            <p>Resultados del {{$asesores->firstItem() }} al {{$asesores->lastItem() }} de {{$asesores->total() }}</p>
+        </div>
+    @endif
+    <div id="paginacionAsesor">
+        {{ $asesores->links('pagination::bootstrap-4') }}
+    </div>
 </div>

@@ -20,6 +20,13 @@
     @endforeach
 </tbody>
 </table>
-<div id="paginacionGrupos">
-    {{ $grupos->links('pagination::bootstrap-4') }}
+<div class="paginacionAD">
+    @if ($grupos->total() != 0)
+        <div>
+            <p>Resultados del {{$grupos->firstItem() }} al {{$grupos->lastItem() }} de {{$grupos->total() }}</p>
+        </div>
+    @endif
+    <div id="paginacionGrupos">
+        {{ $grupos->links('pagination::bootstrap-4') }}
+    </div>
 </div>

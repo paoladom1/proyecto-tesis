@@ -301,7 +301,7 @@
                                 </div>
                             </div>
                             <br>
-                            <label class="form-label">Segundo lector</label> 
+                            <label class="form-label">Lector</label> 
                             <div class="containerToogle">
                                 <div>
                                     <div class="dropdown">
@@ -377,14 +377,19 @@
                     @endforeach
                 </tbody>
             </table>
-            <div id="paginacionGrupos">
-                {{ $grupos->links('pagination::bootstrap-4') }}
+            <div class="paginacionAD">
+                @if ($grupos->total() != 0)
+                    <div>
+                        <p>Resultados del {{$grupos->firstItem() }} al {{$grupos->lastItem() }} de {{$grupos->total() }}</p>
+                    </div>
+                @endif
+                <div id="paginacionGrupos">
+                    {{ $grupos->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
     </div>
-    <div class="row d-flex flex-row-reverse mt-3">
-        <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: -7%;" onclick="$('#btnCrearGrupo').text('Crear Grupo');  mostrarEleccionEstudiante();"><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
-    </div>
+    <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="" onclick="$('#btnCrearGrupo').text('Crear Grupo');  mostrarEleccionEstudiante();"><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
     <br>
 
     <!--------------------------------------------------Modal para estudiantes----------------------------------------->
@@ -880,11 +885,11 @@
             bandera = 1;
         } else if (cambio == 3) {
             cambiarTexto(boton, "UCA");
-            $("#tituloModal").text("Segundo Lector"); 
+            $("#tituloModal").text("Lector"); 
             bandera = 2;
         } else if (cambio == 4) {
             cambiarTexto(boton, "Externo");
-            $("#tituloModal2").text("Segundo Lector"); 
+            $("#tituloModal2").text("Lector"); 
             bandera = 2;
         }
     }

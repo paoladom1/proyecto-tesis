@@ -17,7 +17,14 @@
             </tr>
         @endforeach
     </tbody>
-</table>
-<div id="paginacionLector">
-    {{ $lectores->links('pagination::bootstrap-4') }}
-</div>
+    </table>
+    <div class="paginacionAD">
+        @if ($lectores->total() != 0)
+            <div>
+                <p>Resultados del {{$lectores->firstItem() }} al {{$lectores->lastItem() }} de {{$lectores->total() }}</p>
+            </div>
+        @endif
+        <div id="paginacionLector">
+            {{ $lectores->links('pagination::bootstrap-4') }}
+        </div>
+    </div>

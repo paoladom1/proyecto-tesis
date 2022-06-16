@@ -1,6 +1,6 @@
 @extends('plantillas.nav')
 @section('content')
-    <div class="container" style="background-color: white">
+    <div class="container-fluid" style="background-color: white; width: 85%">
         <div class="row">
             <div class="container mPrincipal">
                 <div class="row" id="titulosApp">
@@ -9,7 +9,7 @@
                 <center>
                 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-1 mb-3">
                     <div class="col">
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <div class="card m-3 position-static card-menu" style="width: 20rem;">
                                 <a href="{{ url('/resumen') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="col">
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <div class="card m-3 position-static card-menu" style="width: 20rem;">
                                 <a href="{{ url('/agradecimientos') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="col">
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;" >
+                            <div class="card m-3 position-static card-menu" style="width: 20rem;" >
                                 <a href="{{ url('/abreviaturas') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard3.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
@@ -44,7 +44,7 @@
                     <!------------------------------------------------------------------------------------------------------>
 
                     <div class="col">
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <div class="card m-3 position-static card-menu" style="width: 20rem;">
                                 <a href="{{ url('/capitulos') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard4.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="col">
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <div class="card m-3 position-static card-menu" style="width: 20rem;">
                                 <a href="{{ url('/glosario') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard5.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="col">
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <div class="card m-3 position-static card-menu" style="width: 20rem;">
                                 <a href="{{ url('/referencias') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard6.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
@@ -79,7 +79,7 @@
                     <!------------------------------------------------------------------------------------------------------>
 
                     <div class="col">
-                            <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                            <div class="card m-3 position-static card-menu" style="width: 20rem;">
                                 <a href="{{ url('/bitacora') }}" style="text-decoration: none; color: black;">
                                     <img src="img/fondoCard7.jpeg" class="card-img-top img-card" alt="Card image cap">
                                     <div class="card-body body-card mt-2">
@@ -92,12 +92,11 @@
 
                 </center>
             </div>
+            
         </div>
-
+        <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button" style="width: auto; margin-bottom: 10px"><i class="bi bi-file-earmark-text float-icon"></i></a>
     </div>
-
-    <a class="float-button" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="bi bi-file-earmark-text float-icon"></i></a>
-
+    <br>
     <!-- Crear documento -->
     <form action="{{ url('/crearDocumento') }}" method="post">
         {{ csrf_field() }}

@@ -47,8 +47,8 @@ class DirectorController extends Controller
         
         $departamentoBusqueda = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
 
-        $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(6);
-        $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(6);
+        $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(10);
+        $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(10);
 
         if ($request->ajax()) {
             return response()->json(view($request->get('vista'), array(

@@ -41,7 +41,7 @@
                 <center>
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4 mt-3 mb-3">
                         <div class="col">
-                                <div class="card m-3 position-static card-menu" style="width: 18rem;">
+                                <div class="card m-3 position-static card-menu" style="width: 20rem;">
                                     <a href="{{ url('/externo') }}" style="text-decoration: none; color: black;">
                                         <img src="img/fondoCard2.jpeg" class="card-img-top img-card" alt="Card image cap">
                                         <div class="card-body body-card mt-2">
@@ -51,7 +51,7 @@
                                 </div>
                         </div>
                         <div class="col">
-                                <div class="card m-3 position-static card-menu" style="width: 18rem;" >
+                                <div class="card m-3 position-static card-menu" style="width: 20rem;" >
                                     <a href="{{ url('/grupoTrabajo') }}" style="text-decoration: none; color: black;">
                                         <img src="img/fondoCard.jpeg" class="card-img-top img-card" alt="Card image cap">
                                         <div class="card-body body-card mt-2">

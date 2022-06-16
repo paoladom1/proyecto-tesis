@@ -154,7 +154,7 @@
                                     <select class="form-control form-select" id="rol">
                                         <option value = "">Seleccione un rol</option>
                                         <option value = "1">Lector</option>
-                                        <option value = "0">Asesor</option>
+                                        <option value = "0">Director</option>
                                     </select>
                                     <label for="rol">Rol</label>
                                     </div>
@@ -180,7 +180,7 @@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">LECTORES EXTERNO</button>
-          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">ASESORES EXTERNO</button>
+          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">DIRECTORES EXTERNO</button>
         </div>
     </nav>
       <div class="tab-content" id="nav-tabContent">
@@ -207,8 +207,15 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div id="paginacionLector">
-                        {{ $lectores->links('pagination::bootstrap-4') }}
+                    <div class="paginacionAD">
+                        @if ($lectores->total() != 0)
+                            <div>
+                                <p>Resultados del {{$lectores->firstItem() }} al {{$lectores->lastItem() }} de {{$lectores->total() }}</p>
+                            </div>
+                        @endif
+                        <div id="paginacionLector">
+                            {{ $lectores->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -236,16 +243,21 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div id="paginacionAsesor">
-                        {{ $asesores->links('pagination::bootstrap-4') }}
+                    <div class="paginacionAD">
+                        @if ($asesores->total() != 0)
+                            <div>
+                                <p>Resultados del {{$asesores->firstItem() }} al {{$asesores->lastItem() }} de {{$asesores->total() }}</p>
+                            </div>
+                        @endif
+                        <div id="paginacionAsesor">
+                            {{ $asesores->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
       </div>
-    <div class="row d-flex flex-row-reverse mt-3">
-        <a class="float-button" onclick="myModal.show()" href="#exampleModalToggle" role="button" data-backdrop="false" style="width: 15%; right: -7%;" ><i class="bi bi-person-plus-fill float-icon"></i></a>
-    </div>
+      <a class="float-button btn-float-2" onclick="myModal.show()" href="#exampleModalToggle" role="button" data-backdrop="false" ><i class="bi bi-person-plus-fill float-icon"></i></a>
     <br>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
