@@ -1,7 +1,7 @@
 @extends('plantillas.nav')
 @section('content')
 
-    <div class="containerBitacora fuente-general">
+    <div class="containerBitacora fuente-general" style="margin-bottom: 30px;">
         <div class="col seccion_" id="titulosApp">
             <h2>BITÁCORA DE CAMBIOS</h2>
         </div>
@@ -45,7 +45,7 @@
                     <button type="submit" class="btn btn-success btn-sm" data-dismiss="modal"><i class="bi bi-search"></i> Filtrar</button>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" onclick="restablecerFiltro()"><i class="bi bi-arrow-repeat"></i> Restablecer</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" onclick="restablecerFiltro()"><i class="bi bi-arrow-repeat"></i> Limpiar Filtro</button>
                 </div>
             </div>
         </form>

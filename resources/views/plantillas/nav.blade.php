@@ -89,6 +89,12 @@
         @yield('content')
     </main>
 
+<style>
+    main{
+        min-height: calc(100vh - 79px - 87px);
+    }
+</style>
+
 <script>
     function openNav(){
         document.getElementById("SideNav").style.width = "250px";
