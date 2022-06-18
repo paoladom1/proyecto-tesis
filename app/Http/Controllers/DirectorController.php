@@ -47,8 +47,41 @@ class DirectorController extends Controller
         
         $departamentoBusqueda = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
 
-        $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(10);
-        $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->where("departamento_unidad_id", "=", $departamentoBusqueda)->orderBy('id', 'desc')->paginate(10);
+        $tipoAD = $request->get('tipoLectorAsesor');
+        $tipoBusqueda = $request->get('tipoBusqueda');
+        $busqueda = $request->get('busqueda');
+        $nombreL = "";
+        $apellidoL = "";
+        $correoL = "";
+        $nombreD = "";
+        $apellidoD = "";
+        $correoD = "";
+
+        if ($tipoAD == 1) {
+            if ($tipoBusqueda == 1) {
+                $nombreL = $busqueda;
+            } else if ($tipoBusqueda == 2) {
+                $apellidoL = $busqueda;
+            } else if ($tipoBusqueda == 3) {
+                $correoL = $busqueda;
+            }
+        } else if ($tipoAD == 2) {
+            if ($tipoBusqueda == 1) {
+                $nombreD = $busqueda;
+            } else if ($tipoBusqueda == 2) {
+                $apellidoD = $busqueda;
+            } else if ($tipoBusqueda == 3) {
+                $correoD = $busqueda;
+            }
+        }
+
+        $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->
+        where("departamento_unidad_id", "=", $departamentoBusqueda)->where("nombre", "like", $nombreD."%")->Where("apellido", "like", $apellidoD."%")->Where("correo", "like", $correoD."%")
+        ->orderBy('id', 'desc')->paginate(10);
+        
+        $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->
+        where("departamento_unidad_id", "=", $departamentoBusqueda)->where("nombre", "like", $nombreL."%")->Where("apellido", "like", $apellidoL."%")->Where("correo", "like", $correoL."%")
+        ->orderBy('id', 'desc')->paginate(10);
 
         if ($request->ajax()) {
             return response()->json(view($request->get('vista'), array(

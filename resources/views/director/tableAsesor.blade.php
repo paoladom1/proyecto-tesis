@@ -7,7 +7,7 @@
             <th scope="col">ACCIONES</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="contenidoAsesor">
         @foreach ($asesores as $asesor)
             <tr>
                 <td style="width: 26%">{{$asesor->nombre}}</td>
@@ -16,6 +16,9 @@
                 <td><button class="btn btn-primary" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $asesor->id ?>)" style="color: white">Editar</button></td>
             </tr>
         @endforeach
+        <tr id="noDatos2">
+            <td colspan="4">¡No hay datos disponibles!</td>
+        </tr>
     </tbody>
 </table>
 <div class="paginacionAD">

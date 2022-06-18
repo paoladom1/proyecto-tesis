@@ -100,6 +100,21 @@
         transform: scale(0.982) translateY(0.045rem) translateX(0.1rem);
         border-radius: 5px 0 0 0;
     }
+    .dropEstudiante .dropdown-divider{
+        margin: 0;
+    }
+    .dropEstudiante .dropdown-item{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .dropEstudiante .dropdown-menu{
+        padding: 0;
+    }
+
+    #noDatos1, #noDatos2{
+        display: none;
+    }
 </style>
    
     <br>
@@ -179,8 +194,21 @@
     <div id="liveAlertPlaceholder"></div>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">LECTORES EXTERNO</button>
-          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">DIRECTORES EXTERNO</button>
+          <button onclick="limpiarBuscador(); banderaTipoAD = 1;" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">LECTORES EXTERNO</button>
+          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" onclick="limpiarBuscador(); banderaTipoAD = 2;">DIRECTORES EXTERNO</button>
+        </div>
+
+        <div class="input-group mb-3 dropEstudiante" style="width: 40%;float: right;margin-top: -55px;">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="buscadorEstuiante" data-bs-toggle="dropdown" aria-expanded="false">Nombre</button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" onclick="$('#buscadorEstuiante').text('Nombre'); banderaBusqueda=1;">Nombre</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" onclick="$('#buscadorEstuiante').text('Apellido'); banderaBusqueda=2">Apellido</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" onclick="$('#buscadorEstuiante').text('Correo'); banderaBusqueda=3;">Correo</a></li>
+            </ul>
+            <input type="search" class="form-control" id="buscadorTablaE" placeholder="Digite su criterio de busqueda">
+            <button class="btn btn-secondary" type="button" id="button-addon2" onclick="buscadorAD()"><i class="bi bi-search"></i></button>
         </div>
     </nav>
       <div class="tab-content" id="nav-tabContent">
@@ -205,6 +233,9 @@
                                     <td><button class="btn btn-primary" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $lector->id ?>)" style="color: white">Editar</button></td>
                                 </tr>
                             @endforeach
+                            <tr id="noDatos1">
+                                <td colspan="4">¡No hay datos disponibles!</td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="paginacionAD">
@@ -232,7 +263,7 @@
                             <th scope="col">ACCIONES</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="contenidoAsesor">
                             @foreach ($asesores as $asesor)
                                 <tr>
                                     <td style="width: 26%">{{$asesor->nombre}}</td>
@@ -241,6 +272,9 @@
                                     <td><button class="btn btn-primary" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $asesor->id ?>)" style="color: white">Editar</button></td>
                                 </tr>
                             @endforeach
+                            <tr id="noDatos2">
+                                <td colspan="4">¡No hay datos disponibles!</td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="paginacionAD">
@@ -257,21 +291,16 @@
             </div>
         </div>
       </div>
-      <a class="float-button btn-float-2" onclick="myModal.show()" href="#exampleModalToggle" role="button" data-backdrop="false" ><i class="bi bi-person-plus-fill float-icon"></i></a>
+      <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" ><i class="bi bi-person-plus-fill float-icon"></i></a>
     <br>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
     var paginacionActualLector = 1;
     var paginacionActualAsesor = 1;
-    var myModal = new bootstrap.Modal(document.getElementById('exampleModalToggle'), {
-        keyboard: false
-    });
-
-    $("#exampleModalToggle").on("hidden.bs.modal", function () { 
-        limpiarCampos();
-    });
+    var banderaBusqueda = 1;
+    var banderaTipoAD = 1;
+    var Busqueda = "";
 
     const alertPersonalizado2 = (message, type, icon, cont=0) => {
         const alertPlaceholder = document.getElementById('liveAlertPlaceholder2');
@@ -301,10 +330,38 @@
             type : "GET",
             "serverSide" : true,
             url : "./externo",
-            data: { "page": page, "vista": 'director.tableLector'},
+            data: { "page": page, "vista": 'director.tableLector', "tipoLectorAsesor": banderaTipoAD, "tipoBusqueda": banderaBusqueda, 
+            "busqueda":  Busqueda},
             dataType: 'json',
             success : function(r) {
                 $(".tableDinamicoLector").html(r);
+                total = document.querySelectorAll("#contenidoLector tr").length;
+                
+                if (total == 1) {
+                    document.getElementById("noDatos1").style.display = "table-row";    
+                }
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        })
+    }
+
+    const asesor = (page) => {
+        $.ajax({
+            type : "GET",
+            "serverSide" : true,
+            url : "./externo",
+            data: { "page": page, "vista": 'director.tableAsesor', "tipoLectorAsesor": banderaTipoAD, "tipoBusqueda": banderaBusqueda, 
+            "busqueda":  Busqueda},
+            dataType: 'json',
+            success : function(r) {
+                $(".tableDinamicoAsesor").html(r);
+                total = document.querySelectorAll("#contenidoAsesor tr").length;
+                
+                if (total == 1) {
+                    document.getElementById("noDatos2").style.display = "table-row";    
+                }
             },
             error : function(data) {
                 console.log(data);
@@ -318,22 +375,6 @@
         paginacionActualLector = page;
         lector(page);
     })
-
-    const asesor = (page) => {
-        $.ajax({
-            type : "GET",
-            "serverSide" : true,
-            url : "./externo",
-            data: { "page": page, "vista": 'director.tableAsesor'},
-            dataType: 'json',
-            success : function(r) {
-                $(".tableDinamicoAsesor").html(r);
-            },
-            error : function(data) {
-                console.log(data);
-            }
-        })
-    }
 
     $(document).on('click', '#paginacionAsesor .pagination a', function(e){
         e.preventDefault();
@@ -440,6 +481,48 @@
                 console.log(data);
             }
         })
+    }
+
+    var banderaAccionBuscar = 1;
+
+    function buscadorAD() {
+        Busqueda = $("#buscadorTablaE").val();
+        if (banderaTipoAD == 1) {
+            lector(1);   
+        } else{
+            asesor(1);
+        }
+        banderaAccionBuscar = 0;
+    }
+
+    document.querySelector('#buscadorTablaE').addEventListener ('keypress',function(e){
+        validar(e);
+    })
+
+    document.querySelector('#buscadorTablaE').addEventListener ('input',function(e){
+        if ($('#buscadorTablaE').val() == "" && banderaAccionBuscar == 0) {
+            limpiarBuscador();
+            banderaAccionBuscar = 1;
+        }
+    })
+
+    function validar(e) {
+        let tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==13){
+            buscadorAD()
+        };
+    }
+
+    function limpiarBuscador() {
+        $('#buscadorEstuiante').text('Nombre'); 
+        $('#buscadorTablaE').val('');
+        Busqueda = $("#buscadorTablaE").val();
+        banderaBusqueda=1;
+        if (banderaTipoAD == 1) {
+            lector(1);   
+        } else{
+            asesor(1);
+        }
     }
     
 </script>

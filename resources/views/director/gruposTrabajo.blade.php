@@ -90,6 +90,10 @@
     .dropEstudiante .dropdown-menu{
         padding: 0;
     }
+
+    #noDatos3{
+        display: none;
+    }
 </style>
    
     <br>
@@ -389,7 +393,7 @@
             </div>
         </div>
     </div>
-    <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" style="" onclick="$('#btnCrearGrupo').text('Crear Grupo');  mostrarEleccionEstudiante();"><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
+    <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" onclick="$('#btnCrearGrupo').text('Crear Grupo');  mostrarEleccionEstudiante();"><i class="bi bi-people-fill float-icon" style="border-radius: 100%"></i></a>
     <br>
 
     <!--------------------------------------------------Modal para estudiantes----------------------------------------->
@@ -434,46 +438,12 @@
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#" onclick="$('#buscadorEstuiante').text('Carnet'); banderaBusqueda=3;">Carnet</a></li>
                             </ul>
-                            <input type="text" class="form-control" id="buscadorTablaE" placeholder="Digite su criterio de busqueda">
+                            <input type="search" class="form-control" id="buscadorTablaE" placeholder="Digite su criterio de busqueda">
                             <button class="btn btn-secondary" type="button" id="button-addon2" onclick="buscadorEstudiante()"><i class="bi bi-search"></i></button>
                         </div>
 
                         <div class="tablaEstudiantes">
-                            <table class="table tableE table-hover align-middle">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Carnet</th>
-                                        <th scope="col">Nombres</th>
-                                        <th scope="col">Apellido</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="estudiantes">
-                                    <?php $contEstudiantes = 0; ?>
-                                    @foreach ($estudiantes as $estudiante)
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <input class="form-check-input checkEstudiantes" type="checkbox" onclick="reservarEstudiante(<?php echo $contEstudiantes ?>, <?php echo $estudiante->id ?>)" value="{{$estudiante->id}}" id="checkEstudiante{{$estudiante->id}}">
-                                                </div>
-                                            </td>
-                                            <td id = "carnetEstudiante{{$contEstudiantes}}">{{$estudiante->carnet}}</td>
-                                            <td id = "nombreEstudiante{{$contEstudiantes}}">{{$estudiante->nombre}}</td>
-                                            <td id = "apellidoEstudiante{{$contEstudiantes++}}">{{$estudiante->apellido}}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <div class="paginacionBitacora paginacionEstudiantes">
-                                @if ($estudiantes->total() != 0)
-                                    <div>
-                                        <p>Resultados del {{$estudiantes->firstItem() }} al {{$estudiantes->lastItem() }} de {{$estudiantes->total() }}</p>
-                                    </div>
-                                @endif
-                                <div>
-                                    {{ $estudiantes->links('pagination::bootstrap-4') }}
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -565,6 +535,11 @@
             success : function(r) {
                 $(".tablaEstudiantes").html(r);
                 checkearEstudiantes();
+                total = document.querySelectorAll("#estudiantes tr").length;
+                
+                if (total == 1) {
+                    document.getElementById("noDatos3").style.display = "table-row";    
+                }
             },
             error : function(data) {
                 console.log(data);
@@ -575,7 +550,6 @@
     $(document).on('click', '.paginacionEstudiantes .pagination a', function(e){
         e.preventDefault();
         var page = $(this).attr('href').split('page=')[1];
-        //paginacionActual = page;
         estudiantesPag(page);
     })
 
@@ -1024,11 +998,18 @@
         integrantes = [];
     }
 
+    var banderaAccionBuscar = 1;
+
     document.querySelector('#buscadorTablaE').addEventListener ('keypress',function(e){
         validar(e);
     })
 
-    //funcion para validar se  haya pulsado enter incluyendo dispositivos moviles
+    document.querySelector('#buscadorTablaE').addEventListener ('input',function(e){
+        if ($('#buscadorTablaE').val() == "" && banderaAccionBuscar == 0) {
+            restablecerTablaEstudiante();
+            banderaAccionBuscar = 1;
+        }
+    })
 
     function validar(e) {
         let tecla = (document.all) ? e.keyCode : e.which;
@@ -1038,20 +1019,8 @@
     function buscadorEstudiante() {
         Busqueda = $("#buscadorTablaE").val();
         banderaConstante = banderaBusqueda;
-        $.ajax({
-            type : "GET",
-            "serverSide" : true,
-            url : "./grupoTrabajo",
-            data: { "page": 1, "vista": "director.tablaEstudiante", "buscadorE": Busqueda, "tipoBusqueda": banderaConstante, "idGrupo": $("#idGrupo").val()},
-            dataType: 'json',
-            success : function(r) {
-                $(".tablaEstudiantes").html(r);
-                checkearEstudiantes();
-            },
-            error : function(data) {
-                console.log(data);
-            }
-        })
+        banderaAccionBuscar = 0;
+        estudiantesPag(1);
     }
 
     var cantidadIntegrantes = 0;

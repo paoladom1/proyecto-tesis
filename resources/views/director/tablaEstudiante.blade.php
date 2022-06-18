@@ -21,6 +21,9 @@
             <td id = "apellidoEstudiante{{$contEstudiantes++}}">{{$estudiante->apellido}}</td>
         </tr>
     @endforeach
+    <tr id="noDatos3">
+        <td colspan="4">¡No hay datos disponibles!</td>
+    </tr>
 </tbody>
 </table>
 <div class="paginacionBitacora paginacionEstudiantes">

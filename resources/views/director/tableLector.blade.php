@@ -16,6 +16,9 @@
                 <td><button class="btn btn-primary" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $lector->id ?>)" style="color: white">Editar</button></td>
             </tr>
         @endforeach
+        <tr id="noDatos1">
+            <td colspan="4">¡No hay datos disponibles!</td>
+        </tr>
     </tbody>
     </table>
     <div class="paginacionAD">
