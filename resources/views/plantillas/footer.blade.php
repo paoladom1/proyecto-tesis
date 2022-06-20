@@ -1,10 +1,10 @@
-<footer class="text-white text-center text-lg-start" style="background: #00427D;">
+<footer class="text-white text-center text-lg-start" style="background: #00427D;" id="piePagina">
   <!-- Grid container -->
   <div class="container" style="padding-top: 20px;">
     <!--Grid row-->
     <div class="row">
       <!--Grid column-->
-      <div class="col-lg-6 col-md-12 ">
+      <div class="col-lg-6 col-md-12">
         <div>
             <h5 class="text-uppercase">Universidad Centroamericana José Simeón Cañas</h5>
         </div>

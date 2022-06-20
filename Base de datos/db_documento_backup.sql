@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-06-2022 a las 08:34:32
+-- Tiempo de generación: 20-06-2022 a las 02:06:17
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_documento`
 --
+CREATE DATABASE IF NOT EXISTS `db_documento` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `db_documento`;
 
 -- --------------------------------------------------------
 
@@ -58,7 +60,8 @@ CREATE TABLE `bitacora_modificacion` (
 INSERT INTO `bitacora_modificacion` (`id`, `nombre_modificacion`, `created_at`, `updated_at`) VALUES
 (1, 'Agregó', '2022-05-20 06:19:17', '2022-05-20 06:19:17'),
 (2, 'Modificó', '2022-05-20 06:19:17', '2022-05-20 06:19:17'),
-(3, 'Eliminó', '2022-05-20 06:19:17', '2022-05-20 06:19:17');
+(3, 'Eliminó', '2022-05-20 06:19:17', '2022-05-20 06:19:17'),
+(4, 'Creación', '2022-06-19 23:21:09', '2022-06-19 23:21:09');
 
 -- --------------------------------------------------------
 
@@ -549,7 +552,7 @@ CREATE TABLE `director_carrera` (
 --
 
 INSERT INTO `director_carrera` (`id`, `usuario_id`, `carrera_id`, `empleado_id`, `created_at`, `updated_at`) VALUES
-(1, 3, 7, 5, '2022-05-26 00:40:57', '2022-05-26 00:40:57');
+(1, 5, 7, 5, '2022-05-26 00:40:57', '2022-05-26 00:40:57');
 
 -- --------------------------------------------------------
 
@@ -1357,13 +1360,13 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 (1, 'site.title', 'Site Title', 'Site Title', '', 'text', 1, 'Site'),
 (2, 'site.description', 'Site Description', 'Site Description', '', 'text', 2, 'Site'),
 (3, 'site.logo', 'Site Logo', '', '', 'image', 3, 'Site'),
-(4, 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', '', '', 'text', 4, 'Site'),
-(5, 'admin.bg_image', 'Admin Background Image', '', '', 'image', 5, 'Admin'),
-(6, 'admin.title', 'Admin Title', 'Voyager', '', 'text', 1, 'Admin'),
-(7, 'admin.description', 'Admin Description', 'Welcome to Voyager. The Missing Admin for Laravel', '', 'text', 2, 'Admin'),
-(8, 'admin.loader', 'Admin Loader', '', '', 'image', 3, 'Admin'),
-(9, 'admin.icon_image', 'Admin Icon Image', '', '', 'image', 4, 'Admin'),
-(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', '', '', 'text', 1, 'Admin');
+(4, 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', NULL, '', 'text', 4, 'Site'),
+(5, 'admin.bg_image', 'Admin Background Image', 'settings\\June2022\\3o4fuLEPcspUxtNe2qfN.jpg', '', 'image', 5, 'Admin'),
+(6, 'admin.title', 'Admin Title', 'Panel de administrador UCA', '', 'text', 1, 'Admin'),
+(7, 'admin.description', 'Admin Description', 'Panel de administrador de sistema de gestión de trabajos de graduación.', '', 'text', 2, 'Admin'),
+(8, 'admin.loader', 'Admin Loader', 'settings\\June2022\\OsTCMCniIpPCxJZo3V9W.png', '', 'image', 3, 'Admin'),
+(9, 'admin.icon_image', 'Admin Icon Image', 'settings\\June2022\\WpgvTXWxg5dggBuXU4tR.png', '', 'image', 4, 'Admin'),
+(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', NULL, '', 'text', 1, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -1495,7 +1498,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@admin.com', 'users\\May2022\\p7eg6fSpi2Eds2NE6JPD.jpg', NULL, '$2y$10$0K.xhMg/W1ssYrJR/8Kjve7xuDnP.UwFxWVdkz4wCp78C5YRu8BrG', NULL, '{\"locale\":\"en\"}', '2022-04-15 04:09:47', '2022-05-27 10:37:11'),
+(1, 1, 'admin', 'admin@admin.com', 'users\\June2022\\RD9mfJUeLdY1yJuqrTJb.png', NULL, '$2y$10$0K.xhMg/W1ssYrJR/8Kjve7xuDnP.UwFxWVdkz4wCp78C5YRu8BrG', NULL, '{\"locale\":\"en\"}', '2022-04-15 04:09:47', '2022-06-20 05:02:46'),
 (3, 2, 'eduardo', 'eduardo@gmail.com', 'users/default.png', NULL, '$2y$10$0K.xhMg/W1ssYrJR/8Kjve7xuDnP.UwFxWVdkz4wCp78C5YRu8BrG', NULL, '{\"locale\":\"en\"}', '2022-05-26 22:28:33', '2022-05-27 03:58:40');
 
 -- --------------------------------------------------------
@@ -1831,7 +1834,7 @@ ALTER TABLE `bitacora`
 -- AUTO_INCREMENT de la tabla `bitacora_modificacion`
 --
 ALTER TABLE `bitacora_modificacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora_seccion`

@@ -91,7 +91,8 @@
 
 <style>
     main{
-        min-height: calc(100vh - 79px - 87px);
+        min-height: calc(100vh - 79px - 107px);
+        margin-bottom: 20px;
     }
 </style>
 
@@ -102,13 +103,17 @@
         document.getElementById("nav").style.marginLeft = "250px";
         document.getElementById("content").style.marginLeft = "250px";
         document.getElementById("menu").style.display = 'none';
+        document.getElementById("piePagina").style.marginLeft = "250px";
+        document.getElementById("piePagina").style.transition = "all 0.5s";
         document.getElementById("user-settings").style.marginRight = "15em";
         document.getElementById("user-settings").style.transition = "all 0.5s";
     }
+
     function closeNav(){
         document.getElementById("SideNav").style.marginLeft = "-250px";
         document.getElementById("nav").style.marginLeft = "0";
         document.getElementById("content").style.marginLeft = "0";
+        document.getElementById("piePagina").style.marginLeft = "0";
         setTimeout(() => {  document.getElementById("menu").style.display = 'initial'; }, 600);
         document.getElementById("navMenu").style.fontSize="100%";
         document.getElementById("user-settings").style.marginRight = "0.25em";

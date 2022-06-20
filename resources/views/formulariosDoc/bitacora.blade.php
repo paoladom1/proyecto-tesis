@@ -1,7 +1,7 @@
 @extends('plantillas.nav')
 @section('content')
 
-    <div class="containerBitacora fuente-general" style="margin-bottom: 30px;">
+    <div class="containerBitacora fuente-general" style="margin-bottom: 10px;">
         <div class="col seccion_" id="titulosApp">
             <h2>BITÁCORA DE CAMBIOS</h2>
         </div>
