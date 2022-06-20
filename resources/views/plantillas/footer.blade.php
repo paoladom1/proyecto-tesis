@@ -10,7 +10,7 @@
         </div>
         <div class="footerInfo">
             <div>
-                <i class="bi bi-telephone"></i>
+              <i class="bi bi-globe"></i>
             </div>
             <div>
                 <a href="https://uca.edu.sv/" target="_blank">https://uca.edu.sv/</a>
@@ -21,7 +21,7 @@
                 <i class="bi bi-telephone"></i>
             </div>
             <div>
-                <a href="https://ecampus.uca.edu.sv/my/tel:2210%206600">2210-6600</a>
+                <a href="tel:2210 6600">2210-6600</a>
             </div>
         </div>          
       </div>
