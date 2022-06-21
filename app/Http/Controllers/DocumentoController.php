@@ -468,14 +468,6 @@ class DocumentoController extends Controller
     private function seccionAgradecimiento($documento){
         $agradecimiento = SeccionAgradecimiento::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $section = $documento->addSection(DocumentoController::margenes());
-        $estiloTextoTitulo = $section->addTextRun([
-            "name" => "Times New Roman",
-            "size" => 11,
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
-            "bold" => true,
-        ]);
-        $estiloTextoTitulo->addText(mb_strtoupper('Agradecimientos'), ["bold" => true]);
-        $section->addTextBreak(1);
 
         foreach ($agradecimiento as $dato) {
             \PhpOffice\PhpWord\Shared\Html::addHtml($section, $dato->contenido, false, false);
@@ -493,14 +485,6 @@ class DocumentoController extends Controller
     private function seccionDedicatoria($documento){
         $dedicatoria = SeccionDedicatoria::join('estudiante','estudiante_id', '=', 'estudiante.id')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $section = $documento->addSection(DocumentoController::margenes());
-        $estiloTextoTitulo = $section->addTextRun([
-            "name" => "Times New Roman",
-            "size" => 11,
-            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
-            "bold" => true,
-        ]);
-        $estiloTextoTitulo->addText(mb_strtoupper('Dedicatorias'), ["bold" => true]);
-        $section->addTextBreak(1);
 
         foreach ($dedicatoria as $dato) {
             \PhpOffice\PhpWord\Shared\Html::addHtml($section, $dato->contenido, false, false);
