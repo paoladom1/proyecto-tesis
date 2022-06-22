@@ -13,7 +13,7 @@
                 <td style="width: 26%">{{$lector->nombre}}</td>
                 <td style="width: 26%">{{$lector->apellido}}</td>
                 <td style="width: 26%">{{$lector->correo}}</td>
-                <td><button class="btn btn-primary" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $lector->id ?>)" style="color: white">Editar</button></td>
+                <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $lector->id ?>)" style="color: white">Editar</button></td>
             </tr>
         @endforeach
         <tr id="noDatos1">

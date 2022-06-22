@@ -135,7 +135,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
-                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Registrar asesor o lector externo</h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Registrar Director o Lector externo</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="limpiarCampos() " aria-label="Close" style="color: white; width: 1em;"></button>
                 </div>
                 <div class="modal-body">
@@ -230,7 +230,7 @@
                                     <td style="width: 26%">{{$lector->nombre}}</td>
                                     <td style="width: 26%">{{$lector->apellido}}</td>
                                     <td style="width: 26%">{{$lector->correo}}</td>
-                                    <td><button class="btn btn-primary" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $lector->id ?>)" style="color: white">Editar</button></td>
+                                    <td><button class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $lector->id ?>)" style="color: white">Editar</button></td>
                                 </tr>
                             @endforeach
                             <tr id="noDatos1">
@@ -269,7 +269,7 @@
                                     <td style="width: 26%">{{$asesor->nombre}}</td>
                                     <td style="width: 26%">{{$asesor->apellido}}</td>
                                     <td style="width: 26%">{{$asesor->correo}}</td>
-                                    <td><button class="btn btn-primary" type="button" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $asesor->id ?>)" style="color: white">Editar</button></td>
+                                    <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" data-bs-target="#exampleModalToggle" onclick="datosModal(<?php echo $asesor->id ?>)" style="color: white">Editar</button></td>
                                 </tr>
                             @endforeach
                             <tr id="noDatos2">
@@ -391,7 +391,7 @@
         document.getElementById("rol").value = "";
         document.getElementById("descripcion").value = ""; 
         document.getElementById("btnRegistarExterno").innerText = "Registrar";
-        document.getElementById("exampleModalToggleLabel").innerText = "Registrar asesor o lector externo";
+        document.getElementById("exampleModalToggleLabel").innerText = "Registrar Director o Lector externo";
     }
 
     var contadorMensajes = 0;
@@ -470,12 +470,11 @@
                 rolActual = r['rol_externo'];
                 document.getElementById("descripcion").value = r['descripcion'];
                 if(r['rol_externo'] == 0){
-                    document.getElementById("exampleModalToggleLabel").innerText = "Modificar datos del asesor";
+                    document.getElementById("exampleModalToggleLabel").innerText = "Modificar datos del Director";
                 } else if(r['rol_externo'] == 1){
-                    document.getElementById("exampleModalToggleLabel").innerText = "Modificar datos del lector";
+                    document.getElementById("exampleModalToggleLabel").innerText = "Modificar datos del Lector";
                 }
                 document.getElementById("btnRegistarExterno").innerText = "Modificar";
-                myModal.show();
             },
             error : function(data) {
                 console.log(data);
