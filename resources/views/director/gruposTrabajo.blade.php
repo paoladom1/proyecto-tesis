@@ -855,7 +855,7 @@
             bandera = 1;
         } else if (cambio == 2) {
             cambiarTexto(boton, "Externo");
-            $("#tituloModal2").text("Director del trabajo de graduación"); 
+            $("#tituloModal2").text("Director del trabajo de graduación externo"); 
             bandera = 1;
         } else if (cambio == 3) {
             cambiarTexto(boton, "UCA");
@@ -863,7 +863,7 @@
             bandera = 2;
         } else if (cambio == 4) {
             cambiarTexto(boton, "Externo");
-            $("#tituloModal2").text("Lector"); 
+            $("#tituloModal2").text("Lector externo"); 
             bandera = 2;
         }
     }
