@@ -192,10 +192,11 @@
                             <li>{{$seccion[0]}}</li>
                         @endforeach
                     </ul>
+                    <h5 style="text-align: center;" id="mensaje-error-secciones">¡No se ha seleccionado ninguna sección!</h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i class="bi bi-arrow-left-circle"></i> Atras</button>
-                    <button class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">Crear <i class="bi bi-folder2"></i></button>
+                    <button class="btn btn-success" id="btn-crear-documento" data-bs-dismiss="modal" aria-label="Close">Crear <i class="bi bi-folder2"></i></button>
                 </div>
                 </div>
             </div>
@@ -219,6 +220,8 @@
             }
         }
 
+        document.getElementById("btn-crear-documento").disabled = true; 
+
         function cambio(checkbox){
             if(check[checkbox].checked){
                 listado[checkbox-1].style.display = 'block';
@@ -228,6 +231,8 @@
                         ++cont;
                     }
                 }
+                document.getElementById("btn-crear-documento").disabled = false;
+                document.getElementById("mensaje-error-secciones").style.display = 'none';
                 if(cont == check.length-(4+desabilitados)){
                     check[0].checked = true;
                 }
@@ -235,8 +240,12 @@
             else{
                 if (check[checkbox].value != -9 || check[checkbox].value != -2 || check[checkbox].value != -3) {
                     check[0].checked = false;
+                    document.getElementById("btn-crear-documento").disabled = true;
+                    document.getElementById("mensaje-error-secciones").style.display = 'block';
                 } else{
                     check[0].checked = true;
+                    document.getElementById("btn-crear-documento").disabled = false;
+                    document.getElementById("mensaje-error-secciones").style.display = 'none';
                 }
                 listado[checkbox-1].style.display = 'none';
             }
@@ -265,6 +274,8 @@
             if(check[0].checked){
                 check[0].checked = false;
             }
+            document.getElementById("btn-crear-documento").disabled = true;
+            document.getElementById("mensaje-error-secciones").style.display = 'block';
             for (let index = 1; index < check.length; index++) {
                 if (check[index].checked) {
                     check[index].checked = false;

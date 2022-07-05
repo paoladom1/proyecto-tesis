@@ -20,6 +20,7 @@ use App\Models\Estudiante;
 use App\Models\Bitacora;
 use App\Models\BitacoraSeccion;
 use App\Models\BitacoraModificacion;
+use App\Models\Usuario;
 
 class EstudianteController extends Controller
 {
@@ -135,6 +136,7 @@ class EstudianteController extends Controller
 
         $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '>',0)->get();
         $contenido_introduccion = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->where('seccion_capitulo_id', '=', $id)->where('orden_contenido', '=',0)->get();
+        
         return view('formulariosDoc.contenidoCapitulo', array(
             "capitulo" => $capitulo,
             "contenido" => $contenido,

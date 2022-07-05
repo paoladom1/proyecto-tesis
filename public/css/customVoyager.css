@@ -55,11 +55,9 @@
 
 
 
-.voyager .navbar.navbar-default>.container-fluid:after, .voyager .navbar>.container-fluid {
-    border-bottom: 1px solid #eee;
+.voyager .navbar>.container-fluid {
     width: 99.5%;
-    height: 1px;
-    border-top: #003C71 solid 1px;
+    border-bottom: 1px solid #003C71;
 }
 
 .welcomeMessage{

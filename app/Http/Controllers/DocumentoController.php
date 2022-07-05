@@ -189,7 +189,7 @@ class DocumentoController extends Controller
 
     public function margenes(){
         return array(
-            'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5), 
+            'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(3.5), 
             'marginRight' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5),
             'marginTop' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5), 
             'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5)
@@ -266,7 +266,6 @@ class DocumentoController extends Controller
         $section->addTextBreak(1);
         $section->addText("PARA OPTAR AL GRADO DE", $estilo, 'portadaStyle');
         $section->addText(mb_strtoupper($carrera[0]->grado), $estilo, 'portadaStyle');
-        $section->addTextBreak(1);
         $section->addTextBreak(1);
         $section->addText("POR", $estilo, 'portadaStyle');
 
