@@ -4,12 +4,14 @@
     <div class="page-content">
         @include('voyager::alerts')
         @include('voyager::dimmers')
-        <div class = "welcomeMessage">
-            <div class="card">
-                <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
-                <hr>
-                <div class="card-body">
-                    <h1 class="card-title">Panel de control del administrador.</h1>
+        <div class="container-fluid">
+            <div class = "welcomeMessage">
+                <div class="card">
+                    <img src="img/LogoUCAnegro.png" class="card-img-top img-card" alt="Card image cap">
+                    <hr>
+                    <div class="card-body">
+                        <h1 class="card-title">Panel de control del administrador.</h1>
+                    </div>
                 </div>
             </div>
         </div>
