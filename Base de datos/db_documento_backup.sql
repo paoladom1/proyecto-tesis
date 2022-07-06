@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2022 a las 02:06:17
+-- Tiempo de generación: 06-07-2022 a las 02:41:42
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_documento`
 --
-CREATE DATABASE IF NOT EXISTS `db_documento` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `db_documento`;
 
 -- --------------------------------------------------------
 
@@ -315,9 +313,9 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (79, 15, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 1, 0, 1, '{}', 4),
 (80, 15, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '{}', 5),
 (81, 16, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
-(82, 16, 'usuario_id', 'text', 'Usuario Id', 0, 1, 1, 1, 1, 1, '{}', 2),
-(83, 16, 'carrera_id', 'text', 'Carrera Id', 0, 1, 1, 1, 1, 1, '{}', 3),
-(84, 16, 'empleado_id', 'text', 'Empleado Id', 0, 1, 1, 1, 1, 1, '{}', 4),
+(82, 16, 'usuario_id', 'text', 'Usuario Id', 1, 1, 1, 1, 1, 1, '{}', 2),
+(83, 16, 'carrera_id', 'text', 'Carrera Id', 1, 1, 1, 1, 1, 1, '{}', 3),
+(84, 16, 'empleado_id', 'text', 'Empleado Id', 1, 1, 1, 1, 1, 1, '{}', 4),
 (85, 16, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 1, 0, 1, '{}', 5),
 (86, 16, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '{}', 6),
 (87, 17, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
@@ -409,7 +407,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (175, 30, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 1, 0, 1, '{}', 3),
 (176, 30, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '{}', 4),
 (177, 31, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
-(178, 31, 'foto', 'text', 'Foto', 0, 1, 1, 1, 1, 1, '{}', 3),
+(178, 31, 'foto', 'text', 'Foto', 1, 0, 0, 0, 0, 0, '{}', 3),
 (181, 31, 'tipo_usuario_id', 'text', 'Tipo Usuario Id', 1, 1, 1, 1, 1, 1, '{}', 2),
 (182, 31, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 1, 0, 1, '{}', 6),
 (183, 31, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '{}', 7),
@@ -427,7 +425,8 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (195, 19, 'departamento_unidad_id', 'text', 'Departamento Unidad Id', 1, 1, 1, 1, 1, 1, '{}', 2),
 (196, 17, 'departamento_unidad_id', 'text', 'Departamento Unidad Id', 1, 1, 1, 1, 1, 1, '{}', 4),
 (197, 31, 'email', 'text', 'Email', 1, 1, 1, 1, 1, 1, '{}', 4),
-(198, 31, 'password', 'text', 'Password', 1, 1, 1, 1, 1, 1, '{}', 5);
+(198, 31, 'password', 'text', 'Password', 1, 1, 1, 1, 1, 1, '{}', 5),
+(199, 16, 'director_carrera_belongsto_usuario_relationship', 'relationship', 'usuario', 0, 1, 1, 1, 1, 1, '{\"scope\":\"director\",\"model\":\"App\\\\Models\\\\Usuario\",\"table\":\"usuario\",\"type\":\"belongsTo\",\"column\":\"usuario_id\",\"key\":\"id\",\"label\":\"email\",\"pivot_table\":\"bitacora\",\"pivot\":\"0\",\"taggable\":\"0\"}', 7);
 
 -- --------------------------------------------------------
 
@@ -470,7 +469,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (12, 'cargo', 'cargo', 'Cargo', 'Cargos', NULL, 'App\\Models\\Cargo', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 11:24:58', '2022-05-14 11:24:58'),
 (13, 'carrera', 'carrera', 'Carrera', 'Carreras', NULL, 'App\\Models\\Carrera', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 11:26:47', '2022-05-14 11:26:47'),
 (15, 'departamento_u', 'departamento-u', 'Departamento U', 'Departamento Us 2', NULL, 'App\\Models\\DepartamentoU', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 11:31:07', '2022-05-15 05:40:14'),
-(16, 'director_carrera', 'director-carrera', 'Director Carrera', 'Director Carreras', NULL, 'App\\Models\\DirectorCarrera', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 11:33:02', '2022-05-14 11:33:02'),
+(16, 'director_carrera', 'director-carrera', 'Director Carrera', 'Director Carreras', NULL, 'App\\Models\\DirectorCarrera', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 11:33:02', '2022-06-25 10:05:01'),
 (17, 'empleado', 'empleado', 'Empleado', 'Empleados', NULL, 'App\\Models\\Empleado', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 11:36:44', '2022-05-21 02:12:16'),
 (18, 'estudiante', 'estudiante', 'Estudiante', 'Estudiantes', NULL, 'App\\Models\\Estudiante', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 11:40:48', '2022-05-14 11:40:48'),
 (19, 'externo', 'externo', 'Externo', 'Externos', NULL, 'App\\Models\\Externo', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 11:44:48', '2022-05-21 02:10:57'),
@@ -485,7 +484,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (28, 'tipo_abreviatura', 'tipo-abreviatura', 'Tipo Abreviatura', 'Tipo Abreviaturas', NULL, 'App\\Models\\TipoAbreviatura', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:55:48', '2022-05-14 12:55:48'),
 (29, 'tipo_empleado', 'tipo-empleado', 'Tipo Empleado', 'Tipo Empleados', NULL, 'App\\Models\\TipoEmpleado', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:56:42', '2022-05-14 12:56:42'),
 (30, 'tipo_usuario', 'tipo-usuario', 'Tipo Usuario', 'Tipo Usuarios', NULL, 'App\\Models\\TipoUsuario', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-14 12:57:38', '2022-05-14 12:57:38'),
-(31, 'usuario', 'usuario', 'Usuario', 'Usuarios', NULL, 'App\\Models\\Usuario', NULL, 'App\\Http\\Controllers\\Voyager\\UsuarioController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 12:58:49', '2022-06-03 12:06:43'),
+(31, 'usuario', 'usuario', 'Usuario', 'Usuarios', NULL, 'App\\Models\\Usuario', NULL, 'App\\Http\\Controllers\\Voyager\\UsuarioController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-14 12:58:49', '2022-07-05 11:20:54'),
 (32, 'configuracion_sistema', 'configuracion-sistema', 'Configuracion Sistema', 'Configuracion Sistemas', NULL, 'App\\Models\\ConfiguracionSistema', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2022-05-17 05:13:41', '2022-05-17 05:13:41'),
 (33, 'departamento_unidad', 'departamento-unidad', 'Departamento Unidad', 'Departamento Unidads', NULL, 'App\\Models\\DepartamentoU', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-05-21 01:55:11', '2022-05-21 01:57:27');
 
@@ -552,7 +551,7 @@ CREATE TABLE `director_carrera` (
 --
 
 INSERT INTO `director_carrera` (`id`, `usuario_id`, `carrera_id`, `empleado_id`, `created_at`, `updated_at`) VALUES
-(1, 5, 7, 5, '2022-05-26 00:40:57', '2022-05-26 00:40:57');
+(3, 63, 7, 5, '2022-07-05 19:04:26', '2022-07-05 19:04:26');
 
 -- --------------------------------------------------------
 
@@ -606,9 +605,56 @@ CREATE TABLE `estudiante` (
 --
 
 INSERT INTO `estudiante` (`id`, `nombre`, `apellido`, `carnet`, `carrera_id`, `usuario_id`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
-(7, 'Eduardo Alberto', 'López Torres', '00092117', 7, 5, 1, '2022-05-27 07:14:17', '2022-05-27 07:14:17'),
-(8, 'Joshua Steven', 'Sharp Reyes', '00092117', 7, 3, 1, '2022-05-27 07:14:17', '2022-05-27 07:14:17'),
-(9, 'Ruben Alexander', 'Sigüenza Argueta', '00092117', 7, 3, 1, '2022-05-27 07:14:17', '2022-05-27 07:14:17');
+(11, ' Juan Pablo', ' Acosta Valdivieso', '00128917', 7, 13, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(12, ' Mauricio Alejandro', ' Pacheco Guerrero', '00170517', 7, 14, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(13, ' Jose Fernando', ' Salazar Aquino', '00017917', 7, 15, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(14, ' Cristian Mauricio', ' Alfaro Contreras', '00167917', 7, 16, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(15, ' Luis Eduardo', ' Cortez Murillo', '00029117', 7, 17, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(16, ' Daniel Leonardo', ' Hernandez Chica', '00209317', 7, 18, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(17, ' Luis Adalberto', ' Trujillo Perez', '00127717', 7, 19, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(18, ' Luis Fernando', ' Anstirman Henriquez', '00024117', 7, 20, NULL, '2022-07-05 17:26:55', '2022-07-05 17:26:55'),
+(19, ' David Alejandro', ' Guardado Chinchilla', '00184217', 7, 21, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(20, ' Javier Ernesto', ' Mejia Arevalo', '00076017', 7, 22, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(21, ' Ricardo Antonio', ' Villeda Flores', '00004817', 7, 23, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(22, ' Luisa Daniela', ' Arevalo Rodas', '00038617', 7, 24, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(23, ' Fabricio Enrique', ' Hernandez Lopez', '00163217', 7, 25, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(24, ' Jose David', ' Mejia Segura', '00001617', 7, 26, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(25, ' Walter Antoniell', ' Bustillo Ayala', '00189617', 7, 27, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(26, ' Alvaro Francisco', ' Garcia Cornejo', '00111317', 7, 28, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(27, ' Edwin Ernesto', ' Lovo Ramos', '00120617', 7, 29, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(28, ' Francisco Josue', ' Molina Lopez', '00300917', 7, 30, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(29, ' Raul Fabricio', ' Calderon Jimenez', '00004017', 7, 31, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(30, ' Alexis Javier', ' Gomez Coto', '00122717', 7, 32, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(31, ' Andre Vladimir', ' Gonzalez Hernandez', '00103017', 7, 33, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(32, ' Gerardo Andres', ' Castro Lemus', '00032515', 7, 34, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(33, ' Fernando Antonio', ' Martinez Olmedo', '00076617', 7, 35, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(34, ' Antonio Alexis', ' Pertuz Arevalo', '00267016', 7, 36, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(35, ' Carlos Alejandro', ' Valle Contreras', '00018316', 7, 37, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(36, ' Elsy Alejandra', ' Chavez Mendoza', '00125717', 7, 38, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(37, ' Erick Fernando', ' Leones Arevalo', '00092217', 7, 39, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(38, ' Cristian Alexander', ' Mundo Orellana', '00086917', 7, 40, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(39, ' Rudi David', ' Vallecios Gonzalez', '00078217', 7, 41, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(40, ' Roberto Antonio', ' Fuentes Guardado', '00062217', 7, 42, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(41, ' Oscar Edenilson', ' Lovato Quintanilla', '00127417', 7, 43, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(42, ' Marvin Geovanni', ' Ramirez Vides', '00120717', 7, 44, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(43, ' Ricardo Alberto', ' Gomez Quijano', '00108517', 7, 45, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(44, ' Mario Isaac', ' Lopez Guevara', '00046317', 7, 46, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(45, ' Victor Enrique', ' Mendoza Yanes', '00046517', 7, 47, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(46, ' Daniel Alejandro', ' Gomez Rodriguez', '00118717', 7, 48, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(47, ' Brenda Marcela', ' Guerrero Diaz', '00024317', 7, 49, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(48, ' Esther Maria', ' Lara Garcia', '00049717', 7, 50, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(49, ' Roberto Ernesto', ' Hernandez Contreras', '00162317', 7, 51, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(50, ' Fredy Alexander', ' Sanchez Perez', '00082817', 7, 52, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(51, ' Diego Edgardo', ' Vega Herrera', '00148816', 7, 53, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(52, ' Eduardo Alberto', ' Lopez Torres', '00092117', 7, 54, 1, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(53, ' Joshua Steven', ' Sharp Reyes', '00159817', 7, 55, 1, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(54, ' Ruben Alexander', ' Sigüenza Argueta', '00068817', 7, 56, 1, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(55, ' Jeniffer Daniela', ' Merino Beltran', '00030717', 7, 57, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(56, ' Danniela Alejandra', ' Renderos Lainez', '00087717', 7, 58, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(57, ' Cesar Alejandro', ' Rosales Cruz', '00060917', 7, 59, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(58, ' Carlos Jose', ' Trigueros Rivas', '00082217', 7, 60, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(59, ' Karina Daniela', ' Mina Martinez', '00012217', 7, 61, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56'),
+(60, ' Jose Alejandro', ' Olmedo Araniva', '00097017', 7, 62, NULL, '2022-07-05 17:26:56', '2022-07-05 17:26:56');
 
 -- --------------------------------------------------------
 
@@ -621,7 +667,7 @@ CREATE TABLE `externo` (
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `descripcion` text NOT NULL,
+  `descripcion` text DEFAULT NULL,
   `rol_externo` tinyint(1) NOT NULL,
   `departamento_unidad_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -633,8 +679,9 @@ CREATE TABLE `externo` (
 --
 
 INSERT INTO `externo` (`id`, `nombre`, `apellido`, `correo`, `descripcion`, `rol_externo`, `departamento_unidad_id`, `created_at`, `updated_at`) VALUES
-(2, 'Eduardo', 'López', 'lopezeduardo220@gmail.com', 'Es Ingeniero informático ', 0, 8, '2022-05-26 01:52:43', '2022-05-26 01:52:43'),
-(3, 'Ruben', 'Sigüenza ', 'rubensiguenza@gmail.com', 'Es Ingeniero en Sistema', 1, 8, '2022-05-26 01:52:43', '2022-05-26 01:52:43');
+(2, 'Eduardo', 'López', 'lopezeduardo220@gmail.com', 'Es Ingeniero informático', 0, 8, '2022-05-26 01:52:43', '2022-06-23 05:23:15'),
+(3, 'Ruben', 'Sigüenza ', 'rubensiguenza@gmail.com', 'Es Ingeniero en Sistema', 1, 8, '2022-05-26 01:52:43', '2022-05-26 01:52:43'),
+(4, 'prueba', 'sdfsdf', 'sdfsdf@oho.com', NULL, 1, 8, '2022-06-21 06:06:42', '2022-06-23 05:22:42');
 
 -- --------------------------------------------------------
 
@@ -1225,13 +1272,6 @@ CREATE TABLE `seccion_agradecimiento` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `seccion_agradecimiento`
---
-
-INSERT INTO `seccion_agradecimiento` (`id`, `opcional`, `autor`, `contenido`, `estudiante_id`, `created_at`, `updated_at`) VALUES
-(22, 1, 'Eduardo Alberto López Torres', '<p>asdfadsfsdafsdf</p>', 7, '2022-06-05 02:25:49', '2022-06-05 11:34:49');
-
 -- --------------------------------------------------------
 
 --
@@ -1252,8 +1292,8 @@ CREATE TABLE `seccion_capitulo` (
 --
 
 INSERT INTO `seccion_capitulo` (`id`, `nombre_capitulo`, `orden_capitulo`, `grupo_trabajo_id`, `created_at`, `updated_at`) VALUES
-(5, 'Introducción', 1, 1, '2022-05-30 05:09:29', '2022-06-03 07:21:58'),
-(7, 'Marco Teorico', 2, 1, '2022-06-01 07:54:07', '2022-06-05 11:47:45');
+(5, 'Introducción', 2, 1, '2022-05-30 05:09:29', '2022-06-25 23:18:07'),
+(7, 'Marco Teorico', 1, 1, '2022-06-01 07:54:07', '2022-06-25 23:18:07');
 
 -- --------------------------------------------------------
 
@@ -1520,7 +1560,7 @@ CREATE TABLE `user_roles` (
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `foto` varchar(200) DEFAULT 'img/profile.png',
+  `foto` varchar(200) NOT NULL DEFAULT 'img/profile.png',
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `tipo_usuario_id` int(11) NOT NULL,
@@ -1533,8 +1573,57 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `foto`, `email`, `password`, `tipo_usuario_id`, `created_at`, `updated_at`) VALUES
-(3, 'img/profile.png', 'earaujo@uca.edu.sv', 'earaujo@uca.edu.sv', 2, '2022-05-26 00:39:26', '2022-05-26 00:39:26'),
-(5, 'img/usuarios/5eduardo@gmail.com.jpg', 'eduardo@gmail.com', '$2y$10$0fxsSa88qzHuaBOXUGqIPOQIh83QhdJeW5XPITguyrJufIviGoDJ.', 1, '2022-05-27 03:33:00', '2022-06-04 12:58:47');
+(13, 'img/profile.png', '00128917@uca.edu.sv', '00128917', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(14, 'img/profile.png', '00170517@uca.edu.sv', '00170517', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(15, 'img/profile.png', '00017917@uca.edu.sv', '00017917', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(16, 'img/profile.png', '00167917@uca.edu.sv', '00167917', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(17, 'img/profile.png', '00029117@uca.edu.sv', '00029117', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(18, 'img/profile.png', '00209317@uca.edu.sv', '00209317', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(19, 'img/profile.png', '00127717@uca.edu.sv', '00127717', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(20, 'img/profile.png', '00024117@uca.edu.sv', '00024117', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(21, 'img/profile.png', '00184217@uca.edu.sv', '00184217', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(22, 'img/profile.png', '00076017@uca.edu.sv', '00076017', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(23, 'img/profile.png', '00004817@uca.edu.sv', '00004817', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(24, 'img/profile.png', '00038617@uca.edu.sv', '00038617', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(25, 'img/profile.png', '00163217@uca.edu.sv', '00163217', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(26, 'img/profile.png', '00001617@uca.edu.sv', '00001617', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(27, 'img/profile.png', '00189617@uca.edu.sv', '00189617', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(28, 'img/profile.png', '00111317@uca.edu.sv', '00111317', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(29, 'img/profile.png', '00120617@uca.edu.sv', '00120617', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(30, 'img/profile.png', '00300917@uca.edu.sv', '00300917', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(31, 'img/profile.png', '00004017@uca.edu.sv', '00004017', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(32, 'img/profile.png', '00122717@uca.edu.sv', '00122717', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(33, 'img/profile.png', '00103017@uca.edu.sv', '00103017', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(34, 'img/profile.png', '00032515@uca.edu.sv', '00032515', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(35, 'img/profile.png', '00076617@uca.edu.sv', '00076617', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(36, 'img/profile.png', '00267016@uca.edu.sv', '00267016', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(37, 'img/profile.png', '00018316@uca.edu.sv', '00018316', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(38, 'img/profile.png', '00125717@uca.edu.sv', '00125717', 1, '2022-07-05 17:06:44', '2022-07-05 17:06:44'),
+(39, 'img/profile.png', '00092217@uca.edu.sv', '00092217', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(40, 'img/profile.png', '00086917@uca.edu.sv', '00086917', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(41, 'img/profile.png', '00078217@uca.edu.sv', '00078217', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(42, 'img/profile.png', '00062217@uca.edu.sv', '00062217', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(43, 'img/profile.png', '00127417@uca.edu.sv', '00127417', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(44, 'img/profile.png', '00120717@uca.edu.sv', '00120717', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(45, 'img/profile.png', '00108517@uca.edu.sv', '00108517', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(46, 'img/profile.png', '00046317@uca.edu.sv', '00046317', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(47, 'img/profile.png', '00046517@uca.edu.sv', '00046517', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(48, 'img/profile.png', '00118717@uca.edu.sv', '00118717', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(49, 'img/profile.png', '00024317@uca.edu.sv', '00024317', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(50, 'img/profile.png', '00049717@uca.edu.sv', '00049717', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(51, 'img/profile.png', '00162317@uca.edu.sv', '00162317', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(52, 'img/profile.png', '00082817@uca.edu.sv', '00082817', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(53, 'img/profile.png', '00148816@uca.edu.sv', '00148816', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(54, 'img/profile.png', '00092117@uca.edu.sv', '$2y$10$8xsoFM2bBj2jcCtORoU5WOp3UnpUPmmLRYJggAAL2X.22HWnAxsm6', 1, '2022-07-05 17:06:00', '2022-07-05 23:38:03'),
+(55, 'img/profile.png', '00159817@uca.edu.sv', '$2y$10$FBz04fRWCUjvic/GydO.1.fIUzweMa8cCmyvdFnd0iPwz8YhADgh6', 1, '2022-07-05 17:06:00', '2022-07-06 06:40:01'),
+(56, 'img/profile.png', '00068817@uca.edu.sv', '$2y$10$McRU3QRhh.X1ijiXTCfETeA1QsyOR8SJuTVCC9WoAGMBaqx1UqtrO', 1, '2022-07-05 17:06:00', '2022-07-06 06:40:36'),
+(57, 'img/profile.png', '00030717@uca.edu.sv', '00030717', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(58, 'img/profile.png', '00087717@uca.edu.sv', '00087717', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(59, 'img/profile.png', '00060917@uca.edu.sv', '00060917', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(60, 'img/profile.png', '00082217@uca.edu.sv', '00082217', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(61, 'img/profile.png', '00012217@uca.edu.sv', '00012217', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(62, 'img/profile.png', '00097017@uca.edu.sv', '00097017', 1, '2022-07-05 17:06:45', '2022-07-05 17:06:45'),
+(63, 'img/profile.png', 'earaujo@uca.edu.sv', '$2y$10$bNBJRlqWPTofWyQe9V3cIeSrtq4/R1G5MO1ucTxQaOX5lXr3zkr7W', 2, '2022-07-05 18:33:00', '2022-07-06 02:44:05');
 
 --
 -- Índices para tablas volcadas
@@ -1828,7 +1917,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora_modificacion`
@@ -1870,7 +1959,7 @@ ALTER TABLE `contenido_seccion_capitulo`
 -- AUTO_INCREMENT de la tabla `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
 
 --
 -- AUTO_INCREMENT de la tabla `data_types`
@@ -1888,7 +1977,7 @@ ALTER TABLE `departamento_unidad`
 -- AUTO_INCREMENT de la tabla `director_carrera`
 --
 ALTER TABLE `director_carrera`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
@@ -1900,13 +1989,13 @@ ALTER TABLE `empleado`
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `externo`
 --
 ALTER TABLE `externo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `facultad`
@@ -1972,7 +2061,7 @@ ALTER TABLE `seccion_capitulo`
 -- AUTO_INCREMENT de la tabla `seccion_dedicatoria`
 --
 ALTER TABLE `seccion_dedicatoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_glosario`
@@ -2038,7 +2127,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- Restricciones para tablas volcadas
