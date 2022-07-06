@@ -74,7 +74,7 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-8 justify-content-start" style="align-self: center;">
-                            <input type="submit" value="Iniciar sesion" style="background-color: #E87B2A; color:white; border: #E87B2A; border-radius: 3px; size: 2em; padding: .5em;" >
+                            <input type="submit" value="Iniciar sesión" style="background-color: #E87B2A; color:white; border: #E87B2A; border-radius: 3px; size: 2em; padding: .5em;" >
                         </div>
                     </div>
                     <hr>

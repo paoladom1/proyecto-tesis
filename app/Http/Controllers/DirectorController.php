@@ -154,7 +154,7 @@ class DirectorController extends Controller
         }
 
         $idGrupo = $request->get('idGrupo');
-        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', $nombreE.'%')->having('apellido', 'like', $apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->paginate(6);
+        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', $nombreE.'%')->having('apellido', 'like', $apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->orderBy("grupo_trabajo_id", "desc")->paginate(6);
         $configuraciones = ConfiguracionSistema::first();
         
         if ($request->ajax()) {
