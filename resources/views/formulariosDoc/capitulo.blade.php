@@ -60,15 +60,15 @@
         ++a;
         var nombre = document.getElementById('nombreCap');
         fragmento = `
-                        <th class="align-middle" style="cursor: grab;"><i class="bi bi-list"></i></td>
-                        <th scope="row" style="display:none" class="align-middle" name="numeracion" id="num${a}">${a} </th><span name="idCapitulos" style="display:none">${idC}</span>
-                        <td class="align-middle" name="titulacion"><span name="numCapitulo">Capítulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
-                        <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" onclick="window.location.href='/contenidoCapitulo/${idC}'" class="btn btn-primary">Modificar contenido</button>
-                            <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar título</button>
-                            <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capítulo</button>
-                        </div>
+                        <td class="align-middle" style="cursor: grab; text-align: center; width: 10%;"><i class="bi bi-list"></i></td>
+                        <td scope="row" style="display:none;" class="align-middle" name="numeracion" id="num${a}">${a} </th><span name="idCapitulos" style="display:none">${idC}</span>
+                        <td class="align-middle" style="width: 45%;" name="titulacion"><span name="numCapitulo">Capítulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
+                        <td style="width: 45%;">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" onclick="window.location.href='/contenidoCapitulo/${idC}'" class="btn btn-primary">Modificar contenido</button>
+                                <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar título</button>
+                                <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capítulo</button>
+                            </div>
                         </td>
                     `;
         var div = document.createElement('tr');
@@ -240,13 +240,13 @@
     </div>
     
     <div class="row justify-content-center">
-        <div class="col-md-9">
+        <div class="col-md-11">
             <table class="table table-hover" style="background-color: white; border-radius: 5px;">
                 <thead class="encabezadoBitacora">
                     <tr>
-                        <td></td>
-                        <th scope="col">NOMBRE DEL CAPÍTULO</th>
-                        <th scope="col">ACCIONES</th>
+                        <td style="width: 10%;"></td>
+                        <th scope="col" style="width: 45%;">NOMBRE DEL CAPÍTULO</th>
+                        <th scope="col" style="width: 45%;">ACCIONES</th>
                     </tr>
                 </thead>
                 <tbody id="tablaCapitulo">
