@@ -90,7 +90,7 @@
             if(element.value == 1){
                 ++contador;
             } else if(element.value == 2){
-                elements2[contador2].textContent = contador;
+                elements2[contador2].textContent = contador-1;
                 ++contador2;
             }
         });
@@ -115,6 +115,7 @@
             } 
         }
         document.getElementById("part-"+elemento).remove();
+        
         if(numeracionTres != ''){
             numsSubTitulo = $("#seccion6"+numeracionTres).val();
             $("#seccion6"+numeracionTres).val(numsSubTitulo-1);
@@ -143,13 +144,40 @@
             $("#tituloCap").text('¿Esta seguro de eliminar el subtema "'+$('#tituloH'+id).text()+'"?');
         }
     }  
+
+    function dragDrop() {
+        $(".accordion").sortable(
+            {
+                update: function(event, ui)
+                {
+                    console.log(ui.item.attr('data-id-cancion')+" en "+ui.item.index());
+                    bandera2 = 1;
+                    var ordenElementos = $(this).sortable("toArray"); 
+                    tipo = $('#'+ordenElementos[1]+' input[name="seccion4[]"]').val();
+                    if(tipo == 1){
+                        ordenarTemas();
+                    } else if(tipo == 2){
+                        valor = $('#'+ordenElementos[1]+' #seccion8').val();
+                        ordenarSubTemas(valor);
+                    }
+                }
+            },
+            {
+                handle: 'button',
+                cancel: ''
+            }
+        );
+            var exampleEl = document.getElementById('add_seccion()')
+            var tooltip = new bootstrap.Tooltip(exampleEl, {
+            boundary: document.body 
+        })
+    }
     
     function addSubSeccion(num, idTituloCapitulo, titulo = '(Sin sub-tema)', descripcion = '', id = 0){
             valorSegundo = $("#span1"+num).text();
             contadorGlobal++;
             numeracionTercera = $("#seccion6"+num).val();
             fragmento = `
-                        
                         <div class="accordion-item">
                             <div class="contenedorBotones">
                                 <div class="btn-group btnEliminarSub" role="group" aria-label="Basic mixed styles example">                            
@@ -163,7 +191,7 @@
                             <div id="collapseOne${contadorGlobal}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample2">
                                 <div class="accordion-body">
                                     
-                                    <div class="row">
+                                        <div class="row">
                                             <div class="col seccion_${contadorGlobal}">
                                                 <span class="input-group-text" id="basic-addon3">Título</span>
                                                 <input type="text" name="seccion1[]" id="tituloB${contadorGlobal}" value="${titulo}" onkeyup="temasSubTemas(${contadorGlobal}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -236,7 +264,7 @@
                         <div class="row justify-content-end" style="margin-top: 10px;">
                             <div class="col-md-11">
                                 <div class="accordion" id="accordionExample2${contadorTema}">
-
+                                    
                                 <div>
                             </div>
                         </div>`;
@@ -246,6 +274,7 @@
                 div.innerHTML = fragmento;
                 document.getElementById('accordionExample').appendChild(div);
             agregarEditor(contadorGlobal);
+            dragDrop();
     }
 
     function eliminarTema(id){
@@ -280,33 +309,8 @@
     var bandera2 = 0;
 
     $(document).ready(function(){
-        $(".accordion").sortable(
-                {
-                    update: function(event, ui)
-                    {
-                        console.log(ui.item.attr('data-id-cancion')+" en "+ui.item.index());
-                        bandera2 = 1;
-                        var ordenElementos = $(this).sortable("toArray"); 
-                        tipo = $('#'+ordenElementos[1]+' input[name="seccion4[]"]').val();
-                        if(tipo == 1){
-                            ordenarTemas();
-                        } else if(tipo == 2){
-                            valor = $('#'+ordenElementos[1]+' #seccion8').val();
-                            alert(valor);
-                            ordenarSubTemas(valor);
-                        }
-                    }
-                },
-                {
-                    handle: 'button',
-                    cancel: ''
-                }
-            );
-            var exampleEl = document.getElementById('add_seccion()')
-            var tooltip = new bootstrap.Tooltip(exampleEl, {
-                boundary: document.body 
-            })
-        });
+        dragDrop();
+    });
 
         window.addEventListener('beforeunload', function (e) {
             if(bandera2 == 1){
@@ -377,7 +381,7 @@
                 <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1" style="background-color: #E87B2A; border:1px solid #E87B2A; color:white;"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
             </div>
         </div>
-
+                                
         <div class="accordion" id="accordionExample">
             
         </div>
