@@ -265,6 +265,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="liveAlertPlaceholder4"></div>
+                    <p>Campos requeridos <span style="color: red;">(*)</span></p>
                     <div class="row">
                         <div class="col">
                             <div class="form-check form-switch form-check-reverse">
@@ -279,10 +280,10 @@
                         <div class="col-md-6">
                             <div class="form-group form-floating">
                                 <input type="text" id="tema" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Ingrese el tema de trabajo de graduacion">
-                                <label for="tema">Tema de trabajo de graduación</label>
+                                <label for="tema">Tema de trabajo de graduación <span style="color: red;">(*)</span></label>
                             </div>
                             <br>
-                            <label class="form-label">Director del trabajo de graduación</label> 
+                            <label class="form-label">Director del trabajo de graduación <span style="color: red;">(*)</span></label> 
                             <div class="containerToogle">
                                 <div>
                                     <div class="dropdown">
@@ -329,7 +330,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal45"><i class="bi bi-people"></i> Seleccionar estudiantes</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal45"><i class="bi bi-people"></i> Seleccionar estudiantes</button> 
                             <table class="table table-hover align-middle" style="text-align: center;">
                                 <thead>
                                     <tr>
@@ -340,7 +341,7 @@
                                 </thead>
                                 <tbody id="asignados">
                                     <tr id="noDatos1">
-                                        <td colspan="3">No hay estudiantes seleccionados</td>
+                                        <td colspan="3">No hay estudiantes seleccionados <span style="color: red;">(*)</span></td>
                                     </tr>
                                 </tbody>
                             </table>

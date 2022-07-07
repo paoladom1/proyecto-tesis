@@ -17,6 +17,11 @@ class Usuario extends Authenticatable
         return $query->where('tipo_usuario_id', 2);
     }
 
+    public function scopeEstudiante($query)
+    {
+        return $query->where('tipo_usuario_id', 1);
+    }
+
     protected $hidden = [
         'password'
     ];

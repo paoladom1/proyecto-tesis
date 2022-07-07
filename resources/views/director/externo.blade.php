@@ -143,25 +143,29 @@
                     <div class="row">
                         <form>
                             <input hidden type="text" id="idExterno">
+                            <p>Campos requeridos <span style="color: red;">(*)</span></p>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-floating mb-2 mt-2">
-                                        <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
-                                        <label for="nombre">Nombres</label>
+                                        <input type="text" maxlength="100" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                                        <label for="nombre">Nombres <span style="color: red;">(*)</span></label>
+                                        <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al limite de 100 caracteres!</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-floating mb-2 mt-2">
-                                        <input type="text" class="form-control" id="apellido" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
-                                        <label for="apellido">Apellidos</label>
+                                        <input type="text" maxlength="100" class="form-control" id="apellido" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                                        <label for="apellido">Apellidos <span style="color: red;">(*)</span></label>
+                                        <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al limite de 100 caracteres!</span>
                                     </div>  
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md">
                                     <div class="form-group form-floating mb-3 mt-3">
-                                        <input type="text" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
-                                        <label for="correo">Correo electronico</label>
+                                        <input type="text" maxlength="100" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                                        <label for="correo">Correo electronico <span style="color: red;">(*)</span></label>
+                                        <span style="color: red; display: none;" id="mensajeCorreo">¡Ha llegado al limite de 100 caracteres!</span>
                                     </div>
                                 </div>
                                 <div class="col-md">
@@ -171,7 +175,7 @@
                                         <option value = "1">Lector</option>
                                         <option value = "0">Director</option>
                                     </select>
-                                    <label for="rol">Rol</label>
+                                    <label for="rol">Rol <span style="color: red;">(*)</span></label>
                                     </div>
                                 </div>
                             </div>
@@ -392,6 +396,9 @@
         document.getElementById("descripcion").value = ""; 
         document.getElementById("btnRegistarExterno").innerText = "Registrar";
         document.getElementById("exampleModalToggleLabel").innerText = "Registrar Director o Lector externo";
+        document.getElementById('mensajeNombre').style.display = "none";
+        document.getElementById('mensajeApellido').style.display = "none";
+        document.getElementById('mensajeCorreo').style.display = "none";
     }
 
     var contadorMensajes = 0;
@@ -419,31 +426,35 @@
                     url : "./registrarLA",
                     data: {"_token": "{{ csrf_token() }}", "nombre": nombre, "apellido": apellido, "correo": correo, "descripcion": descripcion, "rol": rol, "id": idExterno},
                     success : function(r) {
-                        if(idExterno == ""){
-                            if (rol == 0) { //asesor
-                                asesor(1);
-                                alertPersonalizado("¡Asesor registrado con exito!", 'success', 1, ++contadorMensajes);   
-                            } else if(rol == 1){ //lector
-                                lector(1);
-                                alertPersonalizado("¡Lector registrado con exito!", 'success', 1, ++contadorMensajes);
-                            }
-                        } else{
-                            if (rolActual == rol) {
-                                asesor(paginacionActualAsesor);
-                                lector(paginacionActualLector);   
-                            } else{
-                                if (rol == 0) { // asesor
+                        if (r == "") {
+                            if(idExterno == ""){
+                                if (rol == 0) { //asesor
                                     asesor(1);
-                                    lector(paginacionActualLector);   
-                                } else if(rol == 1){
-                                    asesor(paginacionActualAsesor);
-                                    lector(1);   
+                                    alertPersonalizado("¡Asesor registrado con exito!", 'success', 1, ++contadorMensajes);   
+                                } else if(rol == 1){ //lector
+                                    lector(1);
+                                    alertPersonalizado("¡Lector registrado con exito!", 'success', 1, ++contadorMensajes);
                                 }
+                            } else{
+                                if (rolActual == rol) {
+                                    asesor(paginacionActualAsesor);
+                                    lector(paginacionActualLector);   
+                                } else{
+                                    if (rol == 0) { // asesor
+                                        asesor(1);
+                                        lector(paginacionActualLector);   
+                                    } else if(rol == 1){
+                                        asesor(paginacionActualAsesor);
+                                        lector(1);   
+                                    }
+                                }
+                                alertPersonalizado("¡Datos modificados con exito!", 'success', 1, ++contadorMensajes);
                             }
-                            alertPersonalizado("¡Datos modificados con exito!", 'success', 1, ++contadorMensajes);
+                            limpiarCampos();
+                            $('#exampleModalToggle').modal('hide');   
+                        } else {
+                            alertPersonalizado2("¡Ya hay un lector o director con los mismos datos!", 'danger', 2, 1)   
                         }
-                        limpiarCampos();
-                        $('#exampleModalToggle').modal('hide');
                     },
                     error : function(data) {
                         console.log(data);
@@ -500,7 +511,13 @@
 
     document.querySelector('#buscadorTablaE').addEventListener ('input',function(e){
         if ($('#buscadorTablaE').val() == "" && banderaAccionBuscar == 0) {
-            limpiarBuscador();
+            Busqueda = $("#buscadorTablaE").val();
+            $('#buscadorTablaE').val('');
+            if (banderaTipoAD == 1) {
+                lector(1);   
+            } else{
+                asesor(1);
+            }
             banderaAccionBuscar = 1;
         }
     })
@@ -523,6 +540,34 @@
             asesor(1);
         }
     }
+
+    // --------------------------- Validación del numero de caracteres de un input --------------------------------
+    document.querySelector('#nombre').addEventListener ('keyup',function(e){
+        var texto = document.getElementById('nombre').value;
+        if (texto.length == 100) {
+            document.getElementById('mensajeNombre').style.display = "block";
+        } else if (texto.length <= 99) {
+            document.getElementById('mensajeNombre').style.display = "none";
+        }
+    })
+
+    document.querySelector('#apellido').addEventListener ('keyup',function(e){
+        var texto = document.getElementById('apellido').value;
+        if (texto.length == 100) {
+            document.getElementById('mensajeApellido').style.display = "block";
+        } else if (texto.length <= 99) {
+            document.getElementById('mensajeApellido').style.display = "none";
+        }
+    })
+
+    document.querySelector('#correo').addEventListener ('keyup',function(e){
+        var texto = document.getElementById('correo').value;
+        if (texto.length == 100) {
+            document.getElementById('mensajeCorreo').style.display = "block";
+        } else if (texto.length <= 99) {
+            document.getElementById('mensajeCorreo').style.display = "none";
+        }
+    })
     
 </script>
 @endsection 

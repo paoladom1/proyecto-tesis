@@ -117,25 +117,30 @@ class DirectorController extends Controller
         $id = $request->input('id');
         // Se obtiene el departamento al que pertenece el director de carrera.
         $departamento = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
-
-        if ($id != "") { // En caso el id no este vacío, se actualizara el dato.
-            $externo = Externo::findOrFail($id);
-            $externo->nombre = $request->input('nombre');
-            $externo->apellido = $request->input('apellido');
-            $externo->correo = $request->input('correo');
-            $externo->descripcion = $request->input('descripcion');
-            $externo->rol_externo = $request->input('rol');
-            $externo->departamento_unidad_id = $departamento;
-            $externo->update();
-        } else{ // Caso contrario el id este vacio, se agregará un nuevo lector o asesor, segun sea el caso.
-            $externo = new Externo();
-            $externo->nombre = $request->input('nombre');
-            $externo->apellido = $request->input('apellido');
-            $externo->correo = $request->input('correo');
-            $externo->descripcion = $request->input('descripcion');
-            $externo->rol_externo = $request->input('rol');
-            $externo->departamento_unidad_id = $departamento;
-            $externo->save();
+        $correoCom = $request->input('correo');
+        $correo = Externo::where("correo", "=", $correoCom)->first();
+        if ($correo == null) {
+            if ($id != "") { // En caso el id no este vacío, se actualizara el dato.
+                $externo = Externo::findOrFail($id);
+                $externo->nombre = $request->input('nombre');
+                $externo->apellido = $request->input('apellido');
+                $externo->correo = $request->input('correo');
+                $externo->descripcion = $request->input('descripcion');
+                $externo->rol_externo = $request->input('rol');
+                $externo->departamento_unidad_id = $departamento;
+                $externo->update();
+            } else{ // Caso contrario el id este vacio, se agregará un nuevo lector o asesor, segun sea el caso.
+                $externo = new Externo();
+                $externo->nombre = $request->input('nombre');
+                $externo->apellido = $request->input('apellido');
+                $externo->correo = $request->input('correo');
+                $externo->descripcion = $request->input('descripcion');
+                $externo->rol_externo = $request->input('rol');
+                $externo->departamento_unidad_id = $departamento;
+                $externo->save();
+            }   
+        } else{
+            return $correo;
         }
     }
 
@@ -179,7 +184,7 @@ class DirectorController extends Controller
 
         // Se obtienen los datos de los estudiantes y si se da el caso, tambien se realizan los respectivos filtros.
         $idGrupo = $request->get('idGrupo');
-        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', $nombreE.'%')->having('apellido', 'like', $apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->orderBy("grupo_trabajo_id", "desc")->paginate(6);
+        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "is", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', '%'.$nombreE.'%')->having('apellido', 'like', '%'.$apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->orderBy("grupo_trabajo_id", "desc")->paginate(6);
         $configuraciones = ConfiguracionSistema::first(); // Configuraciones de los grupos de trabajo.
         
         // Retorna una tabla, en la cual se obtienen los datos de los estudiantes filtrados anteriormente, solo si es el caso.

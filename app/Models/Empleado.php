@@ -12,4 +12,9 @@ class Empleado extends Model
     public function departamento(){
         return $this -> belongsTo('App\Models\DepartamentoU', 'departamento_unidad_id');
     }
+
+    public function scopeEmpleado($query)
+    {
+        return $query->where('cargo_id', 3);
+    }
 }

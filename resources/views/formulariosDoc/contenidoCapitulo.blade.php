@@ -292,16 +292,14 @@
                             ordenarTemas();
                         } else if(tipo == 2){
                             valor = $('#'+ordenElementos[1]+' #seccion8').val();
+                            alert(valor);
                             ordenarSubTemas(valor);
                         }
                     }
                 },
                 {
-
-                handle: 'button',
-
-                cancel: ''
-
+                    handle: 'button',
+                    cancel: ''
                 }
             );
             var exampleEl = document.getElementById('add_seccion()')
