@@ -63,10 +63,11 @@
 
     function agregarEditor(id) {
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
+        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto'+id, {
             height: 250,
             removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle'
+            extraPlugins: 'liststyle,justify'
         });
 
         for (var i in CKEDITOR.instances) { 

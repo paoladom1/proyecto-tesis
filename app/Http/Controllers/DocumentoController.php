@@ -523,11 +523,11 @@ class DocumentoController extends Controller
                 DocumentoController::segundo($documento);
                 $seccionesCrear = $seccionesCrear.'- Portada y Segunda Portada\\n';
             } else if($dato == -2){ 
-                DocumentoController::seccionAgradecimiento($documento);
-                $seccionesCrear = $seccionesCrear.'- Agradecimiento\\n';
-            } else if($dato == -3){ 
                 DocumentoController::seccionDedicatoria($documento);
                 $seccionesCrear = $seccionesCrear.'- Dedicatoria\\n';
+            } else if($dato == -3){ 
+                DocumentoController::seccionAgradecimiento($documento);
+                $seccionesCrear = $seccionesCrear.'- Agradecimiento\\n';
             } else if($dato == -4){ 
                 DocumentoController::seccionResumen($documento, $documentoTodo);
                 $seccionesCrear = $seccionesCrear.'- Resumen\\n';
@@ -570,6 +570,7 @@ class DocumentoController extends Controller
         }
         $seccionesCrear = 'Las secciones creadas fueron:\\n\\n'.$seccionesCrear;
         $this->bitacora($seccionesCrear, 10, 4);
+        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment;filename="'.$this->obtenerGrupoTema().'.docx"');
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');

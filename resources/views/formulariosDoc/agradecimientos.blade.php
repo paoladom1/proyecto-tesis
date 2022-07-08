@@ -5,10 +5,11 @@
         // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
         // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
+        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
         var editor = CKEDITOR.replace('contenido'+n, {
             height: 275,
             removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle'
+            extraPlugins: 'liststyle,justify'
         });
 
         editor.config.contentsCss = "/css/content.css";

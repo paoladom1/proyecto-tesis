@@ -4,10 +4,11 @@
 <script>
     function agregarEditor() {
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
+        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto', {
             height: 350,
             removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle'
+            extraPlugins: 'liststyle,justify'
         });
 
         editor.config.contentsCss = "/css/content.css";

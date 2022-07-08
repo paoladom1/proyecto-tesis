@@ -369,7 +369,7 @@ class EstudianteController extends Controller
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "¡La sección glosario se podrá incluir en el documento!"
+                'mensaje' => "¡La sección glosario se incluirá en el documento!"
             );
             $this->bitacora('Se cambió a estado: No es opcional', 8, 2);
         }
@@ -604,7 +604,7 @@ class EstudianteController extends Controller
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "¡La sección ".$mensajeTipo." se podrá incluir en el documento!"
+                'mensaje' => "¡La sección ".$mensajeTipo." se incluirá en el documento!"
             );
             $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: No es opcional', 2, 2);
         }
