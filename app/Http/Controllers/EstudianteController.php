@@ -363,13 +363,13 @@ class EstudianteController extends Controller
         if($opcional == 1){
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "¡Cambió a estado: Es opcional! (La sección del glosario no se incluirá en el documento)"
+                'mensaje' => "¡La sección glosario NO se incluirá en el documento!"
             );
             $this->bitacora('Se cambió a estado: Es opcional', 8, 2);
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "¡Cambió a estado: No es opcional! (La sección del glosario se podrá incluir en el documento)"
+                'mensaje' => "¡La sección glosario se podrá incluir en el documento!"
             );
             $this->bitacora('Se cambió a estado: No es opcional', 8, 2);
         }
@@ -590,21 +590,21 @@ class EstudianteController extends Controller
         }
 
         if ($tipo == 1) {
-            $mensajeTipo = "agradecimientos";
+            $mensajeTipo = "agradecimiento";
         } else{
-            $mensajeTipo = "dedicatorias";
+            $mensajeTipo = "dedicatoria";
         }
 
         if($opcional == 1){
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "¡Cambió a estado: Es opcional! (La sección de ".$mensajeTipo." no se incluirá en el documento)"
+                'mensaje' => "¡La sección ".$mensajeTipo." NO se incluirá en el documento!"
             );
             $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: Es opcional', 1, 2);
         } else{
             $mensaje = array(
                 'code'=> 200,
-                'mensaje' => "¡Cambió a estado: No es opcional! (La sección de ".$mensajeTipo." se podrá incluir en el documento)"
+                'mensaje' => "¡La sección ".$mensajeTipo." se podrá incluir en el documento!"
             );
             $this->bitacora('La sección de '.$mensajeTipo.' cambió a estado: No es opcional', 2, 2);
         }
