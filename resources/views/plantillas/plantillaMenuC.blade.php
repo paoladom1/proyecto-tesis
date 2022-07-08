@@ -208,17 +208,9 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
 
-        var desabilitados = 0;
-
         var listado = document.querySelectorAll("#listadoSecciones li");
 
         var check = document.querySelectorAll('.checkSeccion .form-check-input');
-
-        for (let index = 1; index < check.length; index++) {
-            if(check[index].disabled && check[index].value != -9 && check[index].value != -2 && check[index].value != -3){
-                ++desabilitados;
-            }
-        }
 
         document.getElementById("btn-crear-documento").disabled = true; 
 
@@ -233,21 +225,38 @@
                 }
                 document.getElementById("btn-crear-documento").disabled = false;
                 document.getElementById("mensaje-error-secciones").style.display = 'none';
-                if(cont == check.length-(4+desabilitados)){
+                if(cont == check.length-4){
                     check[0].checked = true;
                 }
             }
             else{
-                if (check[checkbox].value != -9 || check[checkbox].value != -2 || check[checkbox].value != -3) {
+                if (check[checkbox].value != -9 || check[checkbox].value != -2 || check[checkbox].value != -3){
                     check[0].checked = false;
-                    document.getElementById("btn-crear-documento").disabled = true;
-                    document.getElementById("mensaje-error-secciones").style.display = 'block';
-                } else{
-                    check[0].checked = true;
                     document.getElementById("btn-crear-documento").disabled = false;
                     document.getElementById("mensaje-error-secciones").style.display = 'none';
                 }
                 listado[checkbox-1].style.display = 'none';
+                
+                // Comprueba si hay alguna seccion seleccionada y si no hay ninguna seleccionada, desabilita el boton de crear.
+                let banCheck = 0; 
+                let contAct = 0;
+                for (let index = 0; index < check.length; index++) {
+                    if (check[index].checked) {
+                        banCheck = 1; 
+                    }
+                    if (check[index].checked && check[index].value != -9 && check[index].value != -2 && check[index].value != -3) {
+                        ++contAct;
+                    }
+                }
+
+                if (contAct == check.length-4) {
+                    check[0].checked = true;
+                }
+
+                if (banCheck == 0) {
+                    document.getElementById("btn-crear-documento").disabled = true;
+                    document.getElementById("mensaje-error-secciones").style.display = 'block';
+                }
             }
         }
 
