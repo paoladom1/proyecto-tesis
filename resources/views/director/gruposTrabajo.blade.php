@@ -283,7 +283,7 @@
                                 <label for="tema">Tema de trabajo de graduación <span style="color: red;">(*)</span></label>
                             </div>
                             <br>
-                            <label class="form-label">Director del trabajo de graduación <span style="color: red;">(*)</span></label> 
+                            <label class="form-label">Director(a) del trabajo de graduación <span style="color: red;">(*)</span></label> 
                             <div class="containerToogle">
                                 <div>
                                     <div class="dropdown">
@@ -306,7 +306,7 @@
                                 </div>
                             </div>
                             <br>
-                            <label class="form-label">Lector</label> 
+                            <label class="form-label">Lector(a)</label> 
                             <div class="containerToogle">
                                 <div>
                                     <div class="dropdown">
