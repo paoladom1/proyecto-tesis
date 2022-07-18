@@ -89,8 +89,7 @@ Route::post('/filtroDepartamento', 'App\Http\Controllers\DirectorController@filt
 Route::post('/datosExterno', 'App\Http\Controllers\DirectorController@datosExterno');
 Route::post('/registrarGrupo', 'App\Http\Controllers\DirectorController@registrarGrupo');
 Route::post('/mostrarDatoGrupo', 'App\Http\Controllers\DirectorController@mostrarDatosGrupo');
+
+
 Route::post('/mostrarDatoEstudiante', 'App\Http\Controllers\DirectorController@mostrarDatoEstudiante');
-
-
-
 Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');

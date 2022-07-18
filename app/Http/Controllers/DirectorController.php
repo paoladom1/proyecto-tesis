@@ -163,8 +163,10 @@ class DirectorController extends Controller
 
         $carrera = $this->obtenerDatosDirector()->carrera_id;
         $departamentoBusqueda = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
-        $grupos = GrupoTrabajo::with('estudiante')->paginate(10);
-
+        $grupos = GrupoTrabajo::join('estudiante','grupo_trabajo_id', '=', 'grupo_trabajo.id')->
+        selectRaw('grupo_trabajo.id as id, anio_inicio, ciclo_inicio, tema, prorroga, asesor_interno_id, lector_interno_id, asesor_externo_id, lector_externo_id')
+        ->where("carrera_id", "=", $carrera)->
+        groupBy("id")->paginate(10);
         // Si es el caso, se obtienen los datos necesarios para realizar los filtros de estudiantes.
         $busqueda = $request->get('buscadorE');
         $tipo = $request->get('tipoBusqueda');
@@ -184,7 +186,12 @@ class DirectorController extends Controller
 
         // Se obtienen los datos de los estudiantes y si se da el caso, tambien se realizan los respectivos filtros.
         $idGrupo = $request->get('idGrupo');
-        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "is", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', '%'.$nombreE.'%')->having('apellido', 'like', '%'.$apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->orderBy("grupo_trabajo_id", "desc")->paginate(6);
+        if ($request->get('idGrupo') == null) {
+            $idGrupo = "";
+        }
+
+        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', '%'.$nombreE.'%')->having('apellido', 'like', '%'.$apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->orderBy("grupo_trabajo_id", "desc")->orderBy("usuario_id", "asc")->paginate(6);
+        
         $configuraciones = ConfiguracionSistema::first(); // Configuraciones de los grupos de trabajo.
         
         // Retorna una tabla, en la cual se obtienen los datos de los estudiantes filtrados anteriormente, solo si es el caso.
@@ -359,35 +366,5 @@ class DirectorController extends Controller
         $id = $request->input("id");
         $gruposTrabajo = GrupoTrabajo::with("estudiante")->with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();   	
         return $gruposTrabajo;
-    }
-
-    //----------------------------------Asignar estudiantes a los trabajos de graduacion-------------------------------------
-
-    //Se muestra un registro en especifico de un grupo de trabajo de graduación.
-    public function mostrarDatoEstudiante(Request $request)
-    {
-        $id = $request->input("id");
-        $gruposTrabajo = GrupoTrabajo::with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();   	
-        return $gruposTrabajo;
-    }
-
-    // Se hace un buscador para los estudiantes. 
-    public function buscador(Request $request)
-    {
-        $datos = json_decode($request->input("datos"));
-        $contBusqueda = 0;
-        foreach ($datos as $dato) {
-            $valor = json_decode(strripos($dato[0], $request->input("busqueda")));
-            if($valor == "0"){
-                $busqueda[$contBusqueda][0] = $dato[0]; $busqueda[$contBusqueda++][1] = $dato[1];
-            } 
-        }
-        if (!isset($busqueda)) {
-            $busqueda = "";
-        } 
-        if ($request->input("busqueda") == "") {
-            $busqueda = $datos;
-        }
-        return $busqueda;
     }
 }

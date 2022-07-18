@@ -3,11 +3,11 @@
 
 <script>
     var contAlert = 0;
-    function modificarCapitulo(i) {
-        let elements = document.getElementsByName("tituloN");
-        let elements2 = document.getElementsByName("idCapitulos");
-        document.getElementById('nombreCap').value = elements[i-1].textContent;
-        document.getElementById('idCap').value = elements2[i-1].textContent;
+    function modificarCapitulo(i, posicion) {
+        let elements = document.getElementById("tituloN"+posicion);
+        let elements2 = document.getElementById("idCapitulos"+posicion);
+        document.getElementById('nombreCap').value = elements.textContent;
+        document.getElementById('idCap').value = elements2.textContent;
         var boton = document.getElementById('btnTitulo');
         boton.textContent = "Modificar Capitulo";
         $('#btnQuitar').show();
@@ -61,12 +61,12 @@
         var nombre = document.getElementById('nombreCap');
         fragmento = `
                         <td class="align-middle" style="cursor: grab; text-align: center; width: 10%;"><i class="bi bi-list"></i></td>
-                        <td scope="row" style="display:none;" class="align-middle" name="numeracion" id="num${a}">${a} </th><span name="idCapitulos" style="display:none">${idC}</span>
-                        <td class="align-middle" style="width: 45%;" name="titulacion"><span name="numCapitulo">Capítulo ${a}.</span> <span name="tituloN">${nombreC}</span></td> 
+                        <td scope="row" style="display:none;" class="align-middle" name="numeracion" id="num${a}">${a} </td><span name="idCap" id="idCapitulos${a}" style="display:none">${idC}</span>
+                        <td class="align-middle" style="width: 45%;" name="titulacion"><span name="numCapitulo">Capítulo ${a}.</span> <span id="tituloN${a}">${nombreC}</span></td> 
                         <td style="width: 45%;">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" onclick="window.location.href='/contenidoCapitulo/${idC}'" class="btn btn-primary">Modificar contenido</button>
-                                <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent)" class="btn btn-warning" style="color: white;">Modificar título</button>
+                                <button type="button" onclick="modificarCapitulo(document.getElementById('num${a}').textContent, ${a})" class="btn btn-warning" style="color: white;">Modificar título</button>
                                 <button type="button" onclick="obtenerNombreCapitulo(${a}, '${nombreC}', ${idC})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger">Eliminar capítulo</button>
                             </div>
                         </td>
@@ -108,6 +108,9 @@
                         r.forEach(element => {
                             seccion(element["nombre_capitulo"], element["id"]);
                         });
+                        if (document.querySelectorAll("tbody tr").length > 1) {
+                            document.getElementById("mensajeNoHay").style.display = "none";
+                        } 
                     },
                     error : function(data) {
                         console.log(data);
@@ -142,8 +145,7 @@
     }
 
     function modificarOrden() {
-        let nombre = $('#nombreCap').val();
-        let ids = document.getElementsByName("idCapitulos"); //idCapitulos
+        let ids = document.getElementsByName("idCap"); //idCapitulos
         var arrayText = new Array();
 
         for(var i = 0; i < ids.length; i++){
@@ -165,6 +167,7 @@
     }
 
         function eliminarCapituloBD(id){
+            datos = document.querySelectorAll("tbody tr");
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
@@ -173,6 +176,9 @@
                 success : function(r) {
                     guardarOrdenCapitulo();
                     alertPersonalizado("¡Se eliminó el capitulo con exito!", 'success', 1, ++contAlert);
+                    if (datos.length == 1) {
+                        document.getElementById("mensajeNoHay").style.display = "table-row";
+                    }
                 },
                 error : function(data) {
                     console.log(data);
@@ -190,6 +196,12 @@
                 })
             }
         }
+
+        $(document).ready(function(){
+            if (document.querySelectorAll("tbody tr").length == 1) {
+                document.getElementById("mensajeNoHay").style.display = "table-row";
+            } 
+        })
 </script>
 
 <style>
@@ -232,7 +244,7 @@
             <label for="basic-url" style="display: none;" class="form-label">Nombre del capitulo</label>
             <div class="input-group mb-3 mt-3">
                 <button style="display:none" class="btn btn-danger" id="btnQuitar" onclick="quitarModificar()">X</button>
-                <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capitulo" style="font-style: italic;">
+                <input type="text" class="form-control" id="nombreCap" aria-describedby="basic-addon3" placeholder="Nombre del capítulo" style="font-style: italic;">
                 <input hidden type="text" class="form-control" id="idCap" aria-describedby="basic-addon3">
                 <button onclick="guardarCapitulo(document.getElementById('idCap').value)" class="btn btn-success"><i class="bi bi-save"></i> <span id="btnTitulo">Agregar Capítulo</span></button>
             </div>
@@ -259,12 +271,10 @@
                             seccion("<?php ++$contCapitulos; echo $capitulo->nombre_capitulo ?>", <?php echo $capitulo->id ?>);
                         </script>
                     @endforeach
-                    @if ($contCapitulos == 0)
-                        <tr style="text-align: center">
-                            <td colspan="3">No hay datos disponibles</td>
-                        </tr>
-                    @endif
                 </tbody>
+                <tr style="text-align: center; display: none;" id="mensajeNoHay">
+                    <td colspan="3">No hay datos disponibles</td>
+                </tr>
             </table>
         </div>
     </div>

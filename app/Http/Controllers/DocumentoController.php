@@ -43,12 +43,13 @@ class DocumentoController extends Controller
         $grupo = auth()->guard('admin')->user()->id;
         $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
         $grupoTema = GrupoTrabajo::where('id', '=', $this->obtenerGrupo())->first();
-        $nombre = $grupoTema->anio_inicio.'-'.$grupoTema->ciclo_inicio.'-'.$grupoTema->id;
+        $nombre = "DOCUMENTO_GRADUACION_CICLO_".$grupoTema->ciclo_inicio.'_'.$grupoTema->anio_inicio;
         return $nombre;
     }
 
     public function bitacora($descripcion, $bitacora_seccion, $bitacora_modificacion)
     {
+
         /*
             - BITACORA_MODIFICACION -
             1 -> Agregó
@@ -68,6 +69,7 @@ class DocumentoController extends Controller
             9 -> Referencia
             10 -> Creación de documento
         */
+        
         $grupo = auth()->guard('admin')->user()->id;
         $estudiante = Estudiante::where('usuario_id', '=', $grupo)->first();
 
@@ -149,7 +151,7 @@ class DocumentoController extends Controller
             $array[$cont][0] = 'Nomenclaturas'; $array[$cont++][1] = '-1';
         }
 
-        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
+        $capitulo = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         $numCap = 1;
 
         if (count($capitulo) == 0) {
@@ -211,6 +213,7 @@ class DocumentoController extends Controller
         $center = array(
             'align' => 'center'
         );
+        
         $fuenteTitulo = [
             "name" => "Times New Roman",
             "size" => 11,
@@ -384,12 +387,14 @@ class DocumentoController extends Controller
         $contenido = ContenidoSeccionCapitulo::with('contenidoCapitulo2')->orderBy("orden_contenido", 'asc')->where('seccion_capitulo_id', '=', $numero)->get();
         
         $section->addTitle(mb_strtoupper('Capitulo '.$capitulo->orden_capitulo.'. '.$capitulo->nombre_capitulo), 1);
+        $section->addTextBreak(1);
         $numSegundo = 1;
         foreach($contenido as $con){
             if ($con->orden_contenido > 0) {
-                $section->addTextBreak(1);
                 $section->addTitle($capitulo->orden_capitulo.'.'.$numSegundo.' '.$con->tema,2);
-                $section->addTextBreak(1);
+                if ($con->contenido != null) {
+                    $section->addTextBreak(1);
+                }
                 \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con->contenido, false, false);
                 $section->addTextBreak(1);
                 $numTercero = 1;
@@ -402,8 +407,8 @@ class DocumentoController extends Controller
                 ++$numSegundo;   
             } else{
                 if ($con->contenido != "<p>null</p>") {
-                    $section->addTextBreak(1);
                     \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con->contenido, false, false);
+                    $section->addTextBreak(1);
                 }
             }
         }
@@ -571,6 +576,7 @@ class DocumentoController extends Controller
         $seccionesCrear = 'Las secciones creadas fueron:\\n\\n'.$seccionesCrear;
         $this->bitacora($seccionesCrear, 10, 4);
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+        \PhpOffice\PhpWord\Settings::setCompatibility(false);
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment;filename="'.$this->obtenerGrupoTema().'.docx"');
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($documento, 'Word2007');

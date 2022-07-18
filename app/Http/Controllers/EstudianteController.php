@@ -88,7 +88,7 @@ class EstudianteController extends Controller
         $capitulo->grupo_trabajo_id = $this->obtenerGrupo();
         $capitulo->save();
         $this->bitacora('Se ha creado el capítulo: '.$capitulo->nombre_capitulo, 7, 1);
-        $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->get();
+        $capitulos = SeccionCapitulo::orderBy("orden_capitulo", 'asc')->where('grupo_trabajo_id', '=', $this->obtenerGrupo())->get();
         return $capitulos;
     }
 
@@ -159,7 +159,11 @@ class EstudianteController extends Controller
                 } else{
                     $contenidoCapitulo2 = SubcontenidoSeccionCapitulo::findOrFail($idCont);
                 }
-                $contenidoCapitulo2->subtema = $seccion;
+                if ($seccion == "") {
+                    $contenidoCapitulo2->subtema = "(Sin sub-tema)";
+                } else{
+                    $contenidoCapitulo2->subtema = $seccion;
+                }
                 $contenidoCapitulo2->contenido = $request->input('seccion2')[$i];
                 $contenidoCapitulo2->orden_subcontenido = $i;
                 if($request->input('seccion5')[$i2] == 0){
@@ -179,7 +183,11 @@ class EstudianteController extends Controller
                 } else{
                     $contenidoCapitulo = ContenidoSeccionCapitulo::findOrFail($idCont);
                 }
-                $contenidoCapitulo->tema = $seccion;
+                if ($seccion == "") {
+                    $contenidoCapitulo->tema = "(Sin tema)";
+                } else{
+                    $contenidoCapitulo->tema = $seccion;
+                }
                 if($i == 0){
                     if ($request->input('seccion2')[$i] == null) {
                         $contenidoCapitulo->contenido = "<p>null</p>";    

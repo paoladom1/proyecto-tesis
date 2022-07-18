@@ -305,6 +305,15 @@
     var banderaBusqueda = 1;
     var banderaTipoAD = 1;
     var Busqueda = "";
+     
+    // Verifica si contiene datos las dos tablas, en caso no tengan datos, se coloca el mensaje de que no hay datos disponibles.
+    if (document.querySelectorAll("#contenidoLector tr").length == 1) {
+        document.getElementById("noDatos1").style.display = "table-row";    
+    }
+
+    if (document.querySelectorAll("#contenidoAsesor tr").length == 1) {
+        document.getElementById("noDatos2").style.display = "table-row";    
+    }
 
     const alertPersonalizado2 = (message, type, icon, cont=0) => {
         const alertPlaceholder = document.getElementById('liveAlertPlaceholder2');
@@ -339,8 +348,7 @@
             dataType: 'json',
             success : function(r) {
                 $(".tableDinamicoLector").html(r);
-                total = document.querySelectorAll("#contenidoLector tr").length;
-                
+                total = document.querySelectorAll("#contenidoLector tr").length;                
                 if (total == 1) {
                     document.getElementById("noDatos1").style.display = "table-row";    
                 }

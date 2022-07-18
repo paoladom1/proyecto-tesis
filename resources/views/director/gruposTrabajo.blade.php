@@ -380,6 +380,11 @@
                             <td style="width: 20%"><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="mostrarDatosModalPrincipal(<?php echo $dato->id ?>)" style="color: white">Editar</button>{{--  <button class="btn btn-danger ms-1" onclick="">Eliminar</button>--}}</td>
                         </tr>
                     @endforeach
+                    @if (count($grupos) == 0)
+                        <tr id="noDatosPrincipal">
+                            <td colspan="4">No hay datos disponibles</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
             <div class="paginacionAD">
@@ -901,6 +906,9 @@
                         alertPersonalizado("Grupo de trabajo de graduación registrado con exito!", 'success', 1, ++contadorAlerta);   
                     } else{
                         alertPersonalizado("Grupo de trabajo de graduación modificado con exito!", 'success', 1, ++contadorAlerta);   
+                    }
+                    if (document.getElementById("noDatosPrincipal")) {
+                        document.getElementById("noDatosPrincipal").style.display = "none";   
                     }
                 },
                 error : function(data) {

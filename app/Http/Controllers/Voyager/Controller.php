@@ -139,10 +139,6 @@ abstract class Controller extends BaseController
                 }
             }
         }
-        
-        if(isset($data->password)){
-            $data->password = bcrypt($data->password);
-        }
 
         $data->save();
 

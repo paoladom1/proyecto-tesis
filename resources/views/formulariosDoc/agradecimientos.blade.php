@@ -306,7 +306,7 @@
             tipoNombre = "el agradecimiento";
             tipoNombreTi = "agradecimiento";
         } else{
-            tipoNombre = "la dedicatroria";
+            tipoNombre = "la dedicatoria";
             tipoNombreTi = "dedicatoria";
         }
         var nombreIntegrante = document.getElementById('spanNombreI'+idEtiqueta).innerText;

@@ -18,7 +18,6 @@ class DirectorMiddleware
     {
         if (auth()->guard('admin')->check()){
             if(auth()->guard('admin')->user()->tipo_usuario_id == 1)
-                //auth()->guard('admin')->logout();
                 return redirect('/menu');
             return $next($request);
         } else{

@@ -126,9 +126,17 @@
         alertPersonalizado('¡Se eliminó con exito!', 'success', 1, ++contAlert);
     }
 
-    function temasSubTemas(a) {
+    function temas(a) {
         if($( "#tituloB"+a ).val() == ""){
             $( "#tituloH"+a ).text("(Sin tema)");
+        } else{
+            $( "#tituloH"+a ).text($( "#tituloB"+a ).val());
+        }
+    }
+
+    function SubTemas(a) {
+        if($( "#tituloB"+a ).val() == ""){
+            $( "#tituloH"+a ).text("(Sin sub-tema)");
         } else{
             $( "#tituloH"+a ).text($( "#tituloB"+a ).val());
         }
@@ -174,10 +182,16 @@
         })
     }
     
-    function addSubSeccion(num, idTituloCapitulo, titulo = '(Sin sub-tema)', descripcion = '', id = 0){
+    function addSubSeccion(num, idTituloCapitulo, titulo = '', descripcion = '', id = 0){
             valorSegundo = $("#span1"+num).text();
             contadorGlobal++;
             numeracionTercera = $("#seccion6"+num).val();
+            let placeH = titulo;
+            if (titulo == '(Sin sub-tema)' || titulo == '') {
+                placeH = '(Sin sub-tema)';
+                titulo = '';
+            }
+
             fragmento = `
                         <div class="accordion-item">
                             <div class="contenedorBotones">
@@ -187,7 +201,7 @@
                             </div>
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne${contadorGlobal}" aria-expanded="false" aria-controls="collapseTwo${contadorGlobal}">
-                                    <span style="margin-left: 5px;"><?php echo $capitulo->orden_capitulo; ?>.<span name="numeracionCapSub">${valorSegundo}</span>.<span name="numeracionCap2${num}">${++numeracionTercera}</span></span><span style="margin-left: 5px;" id="tituloH${contadorGlobal}">${titulo}</span>                                </button>
+                                    <span style="margin-left: 5px;"><?php echo $capitulo->orden_capitulo; ?>.<span name="numeracionCapSub">${valorSegundo}</span>.<span name="numeracionCap2${num}">${++numeracionTercera}</span></span><span style="margin-left: 5px;" id="tituloH${contadorGlobal}">${placeH}</span>                                </button>
                             </h2>
                             <div id="collapseOne${contadorGlobal}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample2">
                                 <div class="accordion-body">
@@ -195,7 +209,7 @@
                                         <div class="row">
                                             <div class="col seccion_${contadorGlobal}">
                                                 <span class="input-group-text" id="basic-addon3">Título</span>
-                                                <input type="text" name="seccion1[]" id="tituloB${contadorGlobal}" value="${titulo}" onkeyup="temasSubTemas(${contadorGlobal}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                <input type="text" name="seccion1[]" id="tituloB${contadorGlobal}" placeholder="(Sin sub-tema)" value="${titulo}" onkeyup="SubTemas(${contadorGlobal}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                             </div>
                                             <input hidden type="text" name="seccion3[]" id="seccion3${contadorGlobal}" value="${id}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                             <input hidden type="text" name="seccion4[]" id="seccion4${contadorGlobal}" value="2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">    
@@ -223,9 +237,14 @@
             agregarEditor(contadorGlobal);
     }
 
-    function addSeccion(titulo = '(Sin tema)', descripcion = '', id = 0){
+    function addSeccion(titulo = '', descripcion = '', id = 0){
             contadorGlobal++;
             contadorTema++;
+            let placeH = titulo;
+            if (titulo == '(Sin tema)' || titulo == '') {
+                placeH = '(Sin tema)';
+                titulo = '';
+            }
             fragmento = `<br>
                         <div class="accordion-item">
                             <div class="contenedorBotones">
@@ -236,7 +255,7 @@
                             </div>
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo${contadorGlobal}" aria-expanded="false" aria-controls="collapseTwo${contadorGlobal}">
-                                    <span><?php echo $capitulo->orden_capitulo; ?>.<span name="numeracionCaps" id="span1${contadorTema}">${contadorTema}</span></span><span style="margin-left: 5px;" id="tituloH${contadorGlobal}">${titulo}</span>
+                                    <span><?php echo $capitulo->orden_capitulo; ?>.<span name="numeracionCaps" id="span1${contadorTema}">${contadorTema}</span></span><span style="margin-left: 5px;" id="tituloH${contadorGlobal}">${placeH}</span>
                                 </button>
                             </h2>
                             <div id="collapseTwo${contadorGlobal}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
@@ -244,7 +263,7 @@
                                     <div class="row">
                                             <div class="col seccion_${contadorGlobal}">
                                                 <span class="input-group-text" id="basic-addon3">Título</span>
-                                                <input type="text" name="seccion1[]" id="tituloB${contadorGlobal}" value="${titulo}" onkeyup="temasSubTemas(${contadorGlobal}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                <input type="text" name="seccion1[]" id="tituloB${contadorGlobal}" placeholder="(Sin tema)" value="${titulo}" onkeyup="temas(${contadorGlobal}); bandera2 = 1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                             </div>
                                             <input hidden type="text" name="seccion3[]" id="seccion3${contadorGlobal}" value="${id}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                             <input hidden type="text" name="seccion4[]" id="seccion4${contadorGlobal}" value="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -373,15 +392,9 @@
                 </div>
             </div>
         </div>
-        <br>
         <script>
             agregarEditor(0);
         </script>
-        <div class="row justify-content-start">
-            <div class="">
-                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1" style="background-color: #E87B2A; border:1px solid #E87B2A; color:white;"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
-            </div>
-        </div>
                                 
         <div class="accordion" id="accordionExample">
             
@@ -405,6 +418,12 @@
                 </script>
             @endforeach
         @endforeach
+        <br>
+        <div class="row justify-content-start">
+            <div class="">
+                <button type="button" class="btn btn-warning btn-sm" id="add_seccion()" onClick="addSeccion(); bandera2 = 1" style="background-color: #E87B2A; border:1px solid #E87B2A; color:white;"> <i class="bi bi-plus-circle"></i> Agregar Tema</button>
+            </div>
+        </div>
         <br>
         <button type="submit" onclick="bandera2 = 0" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Capítulo</button>
     </form>
