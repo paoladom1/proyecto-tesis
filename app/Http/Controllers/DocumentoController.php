@@ -237,7 +237,7 @@ class DocumentoController extends Controller
     }
 
     private function portada($documento){
-        $grupo_trabajo = GrupoTrabajo::where('id', '=', 1)->get();
+        $grupo_trabajo = GrupoTrabajo::where('id', '=', $this->obtenerGrupo())->get();
         $estudiantes = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->orderBy("apellido", 'asc')->get();
         $carrera_id = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("carrera_id")->get("carrera_id");
         $carrera = Carrera::where('id', '=', $carrera_id[0]->carrera_id)->with("facultad")->get();
@@ -296,7 +296,7 @@ class DocumentoController extends Controller
         $secretaria = Empleado::where('cargo_id', '=', 2)->first();
         $carrera_id = Estudiante::where('grupo_trabajo_id', '=', $this->obtenerGrupo())->groupBy("carrera_id")->first("carrera_id");
         $DirectorCarrera = DirectorCarrera::where('carrera_id', '=', $carrera_id->carrera_id)->with("empleado")->first();
-        $grupo_trabajo = GrupoTrabajo::where('id', '=', 1)->with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->first();
+        $grupo_trabajo = GrupoTrabajo::where('id', '=', $this->obtenerGrupo())->with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->first();
         $carrera = Carrera::where('id', '=', $carrera_id->carrera_id)->with("facultad")->first();
         $decano = Empleado::join('departamento_unidad','departamento_unidad_id', '=', 'departamento_unidad.id')->where('cargo_id', '=', 1)->where('facultad_id', '=', $carrera->facultad->id)->first();
         $rector = Empleado::where('cargo_id', '=', 5)->first();
