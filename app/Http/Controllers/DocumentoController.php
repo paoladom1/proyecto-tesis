@@ -374,7 +374,11 @@ class DocumentoController extends Controller
             if($documentoTodo == null){
                 $section = $documento->addSection(DocumentoController::margenes());
             } else{
-                $section = $documento->addSection(array('pageNumberingStart' => 1), DocumentoController::margenes());
+                $section = $documento->addSection(array('pageNumberingStart' => 1, 
+                'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(3.5), 
+                'marginRight' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5),
+                'marginTop' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5), 
+                'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5)));
                 $footer = $section->addFooter();
                 $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE');
             }
@@ -420,7 +424,11 @@ class DocumentoController extends Controller
         if($documentoTodo == null){
             $section = $documento->addSection(DocumentoController::margenes());
         } else{
-            $section = $documento->addSection(array('pageNumberingStart' => 1), DocumentoController::margenes());
+            $section = $documento->addSection(array('pageNumberingStart' => 1, 
+                                                'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(3.5), 
+                                                'marginRight' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5),
+                                                'marginTop' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5), 
+                                                'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5)));
             $footer = $section->addFooter();
             $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE', array('format' => 'roman'));
         }
