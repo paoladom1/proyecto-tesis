@@ -119,9 +119,15 @@ class DirectorController extends Controller
         $departamento = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
         $correoCom = $request->input('correo');
         $correo = Externo::where("correo", "=", $correoCom)->first();
-        if ($correo == null) {
             if ($id != "") { // En caso el id no este vacío, se actualizara el dato.
                 $externo = Externo::findOrFail($id);
+                
+                if ($correoCom != $externo->correo) {
+                    if ($correo != null) {
+                        return $correo;
+                    }
+                } 
+
                 $externo->nombre = $request->input('nombre');
                 $externo->apellido = $request->input('apellido');
                 $externo->correo = $request->input('correo');
@@ -130,18 +136,19 @@ class DirectorController extends Controller
                 $externo->departamento_unidad_id = $departamento;
                 $externo->update();
             } else{ // Caso contrario el id este vacio, se agregará un nuevo lector o asesor, segun sea el caso.
-                $externo = new Externo();
-                $externo->nombre = $request->input('nombre');
-                $externo->apellido = $request->input('apellido');
-                $externo->correo = $request->input('correo');
-                $externo->descripcion = $request->input('descripcion');
-                $externo->rol_externo = $request->input('rol');
-                $externo->departamento_unidad_id = $departamento;
-                $externo->save();
+                if ($correo == null) {
+                    $externo = new Externo();
+                    $externo->nombre = $request->input('nombre');
+                    $externo->apellido = $request->input('apellido');
+                    $externo->correo = $request->input('correo');
+                    $externo->descripcion = $request->input('descripcion');
+                    $externo->rol_externo = $request->input('rol');
+                    $externo->departamento_unidad_id = $departamento;
+                    $externo->save();
+                } else{
+                    return $correo;
+                }
             }   
-        } else{
-            return $correo;
-        }
     }
 
     // Se obtiene un solo registro de algun lector o asesor.

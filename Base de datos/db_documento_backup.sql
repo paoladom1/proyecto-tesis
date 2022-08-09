@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-07-2022 a las 05:09:21
+-- Tiempo de generación: 09-08-2022 a las 06:43:53
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -323,7 +323,12 @@ INSERT INTO `bitacora` (`id`, `descripcion`, `fecha_modificacion`, `estudiante_i
 (340, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Índice', '2022-07-18 19:14:22', 11, 10, 4, '2022-07-19 07:14:22', '2022-07-19 07:14:22'),
 (341, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Índice', '2022-07-18 19:15:38', 11, 10, 4, '2022-07-19 07:15:38', '2022-07-19 07:15:38'),
 (342, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Índice', '2022-07-18 19:16:50', 11, 10, 4, '2022-07-19 07:16:50', '2022-07-19 07:16:50'),
-(343, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Índice', '2022-07-18 19:22:15', 21, 10, 4, '2022-07-19 07:22:15', '2022-07-19 07:22:15');
+(343, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Índice', '2022-07-18 19:22:15', 21, 10, 4, '2022-07-19 07:22:15', '2022-07-19 07:22:15'),
+(344, 'Las secciones creadas fueron:\\n\\n- Resume', '2022-07-22 00:29:40', 52, 10, 4, '2022-07-22 12:29:40', '2022-07-22 12:29:40'),
+(345, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Agradecimiento\\n- Resumen\\n- Índice\\n- Siglas\\n- Abreviaciones\\n- Nomenclaturas\\n- Capitulo 1. Introducción\\n- Capitulo 2. Marco Teórico\\n- Capitulo 3. Requerimientos del Sistema\\n- Capitulo 4. Herramientas y Metodologías del trabajo\\n- Capitulo 5. Diseño del sistema\\n- Capitulo 6. Desarrollo y pruebas del sistema\\n- Capitulo 7. Conclusiones y recomendaciones\\n- Glosario\\n- Referencias', '2022-07-22 00:29:58', 52, 10, 4, '2022-07-22 12:29:58', '2022-07-22 12:29:58'),
+(346, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Agradecimiento\\n- Resumen\\n- Índice\\n- Siglas\\n- Abreviaciones\\n- Nomenclaturas\\n- Capitulo 1. Introducción\\n- Capitulo 2. Marco Teórico\\n- Capitulo 3. Requerimientos del Sistema\\n- Capitulo 4. Herramientas y Metodologías del trabajo\\n- Capitulo 5. Diseño del sistema\\n- Capitulo 6. Desarrollo y pruebas del sistema\\n- Capitulo 7. Conclusiones y recomendaciones\\n- Glosario\\n- Referencias', '2022-07-22 00:32:38', 52, 10, 4, '2022-07-22 12:32:38', '2022-07-22 12:32:38'),
+(347, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Agradecimiento\\n- Resumen\\n- Índice\\n- Siglas\\n- Abreviaciones\\n- Nomenclaturas\\n- Capitulo 1. Introducción\\n- Capitulo 2. Marco Teórico\\n- Capitulo 3. Requerimientos del Sistema\\n- Capitulo 4. Herramientas y Metodologías del trabajo\\n- Capitulo 5. Diseño del sistema\\n- Capitulo 6. Desarrollo y pruebas del sistema\\n- Capitulo 7. Conclusiones y recomendaciones\\n- Glosario\\n- Referencias', '2022-07-22 00:34:51', 52, 10, 4, '2022-07-22 12:34:51', '2022-07-22 12:34:51'),
+(348, 'Las secciones creadas fueron:\\n\\n- Portada y Segunda Portada\\n- Agradecimiento\\n- Resumen\\n- Índice\\n- Siglas\\n- Abreviaciones\\n- Nomenclaturas\\n- Capitulo 1. Introducción\\n- Capitulo 2. Marco Teórico\\n- Capitulo 3. Requerimientos del Sistema\\n- Capitulo 4. Herramientas y Metodologías del trabajo\\n- Capitulo 5. Diseño del sistema\\n- Capitulo 6. Desarrollo y pruebas del sistema\\n- Capitulo 7. Conclusiones y recomendaciones\\n- Glosario\\n- Referencias', '2022-07-31 20:19:06', 52, 10, 4, '2022-08-01 08:19:06', '2022-08-01 08:19:06');
 
 -- --------------------------------------------------------
 
@@ -1053,7 +1058,7 @@ INSERT INTO `externo` (`id`, `nombre`, `apellido`, `correo`, `descripcion`, `rol
 (39, 'Artie', 'Brockley', 'abrockleyq@deliciousdays.com', '', 1, 8, '2022-07-17 20:44:41', '2022-07-17 20:44:41'),
 (40, 'Karmen', 'Gundry', 'kgundryr@live.com', '', 1, 8, '2022-07-17 20:44:41', '2022-07-17 20:44:41'),
 (41, 'Kean', 'Rambadt', 'krambadts@newsvine.com', '', 1, 8, '2022-07-17 20:44:41', '2022-07-17 20:44:41'),
-(42, 'Bondon', 'Jurca', 'bjurcat@4shared.com', '', 1, 8, '2022-07-17 20:44:41', '2022-07-17 20:44:41');
+(42, 'Bondon', 'Jurca', 'bjurcat@4shared.com', NULL, 1, 8, '2022-07-17 20:44:41', '2022-08-09 10:34:28');
 
 -- --------------------------------------------------------
 
@@ -1104,7 +1109,7 @@ CREATE TABLE `grupo_trabajo` (
 
 INSERT INTO `grupo_trabajo` (`id`, `anio_inicio`, `ciclo_inicio`, `tema`, `prorroga`, `asesor_interno_id`, `lector_interno_id`, `asesor_externo_id`, `lector_externo_id`, `created_at`, `updated_at`) VALUES
 (1, 2022, 1, 'Desarrollo de aplicación para facilitar la escritura de los trabajos de graduación para los estudiantes egresados de la Facultad de Ingeniería y Arquitectura de la Universidad Centroamericana José Simeón Cañas.', 0, 4, 7, NULL, NULL, '2022-05-22 05:16:05', '2022-07-19 04:53:08'),
-(8, 2022, 1, 'Desarrollo de plugins para el eCampus', 0, 13, NULL, NULL, NULL, '2022-07-19 04:51:06', '2022-07-19 04:51:06'),
+(8, 2022, 1, 'Desarrollo de plugins para el eCampus', 0, 13, 15, NULL, NULL, '2022-07-19 04:51:06', '2022-07-21 06:38:29'),
 (9, 2022, 1, 'Herramienta para composición de música asistida por computadora', 0, 8, NULL, NULL, NULL, '2022-07-19 04:55:07', '2022-07-19 04:55:07');
 
 -- --------------------------------------------------------
@@ -2074,7 +2079,7 @@ INSERT INTO `usuario` (`id`, `foto`, `email`, `password`, `tipo_usuario_id`, `cr
 (51, 'img/profile.png', '00162317@uca.edu.sv', '$2y$10$JHIxKguJI6y4eHOAOImTx.G1nHt2eeqe0XgF0Mo07CWRpZR6Flm7C', 1, '2022-07-05 17:06:45', '2022-07-18 03:15:29'),
 (52, 'img/profile.png', '00082817@uca.edu.sv', '$2y$10$JDgNBM/8KtmWVwdcQ7H8TeAb9LZV63ZYNnTFypKPxTppZC4bblU2u', 1, '2022-07-05 17:06:45', '2022-07-18 03:15:44'),
 (53, 'img/profile.png', '00148816@uca.edu.sv', '$2y$10$74uknT5QwJk8Xs.8TGYjSekKZjup61Vuk4oFC9IGJu23glBDnC2Ky', 1, '2022-07-05 17:06:45', '2022-07-18 03:15:57'),
-(54, 'img/usuarios/5400092117@uca.edu.sv.jpg', '00092117@uca.edu.sv', '$2y$10$8xsoFM2bBj2jcCtORoU5WOp3UnpUPmmLRYJggAAL2X.22HWnAxsm6', 1, '2022-07-05 17:06:00', '2022-07-11 10:22:10'),
+(54, 'img/usuarios/5400092117@uca.edu.sv.png', '00092117@uca.edu.sv', '$2y$10$8xsoFM2bBj2jcCtORoU5WOp3UnpUPmmLRYJggAAL2X.22HWnAxsm6', 1, '2022-07-05 17:06:00', '2022-08-01 10:46:17'),
 (55, 'img/profile.png', '00159817@uca.edu.sv', '$2y$10$FBz04fRWCUjvic/GydO.1.fIUzweMa8cCmyvdFnd0iPwz8YhADgh6', 1, '2022-07-05 17:06:00', '2022-07-06 06:40:01'),
 (56, 'img/profile.png', '00068817@uca.edu.sv', '$2y$10$McRU3QRhh.X1ijiXTCfETeA1QsyOR8SJuTVCC9WoAGMBaqx1UqtrO', 1, '2022-07-05 17:06:00', '2022-07-06 06:40:36'),
 (57, 'img/profile.png', '00030717@uca.edu.sv', '$2y$10$xYMkMLm2N.a1gN3MeRr0Ae4/FO0PuQvKArIUeOX1xhQzvNO1Cutjm', 1, '2022-07-05 17:06:45', '2022-07-18 03:16:11'),
@@ -2378,7 +2383,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=344;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=349;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora_modificacion`
