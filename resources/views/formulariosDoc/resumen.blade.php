@@ -1,17 +1,23 @@
 @extends('plantillas.nav')
 @section('content')
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <script>
 function agregarEditor() {
+
         CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
         var editor = CKEDITOR.replace('seccionTexto', {
             height: 350,
-            removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle,justify'
+            removeButtons: 'PasteFromWord,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
+            extraPlugins: 'liststyle,justify',
+            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
         });
 
         editor.config.contentsCss = "/css/content.css";
+
     }
 
 </script>
@@ -63,6 +69,7 @@ function agregarEditor() {
 
     <div class="row justify-content-end" style="margin-top: 10px;">
         <div class="col-md-11">
+
             <div class="accordion" id="accordionExample2">
 
             <div>
@@ -93,4 +100,6 @@ function agregarEditor() {
             })
         }
     </script>
+
+
 @endsection
