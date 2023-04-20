@@ -437,6 +437,8 @@ class DocumentoController extends Controller
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resumen[0]->contenido, false, false);
     }
 
+    //----------- funcion para cargar imagen ----------------------------
+    
     public function upload(Request $request){
         if($request->hasFile('upload')) {
             //get filename with extension

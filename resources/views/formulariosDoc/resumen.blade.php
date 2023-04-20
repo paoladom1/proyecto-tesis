@@ -12,6 +12,7 @@ function agregarEditor() {
             height: 350,
             removeButtons: 'PasteFromWord,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
             extraPlugins: 'liststyle,justify',
+            //------ para cargar imagen a documento ---------
             filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
             filebrowserUploadMethod: 'form'
         });
