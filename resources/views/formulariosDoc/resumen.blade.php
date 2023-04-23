@@ -67,7 +67,7 @@
                                                 'Paragraph',
                                                 'PasteFromOffice',
                                                 'Table',
-                                                'TableToolbar',],
+                                                'TableToolbar'],
                                                 simpleUpload: {
                                                     // The URL that the images are uploaded to.
                                                     uploadUrl: '/upload',
@@ -127,7 +127,7 @@
                                         } )
                                         .then(editor => {
 
-                                            
+                                            window.editor = editor;
                                            
                                             // CKEDITOR.ClassicEditor.replace('seccionTexto', {
                                             //     height: 350,
@@ -171,7 +171,7 @@
         var contAlert = 0;
         function registrarResumen() {
             var id = document.getElementsByName('id')[0].value;
-            var contenidoR = CKEDITOR.instances['seccionTexto'].getData();
+            var contenidoR = window.editor.getData();
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
