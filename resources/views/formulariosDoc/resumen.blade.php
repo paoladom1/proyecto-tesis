@@ -3,25 +3,7 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<script>
-function agregarEditor() {
 
-        CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
-        var editor = CKEDITOR.replace('seccionTexto', {
-            height: 350,
-            removeButtons: 'PasteFromWord,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle,justify',
-            //------ para cargar imagen a documento ---------
-            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form'
-        });
-
-        editor.config.contentsCss = "/css/content.css";
-
-    }
-
-</script>
 
     <div class="resumenContainer fuente-general">
         <div class="col seccion_" id="titulosApp">
@@ -56,9 +38,117 @@ function agregarEditor() {
                         <div class="row">
                             <div class="col">
                                 <textarea class="form-control" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
+
                                 <script>
-                                    agregarEditor();
+                                    window.addEventListener('load',(e) => {
+                                        CKEDITOR.ClassicEditor
+                                        .create( document.querySelector( '#seccionTexto' ),{
+                                            plugins: ['Alignment',
+                                                'Autoformat',
+                                                'BlockQuote',
+                                                'Bold',
+                                                'Essentials',
+                                                'FindAndReplace',
+                                                'FontColor',
+                                                'FontSize',
+                                                'Heading',
+                                                'Image',
+                                                'ImageCaption',
+                                                'ImageInsert',
+                                                'ImageStyle',
+                                                'ImageToolbar',
+                                                'ImageUpload',
+                                                'Indent',
+                                                'Italic',
+                                                'Link',
+                                                'List',
+                                                'ListProperties',
+                                                'MediaEmbed',
+                                                'Paragraph',
+                                                'PasteFromOffice',
+                                                'Table',
+                                                'TableToolbar',],
+                                                simpleUpload: {
+                                                    // The URL that the images are uploaded to.
+                                                    uploadUrl: '/upload',
+
+                                                    // Enable the XMLHttpRequest.withCredentials property.
+                                                    withCredentials: true,
+
+                                                    // Headers sent along with the XMLHttpRequest to the upload server.
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': 'CSRF-Token',
+                                                        Authorization: 'Bearer <JSON Web Token>'
+                                                    }
+                                                },
+                                        toolbar: {
+                                            items: [
+                                                'heading',
+                                                '|',
+                                                'bold',
+                                                'italic',
+                                                'link',
+                                                'bulletedList',
+                                                'numberedList',
+                                                '|',
+                                                'outdent',
+                                                'indent',
+                                                '|',
+                                                'alignment',
+                                                'imageUpload',
+                                                'imageInsert',
+                                                'blockQuote',
+                                                'insertTable',
+                                                'mediaEmbed',
+                                                'undo',
+                                                'redo',
+                                                'findAndReplace',
+                                                'fontColor',
+                                                'fontSize'
+                                            ]
+                                        },
+                                        language: 'es',
+                                        image: {
+                                            toolbar: [
+                                                'imageTextAlternative',
+                                                'toggleImageCaption',
+                                                'imageStyle:inline',
+                                                'imageStyle:block',
+                                                'imageStyle:side'
+                                            ]
+                                        },
+                                        table: {
+                                            contentToolbar: [
+                                                'tableColumn',
+                                                'tableRow',
+                                                'mergeTableCells'
+                                            ]
+                                        }
+                                        } )
+                                        .then(editor => {
+
+                                            
+                                           
+                                            // CKEDITOR.ClassicEditor.replace('seccionTexto', {
+                                            //     height: 350,
+                                              
+                                            //     //------ para cargar imagen a documento ---------
+                                            //     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+                                            //     filebrowserUploadMethod: 'form'
+                                            // });
+
+                                            editor.config.contentsCss = "/css/content.css";
+                                        })
+                                        .catch( error => {
+                                            console.error( error );
+                                        } );
+                                        
+                                        
+                                    });
+                                  
                                 </script>
+
+                                
                             </div>
                             <button type="button" onclick="registrarResumen()" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Resumen</button>
                         </div>
@@ -104,3 +194,10 @@ function agregarEditor() {
 
 
 @endsection
+
+
+
+
+
+
+

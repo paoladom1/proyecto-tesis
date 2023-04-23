@@ -26,6 +26,10 @@ use App\Models\Bitacora;
 use App\Models\BitacoraSeccion;
 use App\Models\BitacoraModificacion;
 
+class resultJson {
+    public $url;
+}
+
 class DocumentoController extends Controller
 {
     public function __construct()
@@ -436,6 +440,8 @@ class DocumentoController extends Controller
         $section->addTextBreak(1);
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resumen[0]->contenido, false, false);
     }
+    
+    
 
     //----------- funcion para cargar imagen ----------------------------
     
@@ -457,13 +463,15 @@ class DocumentoController extends Controller
             $request->file('upload')->storeAs('public/uploads', $filenametostore);
  
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('storage/app/public/uploads/'.$filenametostore); 
+            $res = new resultJson();
+            $res->url = asset('storage/app/public/uploads/'.$filenametostore); 
+            
             $msg = 'Image successfully uploaded'; 
             $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
           
             // Render HTML output 
             @header('Content-type: text/html; charset=utf-8'); 
-            echo $re;
+            return json_encode(res);
         }
     }
 
