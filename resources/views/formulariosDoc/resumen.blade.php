@@ -41,7 +41,7 @@
 
                                 <script>
                                     window.addEventListener('load',(e) => {
-                                        CKEDITOR.ClassicEditor
+                                        ClassicEditor
                                         .create( document.querySelector( '#seccionTexto' ),{
                                             plugins: ['Alignment',
                                                 'Autoformat',
@@ -49,12 +49,14 @@
                                                 'Bold',
                                                 'Essentials',
                                                 'FindAndReplace',
+                                                'FontBackgroundColor',
                                                 'FontColor',
+                                                'FontFamily',
                                                 'FontSize',
                                                 'Heading',
                                                 'Image',
                                                 'ImageCaption',
-                                                'ImageInsert',
+                                                'ImageResize',
                                                 'ImageStyle',
                                                 'ImageToolbar',
                                                 'ImageUpload',
@@ -66,27 +68,37 @@
                                                 'MediaEmbed',
                                                 'Paragraph',
                                                 'PasteFromOffice',
+                                                'SimpleUploadAdapter',
                                                 'Table',
-                                                'TableToolbar'],
+                                                'TableCellProperties',
+                                                'TableColumnResize',
+                                                'TableProperties',
+                                                'TableToolbar',
+                                                'Underline'],
                                                 simpleUpload: {
                                                     // The URL that the images are uploaded to.
-                                                    uploadUrl: '/upload',
+                                                    uploadUrl: '/ckeditor/image_upload',
 
                                                     // Enable the XMLHttpRequest.withCredentials property.
                                                     withCredentials: true,
 
                                                     // Headers sent along with the XMLHttpRequest to the upload server.
                                                     headers: {
-                                                        'X-CSRF-TOKEN': 'CSRF-Token',
-                                                        Authorization: 'Bearer <JSON Web Token>'
+                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                                        'Accept' : 'application/json'
                                                     }
+                                                },
+                                                alignment: {
+                                                    options: [ 'left', 'right', 'center', 'justify']
                                                 },
                                         toolbar: {
                                             items: [
                                                 'heading',
                                                 '|',
                                                 'bold',
+                                                'underline',
                                                 'italic',
+                                                'alignment',
                                                 'link',
                                                 'bulletedList',
                                                 'numberedList',
@@ -94,9 +106,7 @@
                                                 'outdent',
                                                 'indent',
                                                 '|',
-                                                'alignment',
                                                 'imageUpload',
-                                                'imageInsert',
                                                 'blockQuote',
                                                 'insertTable',
                                                 'mediaEmbed',
@@ -104,6 +114,8 @@
                                                 'redo',
                                                 'findAndReplace',
                                                 'fontColor',
+                                                'fontBackgroundColor',
+                                                'fontFamily',
                                                 'fontSize'
                                             ]
                                         },
@@ -121,7 +133,9 @@
                                             contentToolbar: [
                                                 'tableColumn',
                                                 'tableRow',
-                                                'mergeTableCells'
+                                                'mergeTableCells',
+                                                'tableCellProperties',
+                                                'tableProperties'
                                             ]
                                         }
                                         } )
