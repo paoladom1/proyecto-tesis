@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GoogleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -93,3 +93,6 @@ Route::post('/mostrarDatoGrupo', 'App\Http\Controllers\DirectorController@mostra
 
 Route::post('/mostrarDatoEstudiante', 'App\Http\Controllers\DirectorController@mostrarDatoEstudiante');
 Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
+
+Route::get('/auth/google', 'App\Http\Controllers\Auth\LoginController@redirectToGoogle');
+Route::get('/auth/google/callback', 'App\Http\Controllers\Auth\LoginController@handleGoogleCallback');
