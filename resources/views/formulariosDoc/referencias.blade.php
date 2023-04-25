@@ -3,15 +3,87 @@
 
 <script>
     function agregarEditor() {
-        CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
-        var editor = CKEDITOR.replace('seccionTexto', {
-            height: 350,
-            removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle,justify'
-        });
+        // CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
+        // CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
+        // var editor = CKEDITOR.replace('seccionTexto', {
+        //     height: 350,
+        //     removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
+        //     extraPlugins: 'liststyle,justify'
+        // });
 
-        editor.config.contentsCss = "/css/content.css";
+        window.addEventListener('load',(e)=>{
+            ClassicEditor
+                .create( document.querySelector( '#seccionTexto' ),{
+                    plugins: ['Alignment',
+                        'Autoformat',
+                        'BlockQuote',
+                        'Bold',
+                        'Essentials',
+                        'FindAndReplace',
+                        'FontBackgroundColor',
+                        'FontColor',
+                        'FontFamily',
+                        'FontSize',
+                        'Heading',
+                        'Indent',
+                        'Italic',
+                        'Link',
+                        'List',
+                        'ListProperties',
+                        'MediaEmbed',
+                        'Paragraph',
+                        'PasteFromOffice',
+                        'Underline'],
+                        alignment: {
+                            options: [ 'left', 'right', 'center', 'justify']
+                        },
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'underline',
+                        'italic',
+                        'alignment',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'blockQuote',
+                        'undo',
+                        'redo',
+                        'findAndReplace',
+                        'fontColor',
+                        'fontBackgroundColor',
+                        'fontFamily',
+                        'fontSize'
+                    ]
+                },
+                language: 'es'
+                }
+                 )
+                .then(editor => {
+
+                    window.editor = editor;
+                    
+                    // CKEDITOR.ClassicEditor.replace('seccionTexto', {
+                    //     height: 350,
+                        
+                    //     //------ para cargar imagen a documento ---------
+                    //     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+                    //     filebrowserUploadMethod: 'form'
+                    // });
+
+                    editor.config.contentsCss = "/css/content.css";
+                })
+                .catch( error => {
+                    console.error( error );
+                } );
+        });
+        
     }
 </script>
 
@@ -62,7 +134,7 @@
         var contAlert = 0;
         function registrarReferencia() {
             var id = document.getElementsByName('id')[0].value ;
-            var contenidoR = CKEDITOR.instances['seccionTexto'].getData();
+            var contenidoR = window.editor.getData();
             $.ajax({
                 type : "POST",
                 "serverSide" : true,

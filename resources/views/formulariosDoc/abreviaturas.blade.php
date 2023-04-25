@@ -1,19 +1,93 @@
 @extends('plantillas.nav')
 @section('content')
 <script>
+     window.editors = [];
     function agregarEditor(n) {
         // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
         // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
-        CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
-        var editor = CKEDITOR.replace('seccionTexto'+n, {
-            height: 275,
-            removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle,justify'
+        // CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
+        // CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
+        // var editor = CKEDITOR.replace('seccionTexto'+n, {
+        //     height: 275,
+        //     removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
+        //     extraPlugins: 'liststyle,justify'
+        // });
+        window.addEventListener('load',(e)=>{
+            ClassicEditor
+                .create( document.querySelector( '#seccionTexto'+n ),{
+                    plugins: ['Alignment',
+                        'Autoformat',
+                        'BlockQuote',
+                        'Bold',
+                        'Essentials',
+                        'FindAndReplace',
+                        'FontBackgroundColor',
+                        'FontColor',
+                        'FontFamily',
+                        'FontSize',
+                        'Heading',
+                        'Indent',
+                        'Italic',
+                        'Link',
+                        'List',
+                        'ListProperties',
+                        'MediaEmbed',
+                        'Paragraph',
+                        'PasteFromOffice',
+                        'Underline'],
+                        alignment: {
+                            options: [ 'left', 'right', 'center', 'justify']
+                        },
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'underline',
+                        'italic',
+                        'alignment',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'blockQuote',
+                        'mediaEmbed',
+                        'undo',
+                        'redo',
+                        'findAndReplace',
+                        'fontColor',
+                        'fontBackgroundColor',
+                        'fontFamily',
+                        'fontSize'
+                    ]
+                },
+                language: 'es'
+                }
+                 )
+                .then(editor => {
+
+                    window.editors[n] = editor;
+                    
+                    // CKEDITOR.ClassicEditor.replace('seccionTexto', {
+                    //     height: 350,
+                        
+                    //     //------ para cargar imagen a documento ---------
+                    //     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+                    //     filebrowserUploadMethod: 'form'
+                    // });
+
+                    editor.config.contentsCss = "/css/content.css";
+                })
+                .catch( error => {
+                    console.error( error );
+                } );
         });
 
-        editor.config.contentsCss = "/css/content.css";
-        return editor;
+       
+        
     }
 
 </script>
@@ -153,13 +227,13 @@
             var contenido;
             if(tipo == 1){
                 id = document.getElementsByName('idA')[0];
-                contenido = CKEDITOR.instances['seccionTexto1'].getData();
+                contenido = window.editors[1].getData();
             } else if(tipo == 2){
                 id = document.getElementsByName('idS')[0];
-                contenido = CKEDITOR.instances['seccionTexto3'].getData();
+                contenido = window.editors[3].getData();
             } else if(tipo == 3){
                 id = document.getElementsByName('idN')[0];
-                contenido = CKEDITOR.instances['seccionTexto2'].getData();
+                contenido = window.editors[2].getData();
             }
             $.ajax({
                 type : "POST",

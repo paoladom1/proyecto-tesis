@@ -1,6 +1,6 @@
 @extends('plantillas.nav')
 @section('content')
-    
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     .contenedorBotones button:focus{
         outline: none;
@@ -62,19 +62,140 @@
     var tipo;
 
     function agregarEditor(id) {
-        CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
-        var editor = CKEDITOR.replace('seccionTexto'+id, {
-            height: 250,
-            removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle,justify'
+        // CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
+        // CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
+        // var editor = CKEDITOR.replace('seccionTexto'+id, {
+        //     height: 250,
+        //     removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
+        //     extraPlugins: 'liststyle,justify'
+        // });
+
+        // for (var i in CKEDITOR.instances) { 
+        //     CKEDITOR.instances[i].on('change', function() {bandera2 = 1}); 
+        // }
+        
+        window.addEventListener('load',(e) => {
+            ClassicEditor
+            .create( document.querySelector( '#seccionTexto' + id ),{
+                plugins: ['Alignment',
+                    'Autoformat',
+                    'BlockQuote',
+                    'Bold',
+                    'Essentials',
+                    'FindAndReplace',
+                    'FontBackgroundColor',
+                    'FontColor',
+                    'FontFamily',
+                    'FontSize',
+                    'Heading',
+                    'Image',
+                    'ImageCaption',
+                    'ImageResize',
+                    'ImageStyle',
+                    'ImageToolbar',
+                    'ImageUpload',
+                    'Indent',
+                    'Italic',
+                    'Link',
+                    'List',
+                    'ListProperties',
+                    'MediaEmbed',
+                    'Paragraph',
+                    'PasteFromOffice',
+                    'SimpleUploadAdapter',
+                    'Table',
+                    'TableCellProperties',
+                    'TableColumnResize',
+                    'TableProperties',
+                    'TableToolbar',
+                    'Underline'],
+                    simpleUpload: {
+                        // The URL that the images are uploaded to.
+                        uploadUrl: '/ckeditor/image_upload',
+
+                        // Enable the XMLHttpRequest.withCredentials property.
+                        withCredentials: true,
+
+                        // Headers sent along with the XMLHttpRequest to the upload server.
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept' : 'application/json'
+                        }
+                    },
+                    alignment: {
+                        options: [ 'left', 'right', 'center', 'justify']
+                    },
+            toolbar: {
+                items: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'underline',
+                    'italic',
+                    'alignment',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    '|',
+                    'outdent',
+                    'indent',
+                    '|',
+                    'imageUpload',
+                    'blockQuote',
+                    'insertTable',
+                    'mediaEmbed',
+                    'undo',
+                    'redo',
+                    'findAndReplace',
+                    'fontColor',
+                    'fontBackgroundColor',
+                    'fontFamily',
+                    'fontSize'
+                ]
+            },
+            language: 'es',
+            image: {
+                toolbar: [
+                    'imageTextAlternative',
+                    'toggleImageCaption',
+                    'imageStyle:inline',
+                    'imageStyle:block',
+                    'imageStyle:side'
+                ]
+            },
+            table: {
+                contentToolbar: [
+                    'tableColumn',
+                    'tableRow',
+                    'mergeTableCells',
+                    'tableCellProperties',
+                    'tableProperties'
+                ]
+            }
+            } )
+            .then(editor => {
+
+                
+                
+                // CKEDITOR.ClassicEditor.replace('seccionTexto', {
+                //     height: 350,
+                    
+                //     //------ para cargar imagen a documento ---------
+                //     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+                //     filebrowserUploadMethod: 'form'
+                // });
+
+                editor.config.contentsCss = "/css/content.css";
+            })
+            .catch( error => {
+                console.error( error );
+            } );
+            
+            
         });
 
-        for (var i in CKEDITOR.instances) { 
-            CKEDITOR.instances[i].on('change', function() {bandera2 = 1}); 
-        }
 
-        editor.config.contentsCss = "/css/content.css";  
+       
     }
 
     function ordenarTemas() {
