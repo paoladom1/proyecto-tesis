@@ -437,6 +437,7 @@ class DocumentoController extends Controller
         $section->addTitle(mb_strtoupper('Resumen'), 1);
         $section->addTextBreak(1);
         $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $resumen[0]->contenido);
+        $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
         \Debugbar::info($resultado);
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado, false, false);
     }
