@@ -438,8 +438,36 @@ class DocumentoController extends Controller
         $section->addTextBreak(1);
         $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $resumen[0]->contenido);
         $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
-        \Debugbar::info($resultado);
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado, false, false);
+
+        // $dom = new \DOMDocument();
+        // libxml_use_internal_errors(true);
+        // $dom->loadHTML($resultado,LIBXML_NOXMLDECL | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+        // $anchors = $dom -> getElementsByTagName('img');
+        // foreach ($anchors as $element) {
+        //     $styleat = $element->getAttribute("style");
+        //     if($styleat != ""){
+        //         $element->setAttribute( "width", substr($styleat,6,-1) );
+        //     }
+            
+        // }
+        // $anchors2 = $dom -> getElementsByTagName('figure');
+        // foreach ($anchors2 as $element) {
+        //     $imgs = $element->getElementsByTagName("img");
+        //     $styleat = $element->getAttribute("style");
+        //     foreach ($imgs as $element2) {
+                
+        //         if($styleat != ""){
+        //             $element2->setAttribute( "width", substr($styleat,6,-1) );
+        //         }
+                
+        //     }
+            
+        // }
+       
+        // $resultado = $dom->saveXML(null,LIBXML_NOXMLDECL);
+        // $resultado = preg_replace('/^(.*)/', '', $resultado );
+        // \Debugbar::info($resultado);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section,  $resultado , false, false);
     }
     
     
