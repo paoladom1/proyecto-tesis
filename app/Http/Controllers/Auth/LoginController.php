@@ -34,11 +34,7 @@ class LoginController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function handleGoogleCallback()
     {
         try {
@@ -46,12 +42,27 @@ class LoginController extends Controller
             $finduser = Usuario::where('email', $user->email)->first();
 
             if ($finduser) {
-                Auth::guard('admin')->login($finduser);
-                $this->handleUserLoggedin();
+                if ($finduser->tipo_usuario_id == 1) {
+                    Auth::guard('admin')->login($finduser);
 
-                return redirect()->intended('menu');
+                    return redirect()->intended('menu');
+                }
+
+                if ($finduser->tipo_usuario_id == 2) {
+                    Auth::guard('admin')->login($finduser);
+
+                    return redirect()->intended('menudirector');
+                }
+
+
             } else {
-                redirect()->intended('login')->withErrors(array("Usuario no se encuentra en la base de datos"));
+                return redirect('/')
+                    ->withErrors(
+                        array(
+                            'email' => "¡No tiene activada su cuenta!"
+                        )
+                    )
+                    ->withInput(request(['email']));
             }
 
         } catch (Exception $e) {

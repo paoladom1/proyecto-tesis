@@ -87,10 +87,12 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="flex items-center justify-end mt-4">
-                        <a href="{{ url('auth/google') }}">
-                            <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
-                                style="margin-left: 3em;">
+                    <div class="flex items-center justify-end mt-4 mb-4">
+                        <span style="font-size: 16px">Acceder con: </span>
+                        <a style="display: flex; justify-content:center; align-items: center; padding: 0 12px; background: white; color: #444; box-shadow: 1px 1px 1px grey; whitespace: no-wrap; border-radius: 5px; border: thin solid #888;"
+                            class="text-decoration-none mt-2" href="{{ url('auth/google') }}">
+                            <span class="icon" style="width: 42px; height: 42px"></span>
+                            <span style="font-size: 14px; font-weight:bold;" class="text-dark">Google</span>
                         </a>
                     </div>
                     <div class="row">
@@ -122,6 +124,10 @@
 
         .tw {
             color: skyblue;
+        }
+
+        .icon {
+            background: url('https://developers.google.com/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
         }
     </style>
 </body>
