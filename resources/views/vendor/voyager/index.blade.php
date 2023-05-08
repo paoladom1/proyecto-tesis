@@ -210,7 +210,7 @@
                 /**
                  * Draw the a chart.js bar chart with data from the specified view that
                  * overlays session data for the current year over session data for the
-                 * previous year, grouped by month.
+                 * previous year, grouped by month
                  */
                 function renderYearOverYearChart(ids) {
 
