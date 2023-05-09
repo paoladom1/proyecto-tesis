@@ -97,6 +97,7 @@ Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 // Ruta de amdministrador
 Route::get('/mostrarUsuario', 'App\Http\Controllers\NewAdminController@mostrarUsuario');
 Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView');
+Route::get('/configAdmin','App\Http\Controllers\NewAdminController@mostrarConfig');
 
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');

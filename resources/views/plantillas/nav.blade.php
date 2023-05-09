@@ -80,8 +80,7 @@
                     <li><a href="{{ url('/grupoTrabajo') }}" style="font-size: 1.3rem"><i class="bi bi-people me-2"></i>Grupos de trabajo</a></li>
                         <hr>
                     <li><a href="{{ url('/mostrarUsuario') }}" style="font-size: 1.3rem"><i class="bi bi-person-check-fill"></i>  Usuarios</a></li>
-                    <li><a href="{{ url('/#') }}" style="font-size: 1.3rem"><i class="bi bi-bookmark-check-fill"></i>  Lectores</a></li>
-                    <li><a href="{{ url('/#') }}" style="font-size: 1.3rem"><i class="bi bi-info-circle"></i>  Asesores</a></li>
+                    <li><a href="{{ url('/configAdmin') }}" style="font-size: 1.3rem"><i class="bi bi-gear"></i>  Configuracion</a></li>
                         <hr>
                 </ul>
             @endif

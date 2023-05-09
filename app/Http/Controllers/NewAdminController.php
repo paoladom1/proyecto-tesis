@@ -31,4 +31,8 @@ class NewAdminController extends Controller
         return view('admin.userInfoForm');
     }
     
+    function mostrarConfig()
+    {
+        return view('admin.configAdmin');
+    }
 }

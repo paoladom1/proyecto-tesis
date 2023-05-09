@@ -371,8 +371,8 @@
                     <td style="width: 20%">00090718@uca.edu.sv</td>
                     <td style="width: 20%">Estudiante</td>
                     <td style="width: 50%">
-                        <button class="btn btn-primary btn-sm" type="button" title="View" >
-                            <i class="bi bi-eye"></i></button>
+                        <a href="{{ url('/infoUsuario')}}"><button class="btn btn-primary btn-sm" type="button" title="View" >
+                            <i class="bi bi-eye"></i></button></a>
                         <button class="btn btn-warning btn-sm" type="button" title="Edit">
                             <i class="bi bi-pen"></i></button>
                         <button class="btn btn-danger btn-sm" type="button" title="Delete">
