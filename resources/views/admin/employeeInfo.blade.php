@@ -279,72 +279,97 @@
 <div class="container-fluid container-general">
 
 
-  <!--------------------------------------------------Modal para crear usuarios en  el sistema----------------------------------------->
+    <!--------------------------------------------------Modal para crear usuarios en  el sistema----------------------------------------->
 
-  <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
                     <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Registrar Usuarios</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="limpiarCampos() " aria-label="Close" style="color: white; width: 1em;"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        onclick="limpiarCampos() " aria-label="Close" style="color: white; width: 1em;"></button>
                 </div>
                 <div class="modal-body">
                     <div id="liveAlertPlaceholder2"></div>
-                    <div class="row">       
+                    <div class="row">
                         <form>
                             <input hidden type="text" id="idExterno">
                             <p>Campos requeridos <span style="color: red;">(*)</span></p>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group form-floating mb-2 mt-2">
-                                        <input type="text" maxlength="100" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingrese los nombres">
-                                        <label for="nombre">Nombres <span style="color: red;">(*)</span></label>
-                                        <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al limite de 100 caracteres!</span>
+                                <div class="col-md">
+                                    <div class="form-group form-floating mb-3 mt-3">
+                                        <input type="text" maxlength="100" class="form-control" id="nombre"
+                                            aria-describedby="emailHelp" placeholder="Ingrese los nombres">
+                                        <label for="nombre">Codigo de empleado <span
+                                                style="color: red;">(*)</span></label>
+                                        <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
+                                            limite de 100 caracteres!</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-floating mb-2 mt-2">
-                                        <input type="text" maxlength="100" class="form-control" id="apellido" aria-describedby="emailHelp" placeholder="Ingrese los apellidos">
+                                <div class="col-md">
+                                    <div class="form-group form-floating mb-3 mt-3">
+                                        <input type="text" maxlength="100" class="form-control" id="nombre"
+                                            aria-describedby="emailHelp" placeholder="Ingrese los nombres">
+                                        <label for="nombre">Nombres <span style="color: red;">(*)</span></label>
+                                        <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
+                                            limite de 100 caracteres!</span>
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-group form-floating mb-3 mt-3">
+                                        <input type="text" maxlength="100" class="form-control" id="apellido"
+                                            aria-describedby="emailHelp" placeholder="Ingrese los apellidos">
                                         <label for="apellido">Apellidos <span style="color: red;">(*)</span></label>
-                                        <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al limite de 100 caracteres!</span>
-                                    </div>  
+                                        <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al
+                                            limite de 100 caracteres!</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md">
                                     <div class="form-group form-floating mb-3 mt-3">
-                                        <input type="text" maxlength="100" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingrese el correo electronico">
-                                        <label for="correo">Correo electronico <span style="color: red;">(*)</span></label>
-                                        <span style="color: red; display: none;" id="mensajeCorreo">¡Ha llegado al limite de 100 caracteres!</span>
+                                        <select class="form-control form-select" id="rol">
+                                            <option value="">Seleccione un tipo de empleado</option>
+                                            <option value="2">Academico</option>
+                                            <option value="1">Administrativo</option>
+                                            <option value="0">Servicio</option>
+                                        </select>
+                                        <label for="rol">Tipo de empleado <span style="color: red;">(*)</span></label>
                                     </div>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-group form-floating mb-3 mt-3">
-                                    <select class="form-control form-select" id="rol">
-                                        <option value = "">Seleccione un tipo de usuario</option>
-                                        <option value = "1">Director de carrera</option>
-                                        <option value = "0">Estudiante</option>
-                                    </select>
-                                    <label for="rol">Tipo de usuario <span style="color: red;">(*)</span></label>
+                                        <select class="form-control form-select" id="rol">
+                                            <option value="">Seleccione un tipo de cargo</option>
+                                            <option value="4">Decano</option>
+                                            <option value="3">Secretario/a academico</option>
+                                            <option value="2">Director de carrera</option>
+                                            <option value="1">Catedratico/a</option>
+                                            <option value="0">Rector o rectora</option>   
+                                        </select>
+                                        <label for="rol">Cargo de empleado <span style="color: red;">(*)</span></label>
                                     </div>
                                 </div>
                                 <div class="col-md">
                                     <div class="form-group form-floating mb-3 mt-3">
-                                    <select class="form-control form-select" id="rol">
-                                        <option value = "">Seleccione un estado</option>
-                                        <option value = "1">Activo</option>
-                                        <option value = "0">Inactivo</option>
-                                    </select>
-                                    <label for="rol">Tipo de estado <span style="color: red;">(*)</span></label>
+                                        <select class="form-control form-select" id="rol">
+                                            <option value="">Seleccione un Depto o Unidad</option>
+                                            <option value="1">Departamento de Electronica e Informatica</option>
+                                            <option value="0">Inactivo</option>
+                                        </select>
+                                        <label for="rol">Departamento/Unidad <span style="color: red;">(*)</span></label>
                                     </div>
                                 </div>
                             </div>
-                          </form>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal" onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
-                    <button type="button" class="mb-3 btn btn-success" onclick="registrarDatos()"><i class="bi bi-save"></i> <span id="btnRegistarExterno">Registrar</span></button>
+                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
+                        onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
+                    <button type="button" class="mb-3 btn btn-success" onclick="registrarDatos()"><i
+                            class="bi bi-save"></i> <span id="btnRegistarExterno">Registrar</span></button>
                 </div>
             </div>
         </div>
@@ -352,22 +377,22 @@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                type="button" role="tab" aria-controls="nav-home" aria-selected="true">USUARIOS</button>
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">EMPLEADOS</button>
         </div>
 
         <div class="input-group mb-3 dropEstudiante" style="width: 40%;float: right;margin-top: -55px;">
             <button class="btn btn-primary dropdown-toggle" type="button" id="buscadorEstuiante"
                 data-bs-toggle="dropdown" aria-expanded="false">Nombre</button>
             <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Codigo de empleado</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="#">Nombre</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Apellido</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item">Correo</a></li>
+                <li><a class="dropdown-item">Apellido</a></li>
             </ul>
             <input type="search" class="form-control" id="buscadorTablaE" placeholder="Digite su criterio de busqueda">
             <button class="btn btn-secondary" type="button" id="button-addon2" onclick="buscadorAD()"><i
@@ -382,22 +407,24 @@
             <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard"">
             <thead class=" thead-dar"
                 style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem !important;">
-                <tr style="padding: 0.5rem">
+                <tr>
+                    <th scope="col">COD. EMPLEADO</th>
                     <th scope="col">NOMBRES</th>
                     <th scope="col">APELLIDOS</th>
-                    <th scope="col">CORREO INSTITUCIONAL</th>
-                    <th scope="col">TIPO DE USUARIO</th>
-                    <th scope="col">ESTADO USUARIO</th>
+                    <th scope="col">TIPO DE EMPLEADO</th>
+                    <th scope="col">CARGO DE EMPLEADO</th>
+                    <th scope="col">DEPARTAMENTO/UNIDAD</th>
                     <th scope="col">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="width: 20% !important;">Paola Carolina</td>
-                        <td style="width: 30%">Dominguez Diaz</td>
-                        <td style="width: 20%">00090718@uca.edu.sv</td>
-                        <td style="width: 20%">Estudiante</td>
-                        <td style="width: 20%">ACTIVO</td>
+                        <td style="width: 20%">00352318</td>
+                        <td style="width: 30%">PAOLA CAROLINA</td>
+                        <td style="width: 20%">DOMINGUEZ DIAZ</td>
+                        <td style="width: 20%">ACADEMICO</td>
+                        <td style="width: 20%">CATEDRATICA</td>
+                        <td style="width: 20%">DEPT. DE ELECTRONICA E INFORMATICA</td>
                         <td style="width: 20%">
                             <a href="{{ url('/infoUsuario')}}"><button class="btn btn-primary btn-sm" type="button"
                                     title="View">
@@ -408,11 +435,12 @@
                                 <i class="bi bi-trash3"></i></button>
                         </td>
                     </tr>
-                    <td style="width: 30%">Gabriela Cecilia</td>
-                    <td style="width: 30%">Salguero Moreno</td>
-                    <td style="width: 20%">00090718@uca.edu.sv</td>
-                    <td style="width: 20%">Estudiante</td>
-                    <td style="width: 20%">ACTIVO</td>
+                    <td style="width: 20%">00090718</td>
+                    <td style="width: 30%">ALEXIS RAFAEL</td>
+                    <td style="width: 20%">BOLANOS MEJIA</td>
+                    <td style="width: 20%">ACADEMICO</td>
+                    <td style="width: 20%">CATEDRATICO</td>
+                    <td style="width: 20%">DEPT. DE ELECTRONICA E INFORMATICA</td>
                     <td style="width: 50%">
                         <button class="btn btn-primary btn-sm" type="button" title="View">
                             <i class="bi bi-eye"></i></button>
@@ -424,11 +452,12 @@
                     </td>
                     </tr>
                     <tr>
-                        <td style="width: 30%">Alexis Rafael</td>
-                        <td style="width: 30%">Bolanos Mejia</td>
-                        <td style="width: 20%">00090718@uca.edu.sv</td>
-                        <td style="width: 20%">Estudiante</td>
-                        <td style="width: 30%">ACTIVO</td>
+                        <td style="width: 20%">00090718</td>
+                        <td style="width: 30%">GABRIELA CECILIA</td>
+                        <td style="width: 20%">SALGUERO </td>
+                        <td style="width: 20%">ACADEMICO</td>
+                        <td style="width: 20%">CATEDRATICA</td>
+                        <td style="width: 20%">DEPT. DE ELECTRONICA E INFORMATICA</td>
                         <td style="width: 50%">
                             <button class="btn btn-primary btn-sm" type="button" title="View">
                                 <i class="bi bi-eye"></i></button>
@@ -448,7 +477,8 @@
             </div>
         </div>
     </div>
-    <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-backdrop="false" ><i class="bi bi-person-plus-fill float-icon"></i></a>
+    <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button"
+        data-backdrop="false"><i class="bi bi-person-plus-fill float-icon"></i></a>
 </div>
 
 

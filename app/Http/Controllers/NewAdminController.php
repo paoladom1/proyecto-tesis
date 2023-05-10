@@ -35,4 +35,9 @@ class NewAdminController extends Controller
     {
         return view('admin.configAdmin');
     }
+
+    function mostrarEmpleados()
+    {
+        return view('admin.employeeInfo');
+    }
 }
