@@ -3,7 +3,13 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
+<style>
+    .ck-editor__editable_inline{
+        min-height: 200px;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+</style>
 
     <div class="resumenContainer fuente-general">
         <div class="col seccion_" id="titulosApp">
@@ -37,8 +43,8 @@
                         <div id="liveAlertPlaceholder"></div>
                         <div class="row">
                             <div class="col">
-                                <textarea class="form-control" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
-
+                                <textarea class="form-control ckescroll" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
+                                
                                 <script>
                                     window.addEventListener('load',(e) => {
                                         ClassicEditor
@@ -115,8 +121,6 @@
                                                 'findAndReplace',
                                                 'fontColor',
                                                 'fontBackgroundColor',
-                                                'fontFamily',
-                                                'fontSize'
                                             ]
                                         },
                                         language: 'es',
@@ -134,14 +138,15 @@
                                                 'tableColumn',
                                                 'tableRow',
                                                 'mergeTableCells',
-                                                'tableCellProperties',
+                                                'tableCellPr-alturaoperties',
                                                 'tableProperties'
                                             ]
                                         }
                                         } )
                                         .then(editor => {
-
+                                            //editor.ui.view.editable.element.style.height = '500px';
                                             window.editor = editor;
+                                            
                                            
                                             // CKEDITOR.ClassicEditor.replace('seccionTexto', {
                                             //     height: 350,
@@ -156,12 +161,8 @@
                                         .catch( error => {
                                             console.error( error );
                                         } );
-                                        
-                                        
                                     });
-                                  
                                 </script>
-
                                 
                             </div>
                             <button type="button" onclick="registrarResumen()" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Resumen</button>
