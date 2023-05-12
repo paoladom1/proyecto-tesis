@@ -138,7 +138,7 @@
                                                 'tableColumn',
                                                 'tableRow',
                                                 'mergeTableCells',
-                                                'tableCellPr-alturaoperties',
+                                                'tableCellProperties',
                                                 'tableProperties'
                                             ]
                                         }
