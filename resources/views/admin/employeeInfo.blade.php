@@ -426,7 +426,7 @@
                         <td style="width: 20%">CATEDRATICA</td>
                         <td style="width: 20%">DEPT. DE ELECTRONICA E INFORMATICA</td>
                         <td style="width: 20%">
-                            <a href="{{ url('/infoUsuario')}}"><button class="btn btn-primary btn-sm" type="button"
+                            <a href="{{ url('/infoEmployee')}}"><button class="btn btn-primary btn-sm" type="button"
                                     title="View">
                                     <i class="bi bi-eye"></i></button></a>
                             <button class="btn btn-warning btn-sm" type="button" title="Edit">

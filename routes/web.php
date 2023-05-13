@@ -99,6 +99,7 @@ Route::get('/mostrarUsuario', 'App\Http\Controllers\NewAdminController@mostrarUs
 Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView');
 Route::get('/configAdmin','App\Http\Controllers\NewAdminController@mostrarConfig');
 Route::get('/employeeInfo','App\Http\Controllers\NewAdminController@mostrarEmpleados');
+Route::get('/infoEmployee', 'App\Http\Controllers\NewAdminController@frmEmployeeView');
 
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');

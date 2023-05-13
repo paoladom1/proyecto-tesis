@@ -40,4 +40,9 @@ class NewAdminController extends Controller
     {
         return view('admin.employeeInfo');
     }
+
+    function frmEmployeeView()
+    {
+        return view('admin.employeeInfoForm');
+    }
 }

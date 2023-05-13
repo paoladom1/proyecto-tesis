@@ -281,37 +281,40 @@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                type="button" role="tab" aria-controls="nav-home" aria-selected="true">USUARIOS</button>
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">EMPLEADOS</button>
         </div>
     </nav>
     <br>
-    <form class="row g-3">
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Nombres</label>
-            <input type="email" class="form-control" id="inputEmail4">
+    <form class="row gx-3 gy-2 align-items-center">
+        <div class="col-sm-2">
+            <label for="inputCod" class="form-label">Codigo de empleado</label>
+            <input type="text" class="form-control" id="inputCod">
+        </div><div></div>
+        <div class="col-sm-3">
+            <label for="inputName" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="inputName">
+            <label for="inputLastnames" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="inputLastnames">
+        </div><div></div>
+        <div class="col-sm-3">
+            <label for="inputEmail" class="form-label">Correo institucional</label>
+            <input type="email" class="form-control" id="inputEmail">
+        </div><div></div>
+        <div class="col-sm-3">
+            <label for="inputType" class="form-label">Tipo de empleado</label>
+            <input type="text" class="form-control" id="inputType">
         </div>
-        <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Apellidos</label>
-            <input type="password" class="form-control" id="inputPassword4">
+        <div class="col-sm-4">
+            <label for="inputGroup" class="form-label">Cargo de empleado</label>
+            <input type="text" class="form-control" id="inputGroup">
         </div>
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Correo institucional</label>
-            <input type="email" class="form-control" id="inputEmail4">
-        </div>
-        <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Tipo de usuario</label>
-            <input type="password" class="form-control" id="inputPassword4">
-        </div>
-        <div class="col-md-4">
-            <label for="inputCity" class="form-label">Grupo asociado</label>
-            <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-12">
-            <label for="inputCity" class="form-label">Trabajo de graduacion</label>
-            <input type="text" class="form-control" id="inputCity">
+        <div class="col-sm-4">
+            <label for="inputWork" class="form-label">Departamento/Unidad</label>
+            <input type="text" class="form-control" id="inputWork">
         </div>
         <div class="col-12">
-            <a href="{{ url('/mostrarUsuario')}}"><button type="button" class="btn btn-primary" style= "background-color:#003C71"><i class="bi bi-arrow-bar-left"></i>Regresar</button></a>
+            <a href="{{ url('/employeeInfo')}}"><button type="button" class="btn btn-primary"
+                    style="background-color:#003C71"><i class="bi bi-arrow-bar-left"></i>Regresar</button></a>
         </div>
     </form>
 </div>
