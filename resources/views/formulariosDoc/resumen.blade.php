@@ -125,6 +125,7 @@
                                         },
                                         language: 'es',
                                         image: {
+                                            resizeUnit: 'px',
                                             toolbar: [
                                                 'imageTextAlternative',
                                                 'toggleImageCaption',
@@ -183,10 +184,47 @@
     </div>
 
     <script>
+        async function getIMGsize(url){
+            const img = new Image();
+            img.src = url;
+            img.onload = async function() {
+                
+                img.width = await this.width;
+            }
+            return img.width
+            
+        }
         var contAlert = 0;
-        function registrarResumen() {
+        async function registrarResumen() {
             var id = document.getElementsByName('id')[0].value;
             var contenidoR = window.editor.getData();
+            //modificar el contenido 
+            console.log(contenidoR);
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(contenidoR,"text/html");
+
+            var imgsElements = xmlDoc.getElementsByTagName("body")[0].getElementsByClassName("image_resized");
+            
+            for(let ele of imgsElements){
+                
+                if(ele.tagName == "IMG"){
+                    
+                  
+                    realvalue =  parseFloat(ele.style.width) * 0.75;
+                    
+                    ele.setAttribute("width",realvalue);
+                }
+                if(ele.tagName == "FIGURE"){
+                   
+                    realvalue =  parseFloat(ele.style.width) * 0.75;
+                    ele.setAttribute("width",realvalue);
+                   
+                }
+            }
+
+            console.log(xmlDoc.getElementsByTagName("body")[0].innerHTML);
+            contenidoR = xmlDoc.getElementsByTagName("body")[0].innerHTML;
+
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
