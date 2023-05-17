@@ -1,5 +1,12 @@
 @extends('plantillas.nav')
 @section('content')
+<style>
+    .ck-editor__editable_inline{
+        min-height: 200px;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+</style>
 <script>
      window.editors = [];
     function agregarEditor(n) {
