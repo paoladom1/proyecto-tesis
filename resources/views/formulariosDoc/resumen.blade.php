@@ -210,16 +210,32 @@
                 if(ele.tagName == "IMG"){
                     
                   
-                    realvalue =  parseFloat(ele.style.width) * 0.75;
+                    var realvalue =  parseFloat(ele.style.width) * 0.75;
                     
                     ele.setAttribute("width",realvalue);
+                    
+                    
+                    
+                    
+                    
+                    
                 }
-                if(ele.tagName == "FIGURE"){
+                if(ele.tagName == "FIGURE" && !ele.classList.contains("image-style-side")){
                    
-                    realvalue =  parseFloat(ele.style.width) * 0.75;
-                    ele.setAttribute("width",realvalue);
+                    var realvalue =  parseFloat(ele.style.width) * 0.75;
+                    ele.childNodes[0].setAttribute("width",realvalue);
+                    var margin = (8.5 - (realvalue/96))/2;
+                    ele.childNodes[0].setAttribute("marginLeft",margin);
                    
                 }
+
+                if(ele.tagName == "FIGURE" && ele.classList.contains("image-style-side")){
+                   
+                   var realvalue =  parseFloat(ele.style.width) * 0.75;
+                   ele.childNodes[0].setAttribute("width",realvalue);
+                   var margin = (8.5 - (realvalue/96));
+                   ele.childNodes[0].setAttribute("marginLeft",margin);
+               }
             }
 
             console.log(xmlDoc.getElementsByTagName("body")[0].innerHTML);
