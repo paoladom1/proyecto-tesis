@@ -204,28 +204,25 @@
             var xmlDoc = parser.parseFromString(contenidoR,"text/html");
 
             var imgsElements = xmlDoc.getElementsByTagName("body")[0].getElementsByClassName("image_resized");
-            
+            var tableElements = xmlDoc.getElementsByTagName("body")[0].getElementsByTagName("table");
+
             for(let ele of imgsElements){
                 
                 if(ele.tagName == "IMG"){
                     
-                  
                     var realvalue =  parseFloat(ele.style.width) * 0.75;
-                    
                     ele.setAttribute("width",realvalue);
-                    
-                    
-                    
-                    
-                    
-                    
+                    ele.style.float= "right";
+
                 }
+
                 if(ele.tagName == "FIGURE" && !ele.classList.contains("image-style-side")){
                    
                     var realvalue =  parseFloat(ele.style.width) * 0.75;
                     ele.childNodes[0].setAttribute("width",realvalue);
                     var margin = (8.5 - (realvalue/96))/2;
-                    ele.childNodes[0].setAttribute("marginLeft",margin);
+                    //ele.childNodes[0].setAttribute("marginLeft",margin);
+                    ele.childNodes[0].style.float= "right";
                    
                 }
 
@@ -235,8 +232,29 @@
                    ele.childNodes[0].setAttribute("width",realvalue);
                    var margin = (8.5 - (realvalue/96));
                    ele.childNodes[0].setAttribute("marginLeft",margin);
+                   ele.style.float= "right";
                }
             }
+
+            /*for(let ele of imgsElements){
+                if(ele.tagName == "IMG"){
+                    realvalue = parseFloat(ele.style.width) * 0.75;
+                    ele.setAttribute("width",realvalue);
+                    ele.style.textAlign = "inline"
+                }
+
+                if(ele.tagName == "FIGURE"){
+                    realvalue = parseFloat(ele.style.width) * 0.75;
+                    ele.setAttribute("width",realvalue);
+                }
+            }*/
+
+            //tablas centradas
+            for(let ele of tableElements){
+                ele.style.textAlign = "center";
+                ele.style.padding = "10px";
+            }
+
 
             console.log(xmlDoc.getElementsByTagName("body")[0].innerHTML);
             contenidoR = xmlDoc.getElementsByTagName("body")[0].innerHTML;
