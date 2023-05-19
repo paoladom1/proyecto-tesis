@@ -423,56 +423,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td style="width: 20%">00352318</td>
-                        <td style="width: 30%">PAOLA CAROLINA</td>
-                        <td style="width: 20%">DOMINGUEZ DIAZ</td>
-                        <td style="width: 20%">ACADEMICO</td>
-                        <td style="width: 20%">CATEDRATICA</td>
-                        <td style="width: 20%">DEPT. DE ELECTRONICA E INFORMATICA</td>
-                        <td style="width: 20%">
-                            <a href="{{ url('/infoEmployee') }}"><button class="btn btn-primary btn-sm" type="button"
-                                    title="View">
-                                    <i class="bi bi-eye"></i></button></a>
-                            <button class="btn btn-warning btn-sm" type="button" title="Edit">
-                                <i class="bi bi-pen"></i></button>
-                            <button class="btn btn-danger btn-sm" type="button" title="Delete">
-                                <i class="bi bi-trash3"></i></button>
-                        </td>
-                    </tr>
-                    <td style="width: 20%">00090718</td>
-                    <td style="width: 30%">ALEXIS RAFAEL</td>
-                    <td style="width: 20%">BOLANOS MEJIA</td>
-                    <td style="width: 20%">ACADEMICO</td>
-                    <td style="width: 20%">CATEDRATICO</td>
-                    <td style="width: 20%">DEPT. DE ELECTRONICA E INFORMATICA</td>
-                    <td style="width: 50%">
-                        <button class="btn btn-primary btn-sm" type="button" title="View">
-                            <i class="bi bi-eye"></i></button>
-                        <button class="btn btn-warning btn-sm" type="button" title="Edit">
-                            <i class="bi bi-pen"></i></button>
-                        <button class="btn btn-danger btn-sm" type="button" title="Delete">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%">00090718</td>
-                        <td style="width: 30%">GABRIELA CECILIA</td>
-                        <td style="width: 20%">SALGUERO </td>
-                        <td style="width: 20%">ACADEMICO</td>
-                        <td style="width: 20%">CATEDRATICA</td>
-                        <td style="width: 20%">DEPT. DE ELECTRONICA E INFORMATICA</td>
-                        <td style="width: 50%">
-                            <button class="btn btn-primary btn-sm" type="button" title="View">
-                                <i class="bi bi-eye"></i></button>
-                            <button class="btn btn-warning btn-sm" type="button" title="Edit">
-                                <i class="bi bi-pen"></i></button>
-                            <button class="btn btn-danger btn-sm" type="button" title="Delete">
-                                <i class="bi bi-trash3"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    @foreach ($empleados as $empleado)
+                        <tr>
+                            <td style="width: 20%">{{ $empleado->codigo_empleado }}</td>
+                            <td style="width: 20%">{{ $empleado->nombre }}</td>
+                            <td style="width: 20%">{{ $empleado->apellido }}</td>
+                            <td style="width: 20%">
+                                @foreach ($tipos_empleado as $tipo_empleado)
+                                    @if ($empleado->tipo_empleado_id === $tipo_empleado->id)
+                                        {{ $tipo_empleado->nombre_tipo_empleado }}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td style="width: 20%">
+                                @foreach ($cargos as $cargo)
+                                    @if ($empleado->cargo_id === $cargo->id)
+                                        {{ $cargo->nombre_cargo }}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td style="width: 20%">
+                                @foreach ($departamentos_u as $dpto)
+                                    @if ($empleado->departamento_unidad_id === $dpto->id)
+                                        {{ $dpto->nombre_departamento }}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td style="width: 30%">
+                                <a href="{{ url('/infoEmployee') }}"><button class="btn btn-primary btn-sm"
+                                        type="button" title="View">
+                                        <i class="bi bi-eye"></i></button></a>
+                                <button class="btn btn-warning btn-sm" type="button" title="Edit">
+                                    <i class="bi bi-pen"></i></button>
+                                <button class="btn btn-danger btn-sm" type="button" title="Delete">
+                                    <i class="bi bi-trash3"></i></button>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
             <div class="paginacionAD">

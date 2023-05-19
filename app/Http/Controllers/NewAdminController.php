@@ -45,8 +45,10 @@ class NewAdminController extends Controller
         $cargos = Cargo::all();
         $departamentos_u = DepartamentoU::all();
 
+        $empleados = Empleado::all();
 
-        return view('admin.employeeInfo', compact('tipos_empleado', 'cargos', 'departamentos_u'));
+
+        return view('admin.employeeInfo', compact('tipos_empleado', 'cargos', 'departamentos_u', 'empleados'));
     }
 
     // Función para registrar Empleado.
