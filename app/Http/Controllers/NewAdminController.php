@@ -96,4 +96,11 @@ class NewAdminController extends Controller
 
         return $this->mostrarEmpleados();
     }
+
+    public function eliminarEmpleado(Empleado $empleado)
+    {
+        $empleado->delete();
+
+        return $this->mostrarEmpleados();
+    }
 }

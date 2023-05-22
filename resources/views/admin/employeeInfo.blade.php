@@ -456,8 +456,14 @@
                                 <a href="{{ url('/infoEmployee', ['empleado' => $empleado->id]) }}"
                                     class="btn btn-warning btn-sm" type="button" title="Edit">
                                     <i class="bi bi-pen"></i></a>
-                                <button class="btn btn-danger btn-sm" type="button" title="Delete">
-                                    <i class="bi bi-trash3"></i></button>
+                                <form method="POST" action="/borrarEmpleado/{{ $empleado->id }}">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button class="btn btn-danger btn-sm" type="submit" title="Delete">
+                                        <i class="bi bi-trash3"></i></button>
+                                </form>
+
                             </td>
                         </tr>
                     @endforeach
