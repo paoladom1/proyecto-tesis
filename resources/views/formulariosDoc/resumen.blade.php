@@ -77,7 +77,7 @@
                                                 'SimpleUploadAdapter',
                                                 'Table',
                                                 'TableCellProperties',
-                                                'TableColumnResize',
+                                                //'TableColumnResize',
                                                 'TableProperties',
                                                 'TableToolbar',
                                                 'Underline'],
