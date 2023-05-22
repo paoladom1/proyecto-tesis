@@ -128,10 +128,7 @@
                                             resizeUnit: 'px',
                                             toolbar: [
                                                 'imageTextAlternative',
-                                                'toggleImageCaption',
-                                                'imageStyle:inline',
-                                                'imageStyle:block',
-                                                'imageStyle:side'
+                                                'imageStyle:inline'
                                             ]
                                         },
                                         table: {
@@ -212,7 +209,7 @@
                     
                     var realvalue =  parseFloat(ele.style.width) * 0.75;
                     ele.setAttribute("width",realvalue);
-                    ele.style.float= "right";
+                    
 
                 }
 
