@@ -55,6 +55,13 @@ class NewAdminController extends Controller
         return $this->mostrarUsuario();
     }
 
+    public function eliminarUsuario(Usuario $usuario)
+    {
+        $usuario->delete();
+
+        return $this->mostrarUsuario();
+    }
+
     function frmUserView()
     {
         return view('admin.userInfoForm');

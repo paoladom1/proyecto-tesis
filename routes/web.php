@@ -96,6 +96,8 @@ Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 
 // Ruta de amdministrador
 Route::get('/mostrarUsuario', 'App\Http\Controllers\NewAdminController@mostrarUsuario');
+Route::delete('/borrarUsuario/{usuario}', 'App\Http\Controllers\NewAdminController@eliminarUsuario');
+
 Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView');
 Route::get('/configAdmin', 'App\Http\Controllers\NewAdminController@mostrarConfig');
 Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados');
