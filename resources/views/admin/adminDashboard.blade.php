@@ -360,26 +360,6 @@
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
                     type="button" role="tab" aria-controls="nav-home" aria-selected="true">USUARIOS</button>
             </div>
-
-            <div class="input-group mb-3 dropEstudiante" style="width: 40%;float: right;margin-top: -55px;">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="buscadorEstuiante"
-                    data-bs-toggle="dropdown" aria-expanded="false">Nombre</button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Nombre</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Apellido</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item">Correo</a></li>
-                </ul>
-                <input type="search" class="form-control" id="buscadorTablaE"
-                    placeholder="Digite su criterio de busqueda">
-                <button class="btn btn-secondary" type="button" id="button-addon2" onclick="buscadorAD()"><i
-                        class="bi bi-search"></i></button>
-            </div>
         </nav>
 
         <!--Tabla para desplegar datos de usuarios registrados en el sistema-->
@@ -389,7 +369,7 @@
                 <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard"">
                     <thead class=" thead-dar"
                         style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem !important;">
-                        <tr style="padding: 0.5rem">
+                        <tr style="padding: 0.5rem; text-align: center">
                             <th scope="col">CORREO INSTITUCIONAL</th>
                             <th scope="col">TIPO DE USUARIO</th>
                             <th scope="col">ESTADO USUARIO</th>
@@ -398,7 +378,7 @@
                     </thead>
                     <tbody>
                         @foreach ($usuarios as $usuario)
-                            <tr>
+                            <tr style="text-align: center">
                                 <td style="width: 20% !important;">{{ $usuario->email }}</td>
                                 <td style="width: 30%">
                                     @foreach ($tipos_usuario as $tipo_usuario)
@@ -408,19 +388,18 @@
                                     @endforeach
                                 </td>
                                 <td style="width: 20%">
-                                    @if ($usuario->estado === 0)
+                                    @if ($usuario->estado === '0')
                                         INACTIVO
                                     @else
                                         ACTIVO
                                     @endif
                                 </td>
-                                <td style="width: 20%">
-                                    <a href="{{ url('/infoUsuario') }}"><button class="btn btn-primary btn-sm"
-                                            type="button" title="View">
-                                            <i class="bi bi-eye"></i></button></a>
-                                    <button class="btn btn-warning btn-sm" type="button" title="Edit">
-                                        <i class="bi bi-pen"></i></button>
-                                    <form method="POST" action="/borrarUsuario/{{ $usuario->id }}">
+                                <td style="width: 30%">
+                                    <a href="{{ url('/editarUsuario', ['usuario' => $usuario->id]) }}"
+                                        class="btn btn-warning btn-sm" type="button" title="Edit">
+                                        <i class="bi bi-pen"></i></a>
+                                    <form class="btn btn-sm" style="padding: 0" method="POST"
+                                        action="/borrarUsuario/{{ $usuario->id }}">
                                         @csrf
                                         @method('DELETE')
 

@@ -8,19 +8,9 @@ use App\Models\TipoUsuario;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use PhpOffice\PhpWord\Style\Language;
-use PhpOffice\PhpWord\Style\TOC;
-use PhpOffice\PhpWord\TemplateProcessor;
 
-use App\Models\Externo;
-use App\Models\ConfiguracionSistema;
-use App\Models\GrupoTrabajo;
-use App\Models\Estudiante;
-use App\Models\Facultad;
 use App\Models\DepartamentoU;
 use App\Models\Empleado;
-use App\Models\DirectorCarrera;
-use App\Models\Carrera;
 
 class NewAdminController extends Controller
 {
@@ -51,6 +41,28 @@ class NewAdminController extends Controller
         Log::info($validatedData);
         // Crea el usuario
         Usuario::create($validatedData);
+
+        return $this->mostrarUsuario();
+    }
+
+    public function editarUsuario(Usuario $usuario)
+    {
+        $tipos_usuario = TipoUsuario::all();
+
+        return view('admin.userInfoForm', compact('usuario', 'tipos_usuario'));
+    }
+
+    public function actualizarUsuario(Request $request, Usuario $usuario)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required',
+            'tipo_usuario_id' => 'required',
+            'estado' => 'required',
+        ]);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        $usuario->update($validatedData);
 
         return $this->mostrarUsuario();
     }
@@ -114,7 +126,6 @@ class NewAdminController extends Controller
 
     public function actualizarEmpleado(Request $request, Empleado $empleado)
     {
-        Log::info($request);
         $validatedData = $request->validate([
             'codigo_empleado' => 'required',
             'nombre' => 'required',

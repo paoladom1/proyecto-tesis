@@ -384,25 +384,6 @@
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
                 type="button" role="tab" aria-controls="nav-home" aria-selected="true">EMPLEADOS</button>
         </div>
-
-        <div class="input-group mb-3 dropEstudiante" style="width: 40%;float: right;margin-top: -55px;">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="buscadorEstuiante"
-                data-bs-toggle="dropdown" aria-expanded="false">Nombre</button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Codigo de empleado</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Nombre</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item">Apellido</a></li>
-            </ul>
-            <input type="search" class="form-control" id="buscadorTablaE" placeholder="Digite su criterio de busqueda">
-            <button class="btn btn-secondary" type="button" id="button-addon2" onclick="buscadorAD()"><i
-                    class="bi bi-search"></i></button>
-        </div>
     </nav>
 
     <!--Tabla para desplegar datos de empleados registrados en el sistema-->
@@ -412,7 +393,7 @@
             <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard"">
                 <thead class=" thead-dar"
                     style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem !important;">
-                    <tr>
+                    <tr style="text-align: center">
                         <th scope="col">COD. EMPLEADO</th>
                         <th scope="col">NOMBRES</th>
                         <th scope="col">APELLIDOS</th>
@@ -424,7 +405,7 @@
                 </thead>
                 <tbody>
                     @foreach ($empleados as $empleado)
-                        <tr>
+                        <tr style="text-align: center">
                             <td style="width: 20%">{{ $empleado->codigo_empleado }}</td>
                             <td style="width: 20%">{{ $empleado->nombre }}</td>
                             <td style="width: 20%">{{ $empleado->apellido }}</td>
@@ -450,13 +431,11 @@
                                 @endforeach
                             </td>
                             <td style="width: 30%">
-                                <a href="{{ url('/infoEmployee') }}"><button class="btn btn-primary btn-sm"
-                                        type="button" title="View">
-                                        <i class="bi bi-eye"></i></button></a>
                                 <a href="{{ url('/infoEmployee', ['empleado' => $empleado->id]) }}"
                                     class="btn btn-warning btn-sm" type="button" title="Edit">
                                     <i class="bi bi-pen"></i></a>
-                                <form method="POST" action="/borrarEmpleado/{{ $empleado->id }}">
+                                <form method="POST" action="/borrarEmpleado/{{ $empleado->id }}" class="btn btn-sm"
+                                    style="padding: 0">
                                     @csrf
                                     @method('DELETE')
 
