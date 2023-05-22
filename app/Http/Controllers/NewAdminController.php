@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cargo;
 use App\Models\TipoEmpleado;
+use App\Models\TipoUsuario;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\Style\Language;
@@ -27,7 +29,30 @@ class NewAdminController extends Controller
 
     function mostrarUsuario()
     {
-        return view('admin.adminDashboard');
+        $tipos_usuario = TipoUsuario::all();
+
+        $usuarios = Usuario::all();
+
+        return view('admin.adminDashboard', compact('tipos_usuario', 'usuarios'));
+    }
+
+    // Función para registrar Usuarios.
+    public function registrarUsuario(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required',
+            'password' => 'required|min:4',
+            'tipo_usuario_id' => 'required',
+            'estado' => 'required',
+        ]);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        Log::info($validatedData);
+        // Crea el usuario
+        Usuario::create($validatedData);
+
+        return $this->mostrarUsuario();
     }
 
     function frmUserView()
