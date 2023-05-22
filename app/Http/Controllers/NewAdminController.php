@@ -21,7 +21,7 @@ class NewAdminController extends Controller
     {
         $tipos_usuario = TipoUsuario::all();
 
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::paginate(10);
 
         return view('admin.adminDashboard', compact('tipos_usuario', 'usuarios'));
     }
@@ -91,7 +91,7 @@ class NewAdminController extends Controller
         $cargos = Cargo::all();
         $departamentos_u = DepartamentoU::all();
 
-        $empleados = Empleado::all();
+        $empleados = Empleado::paginate(10);
 
 
         return view('admin.employeeInfo', compact('tipos_empleado', 'cargos', 'departamentos_u', 'empleados'));

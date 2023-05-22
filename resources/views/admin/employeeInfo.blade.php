@@ -448,9 +448,15 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="paginacionAD">
-                <div>
-                    <p>Resultados del 1 al 3</p>
+            <div class="paginacionBitacora">
+                @if ($empleados->total() != 0)
+                    <div>
+                        <p>Resultados del {{ $empleados->firstItem() }} al {{ $empleados->lastItem() }} de
+                            {{ $empleados->total() }}</p>
+                    </div>
+                @endif
+                <div style="margin-right: 36px">
+                    {{ $empleados->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>
