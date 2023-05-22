@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cargo;
 use App\Models\TipoEmpleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\Style\Language;
 use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -39,6 +40,7 @@ class NewAdminController extends Controller
         return view('admin.configAdmin');
     }
 
+    // Función para mostrar lista de empleados
     function mostrarEmpleados()
     {
         $tipos_empleado = TipoEmpleado::all();
@@ -69,8 +71,29 @@ class NewAdminController extends Controller
         return $this->mostrarEmpleados();
     }
 
-    function frmEmployeeView()
+    public function editarEmpleado(Empleado $empleado)
     {
-        return view('admin.employeeInfoForm');
+        $tipos_empleado = TipoEmpleado::all();
+        $cargos = Cargo::all();
+        $departamentos_u = DepartamentoU::all();
+
+        return view('admin.employeeInfoForm', compact('empleado', 'tipos_empleado', 'cargos', 'departamentos_u'));
+    }
+
+    public function actualizarEmpleado(Request $request, Empleado $empleado)
+    {
+        Log::info($request);
+        $validatedData = $request->validate([
+            'codigo_empleado' => 'required',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'tipo_empleado_id' => 'required',
+            'cargo_id' => 'required',
+            'departamento_unidad_id' => 'required' . $empleado->id,
+        ]);
+
+        $empleado->update($validatedData);
+
+        return $this->mostrarEmpleados();
     }
 }

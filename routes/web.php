@@ -97,9 +97,12 @@ Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 // Ruta de amdministrador
 Route::get('/mostrarUsuario', 'App\Http\Controllers\NewAdminController@mostrarUsuario');
 Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView');
-Route::get('/configAdmin','App\Http\Controllers\NewAdminController@mostrarConfig');
-Route::get('/employeeInfo','App\Http\Controllers\NewAdminController@mostrarEmpleados');
-Route::get('/infoEmployee', 'App\Http\Controllers\NewAdminController@frmEmployeeView');
+Route::get('/configAdmin', 'App\Http\Controllers\NewAdminController@mostrarConfig');
+Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados');
+
+Route::get('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@editarEmpleado')->name('edit');
+Route::put('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@actualizarEmpleado');
+
 
 Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
 

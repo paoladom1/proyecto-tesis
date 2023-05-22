@@ -279,7 +279,7 @@
     <div class="container-fluid container-general">
 
 
-        <!--------------------------------------------------Modal para crear usuarios en  el sistema----------------------------------------->
+        <!--------------------------------------------------Modal para crear empleados en  el sistema----------------------------------------->
 
         <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -405,7 +405,7 @@
         </div>
     </nav>
 
-    <!--Tabla para desplegar datos de usuarios registrados en el sistema-->
+    <!--Tabla para desplegar datos de empleados registrados en el sistema-->
     <div class="table-responsive">
         <div id="liveAlertPlaceholder"></div>
         <div id="tablaUsuariosContainer">
@@ -453,8 +453,9 @@
                                 <a href="{{ url('/infoEmployee') }}"><button class="btn btn-primary btn-sm"
                                         type="button" title="View">
                                         <i class="bi bi-eye"></i></button></a>
-                                <button class="btn btn-warning btn-sm" type="button" title="Edit">
-                                    <i class="bi bi-pen"></i></button>
+                                <a href="{{ url('/infoEmployee', ['empleado' => $empleado->id]) }}"
+                                    class="btn btn-warning btn-sm" type="button" title="Edit">
+                                    <i class="bi bi-pen"></i></a>
                                 <button class="btn btn-danger btn-sm" type="button" title="Delete">
                                     <i class="bi bi-trash3"></i></button>
                             </td>
