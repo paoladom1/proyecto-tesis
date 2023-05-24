@@ -554,7 +554,10 @@
     </form>
 
     <script>
-         var formulario = document.getElementById("formulario");
+        
+        //MODIFICACION DEL FORM ANTES DE ENVIARLO (PARA TABLAS E IMÁGENES)
+        var formulario = document.getElementById("formulario");
+        
         formulario.onsubmit = function (){
             saveCapitulosPreForm();
         }
@@ -566,62 +569,60 @@
 
                 if(auxobject != null){
 
-
                    // let auxstring = auxobject.innerHTML;
                     let parser = new DOMParser();
                     let xmlDoc = parser.parseFromString(window.editor[i].getData(),"text/html");
                     window.editor[i].destroy().then(()=>{
+
                         var imgsElements = xmlDoc.getElementsByTagName("body")[0].getElementsByClassName("image_resized");
-                    var tableElements = xmlDoc.getElementsByTagName("body")[0].getElementsByTagName("table");
+                        var tableElements = xmlDoc.getElementsByTagName("body")[0].getElementsByTagName("table");
 
-                    for(let ele of imgsElements){
+                        for(let ele of imgsElements){
                     
-                        if(ele.tagName == "IMG"){
+                            if(ele.tagName == "IMG"){
                         
-                        var realvalue =  parseFloat(ele.style.width) * 0.75;
-                        ele.setAttribute("width",realvalue);
+                                var realvalue =  parseFloat(ele.style.width) * 0.75;
+                                ele.setAttribute("width",realvalue);
                         
+                            }
+
+                            if(ele.tagName == "FIGURE" && !ele.classList.contains("image-style-side")){
+                    
+                                var realvalue =  parseFloat(ele.style.width) * 0.75;
+                                ele.childNodes[0].setAttribute("width",realvalue);
+                                var margin = (8.5 - (realvalue/96))/2;
+                                ele.childNodes[0].style.float= "right";
+                        
+                            }
+
+                            if(ele.tagName == "FIGURE" && ele.classList.contains("image-style-side")){
+                    
+                                var realvalue =  parseFloat(ele.style.width) * 0.75;
+                                ele.childNodes[0].setAttribute("width",realvalue);
+                                var margin = (8.5 - (realvalue/96));
+                                ele.childNodes[0].setAttribute("marginLeft",margin);
+                                ele.style.float= "right";
+                            }    
                         }
-
-                        if(ele.tagName == "FIGURE" && !ele.classList.contains("image-style-side")){
-                    
-                        var realvalue =  parseFloat(ele.style.width) * 0.75;
-                        ele.childNodes[0].setAttribute("width",realvalue);
-                        var margin = (8.5 - (realvalue/96))/2;
-                        //ele.childNodes[0].setAttribute("marginLeft",margin);
-                        ele.childNodes[0].style.float= "right";
-                        
-                        }
-
-                        if(ele.tagName == "FIGURE" && ele.classList.contains("image-style-side")){
-                    
-                    var realvalue =  parseFloat(ele.style.width) * 0.75;
-                    ele.childNodes[0].setAttribute("width",realvalue);
-                    var margin = (8.5 - (realvalue/96));
-                    ele.childNodes[0].setAttribute("marginLeft",margin);
-                    ele.style.float= "right";
-                        }    
-                    }
 
             
-                    for(let ele of tableElements){
-                    ele.style.textAlign = "center";
-                    ele.style.padding = "10px";
-                    }
+                        for(let ele of tableElements){
+                            ele.style.textAlign = "center";
+                            ele.style.padding = "10px";
+                        }
 
-                    console.log(xmlDoc.getElementsByTagName("body")[0].innerHTML);
-                    let auxobject2 = document.getElementById("seccionTexto" + i);
-                    auxobject2.value = xmlDoc.getElementsByTagName("body")[0].innerHTML;
-                    //auxobject2.innerHTML = xmlDoc.getElementsByTagName("body")[0].innerHTML;
+                        console.log(xmlDoc.getElementsByTagName("body")[0].innerHTML);
+                        let auxobject2 = document.getElementById("seccionTexto" + i);
+                        auxobject2.value = xmlDoc.getElementsByTagName("body")[0].innerHTML;
+                        //auxobject2.innerHTML = xmlDoc.getElementsByTagName("body")[0].innerHTML;
                     
                     });
                    
-                    }
+                }
                
 
             }
            
-            //formulario.submit();
         }
 
     </script>
