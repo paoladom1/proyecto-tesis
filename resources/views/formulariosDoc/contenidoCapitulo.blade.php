@@ -66,7 +66,7 @@
     var idTitutlo;
     var idTemaB;
     var tipo;
-
+    window.editor = [];
     function agregarEditor(id) {
         // CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         // CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
@@ -111,7 +111,7 @@
                     'SimpleUploadAdapter',
                     'Table',
                     'TableCellProperties',
-                    'TableColumnResize',
+                    //'TableColumnResize',
                     'TableProperties',
                     'TableToolbar',
                     'Underline'],
@@ -154,19 +154,17 @@
                     'redo',
                     'findAndReplace',
                     'fontColor',
-                    'fontBackgroundColor',
-                    'fontFamily',
-                    'fontSize'
+                    'fontBackgroundColor'
+                    //'fontFamily',
+                    //'fontSize'
                 ]
             },
             language: 'es',
             image: {
+                resizeUnit: 'px',
                 toolbar: [
                     'imageTextAlternative',
-                    'toggleImageCaption',
-                    'imageStyle:inline',
-                    'imageStyle:block',
-                    'imageStyle:side'
+                    'imageStyle:inline'
                 ]
             },
             table: {
@@ -180,8 +178,8 @@
             }
             } )
             .then(editor => {
-
-                
+               
+                window.editor[id] = editor;
                 
                 // CKEDITOR.ClassicEditor.replace('seccionTexto', {
                 //     height: 350,
@@ -554,6 +552,79 @@
         <br>
         <button type="submit" onclick="bandera2 = 0" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Capítulo</button>
     </form>
+
+    <script>
+         var formulario = document.getElementById("formulario");
+        formulario.onsubmit = function (){
+            saveCapitulosPreForm();
+        }
+       
+        function saveCapitulosPreForm(){
+            
+            for(let i = 0; i < contadorGlobal; i++){
+                let auxobject = document.getElementById("seccionTexto" + i);
+
+                if(auxobject != null){
+
+
+                   // let auxstring = auxobject.innerHTML;
+                    let parser = new DOMParser();
+                    let xmlDoc = parser.parseFromString(window.editor[i].getData(),"text/html");
+                    window.editor[i].destroy().then(()=>{
+                        var imgsElements = xmlDoc.getElementsByTagName("body")[0].getElementsByClassName("image_resized");
+                    var tableElements = xmlDoc.getElementsByTagName("body")[0].getElementsByTagName("table");
+
+                    for(let ele of imgsElements){
+                    
+                        if(ele.tagName == "IMG"){
+                        
+                        var realvalue =  parseFloat(ele.style.width) * 0.75;
+                        ele.setAttribute("width",realvalue);
+                        
+                        }
+
+                        if(ele.tagName == "FIGURE" && !ele.classList.contains("image-style-side")){
+                    
+                        var realvalue =  parseFloat(ele.style.width) * 0.75;
+                        ele.childNodes[0].setAttribute("width",realvalue);
+                        var margin = (8.5 - (realvalue/96))/2;
+                        //ele.childNodes[0].setAttribute("marginLeft",margin);
+                        ele.childNodes[0].style.float= "right";
+                        
+                        }
+
+                        if(ele.tagName == "FIGURE" && ele.classList.contains("image-style-side")){
+                    
+                    var realvalue =  parseFloat(ele.style.width) * 0.75;
+                    ele.childNodes[0].setAttribute("width",realvalue);
+                    var margin = (8.5 - (realvalue/96));
+                    ele.childNodes[0].setAttribute("marginLeft",margin);
+                    ele.style.float= "right";
+                        }    
+                    }
+
+            
+                    for(let ele of tableElements){
+                    ele.style.textAlign = "center";
+                    ele.style.padding = "10px";
+                    }
+
+                    console.log(xmlDoc.getElementsByTagName("body")[0].innerHTML);
+                    let auxobject2 = document.getElementById("seccionTexto" + i);
+                    auxobject2.value = xmlDoc.getElementsByTagName("body")[0].innerHTML;
+                    //auxobject2.innerHTML = xmlDoc.getElementsByTagName("body")[0].innerHTML;
+                    
+                    });
+                   
+                    }
+               
+
+            }
+           
+            //formulario.submit();
+        }
+
+    </script>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -405,19 +405,25 @@ class DocumentoController extends Controller
                 if ($con->contenido != null) {
                     $section->addTextBreak(1);
                 }
-                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con->contenido, false, false);
+                $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $con->contenido);
+                $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado, false, false);
                 $section->addTextBreak(1);
                 $numTercero = 1;
                 foreach($con->contenidoCapitulo2 as $con2){
                     $section->addTitle($capitulo->orden_capitulo.'.'.$numSegundo.'.'.$numTercero++.' '.$con2->subtema,3);
                     $section->addTextBreak(1);
-                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con2->contenido, false, false);
+                    $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $con2->contenido);
+                    $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado, false, false);
                     $section->addTextBreak(1);
                 }
                 ++$numSegundo;   
             } else{
                 if ($con->contenido != "<p>null</p>") {
-                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con->contenido, false, false);
+                    $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $con->contenido);
+                    $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado , false, false);
                     $section->addTextBreak(1);
                 }
             }

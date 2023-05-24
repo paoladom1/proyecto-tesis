@@ -181,16 +181,7 @@
     </div>
 
     <script>
-        async function getIMGsize(url){
-            const img = new Image();
-            img.src = url;
-            img.onload = async function() {
-                
-                img.width = await this.width;
-            }
-            return img.width
-            
-        }
+        
         var contAlert = 0;
         async function registrarResumen() {
             var id = document.getElementsByName('id')[0].value;
