@@ -79,9 +79,10 @@
                     <li> <a href="{{ url('/externo') }}" style="font-size: 1.3rem"><i class="fa-solid fa-address-card me-2"></i><span>Directores y Lectores</span></a> </li>
                     <li><a href="{{ url('/grupoTrabajo') }}" style="font-size: 1.3rem"><i class="bi bi-people me-2"></i>Grupos de trabajo</a></li>
                         <hr>
-                    <li><a href="{{ url('/mostrarUsuario') }}" style="font-size: 1.3rem"><i class="bi bi-person-check-fill"></i>  Usuarios</a></li>
-                    <li><a href="{{ url('/employeeInfo') }}" style="font-size: 1.3rem"><i class="bi bi-person-badge"></i>  Empleados</a></li>
-                    <li><a href="{{ url('/studentInfo') }}" style="font-size: 1.3rem"><i class="bi bi-person-rolodex"></i>  Estudiantes</a></li>
+                    <li><a href="{{ url('/mostrarUsuario') }}" style="font-size: 1.3rem"><i class="bi bi-person-check-fill"></i>  <span>Usuarios</span></a></li>
+                    <li><a href="{{ url('/employeeInfo') }}" style="font-size: 1.3rem"><i class="bi bi-person-badge"></i> <span>Empleados</span></a></li>
+                    <li><a href="{{ url('/studentInfo') }}" style="font-size: 1.3rem"><i class="bi bi-person-rolodex"></i> <span>Estudiantes</span></a></li>
+                    <li><a href="{{ url('/directorInfo') }}" style="font-size: 1.2rem"><i class="bi bi-person-lines-fill"></i> <span>Directores de carrera</span></a></li>
                     <li><a href="{{ url('/configAdmin') }}" style="font-size: 1.3rem"><i class="bi bi-gear"></i>  Configuracion</a></li>
                         <hr>
                 </ul>

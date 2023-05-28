@@ -157,4 +157,12 @@ class NewAdminController extends Controller
         return view('admin.editStudent');
     }
 
+    //Director de carrera
+    function frmDirector(){
+        return view('admin.directorDashboard');
+    }
+
+    function editDirector(){
+        return view('admin.editDirector');
+    }
 }

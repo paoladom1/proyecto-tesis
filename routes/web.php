@@ -115,5 +115,8 @@ Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarU
 Route::get('/studentInfo','App\Http\Controllers\NewAdminController@frmStudent');
 Route::get('editarEstudiante','App\Http\Controllers\NewAdminController@editStudent');
 
+Route::get('/directorInfo','App\Http\Controllers\NewAdminController@frmDirector');
+Route::get('/editarDirector','App\Http\Controllers\NewAdminController@editDirector');
+
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');
