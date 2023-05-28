@@ -394,7 +394,7 @@
                         <td style="width: 20%">INGENIERIA EN INFORMATICA</td>
                         <td style="width: 20%">GRUPO 1</td>
                         <td style="width: 20%">
-                            <a class="btn btn-warning btn-sm" type="button" title="Edit">
+                            <a href="{{ url('/editarEstudiante')}}" class="btn btn-warning btn-sm" type="button" title="Edit">
                                 <i class="bi bi-pen"></i></a>
 
                             <form class="btn btn-sm" style="padding: 0" action="#" method="#">

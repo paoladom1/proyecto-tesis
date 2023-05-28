@@ -153,4 +153,8 @@ class NewAdminController extends Controller
         return view('admin.studentDashboard');
     }
 
+    function editStudent(){
+        return view('admin.editStudent');
+    }
+
 }
