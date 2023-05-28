@@ -38,11 +38,12 @@ class NewAdminController extends Controller
 
         $validatedData['password'] = bcrypt($validatedData['password']);
 
-        Log::info($validatedData);
         // Crea el usuario
         Usuario::create($validatedData);
 
-        return $this->mostrarUsuario();
+        $this->mostrarUsuario();
+
+        return redirect()->route('users');
     }
 
     public function editarUsuario(Usuario $usuario)
@@ -60,18 +61,20 @@ class NewAdminController extends Controller
             'estado' => 'required',
         ]);
 
-        $validatedData['password'] = bcrypt($validatedData['password']);
-
         $usuario->update($validatedData);
 
-        return $this->mostrarUsuario();
+        $this->mostrarUsuario();
+
+        return redirect()->route('users');
     }
 
     public function eliminarUsuario(Usuario $usuario)
     {
         $usuario->delete();
 
-        return $this->mostrarUsuario();
+        $this->mostrarUsuario();
+
+        return redirect()->route('users');
     }
 
     function frmUserView()
@@ -112,7 +115,9 @@ class NewAdminController extends Controller
         // Crea el empleado
         Empleado::create($validatedData);
 
-        return $this->mostrarEmpleados();
+        $this->mostrarEmpleados();
+
+        return redirect()->route('employees');
     }
 
     public function editarEmpleado(Empleado $empleado)
@@ -132,18 +137,22 @@ class NewAdminController extends Controller
             'apellido' => 'required',
             'tipo_empleado_id' => 'required',
             'cargo_id' => 'required',
-            'departamento_unidad_id' => 'required' . $empleado->id,
+            'departamento_unidad_id' => 'required',
         ]);
 
         $empleado->update($validatedData);
 
-        return $this->mostrarEmpleados();
+        $this->mostrarEmpleados();
+
+        return redirect()->route('employees');
     }
 
     public function eliminarEmpleado(Empleado $empleado)
     {
         $empleado->delete();
 
-        return $this->mostrarEmpleados();
+        $this->mostrarEmpleados();
+
+        return redirect()->route('employees');
     }
 }

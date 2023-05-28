@@ -327,7 +327,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-group form-floating mb-3 mt-3">
-                    <select class="form-control form-select" name="departamento_u_id">
+                    <select class="form-control form-select" name="departamento_unidad_id">
                         @foreach ($departamentos_u as $dpto)
                             <option <?= $empleado->departamento_unidad_id == $dpto->id ? 'selected="selected"' : '' ?>
                                 value="{{ $dpto->id }}">
