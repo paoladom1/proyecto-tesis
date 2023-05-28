@@ -380,7 +380,7 @@
                         @foreach ($usuarios as $usuario)
                             <tr style="text-align: center">
                                 <td style="width: 20% !important;">{{ $usuario->email }}</td>
-                                <td style="width: 30%">
+                                <td style="width: 20%">
                                     @foreach ($tipos_usuario as $tipo_usuario)
                                         @if ($usuario->tipo_usuario_id === $tipo_usuario->id)
                                             {{ $tipo_usuario->nombre }}
@@ -394,7 +394,7 @@
                                         ACTIVO
                                     @endif
                                 </td>
-                                <td style="width: 30%">
+                                <td style="width: 20%">
                                     <a href="{{ url('/editarUsuario', ['usuario' => $usuario->id]) }}"
                                         class="btn btn-warning btn-sm" type="button" title="Edit">
                                         <i class="bi bi-pen"></i></a>

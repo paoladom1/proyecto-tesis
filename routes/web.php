@@ -112,5 +112,7 @@ Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminContro
 Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
 Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarUsuario');
 
+Route::get('/studentInfo','App\Http\Controllers\NewAdminController@frmStudent');
+
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');

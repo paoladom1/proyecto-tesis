@@ -146,4 +146,11 @@ class NewAdminController extends Controller
 
         return $this->mostrarEmpleados();
     }
+
+    //Estudiantes
+
+    function frmStudent(){
+        return view('admin.studentDashboard');
+    }
+
 }
