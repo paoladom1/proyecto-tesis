@@ -25,10 +25,10 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 if (auth()->guard('admin')->user()->tipo_usuario_id == 1) {
                     // Estudiante
-                    return redirect('/menu');   
-                } else{
+                    return redirect('/menu');
+                } else {
                     // Director de carrera
-                    return redirect('/menudirector');   
+                    return redirect('/menudirector');
                 }
             }
         }
