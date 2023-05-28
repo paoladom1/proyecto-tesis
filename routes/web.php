@@ -114,3 +114,7 @@ Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarU
 
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');
+
+// Google login
+Route::get('/auth/google', 'App\Http\Controllers\Auth\LoginController@redirectToGoogle');
+Route::get('/auth/google/callback', 'App\Http\Controllers\Auth\LoginController@handleGoogleCallback');
