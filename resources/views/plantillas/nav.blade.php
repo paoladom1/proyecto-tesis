@@ -16,14 +16,17 @@
     src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"
     integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY="
     crossorigin="anonymous"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+    <script src="/js/ckeditor/build/ckeditor.js"></script>
+    <!--- <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script> --->
+    @yield('scripts')
+
     <script src="https://kit.fontawesome.com/455beed8e3.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('js/alertMessage.js')}}"></script>
-    
+
     <title>Proceso de graduación</title>
 </head>
 
@@ -75,6 +78,11 @@
                     </li>
                     <li> <a href="{{ url('/externo') }}" style="font-size: 1.3rem"><i class="fa-solid fa-address-card me-2"></i><span>Directores y Lectores</span></a> </li>
                     <li><a href="{{ url('/grupoTrabajo') }}" style="font-size: 1.3rem"><i class="bi bi-people me-2"></i>Grupos de trabajo</a></li>
+                        <hr>
+                    <li><a href="{{ url('/mostrarUsuario') }}" style="font-size: 1.3rem"><i class="bi bi-person-check-fill"></i>  Usuarios</a></li bi-person-check-fill>
+                    <li><a href="{{ url('/employeeInfo') }}" style="font-size: 1.3rem"><i class="bi bi-person-badge"></i>  Empleados</a></li>
+                    <li><a href="{{ url('/configAdmin') }}" style="font-size: 1.3rem"><i class="bi bi-gear"></i>  Configuracion</a></li>
+                        <hr>
                 </ul>
             @endif
         </div>

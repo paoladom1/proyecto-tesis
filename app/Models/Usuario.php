@@ -8,8 +8,11 @@ class Usuario extends Authenticatable
 {
     protected $table = 'usuario';
 
-    public function director2(){
-        return $this -> hasOne('App\Models\DirectorCarrera');
+    protected $guarded = [];
+
+    public function director2()
+    {
+        return $this->hasOne('App\Models\DirectorCarrera');
     }
 
     public function scopeDirector($query)
@@ -25,4 +28,9 @@ class Usuario extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function usuario()
+    {
+        return $this->hasMany(Usuario::class);
+    }
 }

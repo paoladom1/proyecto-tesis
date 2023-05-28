@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Cargo extends Model
 {
     protected $table = 'cargo';
+
+    public function cargo()
+    {
+        return $this->hasMany(Cargo::class);
+    }
 }

@@ -1,18 +1,93 @@
 @extends('plantillas.nav')
 @section('content')
 <script>
+    window.editors = [];
     function agregarEditor(n) {
         // Replace the <textarea id="editor1"> with a CKEditor 4 instance.
         // A reference to the editor object is returned by CKEDITOR.replace() allowing you to work with editor instances.
-        CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
+        /* CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
         CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
         var editor = CKEDITOR.replace('contenido'+n, {
             height: 275,
             removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
             extraPlugins: 'liststyle,justify'
+        }); */
+
+        window.addEventListener('load',(e)=>{
+            ClassicEditor
+                .create( document.querySelector( '#contenido'+n ),{
+                    plugins: ['Alignment',
+                        'Autoformat',
+                        'BlockQuote',
+                        'Bold',
+                        'Essentials',
+                        'FindAndReplace',
+                        'FontBackgroundColor',
+                        'FontColor',
+                        'FontFamily',
+                        'FontSize',
+                        'Heading',
+                        'Indent',
+                        'Italic',
+                        'Link',
+                        'List',
+                        'ListProperties',
+                        'MediaEmbed',
+                        'Paragraph',
+                        'PasteFromOffice',
+                        'Underline'],
+                        alignment: {
+                            options: [ 'left', 'right', 'center', 'justify']
+                        },
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'underline',
+                        'italic',
+                        'alignment',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'blockQuote',
+                        'mediaEmbed',
+                        'undo',
+                        'redo',
+                        'findAndReplace',
+                        'fontColor',
+                        'fontBackgroundColor',
+                        'fontFamily',
+                        'fontSize'
+                    ]
+                },
+                language: 'es'
+                }
+                 )
+                .then(editor => {
+
+                    window.editors[n] = editor;
+                    
+                    // CKEDITOR.ClassicEditor.replace('seccionTexto', {
+                    //     height: 350,
+                        
+                    //     //------ para cargar imagen a documento ---------
+                    //     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+                    //     filebrowserUploadMethod: 'form'
+                    // });
+
+                    editor.config.contentsCss = "/css/content.css";
+                })
+                .catch( error => {
+                    console.error( error );
+                } );
         });
 
-        editor.config.contentsCss = "/css/content.css";
+       
     }
 
     num = 0;
@@ -255,7 +330,7 @@
         var id = document.getElementById('idDA'+idEtiqueta).value; 
         var idE = document.getElementById('idEstudiante'+idEtiqueta).value;
         var autor = document.getElementById('firma'+idEtiqueta).value;
-        var contenido = CKEDITOR.instances['contenido'+idEtiqueta].getData();
+        var contenido = window.editors[idEtiqueta].getData();
         var tipoURL = "";
         var opcional = 0;
         
@@ -334,7 +409,7 @@
                     alertPersonalizado(r['mensaje'], 'success', 1, ++contAlert);   
                     document.getElementById('idDA'+idEtiqueta).setAttribute("value", '');
                     document.getElementById('btnEliminarDA'+idEtiqueta).disabled = true;
-                    CKEDITOR.instances['contenido'+idEtiqueta].setData("");
+                    window.editors[idEtiqueta].setData("");
                     document.getElementById('firma'+idEtiqueta).value = nombreIntegrante;
                     if (tipo == 1) {
                         if (r['total'] == 0)  {

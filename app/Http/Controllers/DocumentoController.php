@@ -26,6 +26,8 @@ use App\Models\Bitacora;
 use App\Models\BitacoraSeccion;
 use App\Models\BitacoraModificacion;
 
+
+
 class DocumentoController extends Controller
 {
     public function __construct()
@@ -434,7 +436,73 @@ class DocumentoController extends Controller
         }
         $section->addTitle(mb_strtoupper('Resumen'), 1);
         $section->addTextBreak(1);
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resumen[0]->contenido, false, false);
+        $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $resumen[0]->contenido);
+        $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
+
+        // $dom = new \DOMDocument();
+        // libxml_use_internal_errors(true);
+        // $dom->loadHTML($resultado,LIBXML_NOXMLDECL | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+        // $anchors = $dom -> getElementsByTagName('img');
+        // foreach ($anchors as $element) {
+        //     $styleat = $element->getAttribute("style");
+        //     if($styleat != ""){
+        //         $element->setAttribute( "width", substr($styleat,6,-1) );
+        //     }
+            
+        // }
+        // $anchors2 = $dom -> getElementsByTagName('figure');
+        // foreach ($anchors2 as $element) {
+        //     $imgs = $element->getElementsByTagName("img");
+        //     $styleat = $element->getAttribute("style");
+        //     foreach ($imgs as $element2) {
+                
+        //         if($styleat != ""){
+        //             $element2->setAttribute( "width", substr($styleat,6,-1) );
+        //         }
+                
+        //     }
+            
+        // }
+       
+        // $resultado = $dom->saveXML(null,LIBXML_NOXMLDECL);
+        // $resultado = preg_replace('/^(.*)/', '', $resultado );
+        // \Debugbar::info($resultado);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section,  $resultado , false, false);
+    }
+    
+    
+
+    //----------- funcion para cargar imagen ----------------------------
+    
+    public function upload(Request $request){
+        
+        if($request->hasFile('upload')) {
+            //get filename with extension
+            $filenamewithextension = $request->file('upload')->getClientOriginalName();
+   
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+   
+            //get file extension
+            $extension = $request->file('upload')->getClientOriginalExtension();
+   
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+   
+            //Upload File
+            $request->file('upload')->storeAs('public/uploads', $filenametostore);
+ 
+            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            
+            $url = asset('storage/app/public/uploads/'.$filenametostore); 
+            
+            $msg = 'Image successfully uploaded'; 
+            $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+          
+            // Render HTML output 
+            @header('Content-type: text/html; charset=utf-8'); 
+            return response()->json(['url' => $url]);
+        }
     }
 
     private function seccionSiglas($documento){

@@ -1,20 +1,9 @@
 @extends('plantillas.nav')
 @section('content')
 
-<script>
-function agregarEditor() {
-        CKEDITOR.plugins.addExternal( 'liststyle', '/js/liststyle/', 'plugin.js' );
-        CKEDITOR.plugins.addExternal( 'justify', '/js/justify/', 'plugin.js' );
-        var editor = CKEDITOR.replace('seccionTexto', {
-            height: 350,
-            removeButtons: 'PasteFromWord,Image,Table,Format,HorizontalRule,About,Subscript,Superscript,RemoveFormat,Source,Anchor,Blockquote,Styles',
-            extraPlugins: 'liststyle,justify'
-        });
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-        editor.config.contentsCss = "/css/content.css";
-    }
 
-</script>
 
     <div class="resumenContainer fuente-general">
         <div class="col seccion_" id="titulosApp">
@@ -49,9 +38,131 @@ function agregarEditor() {
                         <div class="row">
                             <div class="col">
                                 <textarea class="form-control" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
+
                                 <script>
-                                    agregarEditor();
+                                    window.addEventListener('load',(e) => {
+                                        ClassicEditor
+                                        .create( document.querySelector( '#seccionTexto' ),{
+                                            plugins: ['Alignment',
+                                                'Autoformat',
+                                                'BlockQuote',
+                                                'Bold',
+                                                'Essentials',
+                                                'FindAndReplace',
+                                                'FontBackgroundColor',
+                                                'FontColor',
+                                                'FontFamily',
+                                                'FontSize',
+                                                'Heading',
+                                                'Image',
+                                                'ImageCaption',
+                                                'ImageResize',
+                                                'ImageStyle',
+                                                'ImageToolbar',
+                                                'ImageUpload',
+                                                'Indent',
+                                                'Italic',
+                                                'Link',
+                                                'List',
+                                                'ListProperties',
+                                                'MediaEmbed',
+                                                'Paragraph',
+                                                'PasteFromOffice',
+                                                'SimpleUploadAdapter',
+                                                'Table',
+                                                'TableCellProperties',
+                                                'TableColumnResize',
+                                                'TableProperties',
+                                                'TableToolbar',
+                                                'Underline'],
+                                                simpleUpload: {
+                                                    // The URL that the images are uploaded to.
+                                                    uploadUrl: '/ckeditor/image_upload',
+
+                                                    // Enable the XMLHttpRequest.withCredentials property.
+                                                    withCredentials: true,
+
+                                                    // Headers sent along with the XMLHttpRequest to the upload server.
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                                        'Accept' : 'application/json'
+                                                    }
+                                                },
+                                                alignment: {
+                                                    options: [ 'left', 'right', 'center', 'justify']
+                                                },
+                                        toolbar: {
+                                            items: [
+                                                'heading',
+                                                '|',
+                                                'bold',
+                                                'underline',
+                                                'italic',
+                                                'alignment',
+                                                'link',
+                                                'bulletedList',
+                                                'numberedList',
+                                                '|',
+                                                'outdent',
+                                                'indent',
+                                                '|',
+                                                'imageUpload',
+                                                'blockQuote',
+                                                'insertTable',
+                                                'mediaEmbed',
+                                                'undo',
+                                                'redo',
+                                                'findAndReplace',
+                                                'fontColor',
+                                                'fontBackgroundColor',
+                                                'fontFamily',
+                                                'fontSize'
+                                            ]
+                                        },
+                                        language: 'es',
+                                        image: {
+                                            toolbar: [
+                                                'imageTextAlternative',
+                                                'toggleImageCaption',
+                                                'imageStyle:inline',
+                                                'imageStyle:block',
+                                                'imageStyle:side'
+                                            ]
+                                        },
+                                        table: {
+                                            contentToolbar: [
+                                                'tableColumn',
+                                                'tableRow',
+                                                'mergeTableCells',
+                                                'tableCellProperties',
+                                                'tableProperties'
+                                            ]
+                                        }
+                                        } )
+                                        .then(editor => {
+
+                                            window.editor = editor;
+                                           
+                                            // CKEDITOR.ClassicEditor.replace('seccionTexto', {
+                                            //     height: 350,
+                                              
+                                            //     //------ para cargar imagen a documento ---------
+                                            //     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+                                            //     filebrowserUploadMethod: 'form'
+                                            // });
+
+                                            editor.config.contentsCss = "/css/content.css";
+                                        })
+                                        .catch( error => {
+                                            console.error( error );
+                                        } );
+                                        
+                                        
+                                    });
+                                  
                                 </script>
+
+                                
                             </div>
                             <button type="button" onclick="registrarResumen()" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Resumen</button>
                         </div>
@@ -63,6 +174,7 @@ function agregarEditor() {
 
     <div class="row justify-content-end" style="margin-top: 10px;">
         <div class="col-md-11">
+
             <div class="accordion" id="accordionExample2">
 
             <div>
@@ -73,7 +185,7 @@ function agregarEditor() {
         var contAlert = 0;
         function registrarResumen() {
             var id = document.getElementsByName('id')[0].value;
-            var contenidoR = CKEDITOR.instances['seccionTexto'].getData();
+            var contenidoR = window.editor.getData();
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
@@ -93,4 +205,13 @@ function agregarEditor() {
             })
         }
     </script>
+
+
 @endsection
+
+
+
+
+
+
+

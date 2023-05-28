@@ -94,5 +94,27 @@ Route::post('/mostrarDatoGrupo', 'App\Http\Controllers\DirectorController@mostra
 Route::post('/mostrarDatoEstudiante', 'App\Http\Controllers\DirectorController@mostrarDatoEstudiante');
 Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 
+// Ruta de amdministrador
+Route::get('/mostrarUsuario', 'App\Http\Controllers\NewAdminController@mostrarUsuario')->name('users');
+
+Route::get('/editarUsuario/{usuario}', 'App\Http\Controllers\NewAdminController@editarUsuario')->name('edit');
+Route::put('/actualizarUsuario/{usuario}', 'App\Http\Controllers\NewAdminController@actualizarUsuario');
+Route::delete('/borrarUsuario/{usuario}', 'App\Http\Controllers\NewAdminController@eliminarUsuario');
+
+Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView');
+Route::get('/configAdmin', 'App\Http\Controllers\NewAdminController@mostrarConfig');
+Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados')->name('employees');
+
+Route::get('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@editarEmpleado')->name('edit');
+Route::put('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@actualizarEmpleado');
+Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminController@eliminarEmpleado');
+
+Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
+Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarUsuario');
+
+//----------------------------------- Ruta para subir imagen 2023 ------------------------------
+Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');
+
+// Google login
 Route::get('/auth/google', 'App\Http\Controllers\Auth\LoginController@redirectToGoogle');
 Route::get('/auth/google/callback', 'App\Http\Controllers\Auth\LoginController@handleGoogleCallback');
