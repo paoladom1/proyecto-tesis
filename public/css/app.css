@@ -348,7 +348,7 @@ a[aria-expanded="true"] {
 #titulosApp{
     background-color: #003C71;
     color:white;
-    padding: 10px;
+    padding: 5px;
     border-bottom: solid #E87B2A 8px;
     text-align: center;
 }

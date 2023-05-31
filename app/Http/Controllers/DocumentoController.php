@@ -233,6 +233,9 @@ class DocumentoController extends Controller
         // Estilo de parrafo
         $phpWord->addParagraphStyle('portadaStyle', $center);
         $phpWord->getCompatibility()->setOoxmlVersion(15);
+
+
+        //AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII VAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         $phpWord->getSettings()->setMirrorMargins(true);
         $phpWord->getSettings()->setThemeFontLang(new Language("ES-SV"));
         return $phpWord;
@@ -376,11 +379,8 @@ class DocumentoController extends Controller
             if($documentoTodo == null){
                 $section = $documento->addSection(DocumentoController::margenes());
             } else{
-                $section = $documento->addSection(array('pageNumberingStart' => 1, 
-                'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(3.5), 
-                'marginRight' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5),
-                'marginTop' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5), 
-                'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5)));
+                
+                $section = $documento->addSection(array('pageNumberingStart' => 1), DocumentoController::margenes());
                 $footer = $section->addFooter();
                 $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE');
             }
@@ -401,19 +401,30 @@ class DocumentoController extends Controller
                 if ($con->contenido != null) {
                     $section->addTextBreak(1);
                 }
-                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con->contenido, false, false);
+                //Insertar imágenes en capítulos
+                $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $con->contenido);
+                $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado, false, false);
                 $section->addTextBreak(1);
                 $numTercero = 1;
                 foreach($con->contenidoCapitulo2 as $con2){
                     $section->addTitle($capitulo->orden_capitulo.'.'.$numSegundo.'.'.$numTercero++.' '.$con2->subtema,3);
                     $section->addTextBreak(1);
-                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con2->contenido, false, false);
+                    
+                    //Insertar imágenes en capítulos
+                    $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $con2->contenido);
+                    $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado, false, false);
                     $section->addTextBreak(1);
                 }
                 ++$numSegundo;   
             } else{
                 if ($con->contenido != "<p>null</p>") {
-                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $con->contenido, false, false);
+
+                    //Insertar imágenes en capítulos
+                    $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $con->contenido);
+                    $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $resultado , false, false);
                     $section->addTextBreak(1);
                 }
             }
@@ -426,47 +437,18 @@ class DocumentoController extends Controller
         if($documentoTodo == null){
             $section = $documento->addSection(DocumentoController::margenes());
         } else{
-            $section = $documento->addSection(array('pageNumberingStart' => 1, 
-                                                'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(3.5), 
-                                                'marginRight' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5),
-                                                'marginTop' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5), 
-                                                'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::cmToTwip(2.5)));
+
+            $section = $documento->addSection(array('pageNumberingStart' => 1), DocumentoController::margenes());
             $footer = $section->addFooter();
             $footer->addTextRun(array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER))->addField('PAGE', array('format' => 'roman'));
         }
         $section->addTitle(mb_strtoupper('Resumen'), 1);
         $section->addTextBreak(1);
+
+        //Insertar imágenes en capítulos
         $resultado = preg_replace('/\<\s*img[^\\>]*(?<!\/)(?=\>)/', '$0/', $resumen[0]->contenido);
         $resultado  = preg_replace('/(?<=src=["\'])(https?:)?(\/\/)?[^\/]+\/?(?=\/)/', '.', $resultado );
 
-        // $dom = new \DOMDocument();
-        // libxml_use_internal_errors(true);
-        // $dom->loadHTML($resultado,LIBXML_NOXMLDECL | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-        // $anchors = $dom -> getElementsByTagName('img');
-        // foreach ($anchors as $element) {
-        //     $styleat = $element->getAttribute("style");
-        //     if($styleat != ""){
-        //         $element->setAttribute( "width", substr($styleat,6,-1) );
-        //     }
-            
-        // }
-        // $anchors2 = $dom -> getElementsByTagName('figure');
-        // foreach ($anchors2 as $element) {
-        //     $imgs = $element->getElementsByTagName("img");
-        //     $styleat = $element->getAttribute("style");
-        //     foreach ($imgs as $element2) {
-                
-        //         if($styleat != ""){
-        //             $element2->setAttribute( "width", substr($styleat,6,-1) );
-        //         }
-                
-        //     }
-            
-        // }
-       
-        // $resultado = $dom->saveXML(null,LIBXML_NOXMLDECL);
-        // $resultado = preg_replace('/^(.*)/', '', $resultado );
-        // \Debugbar::info($resultado);
         \PhpOffice\PhpWord\Shared\Html::addHtml($section,  $resultado , false, false);
     }
     

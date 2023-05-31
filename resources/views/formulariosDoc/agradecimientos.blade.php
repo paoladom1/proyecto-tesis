@@ -147,6 +147,13 @@
 
 </script>
 <style>
+    .ck-editor__editable_inline{
+        min-height: 200px;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+
     .contenedorBotones button:focus{
         outline: none;
         box-shadow: none;

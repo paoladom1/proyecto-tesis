@@ -3,7 +3,13 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
+<style>
+    .ck-editor__editable_inline{
+        min-height: 200px;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+</style>
 
     <div class="resumenContainer fuente-general">
         <div class="col seccion_" id="titulosApp">
@@ -37,8 +43,8 @@
                         <div id="liveAlertPlaceholder"></div>
                         <div class="row">
                             <div class="col">
-                                <textarea class="form-control" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
-
+                                <textarea class="form-control ckescroll" id="seccionTexto" name="contenido" aria-label="With textarea" rows=15>{{$contenidoR}}</textarea>
+                                
                                 <script>
                                     window.addEventListener('load',(e) => {
                                         ClassicEditor
@@ -71,7 +77,7 @@
                                                 'SimpleUploadAdapter',
                                                 'Table',
                                                 'TableCellProperties',
-                                                'TableColumnResize',
+                                                //'TableColumnResize',
                                                 'TableProperties',
                                                 'TableToolbar',
                                                 'Underline'],
@@ -115,18 +121,14 @@
                                                 'findAndReplace',
                                                 'fontColor',
                                                 'fontBackgroundColor',
-                                                'fontFamily',
-                                                'fontSize'
                                             ]
                                         },
                                         language: 'es',
                                         image: {
+                                            resizeUnit: 'px',
                                             toolbar: [
                                                 'imageTextAlternative',
-                                                'toggleImageCaption',
-                                                'imageStyle:inline',
-                                                'imageStyle:block',
-                                                'imageStyle:side'
+                                                'imageStyle:inline'
                                             ]
                                         },
                                         table: {
@@ -140,8 +142,9 @@
                                         }
                                         } )
                                         .then(editor => {
-
+                                            //editor.ui.view.editable.element.style.height = '500px';
                                             window.editor = editor;
+                                            
                                            
                                             // CKEDITOR.ClassicEditor.replace('seccionTexto', {
                                             //     height: 350,
@@ -156,12 +159,8 @@
                                         .catch( error => {
                                             console.error( error );
                                         } );
-                                        
-                                        
                                     });
-                                  
                                 </script>
-
                                 
                             </div>
                             <button type="button" onclick="registrarResumen()" class="btn btn-success saveResumen"><i class="bi bi-save"></i> Guardar Resumen</button>
@@ -182,10 +181,72 @@
     </div>
 
     <script>
+        
         var contAlert = 0;
-        function registrarResumen() {
+        async function registrarResumen() {
             var id = document.getElementsByName('id')[0].value;
             var contenidoR = window.editor.getData();
+            //modificar el contenido 
+            console.log(contenidoR);
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(contenidoR,"text/html");
+
+            var imgsElements = xmlDoc.getElementsByTagName("body")[0].getElementsByClassName("image_resized");
+            var tableElements = xmlDoc.getElementsByTagName("body")[0].getElementsByTagName("table");
+
+            for(let ele of imgsElements){
+                
+                if(ele.tagName == "IMG"){
+                    
+                    var realvalue =  parseFloat(ele.style.width) * 0.75;
+                    ele.setAttribute("width",realvalue);
+                    
+
+                }
+
+                if(ele.tagName == "FIGURE" && !ele.classList.contains("image-style-side")){
+                   
+                    var realvalue =  parseFloat(ele.style.width) * 0.75;
+                    ele.childNodes[0].setAttribute("width",realvalue);
+                    var margin = (8.5 - (realvalue/96))/2;
+                    //ele.childNodes[0].setAttribute("marginLeft",margin);
+                    ele.childNodes[0].style.float= "right";
+                   
+                }
+
+                if(ele.tagName == "FIGURE" && ele.classList.contains("image-style-side")){
+                   
+                   var realvalue =  parseFloat(ele.style.width) * 0.75;
+                   ele.childNodes[0].setAttribute("width",realvalue);
+                   var margin = (8.5 - (realvalue/96));
+                   ele.childNodes[0].setAttribute("marginLeft",margin);
+                   ele.style.float= "right";
+               }
+            }
+
+            /*for(let ele of imgsElements){
+                if(ele.tagName == "IMG"){
+                    realvalue = parseFloat(ele.style.width) * 0.75;
+                    ele.setAttribute("width",realvalue);
+                    ele.style.textAlign = "inline"
+                }
+
+                if(ele.tagName == "FIGURE"){
+                    realvalue = parseFloat(ele.style.width) * 0.75;
+                    ele.setAttribute("width",realvalue);
+                }
+            }*/
+
+            //tablas centradas
+            for(let ele of tableElements){
+                ele.style.textAlign = "center";
+                ele.style.padding = "10px";
+            }
+
+
+            console.log(xmlDoc.getElementsByTagName("body")[0].innerHTML);
+            contenidoR = xmlDoc.getElementsByTagName("body")[0].innerHTML;
+
             $.ajax({
                 type : "POST",
                 "serverSide" : true,
