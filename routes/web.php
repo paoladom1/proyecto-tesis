@@ -112,6 +112,12 @@ Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminContro
 Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
 Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarUsuario');
 
+Route::get('/studentInfo','App\Http\Controllers\NewAdminController@frmStudent');
+Route::get('editarEstudiante','App\Http\Controllers\NewAdminController@editStudent');
+
+Route::get('/directorInfo','App\Http\Controllers\NewAdminController@frmDirector');
+Route::get('/editarDirector','App\Http\Controllers\NewAdminController@editDirector');
+
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');
 

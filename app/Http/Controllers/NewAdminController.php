@@ -155,4 +155,23 @@ class NewAdminController extends Controller
 
         return redirect()->route('employees');
     }
+
+    //Estudiantes
+
+    function frmStudent(){
+        return view('admin.studentDashboard');
+    }
+
+    function editStudent(){
+        return view('admin.editStudent');
+    }
+
+    //Director de carrera
+    function frmDirector(){
+        return view('admin.directorDashboard');
+    }
+
+    function editDirector(){
+        return view('admin.editDirector');
+    }
 }
