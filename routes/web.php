@@ -103,8 +103,8 @@ Route::delete('/borrarUsuario/{usuario}', 'App\Http\Controllers\NewAdminControll
 
 Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView');
 Route::get('/configAdmin', 'App\Http\Controllers\NewAdminController@mostrarConfig');
-Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados')->name('employees');
 
+Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados')->name('employees');
 Route::get('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@editarEmpleado')->name('edit');
 Route::put('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@actualizarEmpleado');
 Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminController@eliminarEmpleado');
@@ -112,11 +112,13 @@ Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminContro
 Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
 Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarUsuario');
 
-Route::get('/studentInfo','App\Http\Controllers\NewAdminController@frmStudent');
-Route::get('editarEstudiante','App\Http\Controllers\NewAdminController@editStudent');
+Route::get('/studentInfo', 'App\Http\Controllers\NewAdminController@mostrarEstudiante')->name('students');
+Route::get('/editarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@editarEstudiante');
+Route::put('/editarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@actualizarEstudiante');
 
-Route::get('/directorInfo','App\Http\Controllers\NewAdminController@frmDirector');
-Route::get('/editarDirector','App\Http\Controllers\NewAdminController@editDirector');
+
+Route::get('/directorInfo', 'App\Http\Controllers\NewAdminController@frmDirector');
+Route::get('/editarDirector', 'App\Http\Controllers\NewAdminController@editDirector');
 
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');

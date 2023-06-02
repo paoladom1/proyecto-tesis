@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cargo;
+use App\Models\Carrera;
+use App\Models\Estudiante;
+use App\Models\GrupoTrabajo;
 use App\Models\TipoEmpleado;
 use App\Models\TipoUsuario;
 use App\Models\Usuario;
@@ -158,20 +161,51 @@ class NewAdminController extends Controller
 
     //Estudiantes
 
-    function frmStudent(){
-        return view('admin.studentDashboard');
+    function mostrarEstudiante()
+    {
+        $carreras = Carrera::all();
+
+        $grupos_trabajo = GrupoTrabajo::all();
+
+        $estudiantes = Estudiante::paginate(10);
+
+        return view('admin.studentDashboard', compact('carreras', 'grupos_trabajo', 'estudiantes'));
     }
 
-    function editStudent(){
-        return view('admin.editStudent');
+    function editarEstudiante(Estudiante $estudiante)
+    {
+        $carreras = Carrera::all();
+
+        $grupos_trabajo = GrupoTrabajo::all();
+
+        return view('admin.editStudent', compact('estudiante', 'carreras', 'grupos_trabajo'));
+    }
+
+    public function actualizarEstudiante(Request $request, Estudiante $estudiante)
+    {
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'carnet' => 'required',
+            'carrera_id' => 'required',
+            'grupo_trabajo_id' => 'required',
+        ]);
+
+        $estudiante->update($validatedData);
+
+        $this->mostrarEstudiante();
+
+        return redirect()->route('students');
     }
 
     //Director de carrera
-    function frmDirector(){
+    function frmDirector()
+    {
         return view('admin.directorDashboard');
     }
 
-    function editDirector(){
+    function editDirector()
+    {
         return view('admin.editDirector');
     }
 }
