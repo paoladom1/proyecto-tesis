@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\DepartamentoU;
 use App\Models\Empleado;
+use Illuminate\Support\Str;
 
 class NewAdminController extends Controller
 {
@@ -192,6 +193,40 @@ class NewAdminController extends Controller
         ]);
 
         $estudiante->update($validatedData);
+
+        $this->mostrarEstudiante();
+
+        return redirect()->route('students');
+    }
+
+    public function registrarEstudiante(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'carnet' => 'required',
+            'carrera_id' => 'required',
+            'grupo_trabajo_id' => 'required',
+            'usuario_id',
+        ]);
+
+        $handle = '@uca.edu.sv';
+
+        $user = Usuario::where('email', '=', strval($validatedData['carnet'] . $handle))->first();
+
+        $validatedData['usuario_id'] = $user->id;
+
+        // Crea el empleado
+        Estudiante::create($validatedData);
+
+        $this->mostrarEstudiante();
+
+        return redirect()->route('students');
+    }
+
+    public function eliminarEstudiante(Estudiante $estudiante)
+    {
+        $estudiante->delete();
 
         $this->mostrarEstudiante();
 

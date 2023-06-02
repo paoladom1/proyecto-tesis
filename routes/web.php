@@ -111,6 +111,9 @@ Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminContro
 
 Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
 Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarUsuario');
+Route::post('/nuevoEstudiante', 'App\Http\Controllers\NewAdminController@registrarEstudiante');
+Route::delete('/borrarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@eliminarEstudiante');
+
 
 Route::get('/studentInfo', 'App\Http\Controllers\NewAdminController@mostrarEstudiante')->name('students');
 Route::get('/editarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@editarEstudiante');

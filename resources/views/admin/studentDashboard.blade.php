@@ -294,13 +294,14 @@
                     <div class="modal-body">
                         <div id="liveAlertPlaceholder2"></div>
                         <div class="row">
-                            <form>
+                            <form method="POST" action="/nuevoEstudiante">
+                                @csrf
                                 <input hidden type="text" id="idExterno">
                                 <p>Campos requeridos <span style="color: red;">(*)</span></p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-floating mb-2 mt-2">
-                                            <input type="text" maxlength="100" class="form-control" id="nombre"
+                                            <input type="text" maxlength="100" class="form-control" name="nombre"
                                                 aria-describedby="emailHelp" placeholder="Ingrese los nombres">
                                             <label for="nombre">Nombres <span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
@@ -309,7 +310,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-floating mb-2 mt-2">
-                                            <input type="text" maxlength="100" class="form-control" id="apellido"
+                                            <input type="text" maxlength="100" class="form-control" name="apellido"
                                                 aria-describedby="emailHelp" placeholder="Ingrese los apellidos">
                                             <label for="apellido">Apellidos <span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al
@@ -320,7 +321,7 @@
                                 <div class="row">
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <input type="text" maxlength="100" class="form-control" id="correo"
+                                            <input type="text" maxlength="100" class="form-control" name="carnet"
                                                 aria-describedby="emailHelp" placeholder="Ingrese el correo electronico">
                                             <label for="correo">Carnet estudiantil<span
                                                     style="color: red;">(*)</span></label>
@@ -330,34 +331,40 @@
                                     </div>
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" id="rol">
-                                                <option value="">Seleccione carrera universitaria</option>
-                                                <option value="1">Ingenieria en Informatica</option>
-                                                <option value="0">Arquitectura</option>
+                                            <select class="form-control form-select" name="carrera_id">
+                                                @foreach ($carreras as $carrera)
+                                                    <option value="{{ $carrera->id }}">
+                                                        {{ $carrera->nombre_carrera }}
+                                                    </option>
+                                                @endforeach
                                             </select>
+
                                             <label for="rol">Carrera universitaria<span
                                                     style="color: red;">(*)</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <input type="text" maxlength="100" class="form-control" id="apellido"
-                                                aria-describedby="emailHelp" placeholder="Ingrese los apellidos">
+                                            <select class="form-control form-select" name="grupo_trabajo_id">
+                                                @foreach ($grupos_trabajo as $grupo_trabajo)
+                                                    <option value="{{ $grupo_trabajo->id }}">
+                                                        {{ $grupo_trabajo->tema }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                             <label for="apellido">Grupo de trabajo <span
                                                     style="color: red;">(*)</span></label>
-                                            <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al
-                                                limite de 100 caracteres!</span>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"><i
+                                            class="bi bi-x-circle"></i> Cancelar</button>
+                                    <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
+                                            id="btnRegistarExterno">Registrar</span></button>
+                                </div>
                             </form>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
-                            onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
-                        <button type="button" class="mb-3 btn btn-success" onclick="registrarDatos()"><i
-                                class="bi bi-save"></i> <span id="btnRegistarExterno">Registrar</span></button>
                     </div>
                 </div>
             </div>
