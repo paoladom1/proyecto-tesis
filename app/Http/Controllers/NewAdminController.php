@@ -241,13 +241,44 @@ class NewAdminController extends Controller
 
         $empleados = Empleado::all();
 
+        $usuarios = Usuario::all();
+
         $directores_carrera = DirectorCarrera::paginate(10);
 
-        return view('admin.directorDashboard', compact('carreras', 'empleados', 'directores_carrera'));
+        return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
     }
 
-    function editDirector()
+    function editarDirector(DirectorCarrera $director)
     {
-        return view('admin.editDirector');
+        $carreras = Carrera::all();
+
+        $empleados = Empleado::all();
+
+        return view('admin.editDirector', compact('carreras', 'empleados', 'director'));
+    }
+
+    public function eliminarDirector(DirectorCarrera $director)
+    {
+        $director->delete();
+
+        $this->mostrarDirectores();
+
+        return redirect()->route('directores');
+    }
+
+    public function registrarDirector(Request $request)
+    {
+        $validatedData = $request->validate([
+            'usuario_id' => 'required',
+            'empleado_id' => 'required',
+            'carrera_id' => 'required',
+        ]);
+
+        // Crea el empleado
+        DirectorCarrera::create($validatedData);
+
+        $this->mostrarDirectores();
+
+        return redirect()->route('directores');
     }
 }

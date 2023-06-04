@@ -279,14 +279,14 @@
     <div class="container-fluid container-general">
 
 
-        <!--------------------------------------------------Modal para crear usuarios en  el sistema----------------------------------------->
+        <!--------------------------------------------------Modal para crear directores en  el sistema----------------------------------------->
 
         <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
-                        <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Registrar Empleado
+                        <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Registrar Director
                         </h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             onclick="limpiarCampos() " aria-label="Close" style="color: white; width: 1em;"></button>
@@ -294,24 +294,38 @@
                     <div class="modal-body">
                         <div id="liveAlertPlaceholder2"></div>
                         <div class="row">
-                            <form>
+                            <form method="POST" action="/nuevoDirector">
+                                @csrf
                                 <input hidden type="text" id="idExterno">
                                 <p>Campos requeridos <span style="color: red;">(*)</span></p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-floating mb-2 mt-2">
-                                            <input type="text" maxlength="100" class="form-control" id="nombre"
-                                                aria-describedby="emailHelp" placeholder="Ingrese los nombres">
-                                            <label for="nombre">Nombres <span style="color: red;">(*)</span></label>
+                                            <select class="form-control form-select" name="usuario_id">
+                                                @foreach ($usuarios as $usuario)
+                                                    @if ($usuario->tipo_usuario_id == 2)
+                                                        <option value="{{ $usuario->id }}">
+                                                            {{ $usuario->email }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <label for="nombre">Correo institucional <span
+                                                    style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
                                                 limite de 100 caracteres!</span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-floating mb-2 mt-2">
-                                            <input type="text" maxlength="100" class="form-control" id="apellido"
-                                                aria-describedby="emailHelp" placeholder="Ingrese los apellidos">
-                                            <label for="apellido">Apellidos <span style="color: red;">(*)</span></label>
+                                            <select class="form-control form-select" name="empleado_id">
+                                                @foreach ($empleados as $empleado)
+                                                    <option value="{{ $empleado->id }}">
+                                                        {{ $empleado->nombre . ' ' . $empleado->apellido }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <label for="apellido">Encargado <span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al
                                                 limite de 100 caracteres!</span>
                                         </div>
@@ -320,24 +334,25 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" id="rol">
-                                                <option value="">Seleccione carrera universitaria</option>
-                                                <option value="1">Ingenieria en Informatica</option>
-                                                <option value="0">Arquitectura</option>
+                                            <select class="form-control form-select" name="carrera_id">
+                                                @foreach ($carreras as $carrera)
+                                                    <option value="{{ $carrera->id }}">
+                                                        {{ $carrera->nombre_carrera }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-                                            <label for="rol">Carrera universitaria<span
-                                                    style="color: red;">(*)</span></label>
+                                            <label for="rol">Carrera<span style="color: red;">(*)</span></label>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"><i
+                                            class="bi bi-x-circle"></i> Cancelar</button>
+                                    <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
+                                            id="btnRegistarExterno">Registrar</span></button>
+                                </div>
                             </form>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
-                            onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
-                        <button type="button" class="mb-3 btn btn-success" onclick="registrarDatos()"><i
-                                class="bi bi-save"></i> <span id="btnRegistarExterno">Registrar</span></button>
                     </div>
                 </div>
             </div>
@@ -360,21 +375,14 @@
                     <thead class=" thead-dar"
                         style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem; text-aling:center;  !important;">
                         <tr style="padding: 0.5rem; text-align: center;">
-                            <th scope="col">NOMBRES</th>
-                            <th scope="col">APELLIDOS</th>
                             <th scope="col">CARRERA</th>
+                            <th scope="col">ENCARGADO</th>
                             <th scope="col">ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($directores_carrera as $director)
                             <tr style="text-align: center">
-                                @foreach ($empleados as $empleado)
-                                    @if ($director->empleado_id === $empleado->id)
-                                        <td style="width: 20%;">{{ $empleado->nombre }}</td>
-                                        <td style="width: 20%">{{ $empleado->apellido }}</td>
-                                    @endif
-                                @endforeach
                                 <td style="width: 20%">
                                     @foreach ($carreras as $carrera)
                                         @if ($director->carrera_id === $carrera->id)
@@ -382,16 +390,21 @@
                                         @endif
                                     @endforeach
                                 </td>
-                                <td style="width: 20%">
-                                    <a href="{{ url('/editarDirector') }}" class="btn btn-warning btn-sm" type="button"
-                                        title="Edit">
-                                        <i class="bi bi-pen"></i></a>
-
-                                    <form class="btn btn-sm" style="padding: 0" action="#" method="#">
+                                @foreach ($empleados as $empleado)
+                                    @if ($director->empleado_id === $empleado->id)
+                                        <td style="width: 20%;">{{ $empleado->nombre . ' ' . $empleado->apellido }}</td>
+                                    @endif
+                                @endforeach
+                                <td style="width: 30%">
+                                    <form method="POST" action="/borrarDirector/{{ $director->id }}" class="btn btn-sm"
+                                        style="padding: 0">
+                                        @csrf
+                                        @method('DELETE')
 
                                         <button class="btn btn-danger btn-sm" type="submit" title="Delete">
                                             <i class="bi bi-trash3"></i></button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach
