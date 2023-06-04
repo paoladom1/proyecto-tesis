@@ -120,7 +120,7 @@ Route::get('/editarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminContr
 Route::put('/editarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@actualizarEstudiante');
 
 
-Route::get('/directorInfo', 'App\Http\Controllers\NewAdminController@frmDirector');
+Route::get('/directorInfo', 'App\Http\Controllers\NewAdminController@mostrarDirectores');
 Route::get('/editarDirector', 'App\Http\Controllers\NewAdminController@editDirector');
 
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------

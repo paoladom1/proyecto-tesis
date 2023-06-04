@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cargo;
 use App\Models\Carrera;
+use App\Models\DirectorCarrera;
 use App\Models\Estudiante;
 use App\Models\GrupoTrabajo;
 use App\Models\TipoEmpleado;
@@ -234,9 +235,15 @@ class NewAdminController extends Controller
     }
 
     //Director de carrera
-    function frmDirector()
+    function mostrarDirectores()
     {
-        return view('admin.directorDashboard');
+        $carreras = Carrera::all();
+
+        $empleados = Empleado::all();
+
+        $directores_carrera = DirectorCarrera::paginate(10);
+
+        return view('admin.directorDashboard', compact('carreras', 'empleados', 'directores_carrera'));
     }
 
     function editDirector()
