@@ -142,7 +142,7 @@ class LoginController extends Controller
                         )
                     );
             }
-        } else {
+        } elseif ($user->tipo_usuario_id == 2) {
             $director = DirectorCarrera::where("usuario_id", "=", $id)->first();
             if ($director != null) {
                 if ($director->empleado_id == null) {
@@ -165,6 +165,8 @@ class LoginController extends Controller
                         )
                     );
             }
+        } else {
+            return redirect('/menuadmin');
         }
     }
 }

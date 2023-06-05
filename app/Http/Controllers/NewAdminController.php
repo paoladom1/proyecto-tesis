@@ -19,6 +19,10 @@ use Illuminate\Support\Str;
 
 class NewAdminController extends Controller
 {
+    public function menuAdmin()
+    {
+        return view('plantillas.plantillaMenuAdmin');
+    }
 
     // Se muestra vista para anadir usuarios (Dashboard ADMIN)
 
