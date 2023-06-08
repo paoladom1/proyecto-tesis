@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cargo;
+use App\Models\Carrera;
+use App\Models\DirectorCarrera;
+use App\Models\Estudiante;
+use App\Models\GrupoTrabajo;
 use App\Models\TipoEmpleado;
 use App\Models\TipoUsuario;
 use App\Models\Usuario;
@@ -11,9 +15,14 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\DepartamentoU;
 use App\Models\Empleado;
+use Illuminate\Support\Str;
 
 class NewAdminController extends Controller
 {
+    public function menuAdmin()
+    {
+        return view('plantillas.plantillaMenuAdmin');
+    }
 
     // Se muestra vista para anadir usuarios (Dashboard ADMIN)
 
@@ -158,20 +167,122 @@ class NewAdminController extends Controller
 
     //Estudiantes
 
-    function frmStudent(){
-        return view('admin.studentDashboard');
+    function mostrarEstudiante()
+    {
+        $carreras = Carrera::all();
+
+        $grupos_trabajo = GrupoTrabajo::all();
+
+        $estudiantes = Estudiante::paginate(10);
+
+        return view('admin.studentDashboard', compact('carreras', 'grupos_trabajo', 'estudiantes'));
     }
 
-    function editStudent(){
-        return view('admin.editStudent');
+    function editarEstudiante(Estudiante $estudiante)
+    {
+        $carreras = Carrera::all();
+
+        $grupos_trabajo = GrupoTrabajo::all();
+
+        return view('admin.editStudent', compact('estudiante', 'carreras', 'grupos_trabajo'));
+    }
+
+    public function actualizarEstudiante(Request $request, Estudiante $estudiante)
+    {
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'carnet' => 'required',
+            'carrera_id' => 'required',
+            'grupo_trabajo_id' => 'required',
+        ]);
+
+        $estudiante->update($validatedData);
+
+        $this->mostrarEstudiante();
+
+        return redirect()->route('students');
+    }
+
+    public function registrarEstudiante(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'carnet' => 'required',
+            'carrera_id' => 'required',
+            'grupo_trabajo_id' => 'required',
+            'usuario_id',
+        ]);
+
+        $handle = '@uca.edu.sv';
+
+        $user = Usuario::where('email', '=', strval($validatedData['carnet'] . $handle))->first();
+
+        $validatedData['usuario_id'] = $user->id;
+
+        // Crea el empleado
+        Estudiante::create($validatedData);
+
+        $this->mostrarEstudiante();
+
+        return redirect()->route('students');
+    }
+
+    public function eliminarEstudiante(Estudiante $estudiante)
+    {
+        $estudiante->delete();
+
+        $this->mostrarEstudiante();
+
+        return redirect()->route('students');
     }
 
     //Director de carrera
-    function frmDirector(){
-        return view('admin.directorDashboard');
+    function mostrarDirectores()
+    {
+        $carreras = Carrera::all();
+
+        $empleados = Empleado::all();
+
+        $usuarios = Usuario::all();
+
+        $directores_carrera = DirectorCarrera::paginate(10);
+
+        return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
     }
 
-    function editDirector(){
-        return view('admin.editDirector');
+    function editarDirector(DirectorCarrera $director)
+    {
+        $carreras = Carrera::all();
+
+        $empleados = Empleado::all();
+
+        return view('admin.editDirector', compact('carreras', 'empleados', 'director'));
+    }
+
+    public function eliminarDirector(DirectorCarrera $director)
+    {
+        $director->delete();
+
+        $this->mostrarDirectores();
+
+        return redirect()->route('directores');
+    }
+
+    public function registrarDirector(Request $request)
+    {
+        $validatedData = $request->validate([
+            'usuario_id' => 'required',
+            'empleado_id' => 'required',
+            'carrera_id' => 'required',
+        ]);
+
+        // Crea el empleado
+        DirectorCarrera::create($validatedData);
+
+        $this->mostrarDirectores();
+
+        return redirect()->route('directores');
     }
 }

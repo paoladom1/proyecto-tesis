@@ -94,29 +94,42 @@ Route::post('/mostrarDatoGrupo', 'App\Http\Controllers\DirectorController@mostra
 Route::post('/mostrarDatoEstudiante', 'App\Http\Controllers\DirectorController@mostrarDatoEstudiante');
 Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 
-// Ruta de amdministrador
-Route::get('/mostrarUsuario', 'App\Http\Controllers\NewAdminController@mostrarUsuario')->name('users');
+Route::get('/configAdmin', 'App\Http\Controllers\NewAdminController@mostrarConfig');
 
+// ----------------------------------- Administrador de sistema -----------------------------------
+Route::get('/menuadmin', "App\Http\Controllers\NewAdminController@menuAdmin");
+
+// Usuarios
+Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarUsuario');
+Route::get('/mostrarUsuario', 'App\Http\Controllers\NewAdminController@mostrarUsuario')->name('users');
 Route::get('/editarUsuario/{usuario}', 'App\Http\Controllers\NewAdminController@editarUsuario')->name('edit');
 Route::put('/actualizarUsuario/{usuario}', 'App\Http\Controllers\NewAdminController@actualizarUsuario');
 Route::delete('/borrarUsuario/{usuario}', 'App\Http\Controllers\NewAdminController@eliminarUsuario');
 
 Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView');
-Route::get('/configAdmin', 'App\Http\Controllers\NewAdminController@mostrarConfig');
-Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados')->name('employees');
 
+// Empleados
+Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
+Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados')->name('employees');
 Route::get('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@editarEmpleado')->name('edit');
 Route::put('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@actualizarEmpleado');
 Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminController@eliminarEmpleado');
 
-Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
-Route::post('/nuevoUsuario', 'App\Http\Controllers\NewAdminController@registrarUsuario');
+// Estudiantes
+Route::post('/nuevoEstudiante', 'App\Http\Controllers\NewAdminController@registrarEstudiante');
+Route::delete('/borrarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@eliminarEstudiante');
+Route::get('/studentInfo', 'App\Http\Controllers\NewAdminController@mostrarEstudiante')->name('students');
+Route::get('/editarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@editarEstudiante');
+Route::put('/editarEstudiante/{estudiante}', 'App\Http\Controllers\NewAdminController@actualizarEstudiante');
 
-Route::get('/studentInfo','App\Http\Controllers\NewAdminController@frmStudent');
-Route::get('editarEstudiante','App\Http\Controllers\NewAdminController@editStudent');
+// Directores de carrera
+Route::get('/directorInfo', 'App\Http\Controllers\NewAdminController@mostrarDirectores')->name('directores');
+Route::get('/editarDirector/{director}', 'App\Http\Controllers\NewAdminController@editarDirector');
+Route::put('/editarDirector/{director}', 'App\Http\Controllers\NewAdminController@actualizarDirector');
+Route::delete('/borrarDirector/{director}', 'App\Http\Controllers\NewAdminController@eliminarDirector');
+Route::post('/nuevoDirector', 'App\Http\Controllers\NewAdminController@registrarDirector');
 
-Route::get('/directorInfo','App\Http\Controllers\NewAdminController@frmDirector');
-Route::get('/editarDirector','App\Http\Controllers\NewAdminController@editDirector');
+
 
 //----------------------------------- Ruta para subir imagen 2023 ------------------------------
 Route::post('/ckeditor/image_upload', 'App\Http\Controllers\DocumentoController@upload')->name('upload');

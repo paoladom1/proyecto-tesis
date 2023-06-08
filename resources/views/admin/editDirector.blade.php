@@ -294,9 +294,9 @@
             <label for="inputEmail4" class="form-label">Carrera universitaria</label>
             <input type="email" class="form-control" name="carreraU">
         </div>
-        
+
         <div class="col-12">
-            <a href="{{ url('/studentInfo') }}"><button type="button" class="mb-3 btn btn-danger"><i
+            <a href="{{ url('/directorInfo') }}"><button type="button" class="mb-3 btn btn-danger"><i
                         class="bi bi-arrow-bar-left"></i>Cancelar</button></a>
             <button id="submit" type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i>
                 <span>Actualizar</span></button>

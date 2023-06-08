@@ -16,11 +16,13 @@ class EstudianteMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->guard('admin')->check()){
-            if(auth()->guard('admin')->user()->tipo_usuario_id == 2)
+        if (auth()->guard('admin')->check()) {
+            if (auth()->guard('admin')->user()->tipo_usuario_id == 2)
                 return redirect('/menudirector');
+            if (auth()->guard('admin')->user()->tipo_usuario_id == 3)
+                return redirect('/menuadmin');
             return $next($request);
-        } else{
+        } else {
             return redirect('/');
         }
     }

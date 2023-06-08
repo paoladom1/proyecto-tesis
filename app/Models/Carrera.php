@@ -12,4 +12,8 @@ class Carrera extends Model
     public function facultad(){
         return $this -> belongsTo('App\Models\Facultad', 'facultad_id');
     }
+    public function carrera()
+    {
+        return $this->hasMany(Carrera::class);
+    }
 }

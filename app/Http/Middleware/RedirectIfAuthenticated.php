@@ -26,9 +26,12 @@ class RedirectIfAuthenticated
                 if (auth()->guard('admin')->user()->tipo_usuario_id == 1) {
                     // Estudiante
                     return redirect('/menu');
-                } else {
+                } elseif (auth()->guard('admin')->user()->tipo_usuario_id == 2) {
                     // Director de carrera
                     return redirect('/menudirector');
+                } else {
+                    // Administrador del sistema
+                    return redirect('/menuadmin');
                 }
             }
         }
