@@ -26,11 +26,24 @@ class NewAdminController extends Controller
 
     // Se muestra vista para anadir usuarios (Dashboard ADMIN)
 
-    function mostrarUsuario()
+    function mostrarUsuario(Request $request)
     {
         $tipos_usuario = TipoUsuario::all();
 
-        $usuarios = Usuario::paginate(10);
+        
+        $usuarios = Usuario::where([
+            ['email', '!=', Null],
+            [function ($query) use ($request) {
+                
+                    if (($s = $request->s)) {
+                        $query
+                            ->orWhere('email', 'LIKE', '%' . $s . '%')
+                            ->get();
+                    }
+                
+               
+            }]
+        ])->paginate(10);
 
         return view('admin.adminDashboard', compact('tipos_usuario', 'usuarios'));
     }
@@ -50,7 +63,7 @@ class NewAdminController extends Controller
         // Crea el usuario
         Usuario::create($validatedData);
 
-        $this->mostrarUsuario();
+        
 
         return redirect()->route('users');
     }
@@ -72,7 +85,7 @@ class NewAdminController extends Controller
 
         $usuario->update($validatedData);
 
-        $this->mostrarUsuario();
+        
 
         return redirect()->route('users');
     }
@@ -81,7 +94,7 @@ class NewAdminController extends Controller
     {
         $usuario->delete();
 
-        $this->mostrarUsuario();
+        
 
         return redirect()->route('users');
     }
@@ -97,13 +110,24 @@ class NewAdminController extends Controller
     }
 
     // Función para mostrar lista de empleados
-    function mostrarEmpleados()
+    function mostrarEmpleados(Request $request)
     {
         $tipos_empleado = TipoEmpleado::all();
         $cargos = Cargo::all();
         $departamentos_u = DepartamentoU::all();
 
-        $empleados = Empleado::paginate(10);
+        $empleados = Empleado::where([
+            ['nombre', '!=', Null],
+            [function ($query) use ($request) {
+                if (($s = $request->s)) {
+                    $query
+                        ->orWhere('nombre', 'LIKE', '%' . $s . '%')
+                        ->orWhere('codigo_empleado', 'LIKE', '%' . $s . '%')
+                        ->orWhere('apellido', 'LIKE', '%' . $s . '%')
+                        ->get();
+                }
+            }]
+        ])->paginate(10);
 
 
         return view('admin.employeeInfo', compact('tipos_empleado', 'cargos', 'departamentos_u', 'empleados'));
@@ -124,7 +148,7 @@ class NewAdminController extends Controller
         // Crea el empleado
         Empleado::create($validatedData);
 
-        $this->mostrarEmpleados();
+        
 
         return redirect()->route('employees');
     }
@@ -151,7 +175,7 @@ class NewAdminController extends Controller
 
         $empleado->update($validatedData);
 
-        $this->mostrarEmpleados();
+        
 
         return redirect()->route('employees');
     }
@@ -160,20 +184,31 @@ class NewAdminController extends Controller
     {
         $empleado->delete();
 
-        $this->mostrarEmpleados();
+       
 
         return redirect()->route('employees');
     }
 
     //Estudiantes
 
-    function mostrarEstudiante()
+    function mostrarEstudiante(Request $request)
     {
         $carreras = Carrera::all();
 
         $grupos_trabajo = GrupoTrabajo::all();
 
-        $estudiantes = Estudiante::paginate(10);
+        $estudiantes = Estudiante::where([
+            ['carnet', '!=', Null],
+            [function ($query) use ($request) {
+                if (($s = $request->s)) {
+                    $query
+                        ->orWhere('nombre', 'LIKE', '%' . $s . '%')
+                        ->orWhere('apellido', 'LIKE', '%' . $s . '%')
+                        ->orWhere('carnet', 'LIKE', '%' . $s . '%')
+                        ->get();
+                }
+            }]
+        ])->paginate(10);
 
         return view('admin.studentDashboard', compact('carreras', 'grupos_trabajo', 'estudiantes'));
     }
@@ -199,7 +234,7 @@ class NewAdminController extends Controller
 
         $estudiante->update($validatedData);
 
-        $this->mostrarEstudiante();
+        
 
         return redirect()->route('students');
     }
@@ -224,7 +259,7 @@ class NewAdminController extends Controller
         // Crea el empleado
         Estudiante::create($validatedData);
 
-        $this->mostrarEstudiante();
+        
 
         return redirect()->route('students');
     }
@@ -233,21 +268,24 @@ class NewAdminController extends Controller
     {
         $estudiante->delete();
 
-        $this->mostrarEstudiante();
+       
 
         return redirect()->route('students');
     }
 
     //Director de carrera
-    function mostrarDirectores()
+    function mostrarDirectores(Request $request )
     {
         $carreras = Carrera::all();
 
         $empleados = Empleado::all();
 
         $usuarios = Usuario::all();
-
+       
         $directores_carrera = DirectorCarrera::paginate(10);
+        
+
+       
 
         return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
     }
@@ -265,7 +303,7 @@ class NewAdminController extends Controller
     {
         $director->delete();
 
-        $this->mostrarDirectores();
+        
 
         return redirect()->route('directores');
     }
@@ -281,8 +319,7 @@ class NewAdminController extends Controller
         // Crea el empleado
         DirectorCarrera::create($validatedData);
 
-        $this->mostrarDirectores();
-
+        
         return redirect()->route('directores');
     }
 }
