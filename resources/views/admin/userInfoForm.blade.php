@@ -277,6 +277,15 @@
 
     <br>
     <div class="container-fluid container-general">
+        @if ($errors->any())
+            <div class="alert alert-danger" id="notification" style="display: none">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -289,7 +298,10 @@
             @csrf
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Correo institucional</label>
-                <input type="email" class="form-control" name="email" value="{{ $usuario->email }}">
+                <input type="text" class="form-control" name="email" value="{{ $usuario->email }}"
+                    class="@error('email') is-invalid @enderror"> @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="col-md-6"></div>
             <div class="col-md-6">
@@ -324,4 +336,15 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.getElementsByClassName('alert');
+            if (notification) {
+                setTimeout(function() {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
 @endsection

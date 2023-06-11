@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\DepartamentoU;
 use App\Models\Empleado;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class NewAdminController extends Controller
@@ -38,21 +39,33 @@ class NewAdminController extends Controller
     // Función para registrar Usuarios.
     public function registrarUsuario(Request $request)
     {
-        $validatedData = $request->validate([
-            'email' => 'required',
+        $validations = [
+            'email' => 'required|email|unique:usuario',
             'password' => 'required|min:4',
             'tipo_usuario_id' => 'required',
             'estado' => 'required',
-        ]);
+        ];
 
+        $validator = Validator::make($request->all(), $validations);
+
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $validatedData = $request->validate($validations);
         $validatedData['password'] = bcrypt($validatedData['password']);
 
         // Crea el usuario
-        Usuario::create($validatedData);
+        $user = Usuario::create($validatedData);
 
-        $this->mostrarUsuario();
-
-        return redirect()->route('users');
+        if ($user) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Ha ocurrido un error creando el usuario']);
+        }
     }
 
     public function editarUsuario(Usuario $usuario)
@@ -64,17 +77,25 @@ class NewAdminController extends Controller
 
     public function actualizarUsuario(Request $request, Usuario $usuario)
     {
+        $user = Usuario::find($usuario, ['email', 'tipo_usuario_id', 'estado']);
+
         $validatedData = $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'tipo_usuario_id' => 'required',
             'estado' => 'required',
         ]);
 
+        if (!$validatedData) {
+            return redirect()->route('users')->with('error', 'Ha ocurrido un error!');
+        }
+
+        if ($user->toArray()[0] == $validatedData) {
+            return redirect()->route('users')->with('warning', 'No se realizó ningún cambio');
+        }
+
         $usuario->update($validatedData);
-
         $this->mostrarUsuario();
-
-        return redirect()->route('users');
+        return redirect()->route('users')->with('success', "Usuario actualizado correctamente");
     }
 
     public function eliminarUsuario(Usuario $usuario)
