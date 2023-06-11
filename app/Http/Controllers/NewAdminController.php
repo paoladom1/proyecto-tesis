@@ -8,6 +8,7 @@ use App\Models\TipoUsuario;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\ConfiguracionSistema;
 
 use App\Models\DepartamentoU;
 use App\Models\Empleado;
@@ -20,7 +21,6 @@ class NewAdminController extends Controller
     function mostrarUsuario()
     {
         $tipos_usuario = TipoUsuario::all();
-
         $usuarios = Usuario::paginate(10);
 
         return view('admin.adminDashboard', compact('tipos_usuario', 'usuarios'));
@@ -33,7 +33,7 @@ class NewAdminController extends Controller
             'email' => 'required',
             'password' => 'required|min:4',
             'tipo_usuario_id' => 'required',
-            'estado' => 'required',
+            'fecha_limite' => 'required'
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
@@ -42,7 +42,7 @@ class NewAdminController extends Controller
         Usuario::create($validatedData);
 
         $this->mostrarUsuario();
-
+        
         return redirect()->route('users');
     }
 
@@ -58,7 +58,7 @@ class NewAdminController extends Controller
         $validatedData = $request->validate([
             'email' => 'required',
             'tipo_usuario_id' => 'required',
-            'estado' => 'required',
+            'fecha_limite'=> 'required'
         ]);
 
         $usuario->update($validatedData);
