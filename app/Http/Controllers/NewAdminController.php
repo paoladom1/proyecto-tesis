@@ -104,7 +104,7 @@ class NewAdminController extends Controller
 
         $this->mostrarUsuario();
 
-        return redirect()->route('users');
+        return redirect()->route('users')->with('success', "Usuario eliminado correctamente");
     }
 
     function frmUserView()
@@ -133,21 +133,34 @@ class NewAdminController extends Controller
     // Función para registrar Empleado.
     public function registrarEmpleado(Request $request)
     {
-        $validatedData = $request->validate([
-            'codigo_empleado' => 'required',
+        $validations = [
+            'codigo_empleado' => 'required|unique:empleado',
             'nombre' => 'required',
             'apellido' => 'required',
             'tipo_empleado_id' => 'required',
             'cargo_id' => 'required',
             'departamento_unidad_id' => 'required',
-        ]);
+        ];
 
-        // Crea el empleado
-        Empleado::create($validatedData);
+        $validator = Validator::make($request->all(), $validations);
 
-        $this->mostrarEmpleados();
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
 
-        return redirect()->route('employees');
+        $validatedData = $request->validate($validations);
+
+        // Crea el usuario
+        $employee = Empleado::create($validatedData);
+
+        if ($employee) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Ha ocurrido un error creando el empleado']);
+        }
     }
 
     public function editarEmpleado(Empleado $empleado)
@@ -161,8 +174,10 @@ class NewAdminController extends Controller
 
     public function actualizarEmpleado(Request $request, Empleado $empleado)
     {
+        $employee = Empleado::find($empleado, ['codigo_empleado', 'nombre', 'apellido', 'tipo_empleado_id', 'cargo_id', 'departamento_unidad_id']);
+
         $validatedData = $request->validate([
-            'codigo_empleado' => 'required',
+            'codigo_empleado' => 'required|unique:empleado',
             'nombre' => 'required',
             'apellido' => 'required',
             'tipo_empleado_id' => 'required',
@@ -170,11 +185,17 @@ class NewAdminController extends Controller
             'departamento_unidad_id' => 'required',
         ]);
 
+        if (!$validatedData) {
+            return redirect()->route('employees')->with('error', 'Ha ocurrido un error!');
+        }
+
+        if ($employee->toArray()[0] == $validatedData) {
+            return redirect()->route('employees')->with('warning', 'No se realizó ningún cambio');
+        }
+
         $empleado->update($validatedData);
-
-        $this->mostrarEmpleados();
-
-        return redirect()->route('employees');
+        $this->mostrarUsuario();
+        return redirect()->route('employees')->with('success', "Empleado actualizado correctamente");
     }
 
     public function eliminarEmpleado(Empleado $empleado)
@@ -183,7 +204,7 @@ class NewAdminController extends Controller
 
         $this->mostrarEmpleados();
 
-        return redirect()->route('employees');
+        return redirect()->route('employees')->with('success', "Empleado eliminado correctamente");
     }
 
     //Estudiantes
