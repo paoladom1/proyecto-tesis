@@ -11,6 +11,7 @@ use App\Models\DirectorCarrera;
 use Laravel\Socialite\Facades\Socialite;
 use SebastianBergmann\CliParser\Exception;
 
+date_default_timezone_set('America/El_Salvador');
 
 class LoginController extends Controller
 {
@@ -72,6 +73,7 @@ class LoginController extends Controller
 
     public function login()
     {
+        
         if (request('email') == null) {
             return back()
                 ->withErrors(
@@ -87,6 +89,8 @@ class LoginController extends Controller
                     )
                 );
         }
+
+        
         $credentials = $this->validate(request(), [
             'email' => 'string',
             'password' => 'string'
@@ -117,10 +121,15 @@ class LoginController extends Controller
         $user = auth()->guard('admin')->user();
         $id = $user->id;
         info($user);
+        $fecha_actual=date("Y-m-d");
+        \Debugbar::info($fecha_actual);
+        \Debugbar::info($id);
 
         if ($user->tipo_usuario_id == 1) {
             // Estudiante
             $estudiante = Estudiante::where("usuario_id", "=", $id)->first();
+            $status= Usuario::where("id","=",$id)->first();
+            \Debugbar::info($status->fecha_limite);
             if ($estudiante != null) {
                 if ($estudiante->grupo_trabajo_id == null) {
                     auth()->guard('admin')->logout();
@@ -130,9 +139,17 @@ class LoginController extends Controller
                                 'email' => "¡No pertenece a ningun grupo actualmente!"
                             )
                         );
-                } else {
-                    return redirect('/menu');
+                } if($fecha_actual>$status->fecha_limite){
+                    auth()->guard('admin')->logout();
+                    return back()
+                        ->withErrors(
+                            array(
+                                'email' => "Cuenta desactivada"
+                            )
+                        );
                 }
+                    return redirect('/menu');
+
             } else {
                 auth()->guard('admin')->logout();
                 return back()

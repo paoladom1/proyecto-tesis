@@ -301,7 +301,7 @@
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
                                             <input type="text" maxlength="100" class="form-control" name="email"
-                                                aria-describedby="emailHelp" placeholder="Ingrese el correo electronico">
+                                                aria-describedby="emailHelp" placeholder="Ingrese el correo electronico" required>
                                             <label for="email">Correo electronico institucional<span
                                                     style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeCorreo">¡Ha llegado al
@@ -311,7 +311,7 @@
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
                                             <input type="password" maxlength="100" class="form-control" name="password"
-                                                placeholder="Ingrese la contraseña">
+                                                placeholder="Ingrese la contraseña" required>
                                             <label for="contraseña">Contraseña<span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeCorreo">¡Ha llegado al
                                                 limite de 100 caracteres!</span>
@@ -319,10 +319,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" name="tipo_usuario_id">
+                                            <select class="form-control form-select" name="tipo_usuario_id" required>
                                                 @foreach ($tipos_usuario as $tipo_usuario)
                                                     <option value="{{ $tipo_usuario->id }}">{{ $tipo_usuario->nombre }}
                                                     </option>
@@ -334,12 +333,9 @@
                                     </div>
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" id="rol" name="estado">
-                                                <option value="1">Activo</option>
-                                                <option value="0">Inactivo</option>
-                                            </select>
-                                            <label for="rol">Tipo de estado <span
-                                                    style="color: red;">(*)</span></label>
+                                            <input type="date" class="form-control" name="fecha_limite"
+                                                placeholder="Ingrese la fecha" id="datepicker" required>
+                                            <label for="datepicker">Fecha limite<span style="color: red;">(*)</span></label>
                                         </div>
                                     </div>
                                 </div>
@@ -366,13 +362,13 @@
         <div class="table-responsive">
             <div id="liveAlertPlaceholder"></div>
             <div id="tablaUsuariosContainer">
-                <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard"">
+                <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard">
                     <thead class=" thead-dar"
                         style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem !important;">
                         <tr style="padding: 0.5rem; text-align: center">
                             <th scope="col">CORREO INSTITUCIONAL</th>
                             <th scope="col">TIPO DE USUARIO</th>
-                            <th scope="col">ESTADO USUARIO</th>
+                            <th scope="col">FECHA LIMITE</th>
                             <th scope="col">ACCIONES</th>
                         </tr>
                     </thead>
@@ -388,11 +384,7 @@
                                     @endforeach
                                 </td>
                                 <td style="width: 20%">
-                                    @if ($usuario->estado === '0')
-                                        INACTIVO
-                                    @else
-                                        ACTIVO
-                                    @endif
+                                    {{$usuario->fecha_limite}}
                                 </td>
                                 <td style="width: 20%">
                                     <a href="{{ url('/editarUsuario', ['usuario' => $usuario->id]) }}"

@@ -7,6 +7,8 @@ use App\Models\Estudiante;
 use App\Models\DirectorCarrera;
 use App\Models\Usuario;
 use Illuminate\Support\Str;
+use App\Models\ConfiguracionSistema;
+
 
 class GeneralController extends Controller
 {
@@ -20,6 +22,7 @@ class GeneralController extends Controller
         $tipo = auth()->guard('admin')->user()->tipo_usuario_id;
         $id_usuario = auth()->guard('admin')->user()->id;
         $usuario = Usuario::findOrFail($id_usuario);
+        $config_system= ConfiguracionSistema::all();
         if ($tipo == 1) { // Estudiante
             $datos_usuario = Estudiante::where("usuario_id", "=", $id_usuario)->first();
         } else if ($tipo == 2) { // Director de carrera
