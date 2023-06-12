@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\DepartamentoU;
 use App\Models\Empleado;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class NewAdminController extends Controller
 {
@@ -30,19 +33,21 @@ class NewAdminController extends Controller
     {
         $tipos_usuario = TipoUsuario::all();
 
-        
+
         $usuarios = Usuario::where([
             ['email', '!=', Null],
-            [function ($query) use ($request) {
-                
+            [
+                function ($query) use ($request) {
+
                     if (($s = $request->s)) {
                         $query
                             ->orWhere('email', 'LIKE', '%' . $s . '%')
                             ->get();
                     }
-                
-               
-            }]
+
+
+                }
+            ]
         ])->paginate(10);
 
         return view('admin.adminDashboard', compact('tipos_usuario', 'usuarios'));
@@ -51,21 +56,34 @@ class NewAdminController extends Controller
     // Función para registrar Usuarios.
     public function registrarUsuario(Request $request)
     {
-        $validatedData = $request->validate([
-            'email' => 'required',
+        $validations = [
+            'email' => 'required|email|unique:usuario',
             'password' => 'required|min:4',
             'tipo_usuario_id' => 'required',
             'estado' => 'required',
-        ]);
+        ];
 
+        $validator = Validator::make($request->all(), $validations);
+
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $validatedData = $request->validate($validations);
         $validatedData['password'] = bcrypt($validatedData['password']);
 
         // Crea el usuario
-        Usuario::create($validatedData);
+        $user = Usuario::create($validatedData);
 
-        
-
-        return redirect()->route('users');
+        if ($user) {
+            Session::flash('success', 'Usuario registrado correctamente');
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Ha ocurrido un error creando el usuario']);
+        }
     }
 
     public function editarUsuario(Usuario $usuario)
@@ -77,26 +95,35 @@ class NewAdminController extends Controller
 
     public function actualizarUsuario(Request $request, Usuario $usuario)
     {
+        $user = Usuario::find($usuario, ['email', 'tipo_usuario_id', 'estado']);
+
         $validatedData = $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'tipo_usuario_id' => 'required',
             'estado' => 'required',
         ]);
 
+        if (!$validatedData) {
+            return redirect()->route('users')->with('error', 'Ha ocurrido un error!');
+        }
+
+        if ($user->toArray()[0] == $validatedData) {
+            return redirect()->route('users')->with('warning', 'No se realizó ningún cambio');
+        }
+
         $usuario->update($validatedData);
 
-        
-
-        return redirect()->route('users');
+        $this->mostrarUsuario();
+        return redirect()->route('users')->with('success', "Usuario actualizado correctamente");
     }
 
     public function eliminarUsuario(Usuario $usuario)
     {
         $usuario->delete();
 
-        
 
-        return redirect()->route('users');
+
+        return redirect()->route('users')->with('success', "Usuario eliminado correctamente");
     }
 
     function frmUserView()
@@ -118,15 +145,17 @@ class NewAdminController extends Controller
 
         $empleados = Empleado::where([
             ['nombre', '!=', Null],
-            [function ($query) use ($request) {
-                if (($s = $request->s)) {
-                    $query
-                        ->orWhere('nombre', 'LIKE', '%' . $s . '%')
-                        ->orWhere('codigo_empleado', 'LIKE', '%' . $s . '%')
-                        ->orWhere('apellido', 'LIKE', '%' . $s . '%')
-                        ->get();
+            [
+                function ($query) use ($request) {
+                    if (($s = $request->s)) {
+                        $query
+                            ->orWhere('nombre', 'LIKE', '%' . $s . '%')
+                            ->orWhere('codigo_empleado', 'LIKE', '%' . $s . '%')
+                            ->orWhere('apellido', 'LIKE', '%' . $s . '%')
+                            ->get();
+                    }
                 }
-            }]
+            ]
         ])->paginate(10);
 
 
@@ -136,21 +165,36 @@ class NewAdminController extends Controller
     // Función para registrar Empleado.
     public function registrarEmpleado(Request $request)
     {
-        $validatedData = $request->validate([
-            'codigo_empleado' => 'required',
+        $validations = [
+            'codigo_empleado' => 'required|unique:empleado',
             'nombre' => 'required',
             'apellido' => 'required',
             'tipo_empleado_id' => 'required',
             'cargo_id' => 'required',
             'departamento_unidad_id' => 'required',
-        ]);
+        ];
 
-        // Crea el empleado
-        Empleado::create($validatedData);
+        $validator = Validator::make($request->all(), $validations);
 
-        
 
-        return redirect()->route('employees');
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $validatedData = $request->validate($validations);
+
+        // Crea el usuario
+        $employee = Empleado::create($validatedData);
+
+        if ($employee) {
+            Session::flash('success', 'Empleado registrado correctamente');
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Ha ocurrido un error creando el empleado']);
+        }
     }
 
     public function editarEmpleado(Empleado $empleado)
@@ -164,8 +208,10 @@ class NewAdminController extends Controller
 
     public function actualizarEmpleado(Request $request, Empleado $empleado)
     {
+        $employee = Empleado::find($empleado, ['codigo_empleado', 'nombre', 'apellido', 'tipo_empleado_id', 'cargo_id', 'departamento_unidad_id']);
+
         $validatedData = $request->validate([
-            'codigo_empleado' => 'required',
+            'codigo_empleado' => 'required|unique:empleado',
             'nombre' => 'required',
             'apellido' => 'required',
             'tipo_empleado_id' => 'required',
@@ -173,20 +219,27 @@ class NewAdminController extends Controller
             'departamento_unidad_id' => 'required',
         ]);
 
+        if (!$validatedData) {
+            return redirect()->route('employees')->with('error', 'Ha ocurrido un error!');
+        }
+
+        if ($employee->toArray()[0] == $validatedData) {
+            return redirect()->route('employees')->with('warning', 'No se realizó ningún cambio');
+        }
+
         $empleado->update($validatedData);
 
-        
-
-        return redirect()->route('employees');
+        $this->mostrarUsuario();
+        return redirect()->route('employees')->with('success', "Empleado actualizado correctamente");
     }
 
     public function eliminarEmpleado(Empleado $empleado)
     {
         $empleado->delete();
 
-       
 
-        return redirect()->route('employees');
+
+        return redirect()->route('employees')->with('success', "Empleado eliminado correctamente");
     }
 
     //Estudiantes
@@ -199,15 +252,17 @@ class NewAdminController extends Controller
 
         $estudiantes = Estudiante::where([
             ['carnet', '!=', Null],
-            [function ($query) use ($request) {
-                if (($s = $request->s)) {
-                    $query
-                        ->orWhere('nombre', 'LIKE', '%' . $s . '%')
-                        ->orWhere('apellido', 'LIKE', '%' . $s . '%')
-                        ->orWhere('carnet', 'LIKE', '%' . $s . '%')
-                        ->get();
+            [
+                function ($query) use ($request) {
+                    if (($s = $request->s)) {
+                        $query
+                            ->orWhere('nombre', 'LIKE', '%' . $s . '%')
+                            ->orWhere('apellido', 'LIKE', '%' . $s . '%')
+                            ->orWhere('carnet', 'LIKE', '%' . $s . '%')
+                            ->get();
+                    }
                 }
-            }]
+            ]
         ])->paginate(10);
 
         return view('admin.studentDashboard', compact('carreras', 'grupos_trabajo', 'estudiantes'));
@@ -224,31 +279,27 @@ class NewAdminController extends Controller
 
     public function actualizarEstudiante(Request $request, Estudiante $estudiante)
     {
+        $student = Estudiante::find($estudiante, ['nombre', 'apellido', 'carnet', 'carrera_id', 'grupo_trabajo_id'])->first();
+
         $validatedData = $request->validate([
             'nombre' => 'required',
             'apellido' => 'required',
-            'carnet' => 'required',
-            'carrera_id' => 'required',
-            'grupo_trabajo_id' => 'required',
-        ]);
-
-        $estudiante->update($validatedData);
-
-        
-
-        return redirect()->route('students');
-    }
-
-    public function registrarEstudiante(Request $request)
-    {
-        $validatedData = $request->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'carnet' => 'required',
+            'carnet' => [
+                'required',
+                Rule::unique('estudiante', 'carnet')->ignore($estudiante)
+            ],
             'carrera_id' => 'required',
             'grupo_trabajo_id' => 'required',
             'usuario_id',
         ]);
+
+        if (!$validatedData) {
+            return redirect()->route('students')->with('error', 'Ha ocurrido un error!');
+        }
+
+        if ($student == $validatedData) {
+            return redirect()->route('students')->with('warning', 'No se realizó ningún cambio');
+        }
 
         $handle = '@uca.edu.sv';
 
@@ -256,32 +307,73 @@ class NewAdminController extends Controller
 
         $validatedData['usuario_id'] = $user->id;
 
-        // Crea el empleado
-        Estudiante::create($validatedData);
+        $estudiante->update($validatedData);
+        $this->mostrarEstudiante();
 
-        
+        return redirect()->route('students')->with('success', "Estudiante actualizado correctamente");
+    }
 
-        return redirect()->route('students');
+    public function registrarEstudiante(Request $request)
+    {
+        $validations = [
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'carnet' => 'required|unique:estudiante',
+            'carrera_id' => 'required',
+            'grupo_trabajo_id' => 'required',
+            'usuario_id',
+        ];
+
+        $validator = Validator::make($request->all(), $validations);
+
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $validatedData = $request->validate($validations);
+
+        $handle = '@uca.edu.sv';
+
+        $user = Usuario::where('email', '=', strval($validatedData['carnet'] . $handle))->first();
+
+        if ($user) {
+            $validatedData['usuario_id'] = $user->id;
+
+            // Crea el empleado
+            $student = Estudiante::create($validatedData);
+
+            if ($student) {
+                Session::flash('success', 'Estudiante registrado correctamente');
+                return response()->json(['success' => true]);
+            }
+        } else {
+            Session::flash('error', 'Ha ocurrido un error creando el estudiante');
+            return response()->json(['error' => 'Ha ocurrido un error creando el estudiante']);
+        }
     }
 
     public function eliminarEstudiante(Estudiante $estudiante)
     {
         $estudiante->delete();
 
-       
 
-        return redirect()->route('students');
+
+        return redirect()->route('students')->with('success', "Estudiante eliminado correctamente");
+        ;
     }
 
     //Director de carrera
-    function mostrarDirectores(Request $request )
+    function mostrarDirectores(Request $request)
     {
         $carreras = Carrera::all();
 
         $empleados = Empleado::all();
 
         $usuarios = Usuario::all();
-       
+
         $directores_carrera = DirectorCarrera::paginate(10);
 
         return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
@@ -300,21 +392,38 @@ class NewAdminController extends Controller
     {
         $director->delete();
 
-        return redirect()->route('directores');
+        $this->mostrarDirectores();
+
+        return redirect()->route('directores')->with('success', "Director de Carrera eliminado correctamente");
     }
 
     public function registrarDirector(Request $request)
     {
-        $validatedData = $request->validate([
+        $validations = [
             'usuario_id' => 'required',
             'empleado_id' => 'required',
-            'carrera_id' => 'required',
-        ]);
+            'carrera_id' => 'required|unique:director_carrera',
+        ];
 
-        // Crea el empleado
-        DirectorCarrera::create($validatedData);
+        $validator = Validator::make($request->all(), $validations);
 
-        
-        return redirect()->route('directores');
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $validatedData = $request->validate($validations);
+
+        // Crea el usuario
+        $director = DirectorCarrera::create($validatedData);
+
+        if ($director) {
+            Session::flash('success', 'Director de carrera registrado correctamente');
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Ha ocurrido un error creando el director de carrera']);
+        }
     }
 }

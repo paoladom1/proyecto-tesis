@@ -279,6 +279,24 @@
     <div class="container-fluid container-general">
 
 
+        @if (session('success'))
+            <div class="alert alert-success" id="notification">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" id="notification">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="alert alert-warning" id="notification">
+                {{ session('warning') }}
+            </div>
+        @endif
+
         <!--------------------------------------------------Modal para crear directores en  el sistema----------------------------------------->
 
         <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -294,7 +312,7 @@
                     <div class="modal-body">
                         <div id="liveAlertPlaceholder2"></div>
                         <div class="row">
-                            <form method="POST" action="/nuevoDirector">
+                            <form method="POST" action="/nuevoDirector" id="myForm">
                                 @csrf
                                 <input hidden type="text" id="idExterno">
                                 <p>Campos requeridos <span style="color: red;">(*)</span></p>
@@ -310,6 +328,7 @@
                                                     @endif
                                                 @endforeach
                                             </select>
+
                                             <label for="nombre">Correo institucional <span
                                                     style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
@@ -325,6 +344,8 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <div id="empleado_id-error-wrapper" class="d-none error">
+                                            </div>
                                             <label for="apellido">Encargado <span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al
                                                 limite de 100 caracteres!</span>
@@ -341,13 +362,15 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <div id="carrera_id-error-wrapper" class="d-none error">
+                                            </div>
                                             <label for="rol">Carrera<span style="color: red;">(*)</span></label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"><i
-                                            class="bi bi-x-circle"></i> Cancelar</button>
+                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
+                                        onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
                                     <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
                                             id="btnRegistarExterno">Registrar</span></button>
                                 </div>
@@ -435,4 +458,67 @@
         <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button"
             data-backdrop="false"><i class="bi bi-person-plus-fill float-icon"></i></a>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.getElementById('notification');
+            if (notification) {
+                setTimeout(function() {
+                    if (notification.style) {
+                        notification.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        });
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const form = this;
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.errors) {
+                        showErrors(data.errors);
+                    } else {
+                        window.location.href = "{{ route('directores') }}";
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
+        function showErrors(errors) {
+            Object.entries(errors).forEach(([field, errorList]) => {
+                $(`input[name=${field}]`).toggleClass("is-invalid");
+
+                errorList.forEach(error => {
+                    $(`#${field}-error-wrapper`).append(
+                        `<span class="invalid-feedback d-block">${error}</span>`);
+                    $(`#${field}-error-wrapper`).removeClass('d-none');
+                })
+            });
+        }
+
+        function limpiarCampos() {
+            document.getElementById("myForm").reset();
+            cleanupErrors();
+        }
+
+        function cleanupErrors() {
+            ['carrera_id'].forEach((field) => {
+                const selector = `#${field}-error-wrapper`;
+                $(selector).empty();
+                $(selector).addClass('d-none')
+
+                $(`input[name=${field}]`).removeClass('is-invalid')
+            })
+        }
+    </script>
 @endsection

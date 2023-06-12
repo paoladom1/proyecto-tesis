@@ -278,6 +278,23 @@
     <br>
     <div class="container-fluid container-general">
 
+        @if (session('success'))
+            <div class="alert alert-success" id="notification">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" id="notification">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="alert alert-warning" id="notification">
+                {{ session('warning') }}
+            </div>
+        @endif
 
         <!--------------------------------------------------Modal para crear usuarios en  el sistema----------------------------------------->
 
@@ -293,15 +310,19 @@
                     <div class="modal-body">
                         <div id="liveAlertPlaceholder2"></div>
                         <div class="row">
-                            <form method="POST" action="/nuevoUsuario">
+                            <form method="POST" action="/nuevoUsuario" id="myForm">
                                 @csrf
                                 <input hidden type="text" id="idExterno">
                                 <p>Campos requeridos <span style="color: red;">(*)</span></p>
                                 <div class="row">
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <input type="text" maxlength="100" class="form-control" name="email"
-                                                aria-describedby="emailHelp" placeholder="Ingrese el correo electronico">
+                                            <input required type="text" maxlength="100" class="form-control"
+                                                name="email" aria-describedby="emailHelp"
+                                                placeholder="Ingrese el correo electronico">
+                                            <div id="email-error-wrapper" class="d-none">
+                                            </div>
+
                                             <label for="email">Correo electronico institucional<span
                                                     style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeCorreo">¡Ha llegado al
@@ -310,8 +331,11 @@
                                     </div>
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <input type="password" maxlength="100" class="form-control" name="password"
-                                                placeholder="Ingrese la contraseña">
+                                            <input required type="password" maxlength="100" class="form-control"
+                                                name="password" placeholder="Ingrese la contraseña">
+                                            <div id="password-error-wrapper" class="d-none">
+                                            </div>
+
                                             <label for="contraseña">Contraseña<span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeCorreo">¡Ha llegado al
                                                 limite de 100 caracteres!</span>
@@ -344,8 +368,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"><i
-                                            class="bi bi-x-circle"></i> Cancelar</button>
+                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
+                                        onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
                                     <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
                                             id="btnRegistarExterno">Registrar</span></button>
                                 </div>
@@ -355,6 +379,7 @@
                 </div>
             </div>
         </div>
+
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -434,4 +459,67 @@
         <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button"
             data-backdrop="false"><i class="bi bi-person-plus-fill float-icon"></i></a>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.getElementById('notification');
+            if (notification) {
+                setTimeout(function() {
+                    if (notification.style) {
+                        notification.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        });
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const form = this;
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.errors) {
+                        showErrors(data.errors);
+                    } else {
+                        window.location.href = "{{ route('users') }}";
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
+        function showErrors(errors) {
+            Object.entries(errors).forEach(([field, errorList]) => {
+                $(`input[name=${field}]`).toggleClass("is-invalid");
+
+                errorList.forEach(error => {
+                    $(`#${field}-error-wrapper`).append(
+                        `<span class="invalid-feedback d-block">${error}</span>`);
+                    $(`#${field}-error-wrapper`).toggleClass('d-none');
+                })
+            });
+        }
+
+        function cleanupErrors() {
+            ['email', 'password'].forEach((field) => {
+                const selector = `#${field}-error-wrapper`;
+                $(selector).empty();
+                $(selector).toggleClass('d-none')
+
+                $(`input[name=${field}]`).removeClass('is-invalid');
+            })
+        }
+
+        function limpiarCampos() {
+            document.getElementById("myForm").reset();
+            cleanupErrors();
+        }
+    </script>
 @endsection
