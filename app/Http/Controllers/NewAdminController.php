@@ -283,7 +283,7 @@ class NewAdminController extends Controller
         $usuarios = Usuario::all();
        
         $directores_carrera = DirectorCarrera::paginate(10);
-        
+
         return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
     }
 
@@ -299,8 +299,6 @@ class NewAdminController extends Controller
     public function eliminarDirector(DirectorCarrera $director)
     {
         $director->delete();
-
-        
 
         return redirect()->route('directores');
     }

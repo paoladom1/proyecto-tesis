@@ -379,7 +379,7 @@
                                     placeholder="Search..." />
                             </form> -->
             <div id="tablaEstudiantesContainer">
-                <table class="table table-hover align-middle fuente-general fuente general" id="directorDashboard"">
+                <table class="table table-hover align-middle fuente-general fuente general" id="directorDashboard">
                     <thead class=" thead-dar"
                         style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem; text-aling:center;  !important;">
                         <tr style="padding: 0.5rem; text-align: center;">
