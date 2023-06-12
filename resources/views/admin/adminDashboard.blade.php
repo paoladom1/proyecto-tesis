@@ -368,8 +368,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"><i
-                                            class="bi bi-x-circle"></i> Cancelar</button>
+                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
+                                        onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
                                     <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
                                             id="btnRegistarExterno">Registrar</span></button>
                                 </div>
@@ -500,8 +500,19 @@
             });
         }
 
+        function cleanupErrors() {
+            ['email', 'password'].forEach((field) => {
+                const selector = `#${field}-error-wrapper`;
+                $(selector).empty();
+                $(selector).toggleClass('d-none')
+
+                $(`input[name=${field}]`).removeClass('is-invalid');
+            })
+        }
+
         function limpiarCampos() {
             document.getElementById("myForm").reset();
+            cleanupErrors();
         }
     </script>
 @endsection

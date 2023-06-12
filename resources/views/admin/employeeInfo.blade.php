@@ -397,8 +397,8 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"><i
-                                        class="bi bi-x-circle"></i> Cancelar</button>
+                                <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
+                                    onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
                                 <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
                                         id="btnRegistarExterno">Registrar</span></button>
                             </div>
