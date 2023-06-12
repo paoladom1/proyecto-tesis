@@ -277,6 +277,15 @@
 
     <br>
     <div class="container-fluid container-general">
+        @if ($errors->any())
+            <div class="alert alert-danger" id="notification" style="display: none">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -289,14 +298,26 @@
             @csrf
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombres</label>
-                <input type="text" class="form-control" name="nombre" value="{{ $estudiante->nombre }}">
+                <input type="text" class="form-control" name="nombre"
+                    value="{{ $estudiante->nombre }}"class="@error('nombre') is-invalid @enderror">
+                @error('nombre')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <label for="inputEmail4" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" name="apellido" value="{{ $estudiante->apellido }}">
+                <input type="text" class="form-control" name="apellido"
+                    value="{{ $estudiante->apellido }}"class="@error('apellido') is-invalid @enderror">
+                @error('apellido')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="col-md-6"></div>
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Carnet</label>
-                <input type="text" class="form-control" name="carnet" value="{{ $estudiante->carnet }}">
+                <input type="text" class="form-control" name="carnet"
+                    value="{{ $estudiante->carnet }}"class="@error('carnet') is-invalid @enderror">
+                @error('carnet')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="form-group form-floating mb-3 mt-3">
                     <select class="form-control form-select" name="carrera_id">
                         @foreach ($carreras as $carrera)
@@ -331,4 +352,14 @@
             </div>
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.getElementsByClassName('alert');
+            if (notification) {
+                setTimeout(function() {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
 @endsection
