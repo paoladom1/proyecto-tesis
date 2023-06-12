@@ -277,6 +277,15 @@
 
     <br>
     <div class="container-fluid container-general">
+        @if ($errors->any())
+            <div class="alert alert-danger" id="notification" style="display: none">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -285,21 +294,32 @@
         </nav>
         <br>
         <form method="POST" action="/infoEmployee/{{ $empleado->id }}" class="row gx-3 gy-2 align-items-center">
-            @method("PUT")
+            @method('PUT')
             @csrf
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <label for="inputCod" class="form-label">Codigo de empleado</label>
-                <input type="text" class="form-control" name="codigo_empleado" value="{{ $empleado->codigo_empleado }}">
+                <input type="text" class="form-control" name="codigo_empleado"
+                    value="{{ $empleado->codigo_empleado }}"class="@error('codigo_empleado') is-invalid @enderror">
+                @error('codigo_empleado')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div></div>
             <div class="col-sm-3">
                 <label for="inputName" class="form-label">Nombres</label>
-                <input type="text" class="form-control" name="nombre" value="{{ $empleado->nombre }}">
+                <input type="text" class="form-control" name="nombre" value="{{ $empleado->nombre }}"
+                    class="@error('nombre') is-invalid @enderror"> @error('nombre')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                <br>
                 <label for="inputLastnames" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" name="apellido" value="{{ $empleado->apellido }}">
+                <input type="text" class="form-control" name="apellido"
+                    value="{{ $empleado->apellido }}"class="@error('apellido') is-invalid @enderror"> @error('apellido')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div></div>
-            <div class="col-sm4">
+            <div class="col-sm-10">
                 <div class="form-group form-floating mb-3 mt-3">
                     <select class="form-control form-select" name="tipo_empleado_id">
                         @foreach ($tipos_empleado as $tipo)
@@ -325,7 +345,7 @@
                     <label for="tipo_empleado_id">Cargo de empleado </label>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group form-floating mb-3 mt-3">
                     <select class="form-control form-select" name="departamento_unidad_id">
                         @foreach ($departamentos_u as $dpto)
@@ -346,4 +366,15 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.getElementsByClassName('alert');
+            if (notification) {
+                setTimeout(function() {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
 @endsection

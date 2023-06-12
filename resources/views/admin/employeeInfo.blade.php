@@ -245,6 +245,11 @@
             border-radius: 5px 0 0 0;
         }
 
+        .form-floating>.form-control,
+        .form-floating>.form-select {
+            height: calc(3.5rem + 10px);
+        }
+
         .dropEstudiante .dropdown-divider {
             margin: 0;
         }
@@ -278,6 +283,23 @@
     <br>
     <div class="container-fluid container-general">
 
+        @if (session('success'))
+            <div class="alert alert-success" id="notification">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" id="notification">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="alert alert-warning" id="notification">
+                {{ session('warning') }}
+            </div>
+        @endif
 
         <!--------------------------------------------------Modal para crear empleados en  el sistema----------------------------------------->
 
@@ -290,7 +312,7 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             onclick="limpiarCampos() " aria-label="Close" style="color: white; width: 1em;"></button>
                     </div>
-                    <form method="POST" action="/nuevoEmpleado">
+                    <form method="POST" action="/nuevoEmpleado" id="myForm">
                         @csrf
                         <div class="modal-body">
                             <div id="liveAlertPlaceholder2"></div>
@@ -303,6 +325,8 @@
                                             <input type="text" maxlength="100" class="form-control"
                                                 name="codigo_empleado" aria-describedby="emailHelp"
                                                 placeholder="Ingrese los nombres">
+                                            <div id="codigo_empleado-error-wrapper" class="d-none">
+                                            </div>
                                             <label for="codigo_empleado">Codigo de empleado <span
                                                     style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
@@ -313,6 +337,8 @@
                                         <div class="form-group form-floating mb-3 mt-3">
                                             <input type="text" maxlength="100" class="form-control" name="nombre"
                                                 aria-describedby="emailHelp" placeholder="Ingrese los nombres">
+                                            <div id="nombre-error-wrapper" class="d-none">
+                                            </div>
                                             <label for="nombre">Nombres <span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
                                                 limite de 100 caracteres!</span>
@@ -322,6 +348,8 @@
                                         <div class="form-group form-floating mb-3 mt-3">
                                             <input type="text" maxlength="100" class="form-control" name="apellido"
                                                 aria-describedby="emailHelp" placeholder="Ingrese los apellidos">
+                                            <div id="apellido-error-wrapper" class="d-none">
+                                            </div>
                                             <label for="apellido">Apellidos <span style="color: red;">(*)</span></label>
                                             <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al
                                                 limite de 100 caracteres!</span>
@@ -369,8 +397,8 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"><i
-                                        class="bi bi-x-circle"></i> Cancelar</button>
+                                <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
+                                    onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
                                 <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
                                         id="btnRegistarExterno">Registrar</span></button>
                             </div>
@@ -464,4 +492,57 @@
     <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button"
         data-backdrop="false"><i class="bi bi-person-plus-fill float-icon"></i></a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.getElementById('notification');
+            if (notification) {
+                setTimeout(function() {
+                    if (notification.style) {
+                        notification.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        });
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const form = this;
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.errors) {
+                        showErrors(data.errors);
+                    } else {
+                        window.location.href = "{{ route('employees') }}";
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
+        function showErrors(errors) {
+            Object.entries(errors).forEach(([field, errorList]) => {
+                $(`input[name=${field}]`).toggleClass("is-invalid");
+
+                errorList.forEach(error => {
+                    $(`#${field}-error-wrapper`).append(
+                        `<span class="invalid-feedback d-block">${error}</span>`);
+                    $(`#${field}-error-wrapper`).toggleClass('d-none');
+                })
+            });
+        }
+
+        function limpiarCampos() {
+            document.getElementById("myForm").reset();
+        }
+    </script>
 @endsection

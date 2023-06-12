@@ -284,22 +284,41 @@
         </div>
     </nav>
     <br>
-    <form method="POST" action="/actualizarUsuario/{{ $usuario->id }}" class="row g-3">
-        @method('PUT')
-        @csrf
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Correo institucional</label>
-            <input type="email" class="form-control" name="email" value="{{ $usuario->email }}">
-        </div>
-        <div class="col-md-6"></div>
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Tipo de usuario</label>
-            <div class="form-group form-floating mb-3 mt-3">
-                <select class="form-control form-select" name="tipo_usuario_id">
-                    @foreach ($tipos_usuario as $tipo_usuario)
-                    <option value="{{ $tipo_usuario->id }}"
-                        <?= $usuario->tipo_usuario_id == $tipo_usuario->id ? 'selected="selected"' : '' ?>>
-                        {{ $tipo_usuario->nombre }}
+    <div class="container-fluid container-general">
+        @if ($errors->any())
+            <div class="alert alert-danger" id="notification" style="display: none">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">USUARIOS</button>
+            </div>
+        </nav>
+        <br>
+        <form method="POST" action="/actualizarUsuario/{{ $usuario->id }}" class="row g-3">
+            @method('PUT')
+            @csrf
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Correo institucional</label>
+                <input type="text" class="form-control" name="email" value="{{ $usuario->email }}"
+                    class="@error('email') is-invalid @enderror"> @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <div class="form-group form-floating mb-3 mt-3">
+                    <select class="form-control form-select" name="tipo_usuario_id">
+                        @foreach ($tipos_usuario as $tipo_usuario)
+                            <option value="{{ $tipo_usuario->id }}"
+                                <?= $usuario->tipo_usuario_id == $tipo_usuario->id ? 'selected="selected"' : '' ?>>
+                                {{ $tipo_usuario->nombre }}
 
                     </option>
                     @endforeach
