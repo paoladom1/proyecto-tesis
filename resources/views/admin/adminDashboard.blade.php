@@ -343,10 +343,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" name="tipo_usuario_id">
+                                            <select class="form-control form-select" name="tipo_usuario_id" required>
                                                 @foreach ($tipos_usuario as $tipo_usuario)
                                                     <option value="{{ $tipo_usuario->id }}">{{ $tipo_usuario->nombre }}
                                                     </option>
@@ -358,12 +357,9 @@
                                     </div>
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" id="rol" name="estado">
-                                                <option value="1">Activo</option>
-                                                <option value="0">Inactivo</option>
-                                            </select>
-                                            <label for="rol">Tipo de estado <span
-                                                    style="color: red;">(*)</span></label>
+                                            <input type="date" class="form-control" name="fecha_limite"
+                                                placeholder="Ingrese la fecha" id="datepicker" required>
+                                            <label for="datepicker">Fecha limite<span style="color: red;">(*)</span></label>
                                         </div>
                                     </div>
                                 </div>
@@ -397,7 +393,7 @@
                         <tr style="padding: 0.5rem; text-align: center">
                             <th scope="col">CORREO INSTITUCIONAL</th>
                             <th scope="col">TIPO DE USUARIO</th>
-                            <th scope="col">ESTADO USUARIO</th>
+                            <th scope="col">FECHA LIMITE</th>
                             <th scope="col">ACCIONES</th>
                         </tr>
                     </thead>
@@ -413,11 +409,7 @@
                                     @endforeach
                                 </td>
                                 <td style="width: 20%">
-                                    @if ($usuario->estado === '0')
-                                        INACTIVO
-                                    @else
-                                        ACTIVO
-                                    @endif
+                                    {{$usuario->fecha_limite}}
                                 </td>
                                 <td style="width: 20%">
                                     <a href="{{ url('/editarUsuario', ['usuario' => $usuario->id]) }}"

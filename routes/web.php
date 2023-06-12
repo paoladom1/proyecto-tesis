@@ -94,7 +94,8 @@ Route::post('/mostrarDatoGrupo', 'App\Http\Controllers\DirectorController@mostra
 Route::post('/mostrarDatoEstudiante', 'App\Http\Controllers\DirectorController@mostrarDatoEstudiante');
 Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 
-Route::get('/configAdmin', 'App\Http\Controllers\NewAdminController@mostrarConfig');
+Route::get('/configDirector', 'App\Http\Controllers\DirectorController@mostrarConfig')->name('config');
+Route::put('/actualizarConfig', 'App\Http\Controllers\DirectorController@actualizarConfig');
 
 // ----------------------------------- Administrador de sistema -----------------------------------
 Route::get('/menuadmin', "App\Http\Controllers\NewAdminController@menuAdmin");
