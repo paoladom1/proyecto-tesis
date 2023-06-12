@@ -284,9 +284,6 @@ class NewAdminController extends Controller
        
         $directores_carrera = DirectorCarrera::paginate(10);
         
-
-       
-
         return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
     }
 

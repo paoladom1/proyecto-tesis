@@ -366,15 +366,14 @@
         <div class="table-responsive">
             <div id="liveAlertPlaceholder"></div>
             <form action="/mostrarUsuario" method="GET">
-                                <label for="search" class="sr-only">
-                                    Search
-                                </label>
-                                <input type="text" name="s"
-                                    class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                                    placeholder="Search..." />
-                            </form>
+                <label for="search" class="sr-only"> Search </label>
+                <input type="text" name="s" style="margin:15px"
+                    class="form-group col-md-6 block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                    placeholder="Buscar..." />
+                    
+            </form>
             <div id="tablaUsuariosContainer">
-                <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard"">
+                <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard">
                     <thead class=" thead-dar"
                         style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem !important;">
                         <tr style="padding: 0.5rem; text-align: center">
