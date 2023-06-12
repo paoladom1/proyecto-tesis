@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\Style\Language;
 use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -45,10 +48,10 @@ class DirectorController extends Controller
     public function frmLectorAsesor(Request $request)
     {
         /*
-            0 -> asesores
-            1 -> lectores
+        0 -> asesores
+        1 -> lectores
         */
-        
+
         $departamentoBusqueda = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
         $tipoAD = $request->get('tipoLectorAsesor');
 
@@ -87,27 +90,35 @@ class DirectorController extends Controller
 
         // Obtener los datos de los directores de los trabajos de graduación, combinado con el filtro en caso se quiera hacer una busqueda.
         $asesores = Externo::with('departamento')->where('rol_externo', "=", 0)->
-        where("departamento_unidad_id", "=", $departamentoBusqueda)->where("nombre", "like", $nombreD."%")->Where("apellido", "like", $apellidoD."%")->Where("correo", "like", $correoD."%")
-        ->orderBy('id', 'desc')->paginate(10);
-        
+            where("departamento_unidad_id", "=", $departamentoBusqueda)->where("nombre", "like", $nombreD . "%")->Where("apellido", "like", $apellidoD . "%")->Where("correo", "like", $correoD . "%")
+            ->orderBy('id', 'desc')->paginate(10);
+
         // Obtener los datos de los lectores, combinado con el filtro en caso se quiera hacer una busqueda.
         $lectores = Externo::with('departamento')->where('rol_externo', "=", 1)->
-        where("departamento_unidad_id", "=", $departamentoBusqueda)->where("nombre", "like", $nombreL."%")->Where("apellido", "like", $apellidoL."%")->Where("correo", "like", $correoL."%")
-        ->orderBy('id', 'desc')->paginate(10);
+            where("departamento_unidad_id", "=", $departamentoBusqueda)->where("nombre", "like", $nombreL . "%")->Where("apellido", "like", $apellidoL . "%")->Where("correo", "like", $correoL . "%")
+            ->orderBy('id', 'desc')->paginate(10);
 
         // En caso de realizar un filtro, simplemente retornaria una vista devolviendo una tabla con los datos filtrados.
         if ($request->ajax()) {
-            return response()->json(view($request->get('vista'), array(
-                "asesores" => $asesores,
-                "lectores" => $lectores
-            ))->render());
+            return response()->json(
+                view(
+                    $request->get('vista'),
+                    array(
+                        "asesores" => $asesores,
+                        "lectores" => $lectores
+                    )
+                )->render()
+            );
         }
 
         // redirije a la vista del lector o asesor externo, en caso no se haya utilizado la función para filtro.
-        return view('director.externo', array(
-            "asesores" => $asesores,
-            "lectores" => $lectores
-        ));
+        return view(
+            'director.externo',
+            array(
+                "asesores" => $asesores,
+                "lectores" => $lectores
+            )
+        );
     }
 
     // Función para registrar Asesor o Lector.
@@ -119,36 +130,36 @@ class DirectorController extends Controller
         $departamento = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
         $correoCom = $request->input('correo');
         $correo = Externo::where("correo", "=", $correoCom)->first();
-            if ($id != "") { // En caso el id no este vacío, se actualizara el dato.
-                $externo = Externo::findOrFail($id);
-                
-                if ($correoCom != $externo->correo) {
-                    if ($correo != null) {
-                        return $correo;
-                    }
-                } 
+        if ($id != "") { // En caso el id no este vacío, se actualizara el dato.
+            $externo = Externo::findOrFail($id);
 
+            if ($correoCom != $externo->correo) {
+                if ($correo != null) {
+                    return $correo;
+                }
+            }
+
+            $externo->nombre = $request->input('nombre');
+            $externo->apellido = $request->input('apellido');
+            $externo->correo = $request->input('correo');
+            $externo->descripcion = $request->input('descripcion');
+            $externo->rol_externo = $request->input('rol');
+            $externo->departamento_unidad_id = $departamento;
+            $externo->update();
+        } else { // Caso contrario el id este vacio, se agregará un nuevo lector o asesor, segun sea el caso.
+            if ($correo == null) {
+                $externo = new Externo();
                 $externo->nombre = $request->input('nombre');
                 $externo->apellido = $request->input('apellido');
                 $externo->correo = $request->input('correo');
                 $externo->descripcion = $request->input('descripcion');
                 $externo->rol_externo = $request->input('rol');
                 $externo->departamento_unidad_id = $departamento;
-                $externo->update();
-            } else{ // Caso contrario el id este vacio, se agregará un nuevo lector o asesor, segun sea el caso.
-                if ($correo == null) {
-                    $externo = new Externo();
-                    $externo->nombre = $request->input('nombre');
-                    $externo->apellido = $request->input('apellido');
-                    $externo->correo = $request->input('correo');
-                    $externo->descripcion = $request->input('descripcion');
-                    $externo->rol_externo = $request->input('rol');
-                    $externo->departamento_unidad_id = $departamento;
-                    $externo->save();
-                } else{
-                    return $correo;
-                }
-            }   
+                $externo->save();
+            } else {
+                return $correo;
+            }
+        }
     }
 
     // Se obtiene un solo registro de algun lector o asesor.
@@ -164,16 +175,16 @@ class DirectorController extends Controller
     public function formularioGruposTrabajo(Request $request)
     {
         /*
-            0 -> asesores
-            1 -> lectores
+        0 -> asesores
+        1 -> lectores
         */
 
         $carrera = $this->obtenerDatosDirector()->carrera_id;
         $departamentoBusqueda = $this->obtenerDatosDirector()->empleado->departamento_unidad_id;
-        $grupos = GrupoTrabajo::join('estudiante','grupo_trabajo_id', '=', 'grupo_trabajo.id')->
-        selectRaw('grupo_trabajo.id as id, anio_inicio, ciclo_inicio, tema, prorroga, asesor_interno_id, lector_interno_id, asesor_externo_id, lector_externo_id')
-        ->where("carrera_id", "=", $carrera)->
-        groupBy("id")->paginate(10);
+        $grupos = GrupoTrabajo::join('estudiante', 'grupo_trabajo_id', '=', 'grupo_trabajo.id')->
+            selectRaw('grupo_trabajo.id as id, anio_inicio, ciclo_inicio, tema, prorroga, asesor_interno_id, lector_interno_id, asesor_externo_id, lector_externo_id')
+            ->where("carrera_id", "=", $carrera)->
+            groupBy("id")->paginate(10);
         // Si es el caso, se obtienen los datos necesarios para realizar los filtros de estudiantes.
         $busqueda = $request->get('buscadorE');
         $tipo = $request->get('tipoBusqueda');
@@ -197,17 +208,22 @@ class DirectorController extends Controller
             $idGrupo = "";
         }
 
-        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', '%'.$nombreE.'%')->having('apellido', 'like', '%'.$apellidoE.'%')->having('carnet', 'like', $carnetE.'%')->orderBy("grupo_trabajo_id", "desc")->orderBy("usuario_id", "asc")->paginate(6);
-        
+        $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', '%' . $nombreE . '%')->having('apellido', 'like', '%' . $apellidoE . '%')->having('carnet', 'like', $carnetE . '%')->orderBy("grupo_trabajo_id", "desc")->orderBy("usuario_id", "asc")->paginate(6);
+
         $configuraciones = ConfiguracionSistema::first(); // Configuraciones de los grupos de trabajo.
-        
+
         // Retorna una tabla, en la cual se obtienen los datos de los estudiantes filtrados anteriormente, solo si es el caso.
         if ($request->ajax()) {
-            return response()->json(view($request->get('vista'), array(
-                'grupos' => $grupos,
-                'configuraciones' => $configuraciones,
-                'estudiantes' => $estudiantes
-            ))->render());
+            return response()->json(
+                view(
+                    $request->get('vista'),
+                    array(
+                        'grupos' => $grupos,
+                        'configuraciones' => $configuraciones,
+                        'estudiantes' => $estudiantes
+                    )
+                )->render()
+            );
         }
 
         // Obtiene los datos restantes, necesarios para el formulario de grupos de trabajo.
@@ -216,19 +232,22 @@ class DirectorController extends Controller
         $departamento = DepartamentoU::where("facultad_id", "=", $facultadBusqueda->facultad_id)->get();
         $empleado = Empleado::where("departamento_unidad_id", "=", $departamentoBusqueda)->get();
         $externo = Externo::where("departamento_unidad_id", "=", $departamentoBusqueda)->get();
-        
+
         // Redirije al formulario grupos de trabajo.
-        return view('director.gruposTrabajo', array(
-            'departamentos' => $departamento,
-            'facultades' => $facultad,
-            'idFacultad' => $facultadBusqueda->facultad_id,
-            'idDepartamento' => $departamentoBusqueda,
-            'empleados' => $empleado,
-            'externos' => $externo,
-            'grupos' => $grupos,
-            'configuraciones' => $configuraciones,
-            'estudiantes' => $estudiantes
-        ));
+        return view(
+            'director.gruposTrabajo',
+            array(
+                'departamentos' => $departamento,
+                'facultades' => $facultad,
+                'idFacultad' => $facultadBusqueda->facultad_id,
+                'idDepartamento' => $departamentoBusqueda,
+                'empleados' => $empleado,
+                'externos' => $externo,
+                'grupos' => $grupos,
+                'configuraciones' => $configuraciones,
+                'estudiantes' => $estudiantes
+            )
+        );
     }
 
     // Se hace un filtro del departamento por facultad.
@@ -237,7 +256,7 @@ class DirectorController extends Controller
         $id = $request->input('id');
         if ($id == -1) {
             $departamento = DepartamentoU::where("facultad_id", "=", null)->get();
-        } else{
+        } else {
             $departamento = DepartamentoU::where("facultad_id", "=", $id)->get();
         }
         return $departamento;
@@ -264,8 +283,8 @@ class DirectorController extends Controller
     public function registrarGrupo(Request $request)
     {
         /*
-            0 -> UCA
-            1 -> Externo
+        0 -> UCA
+        1 -> Externo
         */
 
         // Se obtienen los datos generales del grupo de trabajo de graduación.
@@ -286,7 +305,7 @@ class DirectorController extends Controller
                 } else if ($tipoAsesor == 1) {
                     $grupoTrabajo->asesor_externo_id = $idAsesor;
                 }
-            } 
+            }
 
             if ($idLector != "") {
                 if ($tipoLector == 0) {
@@ -294,8 +313,8 @@ class DirectorController extends Controller
                 } else if ($tipoLector == 1) {
                     $grupoTrabajo->lector_externo_id = $idLector;
                 }
-            } 
-            
+            }
+
             $grupoTrabajo->anio_inicio = "2022";
             $grupoTrabajo->ciclo_inicio = "1";
             $grupoTrabajo->prorroga = $prorroga;
@@ -303,7 +322,7 @@ class DirectorController extends Controller
 
             // Falta seccion de estudiantes, falta validacion de campos vacios de tema y asignacion de estudiantes
             // Validacion cuando el lector o asesor externo cambia su rol, verificarlo en la tabla de grupo.
-        } else{ // Caso contrario, el no este vacio, el grupo de trabajo de graduación, solo se modificará.
+        } else { // Caso contrario, el no este vacio, el grupo de trabajo de graduación, solo se modificará.
             $grupoTrabajo = GrupoTrabajo::findOrFail($id);
             $grupoTrabajo->tema = $tema;
             if ($idAsesor != "") {
@@ -314,7 +333,7 @@ class DirectorController extends Controller
                     $grupoTrabajo->asesor_externo_id = $idAsesor;
                     $grupoTrabajo->asesor_interno_id = null;
                 }
-            } else{
+            } else {
                 $grupoTrabajo->asesor_interno_id = null;
                 $grupoTrabajo->asesor_externo_id = null;
             }
@@ -327,11 +346,11 @@ class DirectorController extends Controller
                     $grupoTrabajo->lector_externo_id = $idLector;
                     $grupoTrabajo->lector_interno_id = null;
                 }
-            } else{
+            } else {
                 $grupoTrabajo->lector_interno_id = null;
                 $grupoTrabajo->lector_externo_id = null;
             }
-            
+
             $grupoTrabajo->anio_inicio = "2022";
             $grupoTrabajo->ciclo_inicio = "1";
             $grupoTrabajo->prorroga = $prorroga;
@@ -345,9 +364,9 @@ class DirectorController extends Controller
             foreach ($integrantesGrupo as $integrante) {
                 $estudiante = Estudiante::findOrFail($integrante);
                 $estudiante->grupo_trabajo_id = $grupoTrabajo->id;
-                $estudiante->update(); 
+                $estudiante->update();
             }
-        } else{ // Caso contrario, se verificará a los estudiantes que fueron eliminados del grupo o que fueron agregados.
+        } else { // Caso contrario, se verificará a los estudiantes que fueron eliminados del grupo o que fueron agregados.
             // Se obtienen a los estudiantes que pertenecen al grupo actualmente.
             $estudiante = Estudiante::where("grupo_trabajo_id", "=", $grupoTrabajo->id)->get();
             foreach ($estudiante as $dato) { // Se verifican a los estudiantes que fueron eliminados del grupo y pasa a estado NULL.
@@ -355,14 +374,14 @@ class DirectorController extends Controller
                     $estudiante = Estudiante::findOrFail($dato->id);
                     $estudiante->grupo_trabajo_id = null;
                     $estudiante->update();
-                } else if(in_array($dato->id, $integrantesGrupo)){
+                } else if (in_array($dato->id, $integrantesGrupo)) {
                     unset($integrantesGrupo[array_search($dato->id, $integrantesGrupo)]);
                 }
             }
             foreach ($integrantesGrupo as $integrante) { // Se asignan a los nuevos integrantes del grupo de graduación.
                 $estudiante = Estudiante::findOrFail($integrante);
                 $estudiante->grupo_trabajo_id = $grupoTrabajo->id;
-                $estudiante->update(); 
+                $estudiante->update();
             }
         }
     }
@@ -371,7 +390,34 @@ class DirectorController extends Controller
     public function mostrarDatosGrupo(Request $request)
     {
         $id = $request->input("id");
-        $gruposTrabajo = GrupoTrabajo::with("estudiante")->with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();   	
+        $gruposTrabajo = GrupoTrabajo::with("estudiante")->with("lector_interno")->with("asesor_interno")->with("lector_externo")->with("asesor_externo")->where("id", "=", $id)->first();
         return $gruposTrabajo;
+    }
+
+    // Configuraciones personalizadas (fechas de prorroga y numero de integrantes de equipo).
+
+    function mostrarConfig()
+    {
+        $config = ConfiguracionSistema::first();
+
+        return view('director.configDirector', compact('config'));
+    }
+
+    public function actualizarConfig(Request $request)
+    {
+        $config = ConfiguracionSistema::first();
+
+        $validatedData = $request->validate([
+            'fecha_entrega' => 'required|date_format:Y-m-d',
+            'fecha_prorroga' => 'required|date_format:Y-m-d',
+            'numero_integrantes' => 'required',
+        ]);
+
+        $validatedData['fecha_entrega'] = Carbon::createFromFormat('Y-m-d', $validatedData['fecha_entrega'])->format('Y-m-d');
+        $validatedData['fecha_prorroga'] = Carbon::createFromFormat('Y-m-d', $validatedData['fecha_prorroga'])->format('Y-m-d');
+
+        $config->update($validatedData);
+
+        return redirect()->route('config')->with('success', 'Configuraciones almacenadas correctamente');
     }
 }

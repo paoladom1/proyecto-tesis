@@ -91,11 +91,6 @@ class NewAdminController extends Controller
         return view('admin.userInfoForm');
     }
 
-    function mostrarConfig()
-    {
-        return view('admin.configAdmin');
-    }
-
     // Función para mostrar lista de empleados
     function mostrarEmpleados()
     {

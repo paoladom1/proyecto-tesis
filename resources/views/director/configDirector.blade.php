@@ -278,6 +278,24 @@
     <br>
     <div class="container-fluid container-general">
 
+        @if (session('success'))
+            <div class="alert alert-success" id="notification">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" id="notification">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="alert alert-warning" id="notification">
+                {{ session('warning') }}
+            </div>
+        @endif
+
 
         <!--Despliege de titulo de tabla y filtro de busqueda-->
         <nav>
@@ -318,16 +336,18 @@
         </div>
 
         <div id="myForm" class="d-none">
-            <form method="POST" action="/actualizarConfig" class="row g-3">
+            <form method="POST" id="actualizar-form" action="/actualizarConfig" class="row g-3" onsubmit="presubmit()">
                 @method('PUT')
                 @csrf
                 <div class="col-md-6">
                     <label for="fecha_entrega" class="form-label">Fecha de Entrega</label>
-                    <input type="text" class="form-control" name="fecha_entrega" value="{{ $config->fecha_entrega }}">
+                    <input id="datepicker" type="date" class="form-control" name="fecha_entrega"
+                        value="{{ $config->fecha_entrega }}">
                 </div>
                 <div class="col-md-6">
                     <label for="fecha_prorroga" class="form-label">Fecha de Prorroga</label>
-                    <input type="text" class="form-control" name="fecha_prorroga" value="{{ $config->fecha_prorroga }}">
+                    <input id="datepicker" type="date" class="form-control" name="fecha_prorroga"
+                        value="{{ $config->fecha_prorroga }}" onchange="(e) => console.log(e.target.value)">
                 </div>
                 <div class="col-md-6">
                     <label for="numero_integrantes" class="form-label">Maximo de integrantes de equipo</label>
@@ -348,5 +368,16 @@
         function toggleEdit() {
             $('#myForm').toggleClass('d-none')
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.getElementById('notification');
+            if (notification) {
+                setTimeout(function() {
+                    if (notification.style) {
+                        notification.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        });
     </script>
 @endsection
