@@ -17,7 +17,6 @@ use App\Models\DepartamentoU;
 use App\Models\Empleado;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class NewAdminController extends Controller
@@ -32,7 +31,6 @@ class NewAdminController extends Controller
     function mostrarUsuario(Request $request)
     {
         $tipos_usuario = TipoUsuario::all();
-
 
         $usuarios = Usuario::where([
             ['email', '!=', Null],
@@ -60,7 +58,7 @@ class NewAdminController extends Controller
             'email' => 'required|email|unique:usuario',
             'password' => 'required|min:4',
             'tipo_usuario_id' => 'required',
-            'estado' => 'required',
+            'fecha_limite' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $validations);
@@ -100,7 +98,7 @@ class NewAdminController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|email',
             'tipo_usuario_id' => 'required',
-            'estado' => 'required',
+            'fecha_limite' => 'required'
         ]);
 
         if (!$validatedData) {
@@ -129,11 +127,6 @@ class NewAdminController extends Controller
     function frmUserView()
     {
         return view('admin.userInfoForm');
-    }
-
-    function mostrarConfig()
-    {
-        return view('admin.configAdmin');
     }
 
     // Función para mostrar lista de empleados

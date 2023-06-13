@@ -89,7 +89,7 @@
                     <li><a href="{{ url('/grupoTrabajo') }}" style="font-size: 1.3rem"><i
                                 class="bi bi-people me-2"></i>Grupos de trabajo</a></li>
                     <hr>
-                    <li><a href="{{ url('/configAdmin') }}" style="font-size: 1.3rem"><i class="bi bi-gear"></i>
+                    <li><a href="{{ url('/configDirector') }}" style="font-size: 1.3rem"><i class="bi bi-gear"></i>
                             Configuracion</a></li>
                     <hr>
                 </ul>
