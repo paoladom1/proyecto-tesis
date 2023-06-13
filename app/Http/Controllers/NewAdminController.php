@@ -96,7 +96,11 @@ class NewAdminController extends Controller
         $user = Usuario::find($usuario, ['email', 'tipo_usuario_id', 'estado']);
 
         $validatedData = $request->validate([
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('usuario', 'email')->ignore($usuario)
+            ],
             'tipo_usuario_id' => 'required',
             'fecha_limite' => 'required'
         ]);
@@ -111,7 +115,7 @@ class NewAdminController extends Controller
 
         $usuario->update($validatedData);
 
-        $this->mostrarUsuario();
+        $this->mostrarUsuario($request);
         return redirect()->route('users')->with('success', "Usuario actualizado correctamente");
     }
 
@@ -204,7 +208,10 @@ class NewAdminController extends Controller
         $employee = Empleado::find($empleado, ['codigo_empleado', 'nombre', 'apellido', 'tipo_empleado_id', 'cargo_id', 'departamento_unidad_id']);
 
         $validatedData = $request->validate([
-            'codigo_empleado' => 'required|unique:empleado',
+            'codigo_empleado' => [
+                'required',
+                Rule::unique('empleado', 'codigo_empleado')->ignore($empleado)
+            ],
             'nombre' => 'required',
             'apellido' => 'required',
             'tipo_empleado_id' => 'required',
@@ -222,7 +229,7 @@ class NewAdminController extends Controller
 
         $empleado->update($validatedData);
 
-        $this->mostrarUsuario();
+        $this->mostrarEmpleados($request);
         return redirect()->route('employees')->with('success', "Empleado actualizado correctamente");
     }
 
@@ -301,7 +308,7 @@ class NewAdminController extends Controller
         $validatedData['usuario_id'] = $user->id;
 
         $estudiante->update($validatedData);
-        $this->mostrarEstudiante();
+        $this->mostrarEstudiante($request);
 
         return redirect()->route('students')->with('success', "Estudiante actualizado correctamente");
     }
@@ -359,7 +366,7 @@ class NewAdminController extends Controller
     }
 
     //Director de carrera
-    function mostrarDirectores(Request $request)
+    function mostrarDirectores()
     {
         $carreras = Carrera::all();
 
