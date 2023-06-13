@@ -204,7 +204,7 @@ class NewAdminController extends Controller
         $employee = Empleado::find($empleado, ['codigo_empleado', 'nombre', 'apellido', 'tipo_empleado_id', 'cargo_id', 'departamento_unidad_id']);
 
         $validatedData = $request->validate([
-            'codigo_empleado' => 'required|unique:empleado',
+            'codigo_empleado' => 'required',
             'nombre' => 'required',
             'apellido' => 'required',
             'tipo_empleado_id' => 'required',

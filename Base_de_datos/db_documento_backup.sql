@@ -895,7 +895,7 @@ INSERT INTO `director_carrera` (`id`, `usuario_id`, `carrera_id`, `empleado_id`,
 
 CREATE TABLE `empleado` (
   `id` int(11) NOT NULL,
-  `codigo_empleado` varchar(10) NOT NULL,
+  `codigo_empleado` varchar(10) NOT NULL UNIQUE,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `tipo_empleado_id` int(11) NOT NULL,
