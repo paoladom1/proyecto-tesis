@@ -500,7 +500,7 @@
 
                 errorList.forEach(error => {
                     $(`#${field}-error-wrapper`).append(
-                        `<span class="invalid-feedback d-block">${error}</span>`);
+                        `<span class="invalid-feedback d-block">Ya existe un director registrado para la carrera seleccionada</span>`);
                     $(`#${field}-error-wrapper`).removeClass('d-none');
                 })
             });

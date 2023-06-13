@@ -317,9 +317,8 @@
                                 <div class="row">
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <input required type="text" maxlength="100" class="form-control"
-                                                name="email" aria-describedby="emailHelp"
-                                                placeholder="Ingrese el correo electronico">
+                                            <input type="text" maxlength="100" class="form-control" name="email"
+                                                aria-describedby="emailHelp" placeholder="Ingrese el correo electronico">
                                             <div id="email-error-wrapper" class="d-none">
                                             </div>
 
@@ -331,8 +330,8 @@
                                     </div>
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <input required type="password" maxlength="100" class="form-control"
-                                                name="password" placeholder="Ingrese la contraseña">
+                                            <input type="password" maxlength="100" class="form-control" name="password"
+                                                placeholder="Ingrese la contraseña">
                                             <div id="password-error-wrapper" class="d-none">
                                             </div>
 
@@ -358,7 +357,10 @@
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
                                             <input type="date" class="form-control" name="fecha_limite"
-                                                placeholder="Ingrese la fecha" id="datepicker" required>
+                                                placeholder="Ingrese la fecha" id="datepicker">
+                                            <div id="fecha_limite-error-wrapper" class="d-none">
+                                            </div>
+
                                             <label for="datepicker">Fecha limite<span style="color: red;">(*)</span></label>
                                         </div>
                                     </div>
@@ -391,7 +393,7 @@
                 <input type="text" name="s" style="margin:15px"
                     class="form-group col-md-6 block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                     placeholder="Buscar..." />
-                    
+
             </form>
             <div id="tablaUsuariosContainer">
                 <table class="table table-hover align-middle fuente-general fuente general" id="tableUserDashboard">
@@ -416,7 +418,7 @@
                                     @endforeach
                                 </td>
                                 <td style="width: 20%">
-                                    {{$usuario->fecha_limite}}
+                                    {{ $usuario->fecha_limite }}
                                 </td>
                                 <td style="width: 20%">
                                     <a href="{{ url('/editarUsuario', ['usuario' => $usuario->id]) }}"
