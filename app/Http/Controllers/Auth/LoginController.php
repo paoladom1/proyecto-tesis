@@ -55,6 +55,12 @@ class LoginController extends Controller
                     return redirect()->intended('menudirector');
                 }
 
+                if ($finduser->tipo_usuario_id == 3) {
+                    Auth::guard('admin')->login($finduser);
+
+                    return redirect()->intended('menuadmin');
+                }
+
 
             } else {
                 return redirect('/')
@@ -73,7 +79,7 @@ class LoginController extends Controller
 
     public function login()
     {
-        
+
         if (request('email') == null) {
             return back()
                 ->withErrors(
@@ -90,7 +96,7 @@ class LoginController extends Controller
                 );
         }
 
-        
+
         $credentials = $this->validate(request(), [
             'email' => 'string',
             'password' => 'string'
@@ -121,15 +127,12 @@ class LoginController extends Controller
         $user = auth()->guard('admin')->user();
         $id = $user->id;
         info($user);
-        $fecha_actual=date("Y-m-d");
-        \Debugbar::info($fecha_actual);
-        \Debugbar::info($id);
+        $fecha_actual = date("Y-m-d");
 
         if ($user->tipo_usuario_id == 1) {
             // Estudiante
             $estudiante = Estudiante::where("usuario_id", "=", $id)->first();
-            $status= Usuario::where("id","=",$id)->first();
-            \Debugbar::info($status->fecha_limite);
+            $status = Usuario::where("id", "=", $id)->first();
             if ($estudiante != null) {
                 if ($estudiante->grupo_trabajo_id == null) {
                     auth()->guard('admin')->logout();
@@ -139,7 +142,8 @@ class LoginController extends Controller
                                 'email' => "¡No pertenece a ningun grupo actualmente!"
                             )
                         );
-                } if($fecha_actual>$status->fecha_limite){
+                }
+                if ($fecha_actual > $status->fecha_limite) {
                     auth()->guard('admin')->logout();
                     return back()
                         ->withErrors(
@@ -148,7 +152,7 @@ class LoginController extends Controller
                             )
                         );
                 }
-                    return redirect('/menu');
+                return redirect('/menu');
 
             } else {
                 auth()->guard('admin')->logout();
