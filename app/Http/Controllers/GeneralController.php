@@ -25,7 +25,7 @@ class GeneralController extends Controller
         $config_system= ConfiguracionSistema::all();
         if ($tipo == 1) { // Estudiante
             $datos_usuario = Estudiante::where("usuario_id", "=", $id_usuario)->first();
-        } else if ($tipo == 2) { // Director de carrera
+        } else if ($tipo == 2 || $tipo==3)  { // Director de carrera
             $datos_usuario = DirectorCarrera::join('empleado','empleado_id', '=', 'empleado.id')->where("director_carrera.usuario_id", "=", $id_usuario)->first();
         }
         
