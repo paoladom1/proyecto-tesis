@@ -115,7 +115,7 @@ class NewAdminController extends Controller
 
         $usuario->update($validatedData);
 
-        $this->mostrarUsuario($request);
+        //$this->mostrarUsuario($request);
         return redirect()->route('users')->with('success', "Usuario actualizado correctamente");
     }
 
@@ -229,7 +229,7 @@ class NewAdminController extends Controller
 
         $empleado->update($validatedData);
 
-        $this->mostrarEmpleados($request);
+        //$this->mostrarEmpleados($request);
         return redirect()->route('employees')->with('success', "Empleado actualizado correctamente");
     }
 
@@ -308,7 +308,7 @@ class NewAdminController extends Controller
         $validatedData['usuario_id'] = $user->id;
 
         $estudiante->update($validatedData);
-        $this->mostrarEstudiante($request);
+        //$this->mostrarEstudiante($request);
 
         return redirect()->route('students')->with('success', "Estudiante actualizado correctamente");
     }
@@ -392,7 +392,7 @@ class NewAdminController extends Controller
     {
         $director->delete();
 
-        $this->mostrarDirectores();
+        //$this->mostrarDirectores();
 
         return redirect()->route('directores')->with('success', "Director de Carrera eliminado correctamente");
     }
