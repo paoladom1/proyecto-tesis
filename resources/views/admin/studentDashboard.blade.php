@@ -370,21 +370,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md">
-                                        <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" name="grupo_trabajo_id">
-                                                @foreach ($grupos_trabajo as $grupo_trabajo)
-                                                    <option value="{{ $grupo_trabajo->id }}">
-                                                        {{ $grupo_trabajo->tema }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <label for="apellido">Grupo de trabajo <span
-                                                    style="color: red;">(*)</span></label>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="modal-footer">
                                     <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
                                         onclick="limpiarCampos() "><i class="bi bi-x-circle"></i> Cancelar</button>
