@@ -245,6 +245,11 @@
             border-radius: 5px 0 0 0;
         }
 
+        .form-floating>.form-control,
+        .form-floating>.form-select {
+            height: calc(3.5rem + 10px);
+        }
+
         .dropEstudiante .dropdown-divider {
             margin: 0;
         }
@@ -336,7 +341,7 @@
         </div>
 
         <div id="myForm" class="d-none">
-            <form method="POST" id="actualizar-form" action="/actualizarConfig" class="row g-3" onsubmit="presubmit()">
+            <form method="POST" id="actualizar-form" action="/actualizarConfig" class="row g-3">
                 @method('PUT')
                 @csrf
                 <div class="col-md-6">
@@ -353,11 +358,13 @@
                     <label for="numero_integrantes" class="form-label">Maximo de integrantes de equipo</label>
                     <input type="number" class="form-control" name="numero_integrantes"
                         value="{{ $config->numero_integrantes }}">
+                    <div id="numero_integrantes-error-wrapper" class="d-none">
+                    </div>
                 </div>
 
                 <div class="col-12">
                     <a href="{{ url('/configDirector') }}"><button type="button" class="mb-3 btn btn-danger"><i
-                                class="bi bi-arrow-bar-left"></i>Cancelar</button></a>
+                                class="bi bi-arrow-bar-left" onclick="limpiarCampos()"></i>Cancelar</button></a>
                     <button id="submit" type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i>
                         <span>Actualizar</span></button>
                 </div>
@@ -379,5 +386,59 @@
                 }, 5000);
             }
         });
+
+
+        document.getElementById("actualizar-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            cleanupErrors();
+
+            const form = this;
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.errors) {
+                        showErrors(data.errors);
+                    } else {
+                        window.location.href = "{{ route('config') }}";
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
+        function showErrors(errors) {
+            Object.entries(errors).forEach(([field, errorList]) => {
+                $(`input[name=${field}]`).addClass("is-invalid");
+
+                errorList.forEach(error => {
+                    $(`#${field}-error-wrapper`).append(
+                        `<span class="invalid-feedback d-block">${error}</span>`);
+                    $(`#${field}-error-wrapper`).removeClass('d-none');
+                })
+            });
+        }
+
+        function cleanupErrors() {
+            ['numero_integrantes'].forEach((field) => {
+                const selector = `#${field}-error-wrapper`;
+                $(selector).empty();
+                $(selector).addClass('d-none')
+
+                $(`input[name=${field}]`).removeClass('is-invalid');
+            })
+        }
+
+        function limpiarCampos() {
+            document.getElementById("myForm").reset();
+            cleanupErrors();
+        }
     </script>
 @endsection

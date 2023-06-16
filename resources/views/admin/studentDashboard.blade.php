@@ -245,6 +245,11 @@
             border-radius: 5px 0 0 0;
         }
 
+        .form-floating>.form-control,
+        .form-floating>.form-select {
+            height: calc(3.5rem + 10px);
+        }
+
         .dropEstudiante .dropdown-divider {
             margin: 0;
         }
@@ -370,21 +375,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md">
-                                        <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" name="grupo_trabajo_id">
-                                                @foreach ($grupos_trabajo as $grupo_trabajo)
-                                                    <option value="{{ $grupo_trabajo->id }}">
-                                                        {{ $grupo_trabajo->tema }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <label for="apellido">Grupo de trabajo <span
-                                                    style="color: red;">(*)</span></label>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="modal-footer">
                                     <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
                                         onclick="limpiarCampos() "><i class="bi bi-x-circle"></i> Cancelar</button>
@@ -499,6 +490,7 @@
 
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault();
+            cleanupErrors();
 
             const form = this;
 
@@ -523,12 +515,12 @@
 
         function showErrors(errors) {
             Object.entries(errors).forEach(([field, errorList]) => {
-                $(`input[name=${field}]`).toggleClass("is-invalid");
+                $(`input[name=${field}]`).addClass("is-invalid");
 
                 errorList.forEach(error => {
                     $(`#${field}-error-wrapper`).append(
                         `<span class="invalid-feedback d-block">${error}</span>`);
-                    $(`#${field}-error-wrapper`).toggleClass('d-none');
+                    $(`#${field}-error-wrapper`).removeClass('d-none');
                 })
             });
         }
@@ -537,7 +529,7 @@
             ['nombre', 'apellido', 'carnet'].forEach((field) => {
                 const selector = `#${field}-error-wrapper`;
                 $(selector).empty();
-                $(selector).toggleClass('d-none')
+                $(selector).addClass('d-none')
 
                 $(`input[name=${field}]`).removeClass('is-invalid');
             })

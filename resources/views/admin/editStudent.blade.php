@@ -334,8 +334,14 @@
                     <select class="form-control form-select" name="grupo_trabajo_id">
                         @foreach ($grupos_trabajo as $grupo_trabajo)
                             <option value="{{ $grupo_trabajo->id }}"
-                                <?= $estudiante->grupo_trabajo_id == $grupo_trabajo->id ? 'selected="selected"' : '' ?>>
-                                {{ $grupo_trabajo->tema }}
+                                <?= $estudiante->grupo_trabajo_id == $grupo_trabajo->id ? 'selected="selected"' : '' ?>
+                                <?= $estudiante->grupo_trabajo_id == '' ? 'disabled' : '' ?>
+                                <?= count($grupo_trabajo->estudiante) >= $configuraciones->numero_integrantes ? 'disabled' : '' ?>>
+                                @if ($estudiante->grupo_trabajo_id !== '')
+                                    {{ $grupo_trabajo->tema }}
+                                @else
+                                    {{ ' ' }}
+                                @endif
 
                             </option>
                         @endforeach

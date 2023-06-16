@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cargo;
 use App\Models\Carrera;
+use App\Models\ConfiguracionSistema;
 use App\Models\DirectorCarrera;
 use App\Models\Estudiante;
 use App\Models\GrupoTrabajo;
@@ -272,9 +273,15 @@ class NewAdminController extends Controller
     {
         $carreras = Carrera::all();
 
+        $carrera = $estudiante->carrera_id;
+        $grupo_trabajo = GrupoTrabajo::join('estudiante', 'grupo_trabajo_id', '=', 'grupo_trabajo.id')->
+            selectRaw('grupo_trabajo.id as id, anio_inicio, ciclo_inicio, tema, prorroga, asesor_interno_id, lector_interno_id, asesor_externo_id, lector_externo_id')
+            ->where("carrera_id", "=", $carrera)->
+            groupBy("id");
         $grupos_trabajo = GrupoTrabajo::all();
+        $configuraciones = ConfiguracionSistema::first();
 
-        return view('admin.editStudent', compact('estudiante', 'carreras', 'grupos_trabajo'));
+        return view('admin.editStudent', compact('estudiante', 'carreras', 'grupos_trabajo', 'configuraciones'));
     }
 
     public function actualizarEstudiante(Request $request, Estudiante $estudiante)
@@ -320,7 +327,6 @@ class NewAdminController extends Controller
             'apellido' => 'required',
             'carnet' => 'required|unique:estudiante',
             'carrera_id' => 'required',
-            'grupo_trabajo_id' => 'required',
             'usuario_id',
         ];
 
