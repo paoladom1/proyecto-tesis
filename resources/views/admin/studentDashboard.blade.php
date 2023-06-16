@@ -245,6 +245,11 @@
             border-radius: 5px 0 0 0;
         }
 
+        .form-floating>.form-control,
+        .form-floating>.form-select {
+            height: calc(3.5rem + 10px);
+        }
+
         .dropEstudiante .dropdown-divider {
             margin: 0;
         }
@@ -485,6 +490,7 @@
 
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault();
+            cleanupErrors();
 
             const form = this;
 
@@ -509,12 +515,12 @@
 
         function showErrors(errors) {
             Object.entries(errors).forEach(([field, errorList]) => {
-                $(`input[name=${field}]`).toggleClass("is-invalid");
+                $(`input[name=${field}]`).addClass("is-invalid");
 
                 errorList.forEach(error => {
                     $(`#${field}-error-wrapper`).append(
                         `<span class="invalid-feedback d-block">${error}</span>`);
-                    $(`#${field}-error-wrapper`).toggleClass('d-none');
+                    $(`#${field}-error-wrapper`).removeClass('d-none');
                 })
             });
         }
@@ -523,7 +529,7 @@
             ['nombre', 'apellido', 'carnet'].forEach((field) => {
                 const selector = `#${field}-error-wrapper`;
                 $(selector).empty();
-                $(selector).toggleClass('d-none')
+                $(selector).addClass('d-none')
 
                 $(`input[name=${field}]`).removeClass('is-invalid');
             })

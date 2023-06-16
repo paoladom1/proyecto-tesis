@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpWord\Style\Language;
 use PhpOffice\PhpWord\Style\TOC;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -407,17 +409,34 @@ class DirectorController extends Controller
     {
         $config = ConfiguracionSistema::first();
 
-        $validatedData = $request->validate([
+        $validations = [
             'fecha_entrega' => 'required|date_format:Y-m-d',
             'fecha_prorroga' => 'required|date_format:Y-m-d',
-            'numero_integrantes' => 'required',
-        ]);
+            'numero_integrantes' => 'required|integer|min:1|max:5',
+        ];
+
+        $validator = Validator::make($request->all(), $validations);
+
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $validatedData = $request->validate($validations);
 
         $validatedData['fecha_entrega'] = Carbon::createFromFormat('Y-m-d', $validatedData['fecha_entrega'])->format('Y-m-d');
         $validatedData['fecha_prorroga'] = Carbon::createFromFormat('Y-m-d', $validatedData['fecha_prorroga'])->format('Y-m-d');
 
-        $config->update($validatedData);
+        $configuraciones = $config->update($validatedData);
 
-        return redirect()->route('config')->with('success', 'Configuraciones almacenadas correctamente');
+        if ($configuraciones) {
+            Session::flash('success', 'Configuraciones almacenadas correctamente');
+            return response()->json(['success' => true]);
+        } else {
+            Session::flash('error', 'Ha ocurrido un error!');
+            return response()->json(['error' => 'Ha ocurrido un error!']);
+        }
     }
 }

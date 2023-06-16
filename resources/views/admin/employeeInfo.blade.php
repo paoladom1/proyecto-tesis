@@ -513,6 +513,7 @@
 
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault();
+            cleanupErrors();
 
             const form = this;
 
@@ -537,18 +538,29 @@
 
         function showErrors(errors) {
             Object.entries(errors).forEach(([field, errorList]) => {
-                $(`input[name=${field}]`).toggleClass("is-invalid");
+                $(`input[name=${field}]`).addClass("is-invalid");
 
                 errorList.forEach(error => {
                     $(`#${field}-error-wrapper`).append(
                         `<span class="invalid-feedback d-block">${error}</span>`);
-                    $(`#${field}-error-wrapper`).toggleClass('d-none');
+                    $(`#${field}-error-wrapper`).removeClass('d-none');
                 })
             });
         }
 
         function limpiarCampos() {
             document.getElementById("myForm").reset();
+            cleanupErrors();
+        }
+
+        function cleanupErrors() {
+            ['codigo_empleado', 'nombre', 'apellido'].forEach((field) => {
+                const selector = `#${field}-error-wrapper`;
+                $(selector).empty();
+                $(selector).addClass('d-none')
+
+                $(`input[name=${field}]`).removeClass('is-invalid')
+            })
         }
     </script>
 @endsection

@@ -472,6 +472,7 @@
 
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault();
+            cleanupErrors();
 
             const form = this;
 
@@ -496,7 +497,7 @@
 
         function showErrors(errors) {
             Object.entries(errors).forEach(([field, errorList]) => {
-                $(`input[name=${field}]`).toggleClass("is-invalid");
+                $(`input[name=${field}]`).addClass("is-invalid");
 
                 errorList.forEach(error => {
                     $(`#${field}-error-wrapper`).append(
