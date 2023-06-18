@@ -286,6 +286,24 @@
                 </ul>
             </div>
         @endif
+
+        @if (session('success'))
+            <div class="alert alert-success" id="notification">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" id="notification">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="alert alert-warning" id="notification">
+                {{ session('warning') }}
+            </div>
+        @endif
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -296,85 +314,127 @@
         <form method="POST" action="/infoEmployee/{{ $empleado->id }}" class="row gx-3 gy-2 align-items-center">
             @method('PUT')
             @csrf
-            <div class="col-sm-3">
-                <label for="inputCod" class="form-label">Codigo de empleado</label>
-                <input type="text" class="form-control" name="codigo_empleado"
-                    value="{{ $empleado->codigo_empleado }}"class="@error('codigo_empleado') is-invalid @enderror">
-                @error('codigo_empleado')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div></div>
-            <div class="col-sm-3">
-                <label for="inputName" class="form-label">Nombres</label>
-                <input type="text" class="form-control" name="nombre" value="{{ $empleado->nombre }}"
-                    class="@error('nombre') is-invalid @enderror"> @error('nombre')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-                <br>
-                <label for="inputLastnames" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" name="apellido"
-                    value="{{ $empleado->apellido }}"class="@error('apellido') is-invalid @enderror"> @error('apellido')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div></div>
-            <div class="col-sm-10">
-                <div class="form-group form-floating mb-3 mt-3">
-                    <select class="form-control form-select" name="tipo_empleado_id">
-                        @foreach ($tipos_empleado as $tipo)
-                            <option <?= $empleado->tipo_empleado_id == $tipo->id ? 'selected="selected"' : '' ?>
-                                value="{{ $tipo->id }}">
-                                {{ $tipo->nombre_tipo_empleado }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <label for="tipo_empleado_id">Tipo de empleado </label>
+            <div class="row">
+                <div class="col-md">
+                    <label for="inputCod" class="form-label">Codigo de empleado</label>
+                    <input type="text" class="form-control" name="codigo_empleado"
+                        value="{{ $empleado->codigo_empleado }}"class="@error('codigo_empleado') is-invalid @enderror">
+                    @error('codigo_empleado')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="col-md">
+                    <label for="inputName" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" name="nombre" value="{{ $empleado->nombre }}"
+                        class="@error('nombre') is-invalid @enderror"> @error('nombre')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+
+                </div>
+                <div class="col-md">
+                    <label for="inputLastnames" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" name="apellido"
+                        value="{{ $empleado->apellido }}"class="@error('apellido') is-invalid @enderror"> @error('apellido')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="form-group form-floating mb-3 mt-3">
-                    <select class="form-control form-select" name="cargo_id">
-                        @foreach ($cargos as $cargo)
-                            <option <?= $empleado->cargo_id == $cargo->id ? 'selected="selected"' : '' ?>
-                                value="{{ $cargo->id }}">
-                                {{ $cargo->nombre_cargo }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <label for="tipo_empleado_id">Cargo de empleado </label>
+
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group form-floating mb-3 mt-3">
+                        <select class="form-control form-select" name="cargo_id">
+                            @foreach ($cargos as $cargo)
+                                <option <?= $empleado->cargo_id == $cargo->id ? 'selected="selected"' : '' ?>
+                                    value="{{ $cargo->id }}">
+                                    {{ $cargo->nombre_cargo }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <label for="cargo">Cargo de empleado </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-floating mb-3 mt-3">
+                        <select class="form-control form-select" name="departamento_unidad_id">
+                            @foreach ($departamentos_u as $dpto)
+                                <option <?= $empleado->departamento_unidad_id == $dpto->id ? 'selected="selected"' : '' ?>
+                                    value="{{ $dpto->id }}">
+                                    {{ $dpto->nombre_departamento }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <label for="departamento_unidad_id">Departamento/Unidad</label>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="form-group form-floating mb-3 mt-3">
-                    <select class="form-control form-select" name="departamento_unidad_id">
-                        @foreach ($departamentos_u as $dpto)
-                            <option <?= $empleado->departamento_unidad_id == $dpto->id ? 'selected="selected"' : '' ?>
-                                value="{{ $dpto->id }}">
-                                {{ $dpto->nombre_departamento }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <label for="tipo_empleado_id">Departamento/Unidad</label>
+
+            <div id="director_info" class="d-none row">
+                <div class="col-md">
+                    <div class="form-group form-floating mb-3 mt-3">
+                        <input type="text" maxlength="100" class="form-control" name="email_usuario"
+                            aria-describedby="emailHelp" placeholder="Ingrese el correo" value="{{ $email_usuario }}" />
+                        <div id="email_usuario-error-wrapper" class="d-none">
+                        </div>
+
+                        <label for="nombre">Correo Usuario<span style="color: red;">(*)</span></label>
+                        <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
+                            limite de 100 caracteres!</span>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group form-floating mb-3 mt-3">
+                        <select class="form-control form-select" name="carrera_id">
+                            @foreach ($carreras as $carrera)
+                                <option value="{{ $carrera->id }}" @if ($carrerasDeshabilitadas->contains($carrera->id)) disabled @endif
+                                    @if ($director && $director->carrera_id == $carrera->id) selected @endif>
+                                    {{ $carrera->nombre_carrera }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div id="carrera_id-error-wrapper" class="d-none"></div>
+                        <label for="cargo_id">Carrera encargada<span style="color: red;">(*)</span></label>
+                    </div>
                 </div>
             </div>
-            <div class="col-12">
-                <a href="{{ url('/employeeInfo') }}"><button type="button" class="mb-3 btn btn-danger"><i
-                            class="bi bi-arrow-bar-left"></i>Cancelar</button></a>
-                <button id="submit" type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i>
-                    <span>Actualizar</span></button>
+
+            <div class="row">
+                <div class="col-md">
+                    <a href="{{ url('/employeeInfo') }}">
+                        <button type="button" class="mb-3 btn btn-danger">
+                            <i class="bi bi-arrow-bar-left">
+                            </i>Cancelar
+                        </button>
+                    </a>
+                    <button id="submit" type="submit" class="mb-3 btn btn-success">
+                        <i class="bi bi-save"></i>
+                        <span>Actualizar</span>
+                    </button>
+                </div>
             </div>
         </form>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var notification = document.getElementsByClassName('alert');
+            var notification = document.getElementById('notification');
             if (notification) {
                 setTimeout(function() {
-                    notification.style.display = 'none';
+                    if (notification.style) {
+                        notification.style.display = 'none';
+                    }
                 }, 5000);
             }
+
+            if ($('select[name="cargo_id"]').find(':selected').val() == '3') {
+                $('#director_info').removeClass('d-none')
+            }
+        });
+
+        $('select[name="cargo_id"]').on('change', function() {
+            this.value === '3' ?
+                $('#director_info').removeClass('d-none') :
+                $('#director_info').addClass('d-none')
         });
     </script>
 @endsection

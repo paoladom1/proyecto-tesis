@@ -359,18 +359,6 @@
                                 <div class="row">
                                     <div class="col-md">
                                         <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" name="tipo_empleado_id">
-                                                @foreach ($tipos_empleado as $tipo)
-                                                    <option value="{{ $tipo->id }}">{{ $tipo->nombre_tipo_empleado }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <label for="tipo_empleado_id">Tipo de empleado <span
-                                                    style="color: red;">(*)</span></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="form-group form-floating mb-3 mt-3">
                                             <select class="form-control form-select" name="cargo_id">
                                                 @foreach ($cargos as $cargo)
                                                     <option value="{{ $cargo->id }}">{{ $cargo->nombre_cargo }}
@@ -395,7 +383,40 @@
                                     </div>
                                 </div>
 
+                                <div id="director_info" class="d-none row">
+                                    <div class="col-md">
+                                        <div class="form-group form-floating mb-3 mt-3">
+                                            <input type="text" maxlength="100" class="form-control"
+                                                name="email_usuario" aria-describedby="emailHelp"
+                                                placeholder="Ingrese el correo" />
+                                            <div id="email_usuario-error-wrapper" class="d-none">
+                                            </div>
+
+                                            <label for="nombre">Correo Usuario<span
+                                                    style="color: red;">(*)</span></label>
+                                            <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
+                                                limite de 100 caracteres!</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-group form-floating mb-3 mt-3">
+                                            <select class="form-control form-select" name="carrera_id">
+                                                @foreach ($carreras as $carrera)
+                                                    <option value="{{ $carrera->id }}"
+                                                        @if ($carrerasDeshabilitadas->contains($carrera->id)) disabled @endif>
+                                                        {{ $carrera->nombre_carrera }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <div id="carrera_id-error-wrapper" class="d-none">
+                                            </div>
+                                            <label for="cargo_id">Carrera encargada<span
+                                                    style="color: red;">(*)</span></label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
                                     onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
@@ -428,10 +449,9 @@
                 <thead class=" thead-dar"
                     style="background-color: #003C71; color: white; border-bottom: solid #E87B2A 8px; padding: 0.9rem !important;">
                     <tr style="text-align: center">
-                        <th scope="col">COD. EMPLEADO</th>
+                        <th scope="col">CODIGO</th>
                         <th scope="col">NOMBRES</th>
                         <th scope="col">APELLIDOS</th>
-                        <th scope="col">TIPO DE EMPLEADO</th>
                         <th scope="col">CARGO DE EMPLEADO</th>
                         <th scope="col">DEPARTAMENTO/UNIDAD</th>
                         <th scope="col">ACCIONES</th>
@@ -440,16 +460,9 @@
                 <tbody>
                     @foreach ($empleados as $empleado)
                         <tr style="text-align: center">
-                            <td style="width: 20%">{{ $empleado->codigo_empleado }}</td>
+                            <td style="width: 10%">{{ $empleado->codigo_empleado }}</td>
                             <td style="width: 20%">{{ $empleado->nombre }}</td>
                             <td style="width: 20%">{{ $empleado->apellido }}</td>
-                            <td style="width: 20%">
-                                @foreach ($tipos_empleado as $tipo_empleado)
-                                    @if ($empleado->tipo_empleado_id === $tipo_empleado->id)
-                                        {{ $tipo_empleado->nombre_tipo_empleado }}
-                                    @endif
-                                @endforeach
-                            </td>
                             <td style="width: 20%">
                                 @foreach ($cargos as $cargo)
                                     @if ($empleado->cargo_id === $cargo->id)
@@ -464,7 +477,7 @@
                                     @endif
                                 @endforeach
                             </td>
-                            <td style="width: 30%">
+                            <td style="width: 20%">
                                 <a href="{{ url('/infoEmployee', ['empleado' => $empleado->id]) }}"
                                     class="btn btn-warning btn-sm" type="button" title="Edit">
                                     <i class="bi bi-pen"></i></a>
@@ -485,7 +498,8 @@
             <div class="paginacionBitacora">
                 @if ($empleados->total() != 0)
                     <div>
-                        <p>Resultados del {{ $empleados->firstItem() }} al {{ $empleados->lastItem() }} de
+                        <p>Resultados del {{ $empleados->firstItem() }} al
+                            {{ $empleados->lastItem() }} de
                             {{ $empleados->total() }}</p>
                     </div>
                 @endif
@@ -562,5 +576,11 @@
                 $(`input[name=${field}]`).removeClass('is-invalid')
             })
         }
+
+        $('select[name="cargo_id"]').on('change', function() {
+            this.value === '3' ?
+                $('#director_info').removeClass('d-none') :
+                $('#director_info').addClass('d-none')
+        });
     </script>
 @endsection
