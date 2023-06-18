@@ -568,7 +568,7 @@
         }
 
         function cleanupErrors() {
-            ['codigo_empleado', 'nombre', 'apellido'].forEach((field) => {
+            ['codigo_empleado', 'nombre', 'apellido', 'email_usuario'].forEach((field) => {
                 const selector = `#${field}-error-wrapper`;
                 $(selector).empty();
                 $(selector).addClass('d-none')
