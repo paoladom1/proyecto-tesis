@@ -256,7 +256,7 @@ class NewAdminController extends Controller
             'cargo_id' => 'required',
             'departamento_unidad_id' => 'required',
             'carrera_id' => 'required_if:cargo_id,3',
-            'email_usuario' => 'required_if:cargo_id,3|nullable|email',
+            'email_usuario' => 'required_if:cargo_id,3|email',
         ]);
 
         $empleadoData = $request->validate([

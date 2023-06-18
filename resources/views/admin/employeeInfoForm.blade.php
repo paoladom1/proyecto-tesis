@@ -373,9 +373,10 @@
                 <div class="col-md">
                     <div class="form-group form-floating mb-3 mt-3">
                         <input type="text" maxlength="100" class="form-control" name="email_usuario"
-                            aria-describedby="emailHelp" placeholder="Ingrese el correo" value="{{ $email_usuario }}" />
-                        <div id="email_usuario-error-wrapper" class="d-none">
-                        </div>
+                            aria-describedby="emailHelp" placeholder="Ingrese el correo" value="{{ $email_usuario }}"
+                            class="@error('email_usuario') is-invalid @enderror"> @error('email_usuario')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
 
                         <label for="nombre">Correo Usuario<span style="color: red;">(*)</span></label>
                         <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
