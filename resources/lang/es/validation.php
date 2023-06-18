@@ -131,7 +131,7 @@ return [
 
     'custom' => [
         'email_usuario' => [
-            'required_if' => 'El campo :attribute es obligatorio.',
+            'required_if' => 'El campo :attribute es obligatorio',
         ],
     ],
 

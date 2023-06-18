@@ -278,10 +278,12 @@
     <br>
     <div class="container-fluid container-general">
         @if ($errors->any())
-            <div class="alert alert-danger" id="notification" style="display: none">
+            <div class="alert alert-danger" id="notification">
                 <ul>
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        @if ($error == 'El campo email usuario es obligatorio')
+                            <li>{{ $error . ' para el cargo director de carrera.'}}</li>
+                        @endif
                     @endforeach
                 </ul>
             </div>
