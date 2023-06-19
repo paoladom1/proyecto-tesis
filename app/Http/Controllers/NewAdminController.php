@@ -174,7 +174,7 @@ class NewAdminController extends Controller
             'apellido' => 'required',
             'cargo_id' => 'required',
             'departamento_unidad_id' => 'required',
-            'email_usuario' => 'required_if:cargo_id,3|email',
+            'email_usuario' => 'nullable|required_if:cargo_id,3|email',
             'carrera_id' => 'required_if:cargo_id,3|unique:director_carrera',
             'tipo_empleado_id',
         ];
