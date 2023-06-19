@@ -22,6 +22,8 @@ use Illuminate\Validation\Rule;
 
 class NewAdminController extends Controller
 {
+    private const CARRERA_DIRECTOR_ID = 3;
+
     public function menuAdmin()
     {
         return view('plantillas.plantillaMenuAdmin');
@@ -140,6 +142,10 @@ class NewAdminController extends Controller
         $tipos_empleado = TipoEmpleado::all();
         $cargos = Cargo::all();
         $departamentos_u = DepartamentoU::all();
+        $directores = DirectorCarrera::all();
+
+        $carreras = Carrera::all();
+        $carrerasDeshabilitadas = Carrera::whereIn('id', $directores->pluck('carrera_id'))->get()->pluck('id');
 
         $empleados = Empleado::where([
             ['nombre', '!=', Null],
@@ -156,8 +162,7 @@ class NewAdminController extends Controller
             ]
         ])->paginate(10);
 
-
-        return view('admin.employeeInfo', compact('tipos_empleado', 'cargos', 'departamentos_u', 'empleados'));
+        return view('admin.employeeInfo', compact('cargos', 'departamentos_u', 'empleados', 'carreras', 'carrerasDeshabilitadas'));
     }
 
     // Función para registrar Empleado.
@@ -167,27 +172,57 @@ class NewAdminController extends Controller
             'codigo_empleado' => 'required|unique:empleado',
             'nombre' => 'required',
             'apellido' => 'required',
-            'tipo_empleado_id' => 'required',
             'cargo_id' => 'required',
             'departamento_unidad_id' => 'required',
+            'email_usuario' => 'nullable|required_if:cargo_id,3|email',
+            'carrera_id' => 'required_if:cargo_id,3|unique:director_carrera',
+            'tipo_empleado_id',
         ];
+
+        $tipo_empleado_id = '';
+
+        if ($request->input('cargo_id' == 4)) {
+            $tipo_empleado_id = 1;
+        } else {
+            $tipo_empleado_id = 2;
+        }
 
         $validator = Validator::make($request->all(), $validations);
 
-
         if ($validator->fails()) {
-            Log::info($validator->errors());
             return response()->json([
                 'errors' => $validator->errors()
             ]);
         }
 
-        $validatedData = $request->validate($validations);
+        $employeeData = $request->only(['codigo_empleado', 'nombre', 'apellido', 'cargo_id', 'departamento_unidad_id']);
+        $employeeData['tipo_empleado_id'] = $tipo_empleado_id;
 
-        // Crea el usuario
-        $employee = Empleado::create($validatedData);
+        // si es director, verificar que exista un usuario con correo
+        if ($request->input('cargo_id') == self::CARRERA_DIRECTOR_ID) {
+            if (sizeof(Usuario::where('email', $request->input('email_usuario'))->get()) == 0) {
+                return response()->json([
+                    'errors' => [
+                        'email_usuario' => ['El correo ingresado debe pertenecer a un usuario registardo']
+                    ]
+                ]);
+            }
+        }
 
-        if ($employee) {
+        // Crea el empleado
+        $employee = Empleado::create($employeeData);
+        $director = true;
+
+        // creando director de carrera si aplica
+        if ($request->input('cargo_id') == self::CARRERA_DIRECTOR_ID) {
+            $director = DirectorCarrera::create([
+                'usuario_id' => Usuario::where('email', $request->input('email_usuario'))->firstOrFail()->id,
+                'carrera_id' => $request->input('carrera_id'),
+                'empleado_id' => $employee->id,
+            ]);
+        }
+
+        if ($employee && $director) {
             Session::flash('success', 'Empleado registrado correctamente');
             return response()->json(['success' => true]);
         } else {
@@ -197,40 +232,84 @@ class NewAdminController extends Controller
 
     public function editarEmpleado(Empleado $empleado)
     {
-        $tipos_empleado = TipoEmpleado::all();
+        $directores = DirectorCarrera::where('empleado_id', '!=', $empleado->id)->get();
+        $carreras = Carrera::all();
+        $carrerasDeshabilitadas = Carrera::whereIn('id', $directores->pluck('carrera_id'))->get()->pluck('id');
+
+        $director = DirectorCarrera::where('empleado_id', $empleado->id)->first();
+        $email_usuario = $director ? Usuario::where('id', $director->usuario_id)->first()->email : '';
+
         $cargos = Cargo::all();
         $departamentos_u = DepartamentoU::all();
 
-        return view('admin.employeeInfoForm', compact('empleado', 'tipos_empleado', 'cargos', 'departamentos_u'));
+        return view(
+            'admin.employeeInfoForm',
+            compact(
+                'empleado',
+                'cargos',
+                'departamentos_u',
+                'carreras',
+                'carrerasDeshabilitadas',
+                'director',
+                'email_usuario'
+            )
+        );
     }
 
     public function actualizarEmpleado(Request $request, Empleado $empleado)
     {
-        $employee = Empleado::find($empleado, ['codigo_empleado', 'nombre', 'apellido', 'tipo_empleado_id', 'cargo_id', 'departamento_unidad_id']);
-
-        $validatedData = $request->validate([
+        $request->validate([
             'codigo_empleado' => [
                 'required',
                 Rule::unique('empleado', 'codigo_empleado')->ignore($empleado)
             ],
             'nombre' => 'required',
             'apellido' => 'required',
-            'tipo_empleado_id' => 'required',
+            'cargo_id' => 'required',
+            'departamento_unidad_id' => 'required',
+            'carrera_id' => 'required_if:cargo_id,3',
+            'email_usuario' => 'nullable|required_if:cargo_id,3|email',
+        ]);
+
+        $empleadoData = $request->validate([
+            'codigo_empleado' => [
+                'required',
+                Rule::unique('empleado', 'codigo_empleado')->ignore($empleado)
+            ],
+            'nombre' => 'required',
+            'apellido' => 'required',
             'cargo_id' => 'required',
             'departamento_unidad_id' => 'required',
         ]);
 
-        if (!$validatedData) {
+        if (!$empleadoData) {
+            Session::flash('error', $empleadoData);
             return redirect()->route('employees')->with('error', 'Ha ocurrido un error!');
         }
 
-        if ($employee->toArray()[0] == $validatedData) {
-            return redirect()->route('employees')->with('warning', 'No se realizó ningún cambio');
+        if ($empleado->cargo_id == self::CARRERA_DIRECTOR_ID && $request->input('cargo_id') != self::CARRERA_DIRECTOR_ID) {
+            DirectorCarrera::where('empleado_id', $empleado->id)->delete();
         }
 
-        $empleado->update($validatedData);
+        // si es director, verificar que exista un usuario con correo
+        if ($request->input('cargo_id') == self::CARRERA_DIRECTOR_ID) {
+            if (sizeof(Usuario::where('email', $request->input('email_usuario'))->get()) == 0) {
+                return redirect()->route('edit_employee', ['empleado' => $empleado->id])->with(
+                    'error',
+                    'El correo ingresado debe pertenecer a un usuario registrado'
+                );
+            }
+        }
+        $empleado->update($empleadoData);
 
-        //$this->mostrarEmpleados($request);
+        if ($request->input('cargo_id') == self::CARRERA_DIRECTOR_ID) {
+            DirectorCarrera::updateOrCreate([
+                'usuario_id' => Usuario::where('email', $request->input('email_usuario'))->firstOrFail()->id,
+                'carrera_id' => (int) $request->input('carrera_id'),
+                'empleado_id' => $empleado->id
+            ]);
+        }
+
         return redirect()->route('employees')->with('success', "Empleado actualizado correctamente");
     }
 
@@ -385,15 +464,6 @@ class NewAdminController extends Controller
         return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
     }
 
-    function editarDirector(DirectorCarrera $director)
-    {
-        $carreras = Carrera::all();
-
-        $empleados = Empleado::all();
-
-        return view('admin.editDirector', compact('carreras', 'empleados', 'director'));
-    }
-
     public function eliminarDirector(DirectorCarrera $director)
     {
         $director->delete();
@@ -401,35 +471,5 @@ class NewAdminController extends Controller
         //$this->mostrarDirectores();
 
         return redirect()->route('directores')->with('success', "Director de Carrera eliminado correctamente");
-    }
-
-    public function registrarDirector(Request $request)
-    {
-        $validations = [
-            'usuario_id' => 'required',
-            'empleado_id' => 'required',
-            'carrera_id' => 'required|unique:director_carrera',
-        ];
-
-        $validator = Validator::make($request->all(), $validations);
-
-        if ($validator->fails()) {
-            Log::info($validator->errors());
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        }
-
-        $validatedData = $request->validate($validations);
-
-        // Crea el usuario
-        $director = DirectorCarrera::create($validatedData);
-
-        if ($director) {
-            Session::flash('success', 'Director de carrera registrado correctamente');
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['error' => 'Ha ocurrido un error creando el director de carrera']);
-        }
     }
 }

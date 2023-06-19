@@ -440,6 +440,11 @@
                                 </td>
                             </tr>
                         @endforeach
+                        @if (count($usuarios) == 0)
+                            <tr id="noDatosPrincipal" style="text-align: center">
+                                <td colspan="4">No hay datos disponibles</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
                 <div class="paginacionBitacora">

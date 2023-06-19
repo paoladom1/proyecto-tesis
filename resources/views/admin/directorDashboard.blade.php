@@ -297,89 +297,6 @@
             </div>
         @endif
 
-        <!--------------------------------------------------Modal para crear directores en  el sistema----------------------------------------->
-
-        <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: #003C71; border-bottom: solid #E87B2A 8px;">
-                        <h5 class="modal-title" id="exampleModalToggleLabel" style="color: white;">Registrar Director
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            onclick="limpiarCampos() " aria-label="Close" style="color: white; width: 1em;"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="liveAlertPlaceholder2"></div>
-                        <div class="row">
-                            <form method="POST" action="/nuevoDirector" id="myForm">
-                                @csrf
-                                <input hidden type="text" id="idExterno">
-                                <p>Campos requeridos <span style="color: red;">(*)</span></p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group form-floating mb-2 mt-2">
-                                            <select class="form-control form-select" name="usuario_id">
-                                                @foreach ($usuarios as $usuario)
-                                                    @if ($usuario->tipo_usuario_id == 2)
-                                                        <option value="{{ $usuario->id }}">
-                                                            {{ $usuario->email }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-
-                                            <label for="nombre">Correo institucional <span
-                                                    style="color: red;">(*)</span></label>
-                                            <span style="color: red; display: none;" id="mensajeNombre">¡Ha llegado al
-                                                limite de 100 caracteres!</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-floating mb-2 mt-2">
-                                            <select class="form-control form-select" name="empleado_id">
-                                                @foreach ($empleados as $empleado)
-                                                    <option value="{{ $empleado->id }}">
-                                                        {{ $empleado->nombre . ' ' . $empleado->apellido }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <div id="empleado_id-error-wrapper" class="d-none error">
-                                            </div>
-                                            <label for="apellido">Encargado <span style="color: red;">(*)</span></label>
-                                            <span style="color: red; display: none;" id="mensajeApellido">¡Ha llegado al
-                                                limite de 100 caracteres!</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group form-floating mb-3 mt-3">
-                                            <select class="form-control form-select" name="carrera_id">
-                                                @foreach ($carreras as $carrera)
-                                                    <option value="{{ $carrera->id }}">
-                                                        {{ $carrera->nombre_carrera }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <div id="carrera_id-error-wrapper" class="d-none error">
-                                            </div>
-                                            <label for="rol">Carrera<span style="color: red;">(*)</span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="mb-3 btn btn-danger" data-bs-dismiss="modal"
-                                        onclick="limpiarCampos()"><i class="bi bi-x-circle"></i> Cancelar</button>
-                                    <button type="submit" class="mb-3 btn btn-success"><i class="bi bi-save"></i> <span
-                                            id="btnRegistarExterno">Registrar</span></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -394,13 +311,13 @@
         <div class="table-responsive">
             <div id="liveAlertPlaceholder"></div>
             <!-- <form action="/directorInfo" method="GET">
-                                <label for="search" class="sr-only">
-                                    Search
-                                </label>
-                                <input type="text" name="s"
-                                    class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                                    placeholder="Search..." />
-                            </form> -->
+                                    <label for="search" class="sr-only">
+                                        Search
+                                    </label>
+                                    <input type="text" name="s"
+                                        class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                                        placeholder="Search..." />
+                                </form> -->
             <div id="tablaEstudiantesContainer">
                 <table class="table table-hover align-middle fuente-general fuente general" id="directorDashboard">
                     <thead class=" thead-dar"
@@ -455,8 +372,6 @@
                 </div>
             </div>
         </div>
-        <a class="float-button btn-float-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button"
-            data-backdrop="false"><i class="bi bi-person-plus-fill float-icon"></i></a>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -501,7 +416,8 @@
 
                 errorList.forEach(error => {
                     $(`#${field}-error-wrapper`).append(
-                        `<span class="invalid-feedback d-block">Ya existe un director registrado para la carrera seleccionada</span>`);
+                        `<span class="invalid-feedback d-block">Ya existe un director registrado para la carrera seleccionada</span>`
+                        );
                     $(`#${field}-error-wrapper`).removeClass('d-none');
                 })
             });
