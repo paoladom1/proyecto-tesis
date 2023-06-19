@@ -235,6 +235,40 @@ class DirectorController extends Controller
         $empleado = Empleado::where("departamento_unidad_id", "=", $departamentoBusqueda)->get();
         $externo = Externo::where("departamento_unidad_id", "=", $departamentoBusqueda)->get();
 
+        $ciclo = $request->get('ciclo');
+        $anio = $request->get('anio');
+
+        Log::info($anio);
+
+        $inicio = '';
+        $fin = '';
+
+        if (!$anio && !$ciclo) {
+            $anio = '2010';
+            $inicio = Carbon::createFromDate($anio, 1, 1)->startOfDay();
+            $fin = now();
+        } else {
+
+            if ($ciclo === '01' || $ciclo === '1') {
+                $inicio = Carbon::createFromDate($anio, 3, 1)->startOfDay();
+                $fin = Carbon::createFromDate($anio, 7, 31)->endOfDay();
+            } else if ($ciclo === '02' || $ciclo === '2') {
+                $inicio = Carbon::createFromDate($anio, 8, 1)->startOfDay();
+                $fin = Carbon::createFromDate($anio, 12, 31)->endOfDay();
+            } else if ($ciclo === '03' || $ciclo === '3') {
+                $inicio = Carbon::createFromDate($anio, 1, 1)->startOfDay();
+                $fin = Carbon::createFromDate($anio, 2, 28)->endOfDay();
+            } else {
+                $inicio = '';
+                $fin = '';
+            }
+        }
+
+        Log::info($inicio . ' ' . $fin);
+
+        $filtro_grupos = GrupoTrabajo::whereBetween('created_at', [$inicio, $fin])->paginate(10);
+        Log::info(json_encode($filtro_grupos));
+
         // Redirije al formulario grupos de trabajo.
         return view(
             'director.gruposTrabajo',
@@ -246,6 +280,7 @@ class DirectorController extends Controller
                 'empleados' => $empleado,
                 'externos' => $externo,
                 'grupos' => $grupos,
+                'filtro_grupos' => $filtro_grupos,
                 'configuraciones' => $configuraciones,
                 'estudiantes' => $estudiantes
             )
@@ -438,5 +473,34 @@ class DirectorController extends Controller
             Session::flash('error', 'Ha ocurrido un error!');
             return response()->json(['error' => 'Ha ocurrido un error!']);
         }
+    }
+
+    public function buscarGrupo(Request $request)
+    {
+        $ciclo = '';
+        $request->get('ciclo') ? $ciclo = $request->get('ciclo') : '03';
+        $anio = '';
+        $request->get('anio') ? $anio = $request->get('anio') : '2010';
+
+        $inicio = '';
+        $fin = '';
+
+        if ($ciclo === '01' || $ciclo === '1') {
+            $inicio = Carbon::createFromDate($anio, 3, 1)->startOfDay();
+            $fin = Carbon::createFromDate($anio, 7, 31)->endOfDay();
+        } else if ($ciclo === '02' || $ciclo === '2') {
+            $inicio = Carbon::createFromDate($anio, 8, 1)->startOfDay();
+            $fin = Carbon::createFromDate($anio, 12, 31)->endOfDay();
+        } else if ($ciclo === '03' || $ciclo === '3') {
+            $inicio = Carbon::createFromDate($anio, 1, 1)->startOfDay();
+            $fin = Carbon::createFromDate($anio, 2, 28)->endOfDay();
+        } else {
+            $inicio = Carbon::createFromDate($anio, 1, 1)->startOfDay();
+            $fin = Carbon::createFromDate($anio, 12, 31)->endOfDay();
+        }
+
+        $filtro_grupos = GrupoTrabajo::whereBetween('created_at', [$inicio, $fin])->get();
+
+        return $filtro_grupos;
     }
 }
