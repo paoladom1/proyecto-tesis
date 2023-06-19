@@ -112,7 +112,7 @@ Route::get('/infoUsuario', 'App\Http\Controllers\NewAdminController@frmUserView'
 // Empleados
 Route::post('/nuevoEmpleado', 'App\Http\Controllers\NewAdminController@registrarEmpleado');
 Route::get('/employeeInfo', 'App\Http\Controllers\NewAdminController@mostrarEmpleados')->name('employees');
-Route::get('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@editarEmpleado')->name('edit');
+Route::get('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@editarEmpleado')->name('edit_employee');
 Route::put('/infoEmployee/{empleado}', 'App\Http\Controllers\NewAdminController@actualizarEmpleado');
 Route::delete('/borrarEmpleado/{empleado}', 'App\Http\Controllers\NewAdminController@eliminarEmpleado');
 

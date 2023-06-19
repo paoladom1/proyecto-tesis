@@ -303,6 +303,7 @@
                 @error('nombre')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
+                <br>
                 <label for="inputEmail4" class="form-label">Apellidos</label>
                 <input type="text" class="form-control" name="apellido"
                     value="{{ $estudiante->apellido }}"class="@error('apellido') is-invalid @enderror">
@@ -314,7 +315,7 @@
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Carnet</label>
                 <input type="text" class="form-control" name="carnet"
-                    value="{{ $estudiante->carnet }}"class="@error('carnet') is-invalid @enderror">
+                    value="{{ $estudiante->carnet }}"class="@error('carnet') is-invalid @enderror" readonly>
                 @error('carnet')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

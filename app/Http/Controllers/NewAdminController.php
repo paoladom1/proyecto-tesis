@@ -198,10 +198,22 @@ class NewAdminController extends Controller
         $employeeData = $request->only(['codigo_empleado', 'nombre', 'apellido', 'cargo_id', 'departamento_unidad_id']);
         $employeeData['tipo_empleado_id'] = $tipo_empleado_id;
 
-        // Crea el usuario
+        // si es director, verificar que exista un usuario con correo
+        if ($request->input('cargo_id') == self::CARRERA_DIRECTOR_ID) {
+            if (sizeof(Usuario::where('email', $request->input('email_usuario'))->get()) == 0) {
+                return response()->json([
+                    'errors' => [
+                        'email_usuario' => ['El correo ingresado debe pertenecer a un usuario registardo']
+                    ]
+                ]);
+            }
+        }
+
+        // Crea el empleado
         $employee = Empleado::create($employeeData);
         $director = true;
 
+        // creando director de carrera si aplica
         if ($request->input('cargo_id') == self::CARRERA_DIRECTOR_ID) {
             $director = DirectorCarrera::create([
                 'usuario_id' => Usuario::where('email', $request->input('email_usuario'))->firstOrFail()->id,
@@ -277,6 +289,16 @@ class NewAdminController extends Controller
 
         if ($empleado->cargo_id == self::CARRERA_DIRECTOR_ID && $request->input('cargo_id') != self::CARRERA_DIRECTOR_ID) {
             DirectorCarrera::where('empleado_id', $empleado->id)->delete();
+        }
+
+        // si es director, verificar que exista un usuario con correo
+        if ($request->input('cargo_id') == self::CARRERA_DIRECTOR_ID) {
+            if (sizeof(Usuario::where('email', $request->input('email_usuario'))->get()) == 0) {
+                return redirect()->route('edit_employee', ['empleado' => $empleado->id])->with(
+                    'error',
+                    'El correo ingresado debe pertenecer a un usuario registrado'
+                );
+            }
         }
         $empleado->update($empleadoData);
 
@@ -442,15 +464,6 @@ class NewAdminController extends Controller
         return view('admin.directorDashboard', compact('carreras', 'empleados', 'usuarios', 'directores_carrera'));
     }
 
-    function editarDirector(DirectorCarrera $director)
-    {
-        $carreras = Carrera::all();
-
-        $empleados = Empleado::all();
-
-        return view('admin.editDirector', compact('carreras', 'empleados', 'director'));
-    }
-
     public function eliminarDirector(DirectorCarrera $director)
     {
         $director->delete();
@@ -458,35 +471,5 @@ class NewAdminController extends Controller
         //$this->mostrarDirectores();
 
         return redirect()->route('directores')->with('success', "Director de Carrera eliminado correctamente");
-    }
-
-    public function registrarDirector(Request $request)
-    {
-        $validations = [
-            'usuario_id' => 'required',
-            'empleado_id' => 'required',
-            'carrera_id' => 'required|unique:director_carrera',
-        ];
-
-        $validator = Validator::make($request->all(), $validations);
-
-        if ($validator->fails()) {
-            Log::info($validator->errors());
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        }
-
-        $validatedData = $request->validate($validations);
-
-        // Crea el usuario
-        $director = DirectorCarrera::create($validatedData);
-
-        if ($director) {
-            Session::flash('success', 'Director de carrera registrado correctamente');
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['error' => 'Ha ocurrido un error creando el director de carrera']);
-        }
     }
 }
