@@ -435,18 +435,20 @@ class DirectorController extends Controller
 
     function mostrarConfig()
     {
-        $config = ConfiguracionSistema::first();
+        $user = auth()->guard('admin')->user()->id;
+        $director = DirectorCarrera::where('usuario_id', $user)->first();
+        $config = ConfiguracionSistema::where('director_id', $director->id)->firstOrFail();
 
-        return view('director.configDirector', compact('config'));
+        return view('director.configDirector', compact('config', 'director'));
     }
 
-    public function actualizarConfig(Request $request)
+    public function actualizarConfig(Request $request, DirectorCarrera $director)
     {
-        $config = ConfiguracionSistema::first();
+        $config = ConfiguracionSistema::where('director_id', $director->id)->first();
 
         $validations = [
             'fecha_entrega' => 'required|date_format:Y-m-d',
-            'fecha_prorroga' => 'required|date_format:Y-m-d',
+            'fecha_prorroga' => 'required|date_format:Y-m-d|after_or_equal:fecha_entrega',
             'numero_integrantes' => 'required|integer|min:1|max:5',
         ];
 

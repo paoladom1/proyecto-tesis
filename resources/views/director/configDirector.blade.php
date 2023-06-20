@@ -341,7 +341,7 @@
         </div>
 
         <div id="myForm" class="d-none">
-            <form method="POST" id="actualizar-form" action="/actualizarConfig" class="row g-3">
+            <form method="POST" id="actualizar-form" action="/actualizarConfig/{{ $director->id }}" class="row g-3">
                 @method('PUT')
                 @csrf
                 <div class="col-md-6">
@@ -353,6 +353,8 @@
                     <label for="fecha_prorroga" class="form-label">Fecha de Prorroga</label>
                     <input id="datepicker" type="date" class="form-control" name="fecha_prorroga"
                         value="{{ $config->fecha_prorroga }}" onchange="(e) => console.log(e.target.value)">
+                    <div id="fecha_prorroga-error-wrapper" class="d-none">
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="numero_integrantes" class="form-label">Maximo de integrantes de equipo</label>
@@ -396,6 +398,7 @@
             const form = this;
 
             const formData = new FormData(form);
+
 
             fetch(form.action, {
                     method: form.method,
