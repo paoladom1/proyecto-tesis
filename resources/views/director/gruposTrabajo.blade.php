@@ -532,7 +532,7 @@
                     <tbody>
                         @foreach ($filtro_grupos as $dato)
                             <tr>
-                                @if ($configuraciones->numero_integrantes == count($dato->estudiante))
+                                @if ($configuraciones->numero_integrantes <= count($dato->estudiante))
                                     <td style="width: 20%">{{ count($dato->estudiante) }} (Lleno)</td>
                                 @else
                                     <td style="width: 20%">{{ count($dato->estudiante) }}</td>
@@ -1335,7 +1335,7 @@
         function mostrarEleccionEstudiante(tipoConsulta = 0, datos = '') {
             estudiantesPag(1);
             if (tipoConsulta != 0) {
-                numCont = numCont - datos['estudiante'].length;
+                numCont = numCont - datos['estudiante'].length < 0 ? 0 : numCont - datos['estudiante'].length;
                 $("#numEstudiante").text(numCont);
                 datos['estudiante'].forEach(element => {
                     crearTablaEstudiantesElegidos(element['nombre'], element['apellido'], element['carnet'],

@@ -212,7 +212,9 @@ class DirectorController extends Controller
 
         $estudiantes = Estudiante::where("carrera_id", "=", $carrera)->where("grupo_trabajo_id", "=", null)->orWhere("grupo_trabajo_id", "=", $idGrupo)->having('nombre', 'like', '%' . $nombreE . '%')->having('apellido', 'like', '%' . $apellidoE . '%')->having('carnet', 'like', $carnetE . '%')->orderBy("grupo_trabajo_id", "desc")->orderBy("usuario_id", "asc")->paginate(6);
 
-        $configuraciones = ConfiguracionSistema::first(); // Configuraciones de los grupos de trabajo.
+        $user = auth()->guard('admin')->user()->id;
+        $director = DirectorCarrera::where('usuario_id', $user)->first();
+        $configuraciones = ConfiguracionSistema::where('director_id', $director->id)->firstOrFail(); // Configuraciones de los grupos de trabajo.
 
         // Retorna una tabla, en la cual se obtienen los datos de los estudiantes filtrados anteriormente, solo si es el caso.
         if ($request->ajax()) {
@@ -238,8 +240,6 @@ class DirectorController extends Controller
         $ciclo = $request->get('ciclo');
         $anio = $request->get('anio');
 
-        Log::info($anio);
-
         $inicio = '';
         $fin = '';
 
@@ -264,10 +264,11 @@ class DirectorController extends Controller
             }
         }
 
-        Log::info($inicio . ' ' . $fin);
-
-        $filtro_grupos = GrupoTrabajo::whereBetween('created_at', [$inicio, $fin])->paginate(10);
-        Log::info(json_encode($filtro_grupos));
+        $filtro_grupos = GrupoTrabajo::join('estudiante', 'grupo_trabajo_id', '=', 'grupo_trabajo.id')->
+            selectRaw('grupo_trabajo.id as id, anio_inicio, ciclo_inicio, tema, prorroga, asesor_interno_id, lector_interno_id, asesor_externo_id, lector_externo_id')->whereBetween('grupo_trabajo.created_at', [$inicio, $fin])->
+            where("carrera_id", "=", $carrera)->
+            groupBy("id")->paginate(10);
+        ;
 
         // Redirije al formulario grupos de trabajo.
         return view(
