@@ -375,7 +375,7 @@ class NewAdminController extends Controller
                 Rule::unique('estudiante', 'carnet')->ignore($estudiante)
             ],
             'carrera_id' => 'required',
-            'grupo_trabajo_id' => 'required',
+            'grupo_trabajo_id',
             'usuario_id',
         ]);
 
