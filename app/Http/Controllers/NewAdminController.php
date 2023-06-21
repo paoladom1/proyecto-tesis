@@ -96,8 +96,6 @@ class NewAdminController extends Controller
 
     public function actualizarUsuario(Request $request, Usuario $usuario)
     {
-        $user = Usuario::find($usuario, ['email', 'tipo_usuario_id', 'estado']);
-
         $validatedData = $request->validate([
             'email' => [
                 'required',
@@ -108,11 +106,16 @@ class NewAdminController extends Controller
             'fecha_limite' => 'required'
         ]);
 
+        if ($usuario->email != $validatedData['email'] && $validatedData['tipo_usuario_id'] == 1) {
+            $estudiante = Estudiante::where('usuario_id', '=', $usuario->id)->first();
+            $this->eliminarEstudiante($estudiante);
+        }
+
         if (!$validatedData) {
             return redirect()->route('users')->with('error', 'Ha ocurrido un error!');
         }
 
-        if ($user->toArray()[0] == $validatedData) {
+        if ($usuario == $validatedData) {
             return redirect()->route('users')->with('warning', 'No se realizó ningún cambio');
         }
 
