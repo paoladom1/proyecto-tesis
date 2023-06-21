@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
@@ -421,6 +422,20 @@ class DirectorController extends Controller
                 $estudiante->grupo_trabajo_id = $grupoTrabajo->id;
                 $estudiante->update();
             }
+        }
+
+        if ($prorroga == 1) {
+            $estudiantes = Estudiante::where("grupo_trabajo_id", "=", $grupoTrabajo->id)->get();
+            foreach ($estudiantes as $estudiante) {
+                $usuario = Usuario::where("id", "=", $estudiante->usuario_id)->first();
+                $carrera = Carrera::where("id", "=", $estudiante->carrera_id)->first();
+                $director = DirectorCarrera::where("carrera_id", "=", $carrera->id)->first();
+                $config = ConfiguracionSistema::where("director_id", "=", $director->id)->first();
+                $usuario->fecha_limite = $config->fecha_prorroga;
+
+                $usuario->update(['fecha_limite' => $config->fecha_prorroga]);
+            }
+
         }
     }
 
