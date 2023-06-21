@@ -206,7 +206,7 @@ class NewAdminController extends Controller
             if (sizeof(Usuario::where('email', $request->input('email_usuario'))->get()) == 0) {
                 return response()->json([
                     'errors' => [
-                        'email_usuario' => ['El correo ingresado debe pertenecer a un usuario registardo']
+                        'email_usuario' => ['El correo ingresado debe pertenecer a un usuario registrado']
                     ]
                 ]);
             }
