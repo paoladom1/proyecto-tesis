@@ -95,7 +95,7 @@ Route::post('/mostrarDatoEstudiante', 'App\Http\Controllers\DirectorController@m
 Route::post('/buscador', 'App\Http\Controllers\DirectorController@buscador');
 
 Route::get('/configDirector', 'App\Http\Controllers\DirectorController@mostrarConfig')->name('config');
-Route::put('/actualizarConfig', 'App\Http\Controllers\DirectorController@actualizarConfig');
+Route::put('/actualizarConfig/{director}', 'App\Http\Controllers\DirectorController@actualizarConfig');
 
 // ----------------------------------- Administrador de sistema -----------------------------------
 Route::get('/menuadmin', "App\Http\Controllers\NewAdminController@menuAdmin");
