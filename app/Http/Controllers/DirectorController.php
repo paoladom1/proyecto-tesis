@@ -354,7 +354,7 @@ class DirectorController extends Controller
                 }
             }
 
-            $grupoTrabajo->anio_inicio = "2022";
+            $grupoTrabajo->anio_inicio = "2023";
             $grupoTrabajo->ciclo_inicio = "1";
             $grupoTrabajo->prorroga = $prorroga;
             $grupoTrabajo->save();
@@ -390,7 +390,7 @@ class DirectorController extends Controller
                 $grupoTrabajo->lector_externo_id = null;
             }
 
-            $grupoTrabajo->anio_inicio = "2022";
+            $grupoTrabajo->anio_inicio = "2023";
             $grupoTrabajo->ciclo_inicio = "1";
             $grupoTrabajo->prorroga = $prorroga;
             $grupoTrabajo->update();
